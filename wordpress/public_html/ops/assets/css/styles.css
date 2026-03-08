@@ -1,0 +1,47 @@
+body { font-family: system-ui, Arial, sans-serif; margin:0; background:#0f1115; color:#e8e8e8; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#151823; border-bottom:1px solid #2a2f3a; }
+.topbar a { color:#9fc1ff; margin-right:12px; text-decoration:none; }
+.container { padding:16px; }
+.card { background:#181c27; border:1px solid #2a2f3a; border-radius:10px; padding:16px; margin-bottom:16px; }
+input, select, textarea { width:100%; padding:8px; background:#10131a; border:1px solid #2a2f3a; color:#e8e8e8; border-radius:8px; }
+button { padding:8px 12px; background:#2b66f6; border:0; border-radius:8px; color:#fff; cursor:pointer; }
+.board { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
+.col { min-height:300px; }
+.badge { display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2a2f3a; }
+.order { background:#131721; border:1px solid #2a2f3a; border-radius:8px; padding:10px; margin-bottom:10px; }
+/* --- Board polish --- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(260px, 1fr));
+  gap: 12px;
+}
+@media (max-width: 1200px) {
+  .board { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+}
+@media (max-width: 700px) {
+  .board { grid-template-columns: 1fr; }
+}
+.col { display: flex; flex-direction: column; min-height: 200px; }
+
+.col-header {
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; user-select: none;
+}
+.col-header h3 { margin: 0; }
+.chev { font-size: 18px; opacity: .8; transition: transform .15s ease; }
+.chev.rot { transform: rotate(-90deg); }
+
+.col-body {
+  margin-top: 10px;
+  max-height: 520px;               /* scrollable body */
+  overflow: auto;
+  border-top: 1px solid #2a2f3a;
+  padding-top: 8px;
+}
+
+.order {
+  background:#131721; border:1px solid #2a2f3a; border-radius:8px; padding:10px; margin-bottom:10px;
+}
+.order .meta { font-size: 12px; opacity: .85; display: grid; gap: 4px; }
+.badge { display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2a2f3a; font-size:12px; }
+

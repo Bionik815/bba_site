@@ -1,0 +1,2204 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hostinger AI 2.0.13\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hostinger-ai-assistant\n"
+"Last-Translator: \n"
+"Language-Team: Polish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-08-19T12:02:35+00:00\n"
+"PO-Revision-Date: 2025-12-16 08:16+0000\n"
+"Language: pl_PL\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: hostinger-ai-assistant\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.29\n"
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:76
+#, fuzzy
+msgid "Abilities that provide a way of interacting with WordPress site."
+msgstr "Umiejętności, które zapewniają sposób interakcji z witryną WordPress."
+
+#: includes/class-hostinger-ai-assistant-errors.php:14
+msgid "Action Failed. Try again or contact support. Apologies."
+msgstr "Błąd akcji. Spróbuj ponownie lub skontaktuj się z pomocą techniczną. Przepraszamy za utrudnienia. "
+
+#: admin/class-hostinger-ai-assistant-translations.php:60
+msgid "Active"
+msgstr "Aktywny"
+
+#: admin/class-hostinger-ai-assistant-translations.php:111
+#, fuzzy
+msgid "Add a new page to my WordPress website"
+msgstr "Dodanie nowej strony do mojej witryny WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:131
+#, fuzzy
+msgid "Add a new post to my WordPress website"
+msgstr "Dodaj nowy post do mojej witryny WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:155
+#, fuzzy
+msgid "Add a new product to your WooCommerce store"
+msgstr "Dodaj nowy produkt do swojego sklepu WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:182
+#, fuzzy
+msgid "Add a new WordPress custom post type post"
+msgstr "Dodaj nowy niestandardowy typ postu WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:154
+#, fuzzy
+msgid "Add a product"
+msgstr "Dodaj produkt"
+
+#: admin/class-hostinger-ai-assistant-translations.php:159
+#, fuzzy
+msgid "Add a product category"
+msgstr "Dodaj kategorię produktu"
+
+#: admin/class-hostinger-ai-assistant-translations.php:129
+#, fuzzy
+msgid "Add blog post"
+msgstr "Dodaj wpis na blogu"
+
+#: admin/class-hostinger-ai-assistant-translations.php:74
+#, fuzzy
+msgid "Add Comment"
+msgstr "Dodaj komentarz"
+
+#: admin/class-hostinger-ai-assistant-translations.php:109
+#, fuzzy
+msgid "Add WordPress page"
+msgstr "Dodaj stronę WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:313
+#, fuzzy
+msgid "Advanced users willing to test and exclude items"
+msgstr "Zaawansowani użytkownicy chcący testować i wykluczać elementy"
+
+#: admin/class-hostinger-ai-assistant-translations.php:88
+msgid "After clearing history you won't be able to access previous chats."
+msgstr "Po wyczyszczeniu historii nie będzie można uzyskać dostępu do poprzednich czatów."
+
+#: admin/class-hostinger-ai-assistant-translations.php:93
+msgid "After starting new chat, you will be able to access previous chats from the history."
+msgstr "Po rozpoczęciu nowego czatu będziesz mógł uzyskać dostęp do poprzednich czatów z historii."
+
+#: admin/class-hostinger-ai-assistant-admin.php:144
+#: admin/class-hostinger-ai-assistant-admin.php:145
+#: admin/class-hostinger-ai-assistant-admin.php:158
+#: admin/partials/hostinger-ai-assistant-tab-view.php:24
+msgid "AI Content Creator"
+msgstr "Generator treści AI"
+
+#: admin/class-hostinger-ai-assistant-translations.php:52
+msgid "AI may produce inaccurate information"
+msgstr "AI może generować niedokładne informacje"
+
+#: admin/class-hostinger-ai-assistant-translations.php:34
+msgid "AI-generated image"
+msgstr "Obrazy wygenerowane przez AI"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:217
+#, fuzzy
+msgid "All LiteSpeed caches have been purged successfully."
+msgstr "Wszystkie pamięci podręczne LiteSpeed zostały pomyślnie wyczyszczone."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:249
+#, fuzzy
+msgid "All websites, new users, simple websites, or cache-oriented development"
+msgstr "Wszystkie strony internetowe, nowi użytkownicy, proste strony internetowe lub rozwój zorientowany na pamięć podręczną"
+
+#: includes/class-hostinger-ai-assistant-errors.php:17
+msgid "An unexpected error occurred. Please try again or contact support."
+msgstr "Wystąpił nieoczekiwany błąd. Spróbuj ponownie lub skontaktuj się z pomocą techniczną."
+
+#: includes-psr4/Mcp/McpServer.php:64
+#, fuzzy
+msgid "API key required"
+msgstr "Wymagany klucz API"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:120
+#, fuzzy
+msgid "Apply a predefined optimization preset to LiteSpeed Cache settings. Available presets: basic (minimal optimization), advanced (balanced), aggressive (more optimization), essentials (core features), extreme (maximum optimization). A backup of current settings will be created automatically."
+msgstr "Zastosuj predefiniowane ustawienia optymalizacji do ustawień LiteSpeed Cache. Dostępne ustawienia: podstawowe (minimalna optymalizacja), zaawansowane (zrównoważone), agresywne (większa optymalizacja), podstawowe (podstawowe funkcje), ekstremalne (maksymalna optymalizacja). Kopia zapasowa bieżących ustawień zostanie utworzona automatycznie."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:119
+#, fuzzy
+msgid "Apply LiteSpeed Cache Preset"
+msgstr "Zastosuj wstępne ustawienie pamięci podręcznej LiteSpeed"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:244
+msgid "Are you sure you want to replace your existing content with a new one ?"
+msgstr "Czy na pewno chcesz zastąpić swoją obecną treść nową wersją?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:53
+msgid "Ask Kodee"
+msgstr "Zapytaj Kodee"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:293
+#, fuzzy
+msgid "Asynchronous CSS Loading with Critical CSS"
+msgstr "Asynchroniczne ładowanie CSS za pomocą Critical CSS"
+
+#. %s: PHP version
+#: hostinger-ai-assistant.php:131
+#: admin/class-hostinger-ai-assistant-notices.php:22
+msgid "Attention:"
+msgstr "Uwaga!"
+
+#: admin/class-hostinger-ai-assistant-translations.php:72
+#, fuzzy
+msgid "Bad response"
+msgstr "Zła odpowiedź"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:139
+msgid "Balances depth and readability, engaging audiences and driving leads."
+msgstr "Zachowuje równowagę między treścią a czytelnością, angażując odbiorców i generując leady."
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:205
+msgid "Brewing content with magic"
+msgstr "Generowanie unikalnych treści"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:247
+#, fuzzy
+msgid "Browser Cache"
+msgstr "Pamięć podręczna przeglądarki"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:69
+#, fuzzy
+msgid "Bypass code for maintenance mode"
+msgstr "Kod obejścia dla trybu konserwacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
+#, fuzzy
+msgid "Bypass code for maintenance mode. Needed only when maintenance mode is enabled."
+msgstr "Kod obejścia dla trybu konserwacji. Wymagany tylko wtedy, gdy włączony jest tryb konserwacji."
+
+#: admin/class-hostinger-ai-assistant-translations.php:89
+#: admin/partials/hostinger-ai-assistant-tab-view.php:251
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: admin/class-hostinger-ai-assistant-translations.php:58
+msgid "Cannot restart the chat when Kodee is responding"
+msgstr "Nie można ponownie uruchomić czatu, gdy Kodee odpowiada"
+
+#: admin/class-hostinger-ai-assistant-translations.php:47
+msgid "Cannot restart the chat when talking with the agent"
+msgstr "Nie można ponownie uruchomić czatu podczas rozmowy z agentem"
+
+#: admin/class-hostinger-ai-assistant-translations.php:59
+msgid "Cannot start a new chat when Kodee is responding"
+msgstr "Nie można rozpocząć nowego czatu, gdy Kodee odpowiada"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:222
+msgid "characters"
+msgstr "znaków"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:152
+msgid "Choose the length of generated content"
+msgstr "Wybierz długość generowanej treści"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:93
+msgid "Choose the type of content that will be generated"
+msgstr "Określ typ generowanej treści"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:114
+msgid "Choose your desired emotional impact on readers"
+msgstr "Zdecyduj, jakie emocje chcesz wywołać u odbiorców"
+
+#: admin/class-hostinger-ai-assistant-translations.php:87
+#: admin/class-hostinger-ai-assistant-translations.php:90
+msgid "Clear chat"
+msgstr "Wyczyść chat"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:247
+msgid "Clicking <b>Generate new content</b> will permanently delete your existing content and generate a new one on your recent inputs."
+msgstr "Jeśli klikniesz <b>Generuj nową treść</b>, obecna treść zostanie trwale usunięta, a nowa zostanie wygenerowana na podstawie Twoich ostatnio podanych danych."
+
+#: admin/class-hostinger-ai-assistant-translations.php:49
+#: admin/class-hostinger-ai-assistant-translations.php:100
+msgid "Close"
+msgstr "Zamknij"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:121
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:77
+msgid "Content length"
+msgstr "Długość treści"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:162
+msgid "Content main idea"
+msgstr "Główna tematyka treści"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:63
+msgid "Content Type"
+msgstr "Rodzaj treści"
+
+#: admin/class-hostinger-ai-assistant-translations.php:68
+msgid "Conversation was closed"
+msgstr "Rozmowa została zamknięta"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:65
+#, fuzzy
+msgid "Convert emoticons to graphics"
+msgstr "Konwertowanie emotikonów na grafikę"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:283
+#, fuzzy
+msgid "Could not determine file type"
+msgstr "Nie można określić typu pliku"
+
+#: admin/class-hostinger-ai-assistant-translations.php:160
+#, fuzzy
+msgid "Create a new product category in WooCommerce"
+msgstr "Utwórz nową kategorię produktów w WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:235
+#, fuzzy
+msgid "Create a new WooCommerce product brand. Requires name."
+msgstr "Utwórz nową markę produktu WooCommerce. Wymaga nazwy."
+
+#: admin/class-hostinger-ai-assistant-translations.php:161
+#, fuzzy
+msgid "Create a new WooCommerce product category for my store"
+msgstr "Utwórz nową kategorię produktów WooCommerce dla mojego sklepu"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:100
+#, fuzzy
+msgid "Create a new WooCommerce product category. Requires name."
+msgstr "Utwórz nową kategorię produktów WooCommerce. Wymaga nazwy."
+
+#: admin/class-hostinger-ai-assistant-translations.php:156
+#, fuzzy
+msgid "Create a new WooCommerce product for my store"
+msgstr "Utwórz nowy produkt WooCommerce dla mojego sklepu"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:167
+#, fuzzy
+msgid "Create a new WooCommerce product tag. Requires name."
+msgstr "Utwórz nowy tag produktu WooCommerce. Wymaga nazwy."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:42
+#, fuzzy
+msgid "Create a new WooCommerce product. Requires name and other product details."
+msgstr "Utwórz nowy produkt WooCommerce. Wymaga nazwy i innych szczegółów produktu."
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:40
+#, fuzzy
+msgid "Create a new WordPress page. Requires title and content."
+msgstr "Utwórz nową stronę WordPress. Wymaga tytułu i treści."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post category. Requires a name."
+msgstr "Utwórz nową kategorię postów WordPress. Wymaga nazwy."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post tag. Requires a name."
+msgstr "Utwórz nowy tag posta WordPress. Wymaga nazwy."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post. Requires title and content."
+msgstr "Utwórz nowy post WordPress. Wymaga tytułu i treści."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:58
+#, fuzzy
+msgid "Create a new WordPress user. Requires username and email."
+msgstr "Utwórz nowego użytkownika WordPress. Wymaga nazwy użytkownika i adresu e-mail."
+
+#: admin/class-hostinger-ai-assistant-translations.php:170
+#, fuzzy
+msgid "Create a WooCommerce sales report for a chosen period"
+msgstr "Tworzenie raportu sprzedaży WooCommerce za wybrany okres"
+
+#: admin/class-hostinger-ai-assistant-translations.php:110
+#, fuzzy
+msgid "Create and publish a new page on your WordPress site"
+msgstr "Utworzenie i opublikowanie nowej strony w witrynie WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:130
+#, fuzzy
+msgid "Create and publish a new post on your WordPress site"
+msgstr "Utwórz i opublikuj nowy post w witrynie WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:39
+#, fuzzy
+msgid "Create Category"
+msgstr "Utwórz kategorię"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:195
+msgid "Create content"
+msgstr "Generuj treść"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:181
+#, fuzzy
+msgid "Create Custom Post Type Post"
+msgstr "Tworzenie niestandardowego typu postu"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:39
+#, fuzzy
+msgid "Create Page"
+msgstr "Utwórz stronę"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:39
+#, fuzzy
+msgid "Create Post"
+msgstr "Utwórz post"
+
+#: admin/class-hostinger-ai-assistant-translations.php:33
+msgid "Create Post with AI"
+msgstr "Generuj post przy użyciu AI"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:24
+msgid "Create product with AI"
+msgstr "Generuj produkt przy użyciu AI"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:39
+#, fuzzy
+msgid "Create Tag"
+msgstr "Utwórz tag"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:57
+#, fuzzy
+msgid "Create User"
+msgstr "Utwórz użytkownika"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:41
+#, fuzzy
+msgid "Create WooCommerce Product"
+msgstr "Tworzenie produktu WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
+#, fuzzy
+msgid "Create WooCommerce Product Brand"
+msgstr "Tworzenie marki produktu WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:99
+#, fuzzy
+msgid "Create WooCommerce Product Category"
+msgstr "Tworzenie kategorii produktów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:166
+#, fuzzy
+msgid "Create WooCommerce Product Tag"
+msgstr "Utwórz tag produktu WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:292
+#, fuzzy
+msgid "CSS & JS Combine"
+msgstr "CSS & JS Combine"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:273
+#, fuzzy
+msgid "CSS, JS and HTML Minification"
+msgstr "Minifikacja CSS, JS i HTML"
+
+#: includes-psr4/Mcp/McpServer.php:42
+#, fuzzy
+msgid "Custom MCP Server for Hostinger AI Assistant."
+msgstr "Niestandardowy serwer MCP dla Hostinger AI Assistant."
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:49
+#, fuzzy
+msgid "Date format"
+msgstr "Format daty"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:245
+#, fuzzy
+msgid "Default Cache"
+msgstr "Domyślna pamięć podręczna"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:81
+#, fuzzy
+msgid "Default comment status (open/closed)"
+msgstr "Domyślny status komentarza (otwarty/zamknięty)"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:85
+#, fuzzy
+msgid "Default ping status (open/closed)"
+msgstr "Domyślny status ping (otwarty/zamknięty)"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:69
+#, fuzzy
+msgid "Default post category"
+msgstr "Domyślna kategoria postów"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:73
+#, fuzzy
+msgid "Default post format"
+msgstr "Domyślny format postów"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:261
+#, fuzzy
+msgid "Delete a WooCommerce product brand by ID."
+msgstr "Usuń markę produktu WooCommerce według ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:68
+#, fuzzy
+msgid "Delete a WooCommerce product by ID. This action cannot be undone."
+msgstr "Usuń produkt WooCommerce według ID. Tego działania nie można cofnąć."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:126
+#, fuzzy
+msgid "Delete a WooCommerce product category by ID."
+msgstr "Usuń kategorię produktów WooCommerce według ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:193
+#, fuzzy
+msgid "Delete a WooCommerce product tag by ID."
+msgstr "Usuń tag produktu WooCommerce według identyfikatora."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:66
+#, fuzzy
+msgid "Delete a WordPress category by ID. This action cannot be undone."
+msgstr "Usunięcie kategorii WordPress według ID. Tego działania nie można cofnąć."
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:294
+#, fuzzy
+msgid "Delete a WordPress custom post type post by ID. This action cannot be undone."
+msgstr "Usuwa niestandardowy typ postu WordPress według identyfikatora. Tej akcji nie można cofnąć."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:56
+#, fuzzy
+msgid "Delete a WordPress media item permanently. This action cannot be undone."
+msgstr "Trwale usuwa element multimedialny WordPress. Tego działania nie można cofnąć."
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:66
+#, fuzzy
+msgid "Delete a WordPress page by ID. This action cannot be undone."
+msgstr "Usunięcie strony WordPress według identyfikatora. Tego działania nie można cofnąć."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:66
+#, fuzzy
+msgid "Delete a WordPress post by ID. This action cannot be undone."
+msgstr "Usunięcie wpisu WordPress według identyfikatora. Tego działania nie można cofnąć."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:66
+#, fuzzy
+msgid "Delete a WordPress tag by ID. This action cannot be undone."
+msgstr "Usunięcie tagu WordPress według ID. Tego działania nie można cofnąć."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:90
+#, fuzzy
+msgid "Delete a WordPress user by ID. This action cannot be undone."
+msgstr "Usunięcie użytkownika WordPress według ID. Tego działania nie można cofnąć."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:65
+#, fuzzy
+msgid "Delete Category"
+msgstr "Usuń kategorię"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:293
+#, fuzzy
+msgid "Delete Custom Post Type Post"
+msgstr "Usuń niestandardowy typ postu"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:55
+#, fuzzy
+msgid "Delete Media"
+msgstr "Usuń nośnik"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:65
+#, fuzzy
+msgid "Delete Page"
+msgstr "Usuń stronę"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:65
+#, fuzzy
+msgid "Delete Post"
+msgstr "Usuń post"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:65
+#, fuzzy
+msgid "Delete Tag"
+msgstr "Usuń znacznik"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:89
+#, fuzzy
+msgid "Delete User"
+msgstr "Usuń użytkownika"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:67
+#, fuzzy
+msgid "Delete WooCommerce Product"
+msgstr "Usuń produkt WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
+#, fuzzy
+msgid "Delete WooCommerce Product Brand"
+msgstr "Usuń markę produktu WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:125
+#, fuzzy
+msgid "Delete WooCommerce Product Category"
+msgstr "Usuwanie kategorii produktów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:192
+#, fuzzy
+msgid "Delete WooCommerce Product Tag"
+msgstr "Usuń tag produktu WooCommerce"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:70
+msgid "Describe your product in short"
+msgstr "Opisz w kilku zdaniach swój produkt"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:40
+msgid "Description"
+msgstr "Opis"
+
+#: includes/class-hostinger-ai-assistant-errors.php:23
+msgid "Description is empty. Please provide a valid description."
+msgstr "Pole opisu jest pust.  Wprowadź swój opis."
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:85
+#, fuzzy
+msgid "Disable authentication password"
+msgstr "Wyłącz hasło uwierzytelniania"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
+#, fuzzy
+msgid "Disable authentication password status"
+msgstr "Wyłączenie stanu hasła uwierzytelniania"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
+#, fuzzy
+msgid "Disable XML-RPC status"
+msgstr "Wyłączenie statusu XML-RPC"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:276
+#, fuzzy
+msgid "DNS Prefetch for static files"
+msgstr "Wstępne pobieranie DNS dla plików statycznych"
+
+#: includes/class-hostinger-ai-assistant-surveys.php:24
+msgid "Do you have any comments/suggestions to improve our AI tools?"
+msgstr "Czy masz jakiekolwiek uwagi lub rekomendacje dotyczące naszych narzędzi AI?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:54
+msgid "Drop files here"
+msgstr "Upuść pliki tutaj"
+
+#: admin/class-hostinger-ai-assistant-translations.php:150
+#, fuzzy
+msgid "Edit a WordPress post category by ID"
+msgstr "Edycja kategorii postów WordPress według ID"
+
+#: admin/class-hostinger-ai-assistant-translations.php:145
+#, fuzzy
+msgid "Edit a WordPress post tag (e.g., rename or update it)"
+msgstr "Edycja tagu posta WordPress (np. zmiana nazwy lub aktualizacja)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:115
+#, fuzzy
+msgid "Edit an existing WordPress page by its ID"
+msgstr "Edytuj istniejącą stronę WordPress według jej ID"
+
+#: admin/class-hostinger-ai-assistant-translations.php:135
+#, fuzzy
+msgid "Edit an existing WordPress post by its ID"
+msgstr "Edytuj istniejący post WordPress według jego ID"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:229
+msgid "Edit as a draft"
+msgstr "Edytuj jako wersję roboczą"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:48
+msgid "Edit site"
+msgstr "Edytuj stronę"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:89
+#, fuzzy
+msgid "Enable llms.txt generation"
+msgstr "Włącz generowanie pliku llms.txt"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
+#, fuzzy
+msgid "Enable llms.txt status"
+msgstr "Włącz status llms.txt"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:65
+#, fuzzy
+msgid "Enable or disable maintenance mode"
+msgstr "Włączanie lub wyłączanie trybu konserwacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:73
+#, fuzzy
+msgid "Enable or disable XML-RPC"
+msgstr "Włączanie lub wyłączanie XML-RPC"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:314
+#, fuzzy
+msgid "Enables the maximum level of optimizations for improved page speed scores. Extensive testing required."
+msgstr "Umożliwia maksymalny poziom optymalizacji w celu uzyskania lepszych wyników szybkości strony. Wymagane obszerne testy."
+
+#: admin/class-hostinger-ai-assistant-translations.php:30
+#: admin/partials/hostinger-ai-assistant-tab-view.php:175
+msgid "Enter at least 10 characters"
+msgstr "Wprowadź co najmniej 10 znaków"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:261
+#, fuzzy
+msgid "Enthusiastic beginners"
+msgstr "Entuzjastyczni początkujący"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:291
+#, fuzzy
+msgid "Everything in Advanced"
+msgstr "Wszystko w trybie zaawansowanym"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:306
+#, fuzzy
+msgid "Everything in Aggressive"
+msgstr "Wszystko w Aggressive"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:271
+#, fuzzy
+msgid "Everything in Basic"
+msgstr "Wszystko w wersji podstawowej"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:257
+#, fuzzy
+msgid "Everything in Essentials"
+msgstr "Wszystko w Essentials"
+
+#: admin/class-hostinger-ai-assistant-translations.php:29
+msgid "Example: website development, WordPress tutorial, ..."
+msgstr "Na przykład: tworzenie stron, tutorial WordPress, ..."
+
+#: admin/class-hostinger-ai-assistant-translations.php:81
+msgid "Excellent"
+msgstr "Doskonała"
+
+#: includes/content/class-hostinger-ai-assistant-content-filters.php:86
+msgid "External Featured Image"
+msgstr "Wyróżniony obraz zewnętrzny"
+
+#: admin/class-hostinger-ai-assistant-translations.php:36
+msgid "External featured image"
+msgstr "Zewnętrzny wyróżniony obraz"
+
+#. %s: Preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:373
+#, fuzzy,php-format
+msgid "Failed to apply preset: %s"
+msgstr "Nie udało się zastosować ustawienia wstępnego: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:530
+#, fuzzy
+msgid "Failed to delete post"
+msgstr "Nie udało się usunąć postu"
+
+#. %s: Error message
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:223
+#, fuzzy,php-format
+msgid "Failed to flush cache: %s"
+msgstr "Nie udało się opróżnić pamięci podręcznej: %s"
+
+#. %s: Setting name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:193
+#, fuzzy,php-format
+msgid "Failed to get settings: %s"
+msgstr "Nie udało się pobrać ustawień: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:265
+#, fuzzy
+msgid "File is required"
+msgstr "Plik jest wymagany"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:227
+#, fuzzy
+msgid "File not found"
+msgstr "Nie znaleziono pliku"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:99
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:101
+#, fuzzy
+msgid "Filter by author ID"
+msgstr "Filtruj według identyfikatora autora"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:93
+#, fuzzy
+msgid "Filter by media type (image, video, audio, application)"
+msgstr "Filtrowanie według typu nośnika (obraz, wideo, audio, aplikacja)"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:97
+#, fuzzy
+msgid "Filter by MIME type (e.g., image/jpeg, video/mp4)"
+msgstr "Filtrowanie według typu MIME (np. image/jpeg, video/mp4)"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:105
+#, fuzzy
+msgid "Filter by parent post ID"
+msgstr "Filtruj według identyfikatora posta nadrzędnego"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:103
+#, fuzzy
+msgid "Filter by post status (publish, draft, pending, etc.)"
+msgstr "Filtrowanie według statusu posta (opublikowany, wersja robocza, oczekujący itp.)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:140
+#, fuzzy
+msgid "Find and filter posts with pagination options"
+msgstr "Wyszukiwanie i filtrowanie postów z opcjami paginacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:58
+#, fuzzy
+msgid "Flush LiteSpeed Cache"
+msgstr "Opróżnianie pamięci podręcznej LiteSpeed"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:274
+#, fuzzy
+msgid "Font Display Optimization"
+msgstr "Optymalizacja wyświetlania czcionek"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:132
+#, fuzzy
+msgid "Force category deletion"
+msgstr "Wymuś usunięcie kategorii"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:77
+#, fuzzy
+msgid "Force HTTPS redirects"
+msgstr "Wymuszanie przekierowań HTTPS"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
+#, fuzzy
+msgid "Force HTTPS status"
+msgstr "Wymuś status HTTPS"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:267
+#, fuzzy
+msgid "Force Product Brand deletion"
+msgstr "Wymuś usunięcie marki produktu"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:199
+#, fuzzy
+msgid "Force tag deletion"
+msgstr "Wymuś usunięcie tagu"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:81
+#, fuzzy
+msgid "Force WWW in URLs"
+msgstr "Wymuszanie WWW w adresach URL"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
+#, fuzzy
+msgid "Force WWW status"
+msgstr "Wymuś status WWW"
+
+#: admin/class-hostinger-ai-assistant-translations.php:24
+#: admin/partials/hostinger-ai-assistant-tab-view.php:106
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:89
+msgid "Formal"
+msgstr "Formalny"
+
+#: admin/class-hostinger-ai-assistant-translations.php:26
+#: admin/partials/hostinger-ai-assistant-tab-view.php:108
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:91
+msgid "Friendly"
+msgstr "Przyjazny"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:254
+msgid "Generate new content"
+msgstr "Generuj nową treść"
+
+#: admin/class-hostinger-ai-assistant-translations.php:169
+#, fuzzy
+msgid "Generate sales report"
+msgstr "Generowanie raportów sprzedaży"
+
+#: admin/class-hostinger-ai-assistant-translations.php:171
+#, fuzzy
+msgid "Generate WooCommerce sales report for my store"
+msgstr "Generowanie raportu sprzedaży WooCommerce dla mojego sklepu"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:264
+#: admin/partials/hostinger-ai-assistant-tab-view.php:267
+msgid "Generating content..."
+msgstr "Generowanie treści..."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:91
+#, fuzzy
+msgid "Get a list of all available LiteSpeed Cache optimization presets with their descriptions, features, risk levels, and requirements."
+msgstr "Uzyskaj listę wszystkich dostępnych ustawień optymalizacji LiteSpeed Cache wraz z ich opisami, funkcjami, poziomami ryzyka i wymaganiami."
+
+#: admin/class-hostinger-ai-assistant-translations.php:164
+#, fuzzy
+msgid "Get a list of orders"
+msgstr "Pobierz listę zamówień"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:20
+#, fuzzy
+msgid "Get a list of WooCommerce orders with search and filter capabilities. Returns a list of orders matching the criteria."
+msgstr "Pobiera listę zamówień WooCommerce z możliwością wyszukiwania i filtrowania. Zwraca listę zamówień spełniających kryteria."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:31
+#, fuzzy
+msgid "Get a single WooCommerce product by ID. Returns the full product object with all fields."
+msgstr "Pobiera pojedynczy produkt WooCommerce według ID. Zwraca pełny obiekt produktu ze wszystkimi polami."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:29
+#, fuzzy
+msgid "Get a single WordPress category by ID. Returns the full category object with all fields."
+msgstr "Pobiera pojedynczą kategorię WordPress według ID. Zwraca pełny obiekt kategorii ze wszystkimi polami."
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:29
+#, fuzzy
+msgid "Get a single WordPress page by ID. Returns the full page object with all fields."
+msgstr "Pobiera pojedynczą stronę WordPress według ID. Zwraca pełny obiekt strony ze wszystkimi polami."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:29
+#, fuzzy
+msgid "Get a single WordPress post by ID. Returns the full post object with all fields."
+msgstr "Pobiera pojedynczy post WordPress według ID. Zwraca pełny obiekt postu ze wszystkimi polami."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:29
+#, fuzzy
+msgid "Get a single WordPress tag by ID. Returns the full tag object with all fields."
+msgstr "Pobiera pojedynczy tag WordPress według ID. Zwraca pełny obiekt tagu ze wszystkimi polami."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:44
+#, fuzzy
+msgid "Get a single WordPress user by ID. Returns the full user object with all fields."
+msgstr "Pobiera pojedynczego użytkownika WordPress według ID. Zwraca pełny obiekt użytkownika ze wszystkimi polami."
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:142
+#, fuzzy
+msgid "Get a WordPress custom post type post by ID"
+msgstr "Pobierz niestandardowy typ postu WordPress według ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:32
+#, fuzzy
+msgid "Get a WordPress media item details by ID. Returns the full media object with all fields."
+msgstr "Pobiera szczegóły elementu multimedialnego WordPress według ID. Zwraca pełny obiekt multimedialny ze wszystkimi polami."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:28
+#, fuzzy
+msgid "Get Category"
+msgstr "Uzyskaj kategorię"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:28
+#, fuzzy
+msgid "Get current Hostinger plugin settings including maintenance mode, XML-RPC, HTTPS, and other security options."
+msgstr "Pobierz aktualne ustawienia wtyczki Hostinger, w tym tryb konserwacji, XML-RPC, HTTPS i inne opcje bezpieczeństwa."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:30
+#, fuzzy
+msgid "Get current LiteSpeed Cache settings including active preset, cache status, and key configuration options."
+msgstr "Pobierz bieżące ustawienia LiteSpeed Cache, w tym aktywne ustawienia wstępne, stan pamięci podręcznej i kluczowe opcje konfiguracji."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:118
+#, fuzzy
+msgid "Get Current User"
+msgstr "Pobierz bieżącego użytkownika"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:141
+#, fuzzy
+msgid "Get Custom Post Type Post"
+msgstr "Uzyskaj niestandardowy typ postu"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:20
+#, fuzzy
+msgid "Get General Settings"
+msgstr "Pobierz ustawienia ogólne"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:27
+#, fuzzy
+msgid "Get Hostinger Plugin Settings"
+msgstr "Pobierz ustawienia wtyczki Hostinger"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:29
+#, fuzzy
+msgid "Get LiteSpeed Cache Settings"
+msgstr "Pobierz ustawienia pamięci podręcznej LiteSpeed"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:31
+#, fuzzy
+msgid "Get Media"
+msgstr "Get Media"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:142
+#, fuzzy
+msgid "Get Media File"
+msgstr "Pobierz plik multimedialny"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:28
+#, fuzzy
+msgid "Get Page"
+msgstr "Get Page"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:28
+#, fuzzy
+msgid "Get Post"
+msgstr "Pobierz post"
+
+#: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:16
+#, fuzzy
+msgid "Get Site Info"
+msgstr "Uzyskaj informacje o witrynie"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:28
+#, fuzzy
+msgid "Get Tag"
+msgstr "Get Tag"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:143
+#, fuzzy
+msgid "Get the actual file content (blob) of a WordPress media item."
+msgstr "Pobiera rzeczywistą zawartość pliku (blob) elementu multimedialnego WordPress."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:119
+#, fuzzy
+msgid "Get the current logged-in user information."
+msgstr "Pobiera informacje o aktualnie zalogowanym użytkowniku."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:43
+#, fuzzy
+msgid "Get User"
+msgstr "Uzyskaj użytkownika"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:37
+#, fuzzy
+msgid "Get WooCommerce Coupons Report"
+msgstr "Pobierz raport kuponów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:38
+#, fuzzy
+msgid "Get WooCommerce coupons totals report. Returns count of coupons by coupon type."
+msgstr "Pobierz raport sumy kuponów WooCommerce. Zwraca liczbę kuponów według typu kuponu."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:44
+#, fuzzy
+msgid "Get WooCommerce Customers Report"
+msgstr "Pobierz raport klientów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:45
+#, fuzzy
+msgid "Get WooCommerce customers totals report. Returns statistics about customers."
+msgstr "Pobierz raport sumy klientów WooCommerce. Zwraca statystyki dotyczące klientów."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:51
+#, fuzzy
+msgid "Get WooCommerce Orders Report"
+msgstr "Pobierz raport zamówień WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:52
+#, fuzzy
+msgid "Get WooCommerce orders totals report. Returns statistics about orders."
+msgstr "Pobierz raport sumy zamówień WooCommerce. Zwraca statystyki dotyczące zamówień."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:30
+#, fuzzy
+msgid "Get WooCommerce Product"
+msgstr "Pobierz produkt WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:58
+#, fuzzy
+msgid "Get WooCommerce Products Report"
+msgstr "Pobierz raport produktów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:59
+#, fuzzy
+msgid "Get WooCommerce products totals report. Returns statistics about products."
+msgstr "Pobierz raport podsumowujący produkty WooCommerce. Zwraca statystyki dotyczące produktów."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:65
+#, fuzzy
+msgid "Get WooCommerce Reviews Report"
+msgstr "Pobierz raport recenzji WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:66
+#, fuzzy
+msgid "Get WooCommerce reviews totals report. Returns statistics about product reviews."
+msgstr "Pobierz raport podsumowujący recenzje WooCommerce. Zwraca statystyki dotyczące recenzji produktów."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:72
+#, fuzzy
+msgid "Get WooCommerce Sales Report"
+msgstr "Pobierz raport sprzedaży WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:73
+#, fuzzy
+msgid "Get WooCommerce sales report. Returns detailed sales statistics and revenue data."
+msgstr "Pobierz raport sprzedaży WooCommerce. Zwraca szczegółowe statystyki sprzedaży i dane o przychodach."
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:21
+#, fuzzy
+msgid "Get WordPress general site settings including title, description, timezone, and other configuration options."
+msgstr "Uzyskaj ogólne ustawienia witryny WordPress, w tym tytuł, opis, strefę czasową i inne opcje konfiguracji."
+
+#: admin/class-hostinger-ai-assistant-translations.php:119
+#, fuzzy
+msgid "Get WordPress site information"
+msgstr "Uzyskaj informacje o witrynie WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:71
+#, fuzzy
+msgid "Good response"
+msgstr "Dobra odpowiedź"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:277
+#, fuzzy
+msgid "Gravatar Cache"
+msgstr "Gravatar Cache"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:272
+#, fuzzy
+msgid "Guest Mode and Guest Optimization"
+msgstr "Tryb gościa i optymalizacja dla gości"
+
+#: admin/class-hostinger-ai-assistant-translations.php:64
+#, fuzzy
+msgid "Hello 👋"
+msgstr "Cześć 👋"
+
+#: admin/class-hostinger-ai-assistant-translations.php:42
+msgid "Hi, I'm Kodee, your personal AI assistant. You can ask me any questions you have regarding WordPress. I'm still learning, so sometimes can make mistakes. What questions do you have?"
+msgstr "Cześć, jestem Kodee - Twój osobisty Asystent AI. Możesz śmiało zadawać mi pytania związane z WordPress. Nadal się uczę, więc czasami mogę popełniać błędy.  W czym mogę pomóc?"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:246
+#, fuzzy
+msgid "Higher TTL"
+msgstr "Wyższy TTL"
+
+#: admin/class-hostinger-ai-assistant-translations.php:50
+msgid "History"
+msgstr "Historia"
+
+#. Author of the plugin
+msgid "Hostinger"
+msgstr "Hostinger"
+
+#. Name of the plugin
+msgid "Hostinger AI"
+msgstr "Hostinger AI"
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:75
+#, fuzzy
+msgid "Hostinger AI Abilities"
+msgstr "Zdolności sztucznej inteligencji Hostingera"
+
+#. Description of the plugin
+msgid "Hostinger AI plugin for WordPress."
+msgstr "Wtyczka Hostinger AI dla WordPress."
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:124
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:139
+#, fuzzy
+msgid "Hostinger plugin settings option not defined"
+msgstr "Opcja ustawień wtyczki Hostinger nie została zdefiniowana"
+
+#: admin/class-hostinger-ai-assistant-translations.php:65
+#, fuzzy
+msgid "How can I help you today?"
+msgstr "Jak mogę ci dzisiaj pomóc?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:79
+msgid "How can we improve your experience?"
+msgstr "Jak możemy poprawić Twoje doświadczenia?"
+
+#: includes/class-hostinger-ai-assistant-surveys.php:23
+msgid "How would you rate your experience using our AI Assistant plugin for content generation? (Scale 1-10)"
+msgstr "Jak oceniasz funkcjonalność naszej wtyczki Asystenta AI do generowania treści? (W skali od 1-10)"
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://hostinger.com"
+msgstr "https://hostinger.pl"
+
+#: admin/class-hostinger-ai-assistant-translations.php:105
+msgid "I'm sorry, I didn't understand your question. Could you please rephrase it or ask something different?"
+msgstr "Przepraszam, nie rozumiem Twojego pytania. Czy możesz je sformułować inaczej lub zapytać o coś innego?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:182
+msgid "If you skip this part, AI will automatically generate keyword suggestions after you generate the content"
+msgstr "Jeżeli zignorujesz ten krok, AI automatycznie zaproponuje słowa kluczowe po wygenerowaniu treści"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:258
+#, fuzzy
+msgid "Image Optimization"
+msgstr "Optymalizacja obrazu"
+
+#: includes/content/class-hostinger-ai-assistant-content-filters.php:105
+msgid "Image URL:"
+msgstr "Adres URL obrazu:"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:283
+#, fuzzy
+msgid "Includes many optimizations known to improve page speed scores."
+msgstr "Zawiera wiele optymalizacji, o których wiadomo, że poprawiają wyniki szybkości strony."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:298
+#, fuzzy
+msgid "Includes many optimizations known to improve page speed scores. Testing recommended."
+msgstr "Zawiera wiele optymalizacji, o których wiadomo, że poprawiają wyniki szybkości strony. Zalecane testowanie."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:262
+#, fuzzy
+msgid "Includes optimizations known to improve site score in page speed measurement tools."
+msgstr "Obejmuje optymalizacje, o których wiadomo, że poprawiają wynik witryny w narzędziach do pomiaru szybkości strony."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:311
+#, fuzzy
+msgid "Inline CSS added to Combine"
+msgstr "Inline CSS dodany do Combine"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:310
+#, fuzzy
+msgid "Inline JS added to Combine"
+msgstr "Inline JS dodany do Combine"
+
+#: admin/class-hostinger-ai-assistant-translations.php:37
+msgid "Insert this image inside content"
+msgstr "Wstaw ten obraz w treść"
+
+#: includes-psr4/Mcp/McpServer.php:72
+#, fuzzy
+msgid "Invalid API key"
+msgstr "Nieprawidłowy klucz API"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:275
+#, fuzzy
+msgid "Invalid base64 data"
+msgstr "Nieprawidłowe dane base64"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:222
+#, fuzzy
+msgid "Invalid media ID"
+msgstr "Nieprawidłowy identyfikator nośnika"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:354
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:399
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:423
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:459
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:510
+#, fuzzy
+msgid "Invalid post type"
+msgstr "Nieprawidłowy typ postu"
+
+#. %s: Allowed preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:348
+#, fuzzy,php-format
+msgid "Invalid preset. Allowed presets: %s"
+msgstr "Nieprawidłowe ustawienie wstępne. Dozwolone ustawienia wstępne: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:275
+#, fuzzy
+msgid "JS Defer for both external and inline JS"
+msgstr "JS Defer dla zewnętrznego i wbudowanego JS"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:309
+#, fuzzy
+msgid "JS Delayed"
+msgstr "JS Opóźniony"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:9
+msgid "Keywords"
+msgstr "Słowa kluczowe"
+
+#: admin/class-hostinger-ai-assistant-translations.php:43
+msgid "Kodee"
+msgstr "Kodee"
+
+#: admin/class-hostinger-ai-assistant-translations.php:55
+msgid "Kodee only supports JPEG, JPG, PNG, GIF, HEIC, and DNG files"
+msgstr "Kodee obsługuje tylko pliki JPEG, JPG, PNG, GIF, HEIC i DNG"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:295
+#, fuzzy
+msgid "Lazy Load for Iframes"
+msgstr "Leniwe ładowanie dla ramek Iframe"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:307
+#, fuzzy
+msgid "Lazy Load for Images"
+msgstr "Leniwe ładowanie obrazów"
+
+#: admin/class-hostinger-ai-assistant-translations.php:45
+#: admin/class-hostinger-ai-assistant-translations.php:75
+msgid "Leave feedback"
+msgstr "Podziel się swoją opinią"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:164
+msgid "Let us know more about your content idea. For example: Article about how to use WordPress to dive into website development including tutorials how to use it in a simple way..."
+msgstr "Opowiedz nam więcej o swoim pomyśle na treść. Na przykład: Artykuł, który wyjaśnia, jak WordPress może pomóc w rozwijaniu umiejętności tworzenia stron, zawierający praktyczne tutoriale..."
+
+#: admin/class-hostinger-ai-assistant-translations.php:31
+msgid "Let us now more about your post idea. Share more details for better results"
+msgstr "Opowiedz nam więcej o swoim pomyśle na wpis. Im więcej szczegółów tym lepsze efekty."
+
+#. %s: post type names
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:39
+#, fuzzy,php-format
+msgid "List all available WordPress custom post types including %s"
+msgstr "Lista wszystkich dostępnych niestandardowych typów postów WordPress, w tym %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:224
+#, fuzzy
+msgid "List all WooCommerce product brands. Returns a list of product brands."
+msgstr "Lista wszystkich marek produktów WooCommerce. Zwraca listę marek produktów."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:89
+#, fuzzy
+msgid "List all WooCommerce product categories. Returns a list of product categories."
+msgstr "Lista wszystkich kategorii produktów WooCommerce. Zwraca listę kategorii produktów."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:156
+#, fuzzy
+msgid "List all WooCommerce product tags. Returns a list of product tags."
+msgstr "Lista wszystkich tagów produktów WooCommerce. Zwraca listę tagów produktów."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:18
+#, fuzzy
+msgid "List all WordPress post categories with pagination and filtering."
+msgstr "Lista wszystkich kategorii postów WordPress z paginacją i filtrowaniem."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:18
+#, fuzzy
+msgid "List all WordPress post tags with pagination and filtering."
+msgstr "Lista wszystkich tagów postów WordPress z paginacją i filtrowaniem."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:17
+#, fuzzy
+msgid "List Categories"
+msgstr "Lista kategorii"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:90
+#, fuzzy
+msgid "List LiteSpeed Cache Presets"
+msgstr "Lista ustawień LiteSpeed Cache"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:20
+#, fuzzy
+msgid "List Media"
+msgstr "Lista mediów"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:36
+#, fuzzy
+msgid "List Post Types"
+msgstr "Lista typów postów"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:17
+#, fuzzy
+msgid "List Tags"
+msgstr "Lista tagów"
+
+#: admin/class-hostinger-ai-assistant-translations.php:124
+#, fuzzy
+msgid "List users with their roles"
+msgstr "Lista użytkowników wraz z ich rolami"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
+#, fuzzy
+msgid "List WooCommerce Product Brands"
+msgstr "Lista marek produktów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:88
+#, fuzzy
+msgid "List WooCommerce Product Categories"
+msgstr "Lista kategorii produktów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:155
+#, fuzzy
+msgid "List WooCommerce Product Tags"
+msgstr "Lista tagów produktów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:21
+#, fuzzy
+msgid "List WordPress media items with pagination and filtering."
+msgstr "Lista elementów multimedialnych WordPress z paginacją i filtrowaniem."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:159
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:203
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:233
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:327
+#, fuzzy
+msgid "LiteSpeed Cache plugin is not active"
+msgstr "Wtyczka LiteSpeed Cache nie jest aktywna"
+
+#. %s: Preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:365
+#, fuzzy,php-format
+msgid "LiteSpeed Cache preset \"%s\" has been applied successfully. A backup of your previous settings was created automatically."
+msgstr "Ustawienie wstępne LiteSpeed Cache \"%s\" zostało zastosowane pomyślnie. Kopia zapasowa poprzednich ustawień została utworzona automatycznie."
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:143
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:81
+msgid "Long"
+msgstr "Długi"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:183
+#, fuzzy
+msgid "Maintenance mode status"
+msgstr "Status trybu konserwacji"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:137
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:80
+msgid "Medium"
+msgstr "Średni"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:29
+msgid "Meta description"
+msgstr "Meta opis"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:30
+msgid "Meta descriptions offer concise page summaries in search results, aiding user understanding before clicking."
+msgstr "Meta opisy dostarczają zwięzłych informacji o stronach w wynikach wyszukiwania, pomagając użytkownikom w decyzji przed kliknięciem."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:259
+#, fuzzy
+msgid "Mobile Cache"
+msgstr "Mobilna pamięć podręczna"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:282
+#, fuzzy
+msgid "Most websites"
+msgstr "Większość stron internetowych"
+
+#: admin/class-hostinger-ai-assistant-translations.php:23
+#: admin/partials/hostinger-ai-assistant-tab-view.php:105
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:88
+msgid "Neutral"
+msgstr "Neutralny"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:114
+#, fuzzy
+msgid "Number of items per page"
+msgstr "Liczba elementów na stronę"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:112
+#, fuzzy
+msgid "Number of posts per page"
+msgstr "Liczba postów na stronę"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:77
+#, fuzzy
+msgid "Number of posts to show per page"
+msgstr "Liczba postów do wyświetlenia na stronie"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:29
+msgid "Open guide"
+msgstr "Otwórz przewodnik"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:93
+#, fuzzy
+msgid "Opt-in to MCP"
+msgstr "Opt-in do MCP"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
+#, fuzzy
+msgid "Opt-in Web2Agent MCP status"
+msgstr "Status Opt-in Web2Agent MCP"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:179
+msgid "Optional"
+msgstr "Opcjonalnie"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:154
+#, fuzzy
+msgid "Optional. The size of the image to retrieve (thumbnail, medium, large, full). Defaults to full/original size."
+msgstr "Opcjonalnie. Rozmiar obrazu do pobrania (miniatura, średni, duży, pełny). Domyślnie pełny/oryginalny rozmiar."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:109
+#, fuzzy
+msgid "Page number for pagination"
+msgstr "Numer strony dla paginacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:107
+#, fuzzy
+msgid "Page number for pagination (starts from 1)"
+msgstr "Numer strony dla paginacji (zaczyna się od 1)"
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:16
+#, fuzzy
+msgid "Plugins Information"
+msgstr "Informacje o wtyczkach"
+
+#: admin/class-hostinger-ai-assistant-translations.php:80
+msgid "Poor"
+msgstr "Słaba"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:409
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:469
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:520
+#, fuzzy
+msgid "Post not found"
+msgstr "Post nie został znaleziony"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:38
+msgid "Powered by"
+msgstr "Obsługiwana przez"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:335
+#, fuzzy
+msgid "Preset parameter is required"
+msgstr "Wymagany jest wstępnie ustawiony parametr"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:186
+msgid "Press Enter key to finalize a keyword"
+msgstr "Naciśnij Enter, aby potwierdzić słowo kluczowe"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:39
+msgid "Preview site"
+msgstr "Podgląd strony"
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about active and available WordPress plugins"
+msgstr "Dostarcza szczegółowych informacji o aktywnych i dostępnych wtyczkach WordPress"
+
+#: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about registered WordPress users and their roles"
+msgstr "Dostarcza szczegółowych informacji o zarejestrowanych użytkownikach WordPress i ich rolach"
+
+#: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about the active WordPress theme and its parent theme if applicable"
+msgstr "Dostarcza szczegółowych informacji o aktywnym motywie WordPress i jego motywie nadrzędnym, jeśli ma to zastosowanie"
+
+#: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:17
+#, fuzzy
+msgid "Provides detailed information about the WordPress site like site name, url, description, admin email, plugins, themes, users, and more."
+msgstr "Dostarcza szczegółowych informacji o witrynie WordPress, takich jak nazwa witryny, adres URL, opis, adres e-mail administratora, wtyczki, motywy, użytkownicy i inne."
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:17
+#, fuzzy
+msgid "Provides detailed information about WordPress site settings including general, reading, discussion, media, permalink, privacy, and writing settings"
+msgstr "Zawiera szczegółowe informacje na temat ustawień witryny WordPress, w tym ustawień ogólnych, czytania, dyskusji, multimediów, permalinków, prywatności i pisania"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:17
+#, fuzzy
+msgid "Provides general information about the WordPress site including site details, plugins, themes, and users"
+msgstr "Zawiera ogólne informacje o witrynie WordPress, w tym szczegóły witryny, wtyczki, motywy i użytkowników"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:235
+msgid "Publish"
+msgstr "Publikuj"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:59
+#, fuzzy
+msgid "Purge all LiteSpeed caches including LSCache, CSS/JS, localized resources, object cache, and opcache."
+msgstr "Wyczyść wszystkie pamięci podręczne LiteSpeed, w tym LSCache, CSS/JS, zlokalizowane zasoby, pamięć podręczną obiektów i opcache."
+
+#: admin/class-hostinger-ai-assistant-translations.php:73
+#, fuzzy
+msgid "Rate your conversation"
+msgstr "Oceń swoją rozmowę"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:280
+#, fuzzy
+msgid "Remove Noscript Tags"
+msgstr "Usuń tagi Noscript"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:278
+#, fuzzy
+msgid "Remove Query Strings from Static Files"
+msgstr "Usuwanie ciągów zapytań z plików statycznych"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:279
+#, fuzzy
+msgid "Remove WordPress Emoji"
+msgstr "Usuń emoji WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:294
+#, fuzzy
+msgid "Removed Unused CSS for Users"
+msgstr "Usunięto nieużywane CSS dla użytkowników"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:80
+#, fuzzy
+msgid "Report period. Options: week, month, last_month, year."
+msgstr "Okres raportu. Opcje: tydzień, miesiąc, last_month, rok."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:239
+#, fuzzy
+msgid "Requested size not found"
+msgstr "Nie znaleziono żądanego rozmiaru"
+
+#: admin/class-hostinger-ai-assistant-translations.php:46
+msgid "Restart chatbot"
+msgstr "Zrestartuj chatbota"
+
+#: admin/class-hostinger-ai-assistant-translations.php:165
+#, fuzzy
+msgid "Retrieve a list of WooCommerce orders with filters"
+msgstr "Pobieranie listy zamówień WooCommerce z filtrami"
+
+#: admin/class-hostinger-ai-assistant-translations.php:121
+#, fuzzy
+msgid "Retrieve detailed information about my WordPress site"
+msgstr "Pobieranie szczegółowych informacji o mojej witrynie WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:89
+#, fuzzy
+msgid "Return sales for a specific end date. Format: YYYY-MM-DD."
+msgstr "Zwraca sprzedaż dla określonej daty końcowej. Format: RRRR-MM-DD."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:85
+#, fuzzy
+msgid "Return sales for a specific start date. Format: YYYY-MM-DD."
+msgstr "Zwraca sprzedaż dla określonej daty rozpoczęcia. Format: RRRR-MM-DD."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:20
+#, fuzzy
+msgid "Search and filter WooCommerce products with pagination. Returns a list of products matching the search criteria."
+msgstr "Wyszukiwanie i filtrowanie produktów WooCommerce z paginacją. Zwraca listę produktów spełniających kryteria wyszukiwania."
+
+#. %s: post type names
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:82
+#, fuzzy,php-format
+msgid "Search and filter WordPress custom post types posts including %s with pagination"
+msgstr "Wyszukiwanie i filtrowanie niestandardowych typów postów WordPress, w tym %s z paginacją"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress pages with pagination. Returns a list of pages matching the search criteria."
+msgstr "Wyszukiwanie i filtrowanie stron WordPress z paginacją. Zwraca listę stron spełniających kryteria wyszukiwania."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress posts with pagination. Returns a list of posts matching the search criteria."
+msgstr "Wyszukiwanie i filtrowanie postów WordPress z paginacją. Zwraca listę postów spełniających kryteria wyszukiwania."
+
+#: admin/class-hostinger-ai-assistant-translations.php:125
+#, fuzzy
+msgid "Search and filter WordPress users with pagination"
+msgstr "Wyszukiwanie i filtrowanie użytkowników WordPress z paginacją"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress users with pagination. Returns a list of users matching the search criteria."
+msgstr "Wyszukiwanie i filtrowanie użytkowników WordPress z paginacją. Zwraca listę użytkowników spełniających kryteria wyszukiwania."
+
+#: admin/class-hostinger-ai-assistant-translations.php:139
+#, fuzzy
+msgid "Search blog posts"
+msgstr "Wyszukiwanie wpisów na blogu"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:79
+#, fuzzy
+msgid "Search Custom Post Types Posts"
+msgstr "Wyszukiwanie niestandardowych typów postów"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:81
+#, fuzzy
+msgid "Search Media"
+msgstr "Szukaj mediów"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:17
+#, fuzzy
+msgid "Search Pages"
+msgstr "Strony wyszukiwania"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:17
+#, fuzzy
+msgid "Search Posts"
+msgstr "Szukaj postów"
+
+#: admin/class-hostinger-ai-assistant-translations.php:141
+#, fuzzy
+msgid "Search posts on my WordPress website"
+msgstr "Wyszukiwanie postów w mojej witrynie WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:89
+#, fuzzy
+msgid "Search term to look for in media titles, captions, and descriptions"
+msgstr "Wyszukiwane hasło w tytułach, podpisach i opisach multimediów"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:95
+#, fuzzy
+msgid "Search term to look for in post titles and content"
+msgstr "Wyszukiwane hasła w tytułach i treści postów"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:17
+#, fuzzy
+msgid "Search Users"
+msgstr "Wyszukiwanie użytkowników"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:19
+#, fuzzy
+msgid "Search WooCommerce Orders"
+msgstr "Wyszukiwanie zamówień WooCommerce"
+
+#: admin/class-hostinger-ai-assistant-translations.php:166
+#, fuzzy
+msgid "Search WooCommerce orders for my store"
+msgstr "Wyszukiwanie zamówień WooCommerce dla mojego sklepu"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:19
+#, fuzzy
+msgid "Search WooCommerce Products"
+msgstr "Wyszukiwanie produktów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:82
+#, fuzzy
+msgid "Search WordPress media items by title, caption, or description with filtering options."
+msgstr "Wyszukiwanie elementów multimedialnych WordPress według tytułu, podpisu lub opisu z opcjami filtrowania."
+
+#: admin/class-hostinger-ai-assistant-translations.php:126
+#, fuzzy
+msgid "Search WordPress users on my website"
+msgstr "Wyszukiwanie użytkowników WordPress w mojej witrynie"
+
+#: admin/class-hostinger-ai-assistant-translations.php:56
+msgid "Selected file type is not supported"
+msgstr "Wybrany typ pliku nie jest obsługiwany"
+
+#: admin/class-hostinger-ai-assistant-translations.php:83
+msgid "Send"
+msgstr "Wyślij"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:10
+msgid "SEO keywords improve web content visibility on search engines like Google by being relevant and naturally placed"
+msgstr "Słowa kluczowe SEO poprawiają widoczność treści w wyszukiwarkach, takich jak Google, poprzez trafność i odpowiednie umiejscowienie"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:125
+#: admin/partials/hostinger-ai-assistant-tab-view.php:131
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:79
+msgid "Short"
+msgstr "Krótko"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:16
+#, fuzzy
+msgid "Site Information"
+msgstr "Informacje o witrynie"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:61
+#, fuzzy
+msgid "Site language"
+msgstr "Język strony"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:16
+#, fuzzy
+msgid "Site Settings"
+msgstr "Ustawienia witryny"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:41
+#, fuzzy
+msgid "Site tagline/description"
+msgstr "Tagline/opis strony"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:45
+#, fuzzy
+msgid "Site timezone"
+msgstr "Strefa czasowa witryny"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:37
+#, fuzzy
+msgid "Site title"
+msgstr "Tytuł strony"
+
+#: admin/class-hostinger-ai-assistant-translations.php:103
+msgid "Sorry, the AI Chatbot is currently unavailable. Please try again later."
+msgstr "Niestety, chatbot AI jest obecnie offline. Spróbuj ponownie później."
+
+#: admin/class-hostinger-ai-assistant-translations.php:104
+msgid "Sorry, the AI Chatbot request timed out. Please try again later."
+msgstr "Przepraszamy, żądanie AI Chatbot przekroczyło limit czasu. Spróbuj ponownie później."
+
+#: admin/class-hostinger-ai-assistant-translations.php:48
+#: admin/class-hostinger-ai-assistant-translations.php:92
+#: admin/class-hostinger-ai-assistant-translations.php:94
+msgid "Start new chat"
+msgstr "Rozpocznij nowy czat"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:57
+#, fuzzy
+msgid "Start of week (0 = Sunday, 1 = Monday, etc.)"
+msgstr "Początek tygodnia (0 = niedziela, 1 = poniedziałek itd.)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:99
+msgid "Talking to Kodee is in the works, we'll keep you posted once it's out!"
+msgstr "Talking to Kodee jest w przygotowaniu, będziemy was informować, gdy tylko się ukaże!"
+
+#: admin/class-hostinger-ai-assistant-translations.php:84
+msgid "Thank you for your feedback"
+msgstr "Dziękujemy za Twoją opinię"
+
+#: admin/class-hostinger-ai-assistant-translations.php:77
+msgid "Thanks for letting us know"
+msgstr "Dziękujemy za poinformowanie nas"
+
+#: admin/class-hostinger-ai-assistant-translations.php:76
+msgid "Thanks for letting us know. Click the button below if you want to leave additional feedback."
+msgstr "Dziękujemy za poinformowanie nas. Kliknij przycisk poniżej, jeśli chcesz zostawić dodatkową opinię."
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:197
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:255
+#, fuzzy
+msgid "The content of the post"
+msgstr "Treść postu"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:189
+#, fuzzy
+msgid "The custom post type to create"
+msgstr "Niestandardowy typ postu do utworzenia"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:301
+#, fuzzy
+msgid "The custom post type to delete"
+msgstr "Niestandardowy typ postu do usunięcia"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:149
+#, fuzzy
+msgid "The custom post type to get"
+msgstr "Niestandardowy typ postu do pobrania"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:91
+#, fuzzy
+msgid "The custom post type to search"
+msgstr "Niestandardowy typ postu do wyszukania"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:243
+#, fuzzy
+msgid "The custom post type to update"
+msgstr "Niestandardowy typ postu do aktualizacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:201
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:259
+#, fuzzy
+msgid "The excerpt of the post"
+msgstr "Fragment postu"
+
+#: hostinger-ai-assistant.php:131
+#, php-format
+msgid "The Hostinger AI plugin requires minimum PHP version of <b>%s</b>. "
+msgstr "Wtyczka Hostinger AI wymaga minimalnej wersji PHP <b>%s</b."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:150
+#, fuzzy
+msgid "The ID of the media item"
+msgstr "Identyfikator elementu multimedialnego"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:305
+#, fuzzy
+msgid "The ID of the post to delete"
+msgstr "Identyfikator postu do usunięcia"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:153
+#, fuzzy
+msgid "The ID of the post to get"
+msgstr "Identyfikator postu do pobrania"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:247
+#, fuzzy
+msgid "The ID of the post to update"
+msgstr "Identyfikator postu do aktualizacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:127
+#, fuzzy
+msgid "The preset to apply"
+msgstr "Ustawienie wstępne do zastosowania"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:205
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:263
+#, fuzzy
+msgid "The status of the post (publish, draft, pending, etc.)"
+msgstr "Status postu (opublikowany, wersja robocza, oczekujący itp.)"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:193
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:251
+#, fuzzy
+msgid "The title of the post"
+msgstr "Tytuł postu"
+
+#: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:16
+#, fuzzy
+msgid "Theme Information"
+msgstr "Informacje o temacie"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:20
+msgid "These keywords can help your article and website rank higher in search engines. You can input up to 5 keywords."
+msgstr "Te słowa kluczowe mogą poprawić ranking Twojego artykułu i strony w wyszukiwarkach. Możesz dodać do 5 słów kluczowych."
+
+#: admin/class-hostinger-ai-assistant-translations.php:61
+#, fuzzy
+msgid "Thinking"
+msgstr "Myślenie"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:254
+#, fuzzy
+msgid "This low-risk preset introduces basic optimizations for speed and user experience. Appropriate for enthusiastic beginners."
+msgstr "To ustawienie wstępne o niskim ryzyku wprowadza podstawowe optymalizacje pod kątem szybkości i komfortu użytkowania. Odpowiednie dla początkujących entuzjastów."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:242
+#, fuzzy
+msgid "This no-risk preset is appropriate for all websites. Good for new users, simple websites, or cache-oriented development."
+msgstr "To ustawienie wstępne bez ryzyka jest odpowiednie dla wszystkich stron internetowych. Dobry dla nowych użytkowników, prostych stron internetowych lub rozwoju zorientowanego na pamięć podręczną."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:303
+#, fuzzy
+msgid "This preset almost certainly will require testing and exclusions for some CSS, JS and Lazy Loaded images. Pay special attention to logos, or HTML-based slider images."
+msgstr "To ustawienie wstępne prawie na pewno będzie wymagało przetestowania i wykluczenia niektórych obrazów CSS, JS i Lazy Loaded. Zwróć szczególną uwagę na logo lub obrazy suwaków oparte na HTML."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:268
+#, fuzzy
+msgid "This preset is good for most websites, and is unlikely to cause conflicts. Any CSS or JS conflicts may be resolved with Page Optimization > Tuning tools."
+msgstr "To ustawienie jest dobre dla większości stron internetowych i jest mało prawdopodobne, aby powodowało konflikty. Wszelkie konflikty CSS lub JS można rozwiązać za pomocą narzędzi Optymalizacja strony > Dostrajanie."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:288
+#, fuzzy
+msgid "This preset might work out of the box for some websites, but be sure to test! Some CSS or JS exclusions may be necessary in Page Optimization > Tuning."
+msgstr "To ustawienie wstępne może działać po wyjęciu z pudełka dla niektórych witryn, ale należy je przetestować! Niektóre wykluczenia CSS lub JS mogą być konieczne w Optymalizacja strony > Dostrajanie."
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:270
+msgid "This will only take a moment"
+msgstr "To zajmie tylko chwilę"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:53
+#, fuzzy
+msgid "Time format"
+msgstr "Format czasu"
+
+#: admin/class-hostinger-ai-assistant-notices.php:22
+msgid "To unlock the exclusive features of <b>Hostinger AI</b>, you must possess a unique API token, which is exclusively provided to Hostinger clients"
+msgstr "Aby uzyskać dostęp do ekskluzywnych funkcji <b>Hostinger AI</b>, musisz posiadać unikalny token API, który jest dostępny tylko dla klientów Hostinger."
+
+#. 1: minimum expiration time in seconds, 2: maximum expiration time in seconds
+#: includes-psr4/Mcp/Rest/JwtAuth.php:66
+#, fuzzy,php-format
+msgid "Token expiration must be between %1$d seconds (1 hour) and %2$d seconds (1 day)"
+msgstr "Wygaśnięcie tokena musi zawierać się w przedziale od %1$d sekund (1 godzina) do %2$d sekund (1 dzień)"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:34
+#, fuzzy
+msgid "Token expiration time in seconds (3600-86400)"
+msgstr "Czas wygaśnięcia tokena w sekundach (3600-86400)"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:81
+#, fuzzy
+msgid "Token ID is required."
+msgstr "Wymagany jest identyfikator tokena."
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:112
+#, fuzzy
+msgid "Token is invalid, expired, or has been revoked."
+msgstr "Token jest nieważny, wygasł lub został cofnięty."
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:118
+#, fuzzy
+msgid "Token is malformed: missing user_id."
+msgstr "Token jest zniekształcony: brakuje user_id."
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:89
+#, fuzzy
+msgid "Token not found in registry."
+msgstr "Token nie został znaleziony w rejestrze."
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:99
+#, fuzzy
+msgid "Token revoked successfully."
+msgstr "Token został pomyślnie cofnięty."
+
+#. %s: error message from JWT library
+#: includes-psr4/Mcp/Rest/JwtAuth.php:135
+#, fuzzy,php-format
+msgid "Token validation failed: %s"
+msgstr "Walidacja tokena nie powiodła się: %s"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:100
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:86
+msgid "Tone of voice"
+msgstr "Styl wypowiedzi"
+
+#: admin/class-hostinger-ai-assistant-translations.php:21
+msgid "tones selected"
+msgstr "style wybrane"
+
+#: admin/class-hostinger-ai-assistant-translations.php:25
+#: admin/partials/hostinger-ai-assistant-tab-view.php:107
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:90
+msgid "Trustworthy"
+msgstr "Godny zaufania"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:104
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:129
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:140
+#, fuzzy
+msgid "Unique identifier for the resource"
+msgstr "Unikalny identyfikator zasobu"
+
+#: includes/class-hostinger-ai-assistant-errors.php:36
+msgid "Unknown error code."
+msgstr "Nieznany kod błędu."
+
+#: admin/class-hostinger-ai-assistant-translations.php:151
+#, fuzzy
+msgid "Update a post category on my WordPress website"
+msgstr "Aktualizacja kategorii postów w witrynie WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:146
+#, fuzzy
+msgid "Update a post tag on my WordPress website"
+msgstr "Aktualizacja tagu posta na mojej stronie WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:236
+#, fuzzy
+msgid "Update a WordPress custom post type post by ID"
+msgstr "Zaktualizuj niestandardowy typ postu WordPress według ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:43
+#, fuzzy
+msgid "Update a WordPress media item metadata. Only provided fields will be updated."
+msgstr "Aktualizuje metadane elementu multimedialnego WordPress. Zaktualizowane zostaną tylko podane pola."
+
+#: admin/class-hostinger-ai-assistant-translations.php:116
+#, fuzzy
+msgid "Update an existing page on my WordPress website"
+msgstr "Aktualizacja istniejącej strony w witrynie WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:136
+#, fuzzy
+msgid "Update an existing post on my WordPress site"
+msgstr "Aktualizacja istniejącego wpisu w witrynie WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:248
+#, fuzzy
+msgid "Update an existing WooCommerce product brand by ID."
+msgstr "Zaktualizuj istniejącą markę produktu WooCommerce według ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:55
+#, fuzzy
+msgid "Update an existing WooCommerce product by ID. Only provided fields will be updated."
+msgstr "Zaktualizuj istniejący produkt WooCommerce według ID. Zaktualizowane zostaną tylko podane pola."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:113
+#, fuzzy
+msgid "Update an existing WooCommerce product category by ID."
+msgstr "Zaktualizuj istniejącą kategorię produktów WooCommerce według ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:180
+#, fuzzy
+msgid "Update an existing WooCommerce product tag by ID."
+msgstr "Zaktualizuj istniejący tag produktu WooCommerce według ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress category by ID. Only provided fields will be updated."
+msgstr "Zaktualizuj istniejącą kategorię WordPress według ID. Zaktualizowane zostaną tylko podane pola."
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress page by ID. Only provided fields will be updated."
+msgstr "Zaktualizuj istniejącą stronę WordPress według ID. Zaktualizowane zostaną tylko podane pola."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress post by ID. Only provided fields will be updated."
+msgstr "Zaktualizuj istniejący post WordPress według ID. Tylko podane pola zostaną zaktualizowane."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress tag by ID. Only provided fields will be updated."
+msgstr "Zaktualizuj istniejący tag WordPress według ID. Zaktualizowane zostaną tylko podane pola."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:74
+#, fuzzy
+msgid "Update an existing WordPress user by ID. Only provided fields will be updated."
+msgstr "Zaktualizuj istniejącego użytkownika WordPress według ID. Zaktualizowane zostaną tylko podane pola."
+
+#: admin/class-hostinger-ai-assistant-translations.php:134
+#, fuzzy
+msgid "Update blog post"
+msgstr "Aktualizacja wpisu na blogu"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:52
+#, fuzzy
+msgid "Update Category"
+msgstr "Kategoria aktualizacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:132
+#, fuzzy
+msgid "Update Current User"
+msgstr "Aktualizuj bieżącego użytkownika"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:235
+#, fuzzy
+msgid "Update Custom Post Type Post"
+msgstr "Zaktualizuj niestandardowy typ postu"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:31
+#, fuzzy
+msgid "Update General Settings"
+msgstr "Aktualizacja ustawień ogólnych"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:57
+#, fuzzy
+msgid "Update Hostinger Plugin Settings"
+msgstr "Aktualizacja ustawień wtyczki Hostinger"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:58
+#, fuzzy
+msgid "Update Hostinger plugin settings. Only provided fields will be updated."
+msgstr "Zaktualizuj ustawienia wtyczki Hostinger. Tylko podane pola zostaną zaktualizowane."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:42
+#, fuzzy
+msgid "Update Media"
+msgstr "Aktualizacja mediów"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:52
+#, fuzzy
+msgid "Update Page"
+msgstr "Strona aktualizacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:52
+#, fuzzy
+msgid "Update Post"
+msgstr "Aktualizacja postu"
+
+#: admin/class-hostinger-ai-assistant-translations.php:149
+#, fuzzy
+msgid "Update post category"
+msgstr "Zaktualizuj kategorię postów"
+
+#: admin/class-hostinger-ai-assistant-translations.php:144
+#, fuzzy
+msgid "Update post tag"
+msgstr "Aktualizacja tagu posta"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:52
+#, fuzzy
+msgid "Update Tag"
+msgstr "Znacznik aktualizacji"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:133
+#, fuzzy
+msgid "Update the current logged-in user information."
+msgstr "Aktualizacja informacji o zalogowanym użytkowniku."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:73
+#, fuzzy
+msgid "Update User"
+msgstr "Aktualizacja użytkownika"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:54
+#, fuzzy
+msgid "Update WooCommerce Product"
+msgstr "Aktualizacja produktu WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
+#, fuzzy
+msgid "Update WooCommerce Product Brand"
+msgstr "Zaktualizuj markę produktu WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:112
+#, fuzzy
+msgid "Update WooCommerce Product Category"
+msgstr "Aktualizacja kategorii produktów WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:179
+#, fuzzy
+msgid "Update WooCommerce Product Tag"
+msgstr "Zaktualizuj tag produktu WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:32
+#, fuzzy
+msgid "Update WordPress general site settings. Only provided fields will be updated."
+msgstr "Zaktualizuj ogólne ustawienia witryny WordPress. Zaktualizowane zostaną tylko podane pola."
+
+#: admin/class-hostinger-ai-assistant-translations.php:114
+#, fuzzy
+msgid "Update WordPress page"
+msgstr "Aktualizacja strony WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:35
+msgid "Use this image as:"
+msgstr "Użyj tego obrazu jako:"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:125
+#, fuzzy
+msgid "User associated with token no longer exists."
+msgstr "Użytkownik powiązany z tokenem już nie istnieje."
+
+#: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:16
+#, fuzzy
+msgid "Users Information"
+msgstr "Informacje o użytkownikach"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:133
+msgid "Usually used for video, infographics, or product descriptions"
+msgstr "Najczęściej używane do filmów, infografik i opisów produktów"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:145
+msgid "Usually used to make high-ranked articles that will generate more leads"
+msgstr "Zwykle stosowane do pisania artykułów, które osiągają wysokie oceny i przyciągają więcej potencjalnych klientów"
+
+#: admin/class-hostinger-ai-assistant-translations.php:120
+#, fuzzy
+msgid "View site details like name, URL, description, admin email, plugins, themes, and users"
+msgstr "Wyświetlanie szczegółów witryny, takich jak nazwa, adres URL, opis, adres e-mail administratora, wtyczki, motywy i użytkownicy"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:308
+#, fuzzy
+msgid "Viewport Image Generation"
+msgstr "Generowanie obrazu rzutni"
+
+#: admin/class-hostinger-ai-assistant-translations.php:98
+msgid "Voice feature is coming soon"
+msgstr "Funkcja głosowa już wkrótce"
+
+#: includes/class-hostinger-ai-assistant-errors.php:20
+msgid "We apologize for the inconvenience. The AI content generation process encountered a server error. Please try again later."
+msgstr "Przepraszamy za niedogodności.  W trakcie generowania treści AI wystąpił błąd serwera. Spróbuj ponownie później."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:297
+#, fuzzy
+msgid "Websites willing to test and tune settings"
+msgstr "Strony internetowe chętne do testowania i dostrajania ustawień"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:179
+msgid "What are the focus keywords of your content?"
+msgstr "Jakie są słowa kluczowe w twojej treści?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:56
+msgid "What do you want to make today?"
+msgstr "Co chcesz dzisiaj stworzyć?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:157
+msgid "What is your content about?"
+msgstr "Czego dotyczy twoja treść?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:27
+#: admin/partials/hostinger-ai-assistant-tab-view.php:109
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:92
+msgid "Witty"
+msgstr "Zabawny"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:220
+msgid "words"
+msgstr "wyrazy"
+
+#: admin/class-hostinger-ai-assistant-translations.php:82
+msgid "Write your feedback (optional)"
+msgstr "Napisz swoją opinię (opcjonalnie)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:51
+msgid "Write your question"
+msgstr "Napisz swoje pytanie"
+
+#. %s: PHP version
+#: hostinger-ai-assistant.php:135
+#, php-format
+msgid "You are running <b>%s</b> PHP version."
+msgstr "Używasz wersji PHP <b>%s</b>."
+
+#: admin/class-hostinger-ai-assistant-translations.php:57
+msgid "You can only upload up to 6 files"
+msgstr "Można przesłać maksymalnie 6 plików"
+
+#: admin/class-hostinger-ai-assistant-translations.php:78
+msgid "You rated your conversation"
+msgstr "Oceniłeś/-aś swoją rozmowę"
+
+#: admin/class-hostinger-ai-assistant-translations.php:32
+msgid "You're good to go, but you can share more details for better results"
+msgstr "Gotowe...ale jeśli podasz więcej szczegółów, uzyskasz lepsze wyniki"

@@ -1,0 +1,2204 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hostinger AI 2.0.13\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hostinger-ai-assistant\n"
+"Last-Translator: \n"
+"Language-Team: Thai\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-08-19T12:02:35+00:00\n"
+"PO-Revision-Date: 2025-12-16 08:18+0000\n"
+"Language: th\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: hostinger-ai-assistant\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.29\n"
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:76
+#, fuzzy
+msgid "Abilities that provide a way of interacting with WordPress site."
+msgstr "ความสามารถที่ให้วิธีการโต้ตอบกับเว็บไซต์ WordPress"
+
+#: includes/class-hostinger-ai-assistant-errors.php:14
+msgid "Action Failed. Try again or contact support. Apologies."
+msgstr "การดำเนินการล้มเหลว ลองอีกครั้งหรือติดต่อฝ่ายสนับสนุน ขออภัย"
+
+#: admin/class-hostinger-ai-assistant-translations.php:60
+msgid "Active"
+msgstr "ทำงานอยู่"
+
+#: admin/class-hostinger-ai-assistant-translations.php:111
+#, fuzzy
+msgid "Add a new page to my WordPress website"
+msgstr "เพิ่มหน้าใหม่ในเว็บไซต์ WordPress ของฉัน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:131
+#, fuzzy
+msgid "Add a new post to my WordPress website"
+msgstr "เพิ่มโพสต์ใหม่ในเว็บไซต์ WordPress ของฉัน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:155
+#, fuzzy
+msgid "Add a new product to your WooCommerce store"
+msgstr "เพิ่มสินค้าใหม่ในร้านค้า WooCommerce ของคุณ"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:182
+#, fuzzy
+msgid "Add a new WordPress custom post type post"
+msgstr "เพิ่มประเภทโพสต์ที่กำหนดเองของ WordPress ใหม่"
+
+#: admin/class-hostinger-ai-assistant-translations.php:154
+#, fuzzy
+msgid "Add a product"
+msgstr "เพิ่มสินค้า"
+
+#: admin/class-hostinger-ai-assistant-translations.php:159
+#, fuzzy
+msgid "Add a product category"
+msgstr "เพิ่มหมวดหมู่สินค้า"
+
+#: admin/class-hostinger-ai-assistant-translations.php:129
+#, fuzzy
+msgid "Add blog post"
+msgstr "เพิ่มบทความบล็อก"
+
+#: admin/class-hostinger-ai-assistant-translations.php:74
+#, fuzzy
+msgid "Add Comment"
+msgstr "เพิ่มความคิดเห็น"
+
+#: admin/class-hostinger-ai-assistant-translations.php:109
+#, fuzzy
+msgid "Add WordPress page"
+msgstr "เพิ่มหน้า WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:313
+#, fuzzy
+msgid "Advanced users willing to test and exclude items"
+msgstr "ผู้ใช้ขั้นสูงที่ต้องการทดสอบและยกเว้นรายการ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:88
+msgid "After clearing history you won't be able to access previous chats."
+msgstr "หลังจากล้างประวัติแล้ว คุณจะไม่สามารถเข้าถึงการสนทนาก่อนหน้าได้"
+
+#: admin/class-hostinger-ai-assistant-translations.php:93
+msgid "After starting new chat, you will be able to access previous chats from the history."
+msgstr "หลังจากเริ่มแชทใหม่แล้ว คุณจะสามารถเข้าถึงการสนทนาก่อนหน้าได้จากประวัติ"
+
+#: admin/class-hostinger-ai-assistant-admin.php:144
+#: admin/class-hostinger-ai-assistant-admin.php:145
+#: admin/class-hostinger-ai-assistant-admin.php:158
+#: admin/partials/hostinger-ai-assistant-tab-view.php:24
+msgid "AI Content Creator"
+msgstr "ตัวสร้างเนื้อหา AI"
+
+#: admin/class-hostinger-ai-assistant-translations.php:52
+msgid "AI may produce inaccurate information"
+msgstr "AI อาจผลิตข้อมูลที่ไม่ถูกต้อง"
+
+#: admin/class-hostinger-ai-assistant-translations.php:34
+msgid "AI-generated image"
+msgstr "รูปภาพที่สร้างโดย AI"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:217
+#, fuzzy
+msgid "All LiteSpeed caches have been purged successfully."
+msgstr "แคช LiteSpeed ทั้งหมดถูกล้างเรียบร้อยแล้ว"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:249
+#, fuzzy
+msgid "All websites, new users, simple websites, or cache-oriented development"
+msgstr "เว็บไซต์ทั้งหมด, ผู้ใช้ใหม่, เว็บไซต์แบบง่าย, หรือการพัฒนาระบบที่เน้นแคช"
+
+#: includes/class-hostinger-ai-assistant-errors.php:17
+msgid "An unexpected error occurred. Please try again or contact support."
+msgstr "เกิดข้อผิดพลาดที่ไม่คาดคิด โปรดลองอีกครั้งหรือติดต่อฝ่ายสนับสนุน"
+
+#: includes-psr4/Mcp/McpServer.php:64
+#, fuzzy
+msgid "API key required"
+msgstr "จำเป็นต้องใช้คีย์ API"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:120
+#, fuzzy
+msgid "Apply a predefined optimization preset to LiteSpeed Cache settings. Available presets: basic (minimal optimization), advanced (balanced), aggressive (more optimization), essentials (core features), extreme (maximum optimization). A backup of current settings will be created automatically."
+msgstr "ใช้การตั้งค่าการปรับแต่งล่วงหน้าที่กำหนดไว้ล่วงหน้าสำหรับ LiteSpeed Cache การตั้งค่าล่วงหน้าที่มีให้: พื้นฐาน (การปรับแต่งน้อยที่สุด), ขั้นสูง (สมดุล), เข้มข้น (การปรับแต่งมากขึ้น), จำเป็น (คุณสมบัติหลัก), สุดขีด (การปรับแต่งสูงสุด) จะมีการสำรองข้อมูลการตั้งค่าปัจจุบันโดยอัตโนมัติ"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:119
+#, fuzzy
+msgid "Apply LiteSpeed Cache Preset"
+msgstr "ใช้ LiteSpeed Cache Preset"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:244
+msgid "Are you sure you want to replace your existing content with a new one ?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการแทนที่เนื้อหาที่มีอยู่ด้วยเนื้อหาใหม่?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:53
+msgid "Ask Kodee"
+msgstr "ถาม Kodee"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:293
+#, fuzzy
+msgid "Asynchronous CSS Loading with Critical CSS"
+msgstr "การโหลด CSS แบบอะซิงโครนัสด้วย Critical CSS"
+
+#. %s: PHP version
+#: hostinger-ai-assistant.php:131
+#: admin/class-hostinger-ai-assistant-notices.php:22
+msgid "Attention:"
+msgstr "ความสนใจ:"
+
+#: admin/class-hostinger-ai-assistant-translations.php:72
+#, fuzzy
+msgid "Bad response"
+msgstr "การตอบสนองที่ไม่ดี"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:139
+msgid "Balances depth and readability, engaging audiences and driving leads."
+msgstr "สร้างความสมดุลระหว่างข้อมูลเชิงลึกและการอ่านที่เข้าใจง่าย ดึงดูดผู้ชม และกระตุ้นให้เกิดโอกาสในการขาย"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:205
+msgid "Brewing content with magic"
+msgstr "ปรุงแต่งเนื้อหาด้วยเวทมนตร์"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:247
+#, fuzzy
+msgid "Browser Cache"
+msgstr "แคชของเบราว์เซอร์"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:69
+#, fuzzy
+msgid "Bypass code for maintenance mode"
+msgstr "รหัสบายพาสสำหรับโหมดบำรุงรักษา"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
+#, fuzzy
+msgid "Bypass code for maintenance mode. Needed only when maintenance mode is enabled."
+msgstr "รหัสบายพาสสำหรับโหมดบำรุงรักษา จำเป็นต้องใช้เฉพาะเมื่อโหมดบำรุงรักษาถูกเปิดใช้งานเท่านั้น"
+
+#: admin/class-hostinger-ai-assistant-translations.php:89
+#: admin/partials/hostinger-ai-assistant-tab-view.php:251
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: admin/class-hostinger-ai-assistant-translations.php:58
+msgid "Cannot restart the chat when Kodee is responding"
+msgstr "ไม่สามารถเริ่มการสนทนาใหม่ได้เมื่อ Kodee กำลังตอบกลับ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:47
+msgid "Cannot restart the chat when talking with the agent"
+msgstr "ไม่สามารถเริ่มการสนทนาใหม่ได้เมื่อกำลังคุยกับตัวแทน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:59
+msgid "Cannot start a new chat when Kodee is responding"
+msgstr "ไม่สามารถเริ่มแชทใหม่ได้เมื่อ Kodee กำลังตอบกลับ"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:222
+msgid "characters"
+msgstr "ตัวอักษร"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:152
+msgid "Choose the length of generated content"
+msgstr "เลือกความยาวของเนื้อหาที่สร้าง"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:93
+msgid "Choose the type of content that will be generated"
+msgstr "เลือกประเภทของเนื้อหาที่จะสร้าง"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:114
+msgid "Choose your desired emotional impact on readers"
+msgstr "เลือกอารมณ์ความรู้สึกที่คุณต้องการส่งถึงผู้อ่าน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:87
+#: admin/class-hostinger-ai-assistant-translations.php:90
+msgid "Clear chat"
+msgstr "ลบข้อความ"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:247
+msgid "Clicking <b>Generate new content</b> will permanently delete your existing content and generate a new one on your recent inputs."
+msgstr "การคลิก<b>สร้างเนื้อหาใหม่</b>จะลบเนื้อหาที่มีอยู่ของคุณอย่างถาวรและสร้างเนื้อหาใหม่จากการเพิ่มล่าสุดของคุณ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:49
+#: admin/class-hostinger-ai-assistant-translations.php:100
+msgid "Close"
+msgstr "ปิด"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:121
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:77
+msgid "Content length"
+msgstr "ความยาวของเนื้อหา"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:162
+msgid "Content main idea"
+msgstr "แนวคิดหลักของเนื้อหา"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:63
+msgid "Content Type"
+msgstr "ประเภทเนื้อหา"
+
+#: admin/class-hostinger-ai-assistant-translations.php:68
+msgid "Conversation was closed"
+msgstr "การสนทนาถูกปิด"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:65
+#, fuzzy
+msgid "Convert emoticons to graphics"
+msgstr "แปลงอีโมติคอนเป็นกราฟิก"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:283
+#, fuzzy
+msgid "Could not determine file type"
+msgstr "ไม่สามารถระบุประเภทไฟล์ได้"
+
+#: admin/class-hostinger-ai-assistant-translations.php:160
+#, fuzzy
+msgid "Create a new product category in WooCommerce"
+msgstr "สร้างหมวดหมู่สินค้าใหม่ใน WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:235
+#, fuzzy
+msgid "Create a new WooCommerce product brand. Requires name."
+msgstr "สร้างแบรนด์สินค้าใหม่สำหรับ WooCommerce ต้องระบุชื่อ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:161
+#, fuzzy
+msgid "Create a new WooCommerce product category for my store"
+msgstr "สร้างหมวดหมู่สินค้าใหม่สำหรับ WooCommerce ให้กับร้านค้าของฉัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:100
+#, fuzzy
+msgid "Create a new WooCommerce product category. Requires name."
+msgstr "สร้างหมวดหมู่สินค้าใหม่ใน WooCommerce ต้องระบุชื่อ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:156
+#, fuzzy
+msgid "Create a new WooCommerce product for my store"
+msgstr "สร้างสินค้าใหม่ใน WooCommerce สำหรับร้านค้าของฉัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:167
+#, fuzzy
+msgid "Create a new WooCommerce product tag. Requires name."
+msgstr "สร้างแท็กผลิตภัณฑ์ WooCommerce ใหม่ จำเป็นต้องระบุชื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:42
+#, fuzzy
+msgid "Create a new WooCommerce product. Requires name and other product details."
+msgstr "สร้างสินค้าใหม่ใน WooCommerce ต้องมีชื่อและรายละเอียดสินค้าอื่น ๆ"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:40
+#, fuzzy
+msgid "Create a new WordPress page. Requires title and content."
+msgstr "สร้างหน้าใหม่ใน WordPress ต้องมีชื่อเรื่องและเนื้อหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post category. Requires a name."
+msgstr "สร้างหมวดหมู่โพสต์ใหม่ใน WordPress ต้องมีชื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post tag. Requires a name."
+msgstr "สร้างแท็กโพสต์ใหม่ใน WordPress ต้องมีชื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post. Requires title and content."
+msgstr "สร้างโพสต์ใหม่ใน WordPress ต้องมีชื่อเรื่องและเนื้อหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:58
+#, fuzzy
+msgid "Create a new WordPress user. Requires username and email."
+msgstr "สร้างผู้ใช้ WordPress ใหม่ ต้องใช้ชื่อผู้ใช้และอีเมล"
+
+#: admin/class-hostinger-ai-assistant-translations.php:170
+#, fuzzy
+msgid "Create a WooCommerce sales report for a chosen period"
+msgstr "สร้างรายงานการขาย WooCommerce สำหรับช่วงเวลาที่เลือก"
+
+#: admin/class-hostinger-ai-assistant-translations.php:110
+#, fuzzy
+msgid "Create and publish a new page on your WordPress site"
+msgstr "สร้างและเผยแพร่หน้าใหม่บนเว็บไซต์ WordPress ของคุณ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:130
+#, fuzzy
+msgid "Create and publish a new post on your WordPress site"
+msgstr "สร้างและเผยแพร่โพสต์ใหม่บนเว็บไซต์ WordPress ของคุณ"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:39
+#, fuzzy
+msgid "Create Category"
+msgstr "สร้างหมวดหมู่"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:195
+msgid "Create content"
+msgstr "สร้างเนื้อหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:181
+#, fuzzy
+msgid "Create Custom Post Type Post"
+msgstr "สร้างประเภทโพสต์แบบกำหนดเอง"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:39
+#, fuzzy
+msgid "Create Page"
+msgstr "สร้างหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:39
+#, fuzzy
+msgid "Create Post"
+msgstr "สร้างโพสต์"
+
+#: admin/class-hostinger-ai-assistant-translations.php:33
+msgid "Create Post with AI"
+msgstr "สร้างโพสต์ด้วย AI"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:24
+msgid "Create product with AI"
+msgstr "สร้างผลิตภัณฑ์ด้วย AI"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:39
+#, fuzzy
+msgid "Create Tag"
+msgstr "สร้างแท็ก"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:57
+#, fuzzy
+msgid "Create User"
+msgstr "สร้างผู้ใช้"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:41
+#, fuzzy
+msgid "Create WooCommerce Product"
+msgstr "สร้างสินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
+#, fuzzy
+msgid "Create WooCommerce Product Brand"
+msgstr "สร้างแบรนด์สินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:99
+#, fuzzy
+msgid "Create WooCommerce Product Category"
+msgstr "สร้างหมวดหมู่สินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:166
+#, fuzzy
+msgid "Create WooCommerce Product Tag"
+msgstr "สร้างแท็กสินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:292
+#, fuzzy
+msgid "CSS & JS Combine"
+msgstr "รวม CSS และ JS"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:273
+#, fuzzy
+msgid "CSS, JS and HTML Minification"
+msgstr "การย่อขนาด CSS, JS และ HTML"
+
+#: includes-psr4/Mcp/McpServer.php:42
+#, fuzzy
+msgid "Custom MCP Server for Hostinger AI Assistant."
+msgstr "เซิร์ฟเวอร์ MCP แบบกำหนดเองสำหรับผู้ช่วย AI ของ Hostinger"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:49
+#, fuzzy
+msgid "Date format"
+msgstr "รูปแบบวันที่"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:245
+#, fuzzy
+msgid "Default Cache"
+msgstr "แคชเริ่มต้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:81
+#, fuzzy
+msgid "Default comment status (open/closed)"
+msgstr "สถานะความคิดเห็นเริ่มต้น (เปิด/ปิด)"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:85
+#, fuzzy
+msgid "Default ping status (open/closed)"
+msgstr "สถานะ ping เริ่มต้น (เปิด/ปิด)"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:69
+#, fuzzy
+msgid "Default post category"
+msgstr "หมวดหมู่โพสต์เริ่มต้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:73
+#, fuzzy
+msgid "Default post format"
+msgstr "รูปแบบโพสต์เริ่มต้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:261
+#, fuzzy
+msgid "Delete a WooCommerce product brand by ID."
+msgstr "ลบแบรนด์สินค้า WooCommerce โดยใช้รหัสประจำตัว"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:68
+#, fuzzy
+msgid "Delete a WooCommerce product by ID. This action cannot be undone."
+msgstr "ลบผลิตภัณฑ์ WooCommerce โดยใช้รหัสประจำตัว (ID) การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:126
+#, fuzzy
+msgid "Delete a WooCommerce product category by ID."
+msgstr "ลบหมวดหมู่สินค้า WooCommerce โดยใช้รหัสประจำตัว"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:193
+#, fuzzy
+msgid "Delete a WooCommerce product tag by ID."
+msgstr "ลบแท็กผลิตภัณฑ์ WooCommerce โดยใช้รหัสประจำตัว"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:66
+#, fuzzy
+msgid "Delete a WordPress category by ID. This action cannot be undone."
+msgstr "ลบหมวดหมู่ WordPress โดยใช้รหัสประจำหมวดหมู่ การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:294
+#, fuzzy
+msgid "Delete a WordPress custom post type post by ID. This action cannot be undone."
+msgstr "ลบโพสต์ประเภทที่กำหนดเองของ WordPress โดยใช้ ID การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:56
+#, fuzzy
+msgid "Delete a WordPress media item permanently. This action cannot be undone."
+msgstr "ลบรายการสื่อใน WordPress อย่างถาวร การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:66
+#, fuzzy
+msgid "Delete a WordPress page by ID. This action cannot be undone."
+msgstr "ลบหน้า WordPress โดยใช้รหัสประจำหน้า การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:66
+#, fuzzy
+msgid "Delete a WordPress post by ID. This action cannot be undone."
+msgstr "ลบโพสต์ WordPress โดยใช้รหัสประจำโพสต์ การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:66
+#, fuzzy
+msgid "Delete a WordPress tag by ID. This action cannot be undone."
+msgstr "ลบแท็ก WordPress โดยใช้ ID การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:90
+#, fuzzy
+msgid "Delete a WordPress user by ID. This action cannot be undone."
+msgstr "ลบผู้ใช้ WordPress โดยใช้รหัสผู้ใช้. การกระทำนี้ไม่สามารถยกเลิกได้."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:65
+#, fuzzy
+msgid "Delete Category"
+msgstr "ลบหมวดหมู่"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:293
+#, fuzzy
+msgid "Delete Custom Post Type Post"
+msgstr "ลบโพสต์ประเภทที่กำหนดเอง"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:55
+#, fuzzy
+msgid "Delete Media"
+msgstr "ลบสื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:65
+#, fuzzy
+msgid "Delete Page"
+msgstr "ลบหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:65
+#, fuzzy
+msgid "Delete Post"
+msgstr "ลบโพสต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:65
+#, fuzzy
+msgid "Delete Tag"
+msgstr "ลบแท็ก"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:89
+#, fuzzy
+msgid "Delete User"
+msgstr "ลบผู้ใช้"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:67
+#, fuzzy
+msgid "Delete WooCommerce Product"
+msgstr "ลบสินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
+#, fuzzy
+msgid "Delete WooCommerce Product Brand"
+msgstr "ลบแบรนด์สินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:125
+#, fuzzy
+msgid "Delete WooCommerce Product Category"
+msgstr "ลบหมวดหมู่สินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:192
+#, fuzzy
+msgid "Delete WooCommerce Product Tag"
+msgstr "ลบแท็กสินค้า WooCommerce"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:70
+msgid "Describe your product in short"
+msgstr "อธิบายผลิตภัณฑ์ของคุณโดยย่อ"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:40
+msgid "Description"
+msgstr "คำอธิบาย"
+
+#: includes/class-hostinger-ai-assistant-errors.php:23
+msgid "Description is empty. Please provide a valid description."
+msgstr "ไม่มีคำอธิบาย กรุณากรอกคำอธิบายที่ถูกต้อง"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:85
+#, fuzzy
+msgid "Disable authentication password"
+msgstr "ปิดการใช้งานรหัสผ่านสำหรับการยืนยันตัวตน"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
+#, fuzzy
+msgid "Disable authentication password status"
+msgstr "ปิดสถานะรหัสผ่านการยืนยันตัวตน"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
+#, fuzzy
+msgid "Disable XML-RPC status"
+msgstr "ปิดการใช้งานสถานะ XML-RPC"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:276
+#, fuzzy
+msgid "DNS Prefetch for static files"
+msgstr "การดึงข้อมูล DNS ล่วงหน้าสำหรับไฟล์แบบคงที่"
+
+#: includes/class-hostinger-ai-assistant-surveys.php:24
+msgid "Do you have any comments/suggestions to improve our AI tools?"
+msgstr "คุณมีความคิดเห็น/ข้อเสนอแนะเพื่อปรับปรุงเครื่องมือ AI ของเราหรือไม่?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:54
+msgid "Drop files here"
+msgstr "วางไฟล์ที่นี่"
+
+#: admin/class-hostinger-ai-assistant-translations.php:150
+#, fuzzy
+msgid "Edit a WordPress post category by ID"
+msgstr "แก้ไขหมวดหมู่โพสต์ใน WordPress โดยใช้รหัสประจำตัว"
+
+#: admin/class-hostinger-ai-assistant-translations.php:145
+#, fuzzy
+msgid "Edit a WordPress post tag (e.g., rename or update it)"
+msgstr "แก้ไขแท็กโพสต์ใน WordPress (เช่น เปลี่ยนชื่อหรืออัปเดต)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:115
+#, fuzzy
+msgid "Edit an existing WordPress page by its ID"
+msgstr "แก้ไขหน้า WordPress ที่มีอยู่โดยใช้ ID"
+
+#: admin/class-hostinger-ai-assistant-translations.php:135
+#, fuzzy
+msgid "Edit an existing WordPress post by its ID"
+msgstr "แก้ไขโพสต์ WordPress ที่มีอยู่โดยใช้รหัสประจำตัว (ID)"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:229
+msgid "Edit as a draft"
+msgstr "แก้ไขเป็นฉบับร่าง"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:48
+msgid "Edit site"
+msgstr "แก้ไขเว็บไซต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:89
+#, fuzzy
+msgid "Enable llms.txt generation"
+msgstr "เปิดใช้งานการสร้างไฟล์ llms.txt"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
+#, fuzzy
+msgid "Enable llms.txt status"
+msgstr "เปิดใช้งานสถานะ llms.txt"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:65
+#, fuzzy
+msgid "Enable or disable maintenance mode"
+msgstr "เปิดหรือปิดโหมดบำรุงรักษา"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:73
+#, fuzzy
+msgid "Enable or disable XML-RPC"
+msgstr "เปิดใช้งานหรือปิดใช้งาน XML-RPC"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:314
+#, fuzzy
+msgid "Enables the maximum level of optimizations for improved page speed scores. Extensive testing required."
+msgstr "เปิดใช้งานการปรับแต่งสูงสุดเพื่อปรับปรุงคะแนนความเร็วของหน้าเว็บ จำเป็นต้องมีการทดสอบอย่างละเอียด"
+
+#: admin/class-hostinger-ai-assistant-translations.php:30
+#: admin/partials/hostinger-ai-assistant-tab-view.php:175
+msgid "Enter at least 10 characters"
+msgstr "ป้อนอย่างน้อย 10 ตัวอักษร"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:261
+#, fuzzy
+msgid "Enthusiastic beginners"
+msgstr "ผู้เริ่มต้นที่มีความกระตือรือร้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:291
+#, fuzzy
+msgid "Everything in Advanced"
+msgstr "ทุกอย่างในขั้นสูง"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:306
+#, fuzzy
+msgid "Everything in Aggressive"
+msgstr "ทุกอย่างในเชิงรุก"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:271
+#, fuzzy
+msgid "Everything in Basic"
+msgstr "ทุกสิ่งในภาษาเบสิก"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:257
+#, fuzzy
+msgid "Everything in Essentials"
+msgstr "ทุกสิ่งในสิ่งจำเป็น"
+
+#: admin/class-hostinger-ai-assistant-translations.php:29
+msgid "Example: website development, WordPress tutorial, ..."
+msgstr "ตัวอย่าง: การพัฒนาเว็บไซต์, บทแนะนำ WordPress, ..."
+
+#: admin/class-hostinger-ai-assistant-translations.php:81
+msgid "Excellent"
+msgstr "ยอดเยี่ยม"
+
+#: includes/content/class-hostinger-ai-assistant-content-filters.php:86
+msgid "External Featured Image"
+msgstr "รูปภาพเด่นภายนอก"
+
+#: admin/class-hostinger-ai-assistant-translations.php:36
+msgid "External featured image"
+msgstr "ภาพหลักจากภายนอก"
+
+#. %s: Preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:373
+#, fuzzy,php-format
+msgid "Failed to apply preset: %s"
+msgstr "ไม่สามารถใช้ค่าที่ตั้งไว้ล่วงหน้า: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:530
+#, fuzzy
+msgid "Failed to delete post"
+msgstr "ไม่สามารถลบโพสต์ได้"
+
+#. %s: Error message
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:223
+#, fuzzy,php-format
+msgid "Failed to flush cache: %s"
+msgstr "ไม่สามารถล้างแคช: %s"
+
+#. %s: Setting name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:193
+#, fuzzy,php-format
+msgid "Failed to get settings: %s"
+msgstr "ไม่สามารถรับการตั้งค่า: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:265
+#, fuzzy
+msgid "File is required"
+msgstr "ไฟล์จำเป็น"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:227
+#, fuzzy
+msgid "File not found"
+msgstr "ไฟล์ไม่พบ"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:99
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:101
+#, fuzzy
+msgid "Filter by author ID"
+msgstr "กรองตามรหัสผู้เขียน"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:93
+#, fuzzy
+msgid "Filter by media type (image, video, audio, application)"
+msgstr "กรองตามประเภทสื่อ (รูปภาพ, วิดีโอ, เสียง, แอปพลิเคชัน)"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:97
+#, fuzzy
+msgid "Filter by MIME type (e.g., image/jpeg, video/mp4)"
+msgstr "กรองตามประเภท MIME (เช่น image/jpeg, video/mp4)"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:105
+#, fuzzy
+msgid "Filter by parent post ID"
+msgstr "กรองตาม ID ของโพสต์หลัก"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:103
+#, fuzzy
+msgid "Filter by post status (publish, draft, pending, etc.)"
+msgstr "กรองตามสถานะของโพสต์ (เผยแพร่, ร่าง, รอการอนุมัติ, ฯลฯ)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:140
+#, fuzzy
+msgid "Find and filter posts with pagination options"
+msgstr "ค้นหาและกรองโพสต์พร้อมตัวเลือกการแบ่งหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:58
+#, fuzzy
+msgid "Flush LiteSpeed Cache"
+msgstr "ล้าง LiteSpeed Cache"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:274
+#, fuzzy
+msgid "Font Display Optimization"
+msgstr "การปรับแต่งการแสดงผลแบบอักษร"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:132
+#, fuzzy
+msgid "Force category deletion"
+msgstr "บังคับลบหมวดหมู่"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:77
+#, fuzzy
+msgid "Force HTTPS redirects"
+msgstr "บังคับให้เปลี่ยนเส้นทางเป็น HTTPS"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
+#, fuzzy
+msgid "Force HTTPS status"
+msgstr "บังคับสถานะ HTTPS"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:267
+#, fuzzy
+msgid "Force Product Brand deletion"
+msgstr "บังคับลบแบรนด์สินค้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:199
+#, fuzzy
+msgid "Force tag deletion"
+msgstr "บังคับการลบแท็ก"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:81
+#, fuzzy
+msgid "Force WWW in URLs"
+msgstr "บังคับให้ใช้ WWW ใน URL"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
+#, fuzzy
+msgid "Force WWW status"
+msgstr "บังคับสถานะ WWW"
+
+#: admin/class-hostinger-ai-assistant-translations.php:24
+#: admin/partials/hostinger-ai-assistant-tab-view.php:106
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:89
+msgid "Formal"
+msgstr "ทางการ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:26
+#: admin/partials/hostinger-ai-assistant-tab-view.php:108
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:91
+msgid "Friendly"
+msgstr "เป็นกันเอง"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:254
+msgid "Generate new content"
+msgstr "สร้างเนื้อหาใหม่"
+
+#: admin/class-hostinger-ai-assistant-translations.php:169
+#, fuzzy
+msgid "Generate sales report"
+msgstr "สร้างรายงานการขาย"
+
+#: admin/class-hostinger-ai-assistant-translations.php:171
+#, fuzzy
+msgid "Generate WooCommerce sales report for my store"
+msgstr "สร้างรายงานยอดขาย WooCommerce สำหรับร้านค้าของฉัน"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:264
+#: admin/partials/hostinger-ai-assistant-tab-view.php:267
+msgid "Generating content..."
+msgstr "กำลังสร้างเนื้อหา..."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:91
+#, fuzzy
+msgid "Get a list of all available LiteSpeed Cache optimization presets with their descriptions, features, risk levels, and requirements."
+msgstr "รับรายการของตัวตั้งค่าการเพิ่มประสิทธิภาพ LiteSpeed Cache ทั้งหมดที่มีพร้อมคำอธิบาย คุณสมบัติ ระดับความเสี่ยง และข้อกำหนด"
+
+#: admin/class-hostinger-ai-assistant-translations.php:164
+#, fuzzy
+msgid "Get a list of orders"
+msgstr "รับรายการคำสั่งซื้อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:20
+#, fuzzy
+msgid "Get a list of WooCommerce orders with search and filter capabilities. Returns a list of orders matching the criteria."
+msgstr "รับรายการคำสั่งซื้อ WooCommerce พร้อมความสามารถในการค้นหาและกรอง ส่งคืนรายการคำสั่งซื้อที่ตรงกับเกณฑ์ที่กำหนด"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:31
+#, fuzzy
+msgid "Get a single WooCommerce product by ID. Returns the full product object with all fields."
+msgstr "รับผลิตภัณฑ์ WooCommerce หนึ่งรายการโดยใช้ ID ส่งคืนอ็อบเจ็กต์ผลิตภัณฑ์เต็มรูปแบบพร้อมทุกฟิลด์"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:29
+#, fuzzy
+msgid "Get a single WordPress category by ID. Returns the full category object with all fields."
+msgstr "รับหมวดหมู่ WordPress เดี่ยวโดยใช้ ID ส่งคืนออบเจ็กต์หมวดหมู่เต็มรูปแบบพร้อมฟิลด์ทั้งหมด"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:29
+#, fuzzy
+msgid "Get a single WordPress page by ID. Returns the full page object with all fields."
+msgstr "รับหน้า WordPress หนึ่งหน้าโดยใช้ ID ส่งคืนอ็อบเจ็กต์หน้าเต็มรูปแบบพร้อมฟิลด์ทั้งหมด"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:29
+#, fuzzy
+msgid "Get a single WordPress post by ID. Returns the full post object with all fields."
+msgstr "รับโพสต์ WordPress หนึ่งรายการโดยใช้ ID ส่งคืนออบเจ็กต์โพสต์เต็มรูปแบบพร้อมทุกฟิลด์"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:29
+#, fuzzy
+msgid "Get a single WordPress tag by ID. Returns the full tag object with all fields."
+msgstr "รับแท็ก WordPress เดี่ยวโดยใช้ ID ส่งคืนออบเจ็กต์แท็กเต็มรูปแบบพร้อมทุกฟิลด์"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:44
+#, fuzzy
+msgid "Get a single WordPress user by ID. Returns the full user object with all fields."
+msgstr "รับผู้ใช้ WordPress รายเดียวโดยใช้ ID ส่งคืนอ็อบเจ็กต์ผู้ใช้เต็มรูปแบบพร้อมทุกฟิลด์"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:142
+#, fuzzy
+msgid "Get a WordPress custom post type post by ID"
+msgstr "รับโพสต์ประเภทที่กำหนดเองของ WordPress โดยใช้ ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:32
+#, fuzzy
+msgid "Get a WordPress media item details by ID. Returns the full media object with all fields."
+msgstr "รับรายละเอียดรายการสื่อของ WordPress โดยใช้ ID ส่งคืนวัตถุสื่อเต็มรูปแบบพร้อมทุกฟิลด์"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:28
+#, fuzzy
+msgid "Get Category"
+msgstr "รับหมวดหมู่"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:28
+#, fuzzy
+msgid "Get current Hostinger plugin settings including maintenance mode, XML-RPC, HTTPS, and other security options."
+msgstr "รับการตั้งค่าปลั๊กอิน Hostinger ปัจจุบัน รวมถึงโหมดบำรุงรักษา, XML-RPC, HTTPS และตัวเลือกความปลอดภัยอื่น ๆ"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:30
+#, fuzzy
+msgid "Get current LiteSpeed Cache settings including active preset, cache status, and key configuration options."
+msgstr "รับการตั้งค่า LiteSpeed Cache ปัจจุบัน รวมถึงการตั้งค่าล่วงหน้าที่ใช้อยู่ สถานะแคช และตัวเลือกการกำหนดคีย์"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:118
+#, fuzzy
+msgid "Get Current User"
+msgstr "รับผู้ใช้ปัจจุบัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:141
+#, fuzzy
+msgid "Get Custom Post Type Post"
+msgstr "รับประเภทโพสต์ที่กำหนดเอง"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:20
+#, fuzzy
+msgid "Get General Settings"
+msgstr "รับการตั้งค่าทั่วไป"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:27
+#, fuzzy
+msgid "Get Hostinger Plugin Settings"
+msgstr "รับการตั้งค่าปลั๊กอิน Hostinger"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:29
+#, fuzzy
+msgid "Get LiteSpeed Cache Settings"
+msgstr "รับการตั้งค่า LiteSpeed Cache"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:31
+#, fuzzy
+msgid "Get Media"
+msgstr "รับสื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:142
+#, fuzzy
+msgid "Get Media File"
+msgstr "รับไฟล์สื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:28
+#, fuzzy
+msgid "Get Page"
+msgstr "รับหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:28
+#, fuzzy
+msgid "Get Post"
+msgstr "รับโพสต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:16
+#, fuzzy
+msgid "Get Site Info"
+msgstr "รับข้อมูลเว็บไซต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:28
+#, fuzzy
+msgid "Get Tag"
+msgstr "รับแท็ก"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:143
+#, fuzzy
+msgid "Get the actual file content (blob) of a WordPress media item."
+msgstr "รับเนื้อหาไฟล์จริง (blob) ของรายการสื่อใน WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:119
+#, fuzzy
+msgid "Get the current logged-in user information."
+msgstr "รับข้อมูลผู้ใช้ที่เข้าสู่ระบบปัจจุบัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:43
+#, fuzzy
+msgid "Get User"
+msgstr "รับผู้ใช้"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:37
+#, fuzzy
+msgid "Get WooCommerce Coupons Report"
+msgstr "รับรายงานคูปอง WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:38
+#, fuzzy
+msgid "Get WooCommerce coupons totals report. Returns count of coupons by coupon type."
+msgstr "รับรายงานยอดรวมคูปอง WooCommerce คืนจำนวนคูปองตามประเภทของคูปอง"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:44
+#, fuzzy
+msgid "Get WooCommerce Customers Report"
+msgstr "รับรายงานลูกค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:45
+#, fuzzy
+msgid "Get WooCommerce customers totals report. Returns statistics about customers."
+msgstr "รับรายงานยอดรวมลูกค้า WooCommerce รายงานสถิติเกี่ยวกับลูกค้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:51
+#, fuzzy
+msgid "Get WooCommerce Orders Report"
+msgstr "รับรายงานคำสั่งซื้อ WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:52
+#, fuzzy
+msgid "Get WooCommerce orders totals report. Returns statistics about orders."
+msgstr "รับรายงานยอดรวมคำสั่งซื้อ WooCommerce รายงานสถิติเกี่ยวกับคำสั่งซื้อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:30
+#, fuzzy
+msgid "Get WooCommerce Product"
+msgstr "รับ WooCommerce ผลิตภัณฑ์"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:58
+#, fuzzy
+msgid "Get WooCommerce Products Report"
+msgstr "รับรายงานสินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:59
+#, fuzzy
+msgid "Get WooCommerce products totals report. Returns statistics about products."
+msgstr "รับรายงานยอดรวมสินค้า WooCommerce รายงานสถิติเกี่ยวกับสินค้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:65
+#, fuzzy
+msgid "Get WooCommerce Reviews Report"
+msgstr "รับรายงานรีวิว WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:66
+#, fuzzy
+msgid "Get WooCommerce reviews totals report. Returns statistics about product reviews."
+msgstr "รับรายงานสรุปจำนวนรีวิว WooCommerce รายงานสถิติเกี่ยวกับรีวิวสินค้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:72
+#, fuzzy
+msgid "Get WooCommerce Sales Report"
+msgstr "รับรายงานยอดขาย WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:73
+#, fuzzy
+msgid "Get WooCommerce sales report. Returns detailed sales statistics and revenue data."
+msgstr "รับรายงานยอดขาย WooCommerce. คืนสถิติการขายอย่างละเอียดและข้อมูลรายได้."
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:21
+#, fuzzy
+msgid "Get WordPress general site settings including title, description, timezone, and other configuration options."
+msgstr "รับการตั้งค่าทั่วไปของเว็บไซต์ WordPress รวมถึงชื่อเรื่อง คำอธิบาย โซนเวลา และตัวเลือกการกำหนดค่าอื่นๆ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:119
+#, fuzzy
+msgid "Get WordPress site information"
+msgstr "รับข้อมูลเว็บไซต์ WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:71
+#, fuzzy
+msgid "Good response"
+msgstr "ตอบได้ดี"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:277
+#, fuzzy
+msgid "Gravatar Cache"
+msgstr "แคช Gravatar"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:272
+#, fuzzy
+msgid "Guest Mode and Guest Optimization"
+msgstr "โหมดผู้มาเยือนและการปรับแต่งสำหรับผู้มาเยือน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:64
+#, fuzzy
+msgid "Hello 👋"
+msgstr "สวัสดี 👋"
+
+#: admin/class-hostinger-ai-assistant-translations.php:42
+msgid "Hi, I'm Kodee, your personal AI assistant. You can ask me any questions you have regarding WordPress. I'm still learning, so sometimes can make mistakes. What questions do you have?"
+msgstr "สวัสดี ผมคือผู้ช่วย AI ส่วนตัวของคุณ คุณสามารถถามทุกคำถามเกี่ยวกับ WordPress กับผมได้ ผมยังอยู่ในช่วงเรียนรู้ บางครั้งจึงอาจเกิดข้อผิดพลาดได้ คุณอยากถามอะไรบ้าง?"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:246
+#, fuzzy
+msgid "Higher TTL"
+msgstr "TTL สูงขึ้น"
+
+#: admin/class-hostinger-ai-assistant-translations.php:50
+msgid "History"
+msgstr "ประวัติการใช้งาน"
+
+#. Author of the plugin
+msgid "Hostinger"
+msgstr "Hostinger"
+
+#. Name of the plugin
+msgid "Hostinger AI"
+msgstr "Hostinger AI"
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:75
+#, fuzzy
+msgid "Hostinger AI Abilities"
+msgstr "ความสามารถของ Hostinger AI"
+
+#. Description of the plugin
+msgid "Hostinger AI plugin for WordPress."
+msgstr "ปลั๊กอิน Hostinger AI สำหรับ WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:124
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:139
+#, fuzzy
+msgid "Hostinger plugin settings option not defined"
+msgstr "ตัวเลือกการตั้งค่าปลั๊กอิน Hostinger ไม่ได้รับการกำหนด"
+
+#: admin/class-hostinger-ai-assistant-translations.php:65
+#, fuzzy
+msgid "How can I help you today?"
+msgstr "วันนี้ฉันจะช่วยคุณได้อย่างไรบ้างคะ/ครับ?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:79
+msgid "How can we improve your experience?"
+msgstr "เราจะสามารถปรับปรุงประสบการณ์ของคุณได้อย่างไร?"
+
+#: includes/class-hostinger-ai-assistant-surveys.php:23
+msgid "How would you rate your experience using our AI Assistant plugin for content generation? (Scale 1-10)"
+msgstr "คุณจะให้คะแนนประสบการณ์การใช้ปลั๊กอิน AI Assistant ของเราสำหรับการสร้างเนื้อหาเท่าไหร่ (ระดับ 1-10)"
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://hostinger.com"
+msgstr "https://hostinger.com"
+
+#: admin/class-hostinger-ai-assistant-translations.php:105
+msgid "I'm sorry, I didn't understand your question. Could you please rephrase it or ask something different?"
+msgstr "ผมขอโทษ ผมไม่เข้าใจคำถามของคุณ โปรดอธิบายใหม่หรือถามอย่างอื่นได้ไหม?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:182
+msgid "If you skip this part, AI will automatically generate keyword suggestions after you generate the content"
+msgstr "หากคุณข้ามส่วนนี้ AI จะสร้างคำแนะนำคีย์เวิร์ดโดยอัตโนมัติหลังจากที่คุณสร้างเนื้อหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:258
+#, fuzzy
+msgid "Image Optimization"
+msgstr "การปรับแต่งภาพ"
+
+#: includes/content/class-hostinger-ai-assistant-content-filters.php:105
+msgid "Image URL:"
+msgstr "URL รูปภาพ:"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:283
+#, fuzzy
+msgid "Includes many optimizations known to improve page speed scores."
+msgstr "รวมถึงการปรับปรุงประสิทธิภาพหลายอย่างที่ทราบกันว่าจะช่วยเพิ่มคะแนนความเร็วของหน้าเว็บ"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:298
+#, fuzzy
+msgid "Includes many optimizations known to improve page speed scores. Testing recommended."
+msgstr "รวมถึงการปรับปรุงประสิทธิภาพหลายอย่างที่ทราบกันว่าจะช่วยเพิ่มคะแนนความเร็วของหน้าเว็บ แนะนำให้ทดสอบ"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:262
+#, fuzzy
+msgid "Includes optimizations known to improve site score in page speed measurement tools."
+msgstr "รวมถึงการปรับปรุงที่ทราบว่าจะช่วยปรับปรุงคะแนนเว็บไซต์ในเครื่องมือวัดความเร็วหน้าเว็บ"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:311
+#, fuzzy
+msgid "Inline CSS added to Combine"
+msgstr "เพิ่ม CSS แบบอินไลน์ใน Combine"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:310
+#, fuzzy
+msgid "Inline JS added to Combine"
+msgstr "เพิ่ม JS แบบอินไลน์ใน Combine"
+
+#: admin/class-hostinger-ai-assistant-translations.php:37
+msgid "Insert this image inside content"
+msgstr "แทรกภาพนี้ไว้ในเนื้อหา"
+
+#: includes-psr4/Mcp/McpServer.php:72
+#, fuzzy
+msgid "Invalid API key"
+msgstr "คีย์ API ไม่ถูกต้อง"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:275
+#, fuzzy
+msgid "Invalid base64 data"
+msgstr "ข้อมูล base64 ไม่ถูกต้อง"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:222
+#, fuzzy
+msgid "Invalid media ID"
+msgstr "รหัสสื่อไม่ถูกต้อง"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:354
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:399
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:423
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:459
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:510
+#, fuzzy
+msgid "Invalid post type"
+msgstr "ประเภทโพสต์ไม่ถูกต้อง"
+
+#. %s: Allowed preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:348
+#, fuzzy,php-format
+msgid "Invalid preset. Allowed presets: %s"
+msgstr "ค่าที่ตั้งไว้ไม่ถูกต้อง ค่าที่ตั้งไว้ที่อนุญาต: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:275
+#, fuzzy
+msgid "JS Defer for both external and inline JS"
+msgstr "เลื่อนการโหลด JS ทั้งจากภายนอกและในตัว"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:309
+#, fuzzy
+msgid "JS Delayed"
+msgstr "JS Delayed"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:9
+msgid "Keywords"
+msgstr "คีย์เวิร์ด"
+
+#: admin/class-hostinger-ai-assistant-translations.php:43
+msgid "Kodee"
+msgstr "Kodee"
+
+#: admin/class-hostinger-ai-assistant-translations.php:55
+msgid "Kodee only supports JPEG, JPG, PNG, GIF, HEIC, and DNG files"
+msgstr "Kodee รองรับเฉพาะไฟล์ JPEG, JPG, PNG, GIF, HEIC และ DNG เท่านั้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:295
+#, fuzzy
+msgid "Lazy Load for Iframes"
+msgstr "การโหลดแบบ Lazy Load สำหรับ Iframe"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:307
+#, fuzzy
+msgid "Lazy Load for Images"
+msgstr "โหลดภาพแบบ Lazy Load"
+
+#: admin/class-hostinger-ai-assistant-translations.php:45
+#: admin/class-hostinger-ai-assistant-translations.php:75
+msgid "Leave feedback"
+msgstr "แสดงความคิดเห็น"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:164
+msgid "Let us know more about your content idea. For example: Article about how to use WordPress to dive into website development including tutorials how to use it in a simple way..."
+msgstr "แจ้งให้เราทราบเพิ่มเติมเกี่ยวกับแนวคิดเนื้อหาของคุณ ตัวอย่างเช่น บทความเกี่ยวกับวิธีใช้ WordPress เพื่อพัฒนาเว็บไซต์ รวมถึงบทเรียนแนะนำวิธีใช้แบบง่ายๆ..."
+
+#: admin/class-hostinger-ai-assistant-translations.php:31
+msgid "Let us now more about your post idea. Share more details for better results"
+msgstr "เรามาพูดถึงไอเดียโพสต์ของคุณเพิ่มเติมกันดีกว่า แบ่งปันรายละเอียดเพิ่มเติมเพื่อผลลัพธ์ที่ดีขึ้น"
+
+#. %s: post type names
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:39
+#, fuzzy,php-format
+msgid "List all available WordPress custom post types including %s"
+msgstr "รายการประเภทโพสต์ที่กำหนดเองทั้งหมดใน WordPress รวมถึง %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:224
+#, fuzzy
+msgid "List all WooCommerce product brands. Returns a list of product brands."
+msgstr "แสดงรายการแบรนด์สินค้าทั้งหมดของ WooCommerce. คืนค่าเป็นรายการของแบรนด์สินค้า."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:89
+#, fuzzy
+msgid "List all WooCommerce product categories. Returns a list of product categories."
+msgstr "แสดงรายการหมวดหมู่สินค้าทั้งหมดของ WooCommerce. คืนค่าเป็นรายการหมวดหมู่สินค้า."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:156
+#, fuzzy
+msgid "List all WooCommerce product tags. Returns a list of product tags."
+msgstr "แสดงรายการแท็กสินค้าทั้งหมดของ WooCommerce. คืนค่าเป็นรายการของแท็กสินค้า."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:18
+#, fuzzy
+msgid "List all WordPress post categories with pagination and filtering."
+msgstr "แสดงรายการหมวดหมู่โพสต์ทั้งหมดของ WordPress พร้อมการแบ่งหน้าและการกรอง"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:18
+#, fuzzy
+msgid "List all WordPress post tags with pagination and filtering."
+msgstr "แสดงรายการแท็กโพสต์ทั้งหมดของ WordPress พร้อมการแบ่งหน้าและการกรอง"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:17
+#, fuzzy
+msgid "List Categories"
+msgstr "รายการหมวดหมู่"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:90
+#, fuzzy
+msgid "List LiteSpeed Cache Presets"
+msgstr "แสดงรายการค่ากำหนด LiteSpeed Cache"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:20
+#, fuzzy
+msgid "List Media"
+msgstr "รายการสื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:36
+#, fuzzy
+msgid "List Post Types"
+msgstr "รายการประเภทของโพสต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:17
+#, fuzzy
+msgid "List Tags"
+msgstr "รายการแท็ก"
+
+#: admin/class-hostinger-ai-assistant-translations.php:124
+#, fuzzy
+msgid "List users with their roles"
+msgstr "แสดงรายชื่อผู้ใช้พร้อมบทบาทของพวกเขา"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
+#, fuzzy
+msgid "List WooCommerce Product Brands"
+msgstr "รายการแบรนด์สินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:88
+#, fuzzy
+msgid "List WooCommerce Product Categories"
+msgstr "รายการหมวดหมู่สินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:155
+#, fuzzy
+msgid "List WooCommerce Product Tags"
+msgstr "รายการแท็กสินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:21
+#, fuzzy
+msgid "List WordPress media items with pagination and filtering."
+msgstr "แสดงรายการสื่อของ WordPress พร้อมการแบ่งหน้าและการกรอง"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:159
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:203
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:233
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:327
+#, fuzzy
+msgid "LiteSpeed Cache plugin is not active"
+msgstr "ปลั๊กอิน LiteSpeed Cache ไม่ทำงาน"
+
+#. %s: Preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:365
+#, fuzzy,php-format
+msgid "LiteSpeed Cache preset \"%s\" has been applied successfully. A backup of your previous settings was created automatically."
+msgstr "การตั้งค่า LiteSpeed Cache แบบกำหนดไว้ล่วงหน้า \"%s\" ได้ถูกนำไปใช้เรียบร้อยแล้ว สำเนาสำรองของการตั้งค่าเดิมของคุณได้ถูกสร้างขึ้นโดยอัตโนมัติ"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:143
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:81
+msgid "Long"
+msgstr "ยาว"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:183
+#, fuzzy
+msgid "Maintenance mode status"
+msgstr "สถานะโหมดบำรุงรักษา"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:137
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:80
+msgid "Medium"
+msgstr "ปานกลาง"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:29
+msgid "Meta description"
+msgstr "คำอธิบาย Meta"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:30
+msgid "Meta descriptions offer concise page summaries in search results, aiding user understanding before clicking."
+msgstr "คำอธิบาย Meta จะสรุปหน้าโดยย่อในผลการค้นหา ช่วยให้ผู้ใช้เข้าใจได้ก่อนที่จะคลิก"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:259
+#, fuzzy
+msgid "Mobile Cache"
+msgstr "แคชมือถือ"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:282
+#, fuzzy
+msgid "Most websites"
+msgstr "เว็บไซต์ส่วนใหญ่"
+
+#: admin/class-hostinger-ai-assistant-translations.php:23
+#: admin/partials/hostinger-ai-assistant-tab-view.php:105
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:88
+msgid "Neutral"
+msgstr "เป็นกลาง"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:114
+#, fuzzy
+msgid "Number of items per page"
+msgstr "จำนวนรายการต่อหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:112
+#, fuzzy
+msgid "Number of posts per page"
+msgstr "จำนวนโพสต์ต่อหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:77
+#, fuzzy
+msgid "Number of posts to show per page"
+msgstr "จำนวนโพสต์ที่จะแสดงต่อหน้า"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:29
+msgid "Open guide"
+msgstr "เปิดคู่มือ"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:93
+#, fuzzy
+msgid "Opt-in to MCP"
+msgstr "เลือกเข้าร่วม MCP"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
+#, fuzzy
+msgid "Opt-in Web2Agent MCP status"
+msgstr "สถานะ MCP ของ Web2Agent ที่เลือกเข้าร่วม"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:179
+msgid "Optional"
+msgstr "ไม่บังคับ"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:154
+#, fuzzy
+msgid "Optional. The size of the image to retrieve (thumbnail, medium, large, full). Defaults to full/original size."
+msgstr "ตัวเลือก. ขนาดของภาพที่ต้องการดึงมา (ภาพขนาดย่อ, ขนาดกลาง, ขนาดใหญ่, เต็มขนาด). ค่าเริ่มต้นคือขนาดเต็ม/ขนาดต้นฉบับ."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:109
+#, fuzzy
+msgid "Page number for pagination"
+msgstr "หมายเลขหน้าสำหรับการจัดหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:107
+#, fuzzy
+msgid "Page number for pagination (starts from 1)"
+msgstr "หมายเลขหน้าสำหรับการทำหน้า (เริ่มต้นที่ 1)"
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:16
+#, fuzzy
+msgid "Plugins Information"
+msgstr "ข้อมูลปลั๊กอิน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:80
+msgid "Poor"
+msgstr "แย่"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:409
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:469
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:520
+#, fuzzy
+msgid "Post not found"
+msgstr "ไม่พบโพสต์"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:38
+msgid "Powered by"
+msgstr "ขับเคลื่อนโดย"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:335
+#, fuzzy
+msgid "Preset parameter is required"
+msgstr "จำเป็นต้องใช้พารามิเตอร์ที่ตั้งไว้ล่วงหน้า"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:186
+msgid "Press Enter key to finalize a keyword"
+msgstr "กดปุ่ม Enter เพื่อสรุปคีย์เวิร์ด"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:39
+msgid "Preview site"
+msgstr "ดูตัวอย่างเว็บไซต์"
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about active and available WordPress plugins"
+msgstr "ให้ข้อมูลโดยละเอียดเกี่ยวกับปลั๊กอิน WordPress ที่ใช้งานอยู่และที่พร้อมใช้งาน"
+
+#: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about registered WordPress users and their roles"
+msgstr "ให้ข้อมูลโดยละเอียดเกี่ยวกับผู้ใช้ WordPress ที่ลงทะเบียนและบทบาทของพวกเขา"
+
+#: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about the active WordPress theme and its parent theme if applicable"
+msgstr "ให้ข้อมูลโดยละเอียดเกี่ยวกับธีม WordPress ที่ใช้งานอยู่และธีมแม่ (หากมี)"
+
+#: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:17
+#, fuzzy
+msgid "Provides detailed information about the WordPress site like site name, url, description, admin email, plugins, themes, users, and more."
+msgstr "ให้ข้อมูลโดยละเอียดเกี่ยวกับเว็บไซต์ WordPress เช่น ชื่อเว็บไซต์, url, คำอธิบาย, อีเมลผู้ดูแลระบบ, ปลั๊กอิน, ธีม, ผู้ใช้, และอื่น ๆ"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:17
+#, fuzzy
+msgid "Provides detailed information about WordPress site settings including general, reading, discussion, media, permalink, privacy, and writing settings"
+msgstr "ให้ข้อมูลโดยละเอียดเกี่ยวกับการตั้งค่าเว็บไซต์ WordPress รวมถึงการตั้งค่าทั่วไป การอ่าน การสนทนา สื่อ การเชื่อมโยงถาวร ความเป็นส่วนตัว และการเขียน"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:17
+#, fuzzy
+msgid "Provides general information about the WordPress site including site details, plugins, themes, and users"
+msgstr "ให้ข้อมูลทั่วไปเกี่ยวกับเว็บไซต์ WordPress รวมถึงรายละเอียดเว็บไซต์, ปลั๊กอิน, ธีม, และผู้ใช้"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:235
+msgid "Publish"
+msgstr "เผยแพร่"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:59
+#, fuzzy
+msgid "Purge all LiteSpeed caches including LSCache, CSS/JS, localized resources, object cache, and opcache."
+msgstr "ล้างแคช LiteSpeed ทั้งหมด รวมถึง LSCache, CSS/JS, ทรัพยากรที่แปลภาษา, แคชวัตถุ และ opcache"
+
+#: admin/class-hostinger-ai-assistant-translations.php:73
+#, fuzzy
+msgid "Rate your conversation"
+msgstr "ให้คะแนนการสนทนาของคุณ"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:280
+#, fuzzy
+msgid "Remove Noscript Tags"
+msgstr "ลบแท็ก Noscript"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:278
+#, fuzzy
+msgid "Remove Query Strings from Static Files"
+msgstr "ลบสตริงคำค้นหาออกจากไฟล์สแตติก"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:279
+#, fuzzy
+msgid "Remove WordPress Emoji"
+msgstr "ลบอีโมจิ WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:294
+#, fuzzy
+msgid "Removed Unused CSS for Users"
+msgstr "ลบ CSS ที่ไม่ได้ใช้สำหรับผู้ใช้"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:80
+#, fuzzy
+msgid "Report period. Options: week, month, last_month, year."
+msgstr "ช่วงเวลาการรายงาน ตัวเลือก: สัปดาห์, เดือน, เดือนที่ผ่านมา, ปี"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:239
+#, fuzzy
+msgid "Requested size not found"
+msgstr "ไม่พบขนาดที่ร้องขอ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:46
+msgid "Restart chatbot"
+msgstr "เริ่มแชทบอทใหม่"
+
+#: admin/class-hostinger-ai-assistant-translations.php:165
+#, fuzzy
+msgid "Retrieve a list of WooCommerce orders with filters"
+msgstr "ดึงรายการคำสั่งซื้อ WooCommerce พร้อมตัวกรอง"
+
+#: admin/class-hostinger-ai-assistant-translations.php:121
+#, fuzzy
+msgid "Retrieve detailed information about my WordPress site"
+msgstr "ดึงข้อมูลรายละเอียดเกี่ยวกับเว็บไซต์ WordPress ของฉัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:89
+#, fuzzy
+msgid "Return sales for a specific end date. Format: YYYY-MM-DD."
+msgstr "การคืนสินค้าสำหรับวันที่สิ้นสุดเฉพาะ. รูปแบบ: YYYY-MM-DD."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:85
+#, fuzzy
+msgid "Return sales for a specific start date. Format: YYYY-MM-DD."
+msgstr "การคืนสินค้าสำหรับวันที่เริ่มต้นที่ระบุ รูปแบบ: พ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ.ศ."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:20
+#, fuzzy
+msgid "Search and filter WooCommerce products with pagination. Returns a list of products matching the search criteria."
+msgstr "ค้นหาและกรองสินค้า WooCommerce พร้อมการจัดหน้า ส่งคืนรายการสินค้าที่ตรงกับเกณฑ์การค้นหา"
+
+#. %s: post type names
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:82
+#, fuzzy,php-format
+msgid "Search and filter WordPress custom post types posts including %s with pagination"
+msgstr "ค้นหาและกรองโพสต์ประเภทที่กำหนดเองใน WordPress รวมถึง %s พร้อมการแบ่งหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress pages with pagination. Returns a list of pages matching the search criteria."
+msgstr "ค้นหาและกรองหน้า WordPress พร้อมการแบ่งหน้า ผลลัพธ์จะแสดงรายการหน้าที่ตรงกับเกณฑ์การค้นหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress posts with pagination. Returns a list of posts matching the search criteria."
+msgstr "ค้นหาและกรองโพสต์ WordPress พร้อมการจัดหน้า ส่งคืนรายการโพสต์ที่ตรงกับเกณฑ์การค้นหา"
+
+#: admin/class-hostinger-ai-assistant-translations.php:125
+#, fuzzy
+msgid "Search and filter WordPress users with pagination"
+msgstr "ค้นหาและกรองผู้ใช้ WordPress พร้อมการแบ่งหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress users with pagination. Returns a list of users matching the search criteria."
+msgstr "ค้นหาและกรองผู้ใช้ WordPress พร้อมการจัดหน้า ส่งคืนรายการผู้ใช้ที่ตรงกับเกณฑ์การค้นหา"
+
+#: admin/class-hostinger-ai-assistant-translations.php:139
+#, fuzzy
+msgid "Search blog posts"
+msgstr "ค้นหาบทความในบล็อก"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:79
+#, fuzzy
+msgid "Search Custom Post Types Posts"
+msgstr "ค้นหาประเภทโพสต์ที่กำหนดเอง โพสต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:81
+#, fuzzy
+msgid "Search Media"
+msgstr "สื่อค้นหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:17
+#, fuzzy
+msgid "Search Pages"
+msgstr "หน้าค้นหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:17
+#, fuzzy
+msgid "Search Posts"
+msgstr "ค้นหาโพสต์"
+
+#: admin/class-hostinger-ai-assistant-translations.php:141
+#, fuzzy
+msgid "Search posts on my WordPress website"
+msgstr "ค้นหาโพสต์บนเว็บไซต์ WordPress ของฉัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:89
+#, fuzzy
+msgid "Search term to look for in media titles, captions, and descriptions"
+msgstr "คำค้นหาที่ควรค้นหาในชื่อสื่อ, คำบรรยาย, และคำอธิบาย"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:95
+#, fuzzy
+msgid "Search term to look for in post titles and content"
+msgstr "คำค้นหาเพื่อค้นหาในชื่อโพสต์และเนื้อหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:17
+#, fuzzy
+msgid "Search Users"
+msgstr "ค้นหาผู้ใช้"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:19
+#, fuzzy
+msgid "Search WooCommerce Orders"
+msgstr "ค้นหาคำสั่งซื้อ WooCommerce"
+
+#: admin/class-hostinger-ai-assistant-translations.php:166
+#, fuzzy
+msgid "Search WooCommerce orders for my store"
+msgstr "ค้นหาคำสั่งซื้อ WooCommerce สำหรับร้านค้าของฉัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:19
+#, fuzzy
+msgid "Search WooCommerce Products"
+msgstr "ค้นหาสินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:82
+#, fuzzy
+msgid "Search WordPress media items by title, caption, or description with filtering options."
+msgstr "ค้นหาสื่อใน WordPress ตามชื่อ คำบรรยาย หรือคำอธิบาย พร้อมตัวเลือกการกรอง"
+
+#: admin/class-hostinger-ai-assistant-translations.php:126
+#, fuzzy
+msgid "Search WordPress users on my website"
+msgstr "ค้นหาผู้ใช้ WordPress บนเว็บไซต์ของฉัน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:56
+msgid "Selected file type is not supported"
+msgstr "ประเภทไฟล์ที่เลือกไม่รองรับ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:83
+msgid "Send"
+msgstr "ส่ง"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:10
+msgid "SEO keywords improve web content visibility on search engines like Google by being relevant and naturally placed"
+msgstr "คีย์เวิร์ด SEO ช่วยปรับปรุงการมองเห็นเนื้อหาเว็บบนเครื่องมือค้นหาเช่น Google โดยดูที่ความเกี่ยวข้องและใช้บนเนื้อหาอย่างเป็นธรรมชาติ"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:125
+#: admin/partials/hostinger-ai-assistant-tab-view.php:131
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:79
+msgid "Short"
+msgstr "สั้น"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:16
+#, fuzzy
+msgid "Site Information"
+msgstr "ข้อมูลไซต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:61
+#, fuzzy
+msgid "Site language"
+msgstr "ภาษาของเว็บไซต์"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:16
+#, fuzzy
+msgid "Site Settings"
+msgstr "การตั้งค่าไซต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:41
+#, fuzzy
+msgid "Site tagline/description"
+msgstr "คำขวัญ/คำอธิบายเว็บไซต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:45
+#, fuzzy
+msgid "Site timezone"
+msgstr "เขตเวลาของเว็บไซต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:37
+#, fuzzy
+msgid "Site title"
+msgstr "ชื่อเว็บไซต์"
+
+#: admin/class-hostinger-ai-assistant-translations.php:103
+msgid "Sorry, the AI Chatbot is currently unavailable. Please try again later."
+msgstr "ขออภัย AI Chatbot ไม่สามารถใช้งานได้ในขณะนี้ กรุณาลองอีกครั้งในภายหลัง"
+
+#: admin/class-hostinger-ai-assistant-translations.php:104
+msgid "Sorry, the AI Chatbot request timed out. Please try again later."
+msgstr "ขออภัย คำขอของ AI Chatbot หมดเวลา กรุณาลองใหม่อีกครั้ง"
+
+#: admin/class-hostinger-ai-assistant-translations.php:48
+#: admin/class-hostinger-ai-assistant-translations.php:92
+#: admin/class-hostinger-ai-assistant-translations.php:94
+msgid "Start new chat"
+msgstr "เริ่มแชทใหม่"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:57
+#, fuzzy
+msgid "Start of week (0 = Sunday, 1 = Monday, etc.)"
+msgstr "เริ่มต้นสัปดาห์ (0 = วันอาทิตย์, 1 = วันจันทร์, เป็นต้น)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:99
+msgid "Talking to Kodee is in the works, we'll keep you posted once it's out!"
+msgstr "กำลังพูดคุยกับ Kodee อยู่ เราจะแจ้งให้ทราบเมื่อเสร็จสิ้น!"
+
+#: admin/class-hostinger-ai-assistant-translations.php:84
+msgid "Thank you for your feedback"
+msgstr "ขอบคุณสำหรับคำติชมของคุณ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:77
+msgid "Thanks for letting us know"
+msgstr "ขอบคุณที่แจ้งให้เราทราบ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:76
+msgid "Thanks for letting us know. Click the button below if you want to leave additional feedback."
+msgstr "ขอบคุณที่แจ้งให้เราทราบ กรุณาคลิกปุ่มด้านล่างหากคุณต้องการให้ข้อเสนอแนะเพิ่มเติม"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:197
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:255
+#, fuzzy
+msgid "The content of the post"
+msgstr "เนื้อหาของโพสต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:189
+#, fuzzy
+msgid "The custom post type to create"
+msgstr "ประเภทโพสต์ที่กำหนดเองเพื่อสร้าง"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:301
+#, fuzzy
+msgid "The custom post type to delete"
+msgstr "ประเภทโพสต์ที่กำหนดเองที่ต้องการลบ"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:149
+#, fuzzy
+msgid "The custom post type to get"
+msgstr "ประเภทโพสต์ที่กำหนดเองเพื่อดึงข้อมูล"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:91
+#, fuzzy
+msgid "The custom post type to search"
+msgstr "ประเภทโพสต์ที่กำหนดเองเพื่อค้นหา"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:243
+#, fuzzy
+msgid "The custom post type to update"
+msgstr "ประเภทโพสต์ที่กำหนดเองเพื่ออัปเดต"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:201
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:259
+#, fuzzy
+msgid "The excerpt of the post"
+msgstr "ข้อความที่ตัดตอนจากโพสต์"
+
+#: hostinger-ai-assistant.php:131
+#, php-format
+msgid "The Hostinger AI plugin requires minimum PHP version of <b>%s</b>. "
+msgstr "ปลั๊กอิน Hostinger AI ต้องใช้ PHP เวอร์ชันขั้นต่ำ <b>%s</b>"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:150
+#, fuzzy
+msgid "The ID of the media item"
+msgstr "รหัสประจำตัวของสื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:305
+#, fuzzy
+msgid "The ID of the post to delete"
+msgstr "รหัสประจำตัวของโพสต์ที่ต้องการลบ"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:153
+#, fuzzy
+msgid "The ID of the post to get"
+msgstr "ID ของโพสต์ที่ต้องการ"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:247
+#, fuzzy
+msgid "The ID of the post to update"
+msgstr "ID ของโพสต์ที่ต้องการอัปเดต"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:127
+#, fuzzy
+msgid "The preset to apply"
+msgstr "ค่าที่ตั้งไว้ล่วงหน้าที่จะใช้"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:205
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:263
+#, fuzzy
+msgid "The status of the post (publish, draft, pending, etc.)"
+msgstr "สถานะของโพสต์ (เผยแพร่, ร่าง, รอดำเนินการ, ฯลฯ)"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:193
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:251
+#, fuzzy
+msgid "The title of the post"
+msgstr "ชื่อของโพสต์"
+
+#: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:16
+#, fuzzy
+msgid "Theme Information"
+msgstr "ข้อมูลเกี่ยวกับธีม"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:20
+msgid "These keywords can help your article and website rank higher in search engines. You can input up to 5 keywords."
+msgstr "คีย์เวิร์ดเหล่านี้อาจช่วยให้บทความและเว็บไซต์ของคุณติดอันดับสูงขึ้นในเครื่องมือค้นหา คุณสามารถใส่คีย์เวิร์ดได้สูงสุด 5 คำ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:61
+#, fuzzy
+msgid "Thinking"
+msgstr "การคิด"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:254
+#, fuzzy
+msgid "This low-risk preset introduces basic optimizations for speed and user experience. Appropriate for enthusiastic beginners."
+msgstr "ค่ากำหนดล่วงหน้าที่มีความเสี่ยงต่ำนี้แนะนำการปรับแต่งพื้นฐานเพื่อเพิ่มความเร็วและประสบการณ์ของผู้ใช้ เหมาะสำหรับผู้เริ่มต้นที่มีความกระตือรือร้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:242
+#, fuzzy
+msgid "This no-risk preset is appropriate for all websites. Good for new users, simple websites, or cache-oriented development."
+msgstr "พรีเซ็ตนี้ไม่มีความเสี่ยง เหมาะสำหรับเว็บไซต์ทุกประเภท เหมาะสำหรับผู้ใช้ใหม่ เว็บไซต์ที่เรียบง่าย หรือการพัฒนาที่เน้นแคช"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:303
+#, fuzzy
+msgid "This preset almost certainly will require testing and exclusions for some CSS, JS and Lazy Loaded images. Pay special attention to logos, or HTML-based slider images."
+msgstr "การตั้งค่าล่วงหน้านี้เกือบจะต้องทดสอบและยกเว้นบางส่วนของ CSS, JS และภาพที่โหลดแบบ Lazy Loaded โปรดให้ความสนใจเป็นพิเศษกับโลโก้หรือภาพสไลด์เดอร์ที่ใช้ HTML"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:268
+#, fuzzy
+msgid "This preset is good for most websites, and is unlikely to cause conflicts. Any CSS or JS conflicts may be resolved with Page Optimization > Tuning tools."
+msgstr "พรีเซ็ตนี้เหมาะสำหรับเว็บไซต์ส่วนใหญ่ และไม่น่าจะก่อให้เกิดความขัดแย้ง. ความขัดแย้งของ CSS หรือ JS อาจแก้ไขได้ผ่านเครื่องมือปรับแต่งใน Page Optimization."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:288
+#, fuzzy
+msgid "This preset might work out of the box for some websites, but be sure to test! Some CSS or JS exclusions may be necessary in Page Optimization > Tuning."
+msgstr "พรีเซ็ตนี้อาจใช้งานได้ทันทีสำหรับบางเว็บไซต์ แต่โปรดทดสอบก่อนเสมอ! อาจจำเป็นต้องยกเว้น CSS หรือ JS บางส่วนใน Page Optimization > Tuning"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:270
+msgid "This will only take a moment"
+msgstr "ขั้นตอนนี้จะใช้เวลาสักครู่"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:53
+#, fuzzy
+msgid "Time format"
+msgstr "รูปแบบเวลา"
+
+#: admin/class-hostinger-ai-assistant-notices.php:22
+msgid "To unlock the exclusive features of <b>Hostinger AI</b>, you must possess a unique API token, which is exclusively provided to Hostinger clients"
+msgstr "หากต้องการปลดล็อคคุณสมบัติพิเศษของ <b>Hostinger AI</b> คุณต้องมีโทเค็น API เฉพาะซึ่งมอบให้เฉพาะกับลูกค้าของ Hostinger เท่านั้น"
+
+#. 1: minimum expiration time in seconds, 2: maximum expiration time in seconds
+#: includes-psr4/Mcp/Rest/JwtAuth.php:66
+#, fuzzy,php-format
+msgid "Token expiration must be between %1$d seconds (1 hour) and %2$d seconds (1 day)"
+msgstr "การหมดอายุของโทเคนต้องอยู่ระหว่าง %1$d วินาที (1 ชั่วโมง) ถึง %2$d วินาที (1 วัน)"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:34
+#, fuzzy
+msgid "Token expiration time in seconds (3600-86400)"
+msgstr "เวลาหมดอายุของโทเค็นเป็นวินาที (3600-86400)"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:81
+#, fuzzy
+msgid "Token ID is required."
+msgstr "จำเป็นต้องใช้รหัสโทเค็น"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:112
+#, fuzzy
+msgid "Token is invalid, expired, or has been revoked."
+msgstr "โทเค็นไม่ถูกต้อง หมดอายุ หรือถูกเพิกถอน"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:118
+#, fuzzy
+msgid "Token is malformed: missing user_id."
+msgstr "โทเค็นมีรูปแบบไม่ถูกต้อง: ขาด user_id"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:89
+#, fuzzy
+msgid "Token not found in registry."
+msgstr "ไม่พบโทเค็นในรีจิสทรี"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:99
+#, fuzzy
+msgid "Token revoked successfully."
+msgstr "ยกเลิกโทเค็นสำเร็จแล้ว"
+
+#. %s: error message from JWT library
+#: includes-psr4/Mcp/Rest/JwtAuth.php:135
+#, fuzzy,php-format
+msgid "Token validation failed: %s"
+msgstr "การตรวจสอบโทเค็นล้มเหลว: %s"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:100
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:86
+msgid "Tone of voice"
+msgstr "โทนภาษา"
+
+#: admin/class-hostinger-ai-assistant-translations.php:21
+msgid "tones selected"
+msgstr "โทนภาษาที่เลือก"
+
+#: admin/class-hostinger-ai-assistant-translations.php:25
+#: admin/partials/hostinger-ai-assistant-tab-view.php:107
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:90
+msgid "Trustworthy"
+msgstr "เชื่อถือได้"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:104
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:129
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:140
+#, fuzzy
+msgid "Unique identifier for the resource"
+msgstr "รหัสประจำตัวที่ไม่ซ้ำกันสำหรับทรัพยากร"
+
+#: includes/class-hostinger-ai-assistant-errors.php:36
+msgid "Unknown error code."
+msgstr "รหัสข้อผิดพลาดที่ไม่ทราบ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:151
+#, fuzzy
+msgid "Update a post category on my WordPress website"
+msgstr "อัปเดตหมวดหมู่โพสต์บนเว็บไซต์ WordPress ของฉัน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:146
+#, fuzzy
+msgid "Update a post tag on my WordPress website"
+msgstr "อัปเดตแท็กโพสต์บนเว็บไซต์ WordPress ของฉัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:236
+#, fuzzy
+msgid "Update a WordPress custom post type post by ID"
+msgstr "อัปเดตโพสต์ประเภทที่กำหนดเองใน WordPress โดยใช้ ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:43
+#, fuzzy
+msgid "Update a WordPress media item metadata. Only provided fields will be updated."
+msgstr "อัปเดตข้อมูลเมตาของรายการสื่อใน WordPress จะอัปเดตเฉพาะฟิลด์ที่ให้ไว้เท่านั้น"
+
+#: admin/class-hostinger-ai-assistant-translations.php:116
+#, fuzzy
+msgid "Update an existing page on my WordPress website"
+msgstr "อัปเดตหน้าที่มีอยู่แล้วบนเว็บไซต์ WordPress ของฉัน"
+
+#: admin/class-hostinger-ai-assistant-translations.php:136
+#, fuzzy
+msgid "Update an existing post on my WordPress site"
+msgstr "อัปเดตโพสต์ที่มีอยู่แล้วบนเว็บไซต์ WordPress ของฉัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:248
+#, fuzzy
+msgid "Update an existing WooCommerce product brand by ID."
+msgstr "อัปเดตแบรนด์สินค้า WooCommerce ที่มีอยู่โดยใช้รหัสประจำตัว"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:55
+#, fuzzy
+msgid "Update an existing WooCommerce product by ID. Only provided fields will be updated."
+msgstr "อัปเดตสินค้า WooCommerce ที่มีอยู่โดยใช้รหัสสินค้า (ID) จะอัปเดตเฉพาะฟิลด์ที่ให้ไว้เท่านั้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:113
+#, fuzzy
+msgid "Update an existing WooCommerce product category by ID."
+msgstr "อัปเดตหมวดหมู่สินค้า WooCommerce ที่มีอยู่โดยใช้รหัสประจำตัว"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:180
+#, fuzzy
+msgid "Update an existing WooCommerce product tag by ID."
+msgstr "อัปเดตแท็กสินค้า WooCommerce ที่มีอยู่โดยใช้รหัสประจำตัว"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress category by ID. Only provided fields will be updated."
+msgstr "อัปเดตหมวดหมู่ WordPress ที่มีอยู่โดยใช้ ID จะอัปเดตเฉพาะฟิลด์ที่ให้ไว้เท่านั้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress page by ID. Only provided fields will be updated."
+msgstr "อัปเดตหน้า WordPress ที่มีอยู่โดยใช้ ID จะอัปเดตเฉพาะฟิลด์ที่ให้ไว้เท่านั้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress post by ID. Only provided fields will be updated."
+msgstr "อัปเดตโพสต์ WordPress ที่มีอยู่โดยใช้ ID จะอัปเดตเฉพาะฟิลด์ที่ให้ไว้เท่านั้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress tag by ID. Only provided fields will be updated."
+msgstr "อัปเดตแท็ก WordPress ที่มีอยู่โดยใช้ ID จะอัปเดตเฉพาะฟิลด์ที่ให้ไว้เท่านั้น"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:74
+#, fuzzy
+msgid "Update an existing WordPress user by ID. Only provided fields will be updated."
+msgstr "อัปเดตผู้ใช้ WordPress ที่มีอยู่โดยใช้ ID. จะอัปเดตเฉพาะฟิลด์ที่ให้ไว้เท่านั้น."
+
+#: admin/class-hostinger-ai-assistant-translations.php:134
+#, fuzzy
+msgid "Update blog post"
+msgstr "อัปเดตโพสต์บล็อก"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:52
+#, fuzzy
+msgid "Update Category"
+msgstr "อัปเดตหมวดหมู่"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:132
+#, fuzzy
+msgid "Update Current User"
+msgstr "อัปเดตผู้ใช้ปัจจุบัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:235
+#, fuzzy
+msgid "Update Custom Post Type Post"
+msgstr "อัปเดตประเภทโพสต์ที่กำหนดเอง"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:31
+#, fuzzy
+msgid "Update General Settings"
+msgstr "อัปเดตการตั้งค่าทั่วไป"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:57
+#, fuzzy
+msgid "Update Hostinger Plugin Settings"
+msgstr "อัปเดตการตั้งค่าปลั๊กอิน Hostinger"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:58
+#, fuzzy
+msgid "Update Hostinger plugin settings. Only provided fields will be updated."
+msgstr "อัปเดตการตั้งค่าปลั๊กอิน Hostinger. เฉพาะฟิลด์ที่ให้ไว้เท่านั้นที่จะถูกอัปเดต."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:42
+#, fuzzy
+msgid "Update Media"
+msgstr "อัปเดตสื่อ"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:52
+#, fuzzy
+msgid "Update Page"
+msgstr "อัปเดตหน้า"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:52
+#, fuzzy
+msgid "Update Post"
+msgstr "อัปเดตโพสต์"
+
+#: admin/class-hostinger-ai-assistant-translations.php:149
+#, fuzzy
+msgid "Update post category"
+msgstr "อัปเดตหมวดหมู่โพสต์"
+
+#: admin/class-hostinger-ai-assistant-translations.php:144
+#, fuzzy
+msgid "Update post tag"
+msgstr "อัปเดตแท็กโพสต์"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:52
+#, fuzzy
+msgid "Update Tag"
+msgstr "อัปเดตแท็ก"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:133
+#, fuzzy
+msgid "Update the current logged-in user information."
+msgstr "อัปเดตข้อมูลผู้ใช้ที่เข้าสู่ระบบในปัจจุบัน"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:73
+#, fuzzy
+msgid "Update User"
+msgstr "อัปเดตผู้ใช้"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:54
+#, fuzzy
+msgid "Update WooCommerce Product"
+msgstr "อัปเดตสินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
+#, fuzzy
+msgid "Update WooCommerce Product Brand"
+msgstr "อัปเดตแบรนด์สินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:112
+#, fuzzy
+msgid "Update WooCommerce Product Category"
+msgstr "อัปเดตหมวดหมู่สินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:179
+#, fuzzy
+msgid "Update WooCommerce Product Tag"
+msgstr "อัปเดตแท็กสินค้า WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:32
+#, fuzzy
+msgid "Update WordPress general site settings. Only provided fields will be updated."
+msgstr "อัปเดตการตั้งค่าทั่วไปของเว็บไซต์ WordPress จะอัปเดตเฉพาะฟิลด์ที่ให้ไว้เท่านั้น"
+
+#: admin/class-hostinger-ai-assistant-translations.php:114
+#, fuzzy
+msgid "Update WordPress page"
+msgstr "อัปเดตหน้า WordPress"
+
+#: admin/class-hostinger-ai-assistant-translations.php:35
+msgid "Use this image as:"
+msgstr "ใช้ภาพนี้เป็น:"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:125
+#, fuzzy
+msgid "User associated with token no longer exists."
+msgstr "ผู้ใช้ที่เชื่อมโยงกับโทเค็นไม่มีอยู่แล้ว"
+
+#: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:16
+#, fuzzy
+msgid "Users Information"
+msgstr "ข้อมูลผู้ใช้"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:133
+msgid "Usually used for video, infographics, or product descriptions"
+msgstr "โดยทั่วไปใช้สำหรับวิดีโอ อินโฟกราฟิก หรือคำอธิบายผลิตภัณฑ์"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:145
+msgid "Usually used to make high-ranked articles that will generate more leads"
+msgstr "โดยทั่วไปใช้ในการสร้างบทความที่มีอันดับสูงซึ่งจะทำให้เกิดโอกาสในการขายมากขึ้น"
+
+#: admin/class-hostinger-ai-assistant-translations.php:120
+#, fuzzy
+msgid "View site details like name, URL, description, admin email, plugins, themes, and users"
+msgstr "ดูรายละเอียดเว็บไซต์ เช่น ชื่อ, URL, คำอธิบาย, อีเมลผู้ดูแลระบบ, ปลั๊กอิน, ธีม และผู้ใช้"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:308
+#, fuzzy
+msgid "Viewport Image Generation"
+msgstr "การสร้างภาพวิวพอร์ต"
+
+#: admin/class-hostinger-ai-assistant-translations.php:98
+msgid "Voice feature is coming soon"
+msgstr "ฟีเจอร์เสียงกำลังจะมาเร็วๆ นี้"
+
+#: includes/class-hostinger-ai-assistant-errors.php:20
+msgid "We apologize for the inconvenience. The AI content generation process encountered a server error. Please try again later."
+msgstr "ขออภัยในความไม่สะดวก ขั้นตอนการสร้างเนื้อหา AI พบข้อผิดพลาดของเซิร์ฟเวอร์ โปรดลองอีกครั้งในภายหลัง"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:297
+#, fuzzy
+msgid "Websites willing to test and tune settings"
+msgstr "เว็บไซต์ที่พร้อมทดสอบและปรับแต่งการตั้งค่า"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:179
+msgid "What are the focus keywords of your content?"
+msgstr "คีย์เวิร์ดหลักสำหรับเนื้อหานี้คืออะไร?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:56
+msgid "What do you want to make today?"
+msgstr "วันนี้คุณอยากทำอะไรบ้าง?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:157
+msgid "What is your content about?"
+msgstr "เนื้อหาของคุณเกี่ยวกับอะไร?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:27
+#: admin/partials/hostinger-ai-assistant-tab-view.php:109
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:92
+msgid "Witty"
+msgstr "เฉลียวฉลาด"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:220
+msgid "words"
+msgstr "คำ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:82
+msgid "Write your feedback (optional)"
+msgstr "เขียนความคิดเห็นของคุณ (ไม่บังคับ)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:51
+msgid "Write your question"
+msgstr "เขียนคำถามของคุณ"
+
+#. %s: PHP version
+#: hostinger-ai-assistant.php:135
+#, php-format
+msgid "You are running <b>%s</b> PHP version."
+msgstr "คุณกำลังใช้งาน PHP เวอร์ชัน <b>%s</b>"
+
+#: admin/class-hostinger-ai-assistant-translations.php:57
+msgid "You can only upload up to 6 files"
+msgstr "คุณสามารถอัปโหลดได้สูงสุดเพียง 6 ไฟล์"
+
+#: admin/class-hostinger-ai-assistant-translations.php:78
+msgid "You rated your conversation"
+msgstr "คุณให้คะแนนการสนทนาของคุณ"
+
+#: admin/class-hostinger-ai-assistant-translations.php:32
+msgid "You're good to go, but you can share more details for better results"
+msgstr "คุณพร้อมแล้ว แต่คุณสามารถแบ่งปันรายละเอียดเพิ่มเติมเพื่อผลลัพธ์ที่ดีขึ้นได้"

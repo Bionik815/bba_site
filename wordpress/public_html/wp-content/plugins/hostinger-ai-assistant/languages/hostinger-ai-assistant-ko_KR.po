@@ -1,0 +1,2207 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hostinger AI 2.0.13\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hostinger-ai-assistant\n"
+"Last-Translator: \n"
+"Language-Team: Korean\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-08-19T12:02:35+00:00\n"
+"PO-Revision-Date: 2025-12-16 08:16+0000\n"
+"Language: ko_KR\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: hostinger-ai-assistant\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.29\n"
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:76
+#, fuzzy
+msgid "Abilities that provide a way of interacting with WordPress site."
+msgstr "워드프레스 사이트와 상호 작용하는 방법을 제공하는 기능입니다."
+
+#: includes/class-hostinger-ai-assistant-errors.php:14
+msgid "Action Failed. Try again or contact support. Apologies."
+msgstr ""
+"죄송합니다. 작업이 실패했습니다. 다시 시도하거나 지원팀에 문의해 주세요.\n"
+""
+
+#: admin/class-hostinger-ai-assistant-translations.php:60
+msgid "Active"
+msgstr "활성화"
+
+#: admin/class-hostinger-ai-assistant-translations.php:111
+#, fuzzy
+msgid "Add a new page to my WordPress website"
+msgstr "내 워드프레스 웹사이트에 새 페이지 추가"
+
+#: admin/class-hostinger-ai-assistant-translations.php:131
+#, fuzzy
+msgid "Add a new post to my WordPress website"
+msgstr "내 워드프레스 웹사이트에 새 글 추가"
+
+#: admin/class-hostinger-ai-assistant-translations.php:155
+#, fuzzy
+msgid "Add a new product to your WooCommerce store"
+msgstr "WooCommerce 스토어에 새 제품 추가하기"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:182
+#, fuzzy
+msgid "Add a new WordPress custom post type post"
+msgstr "새 워드프레스 사용자 정의 글 유형 게시물 추가"
+
+#: admin/class-hostinger-ai-assistant-translations.php:154
+#, fuzzy
+msgid "Add a product"
+msgstr "제품 추가"
+
+#: admin/class-hostinger-ai-assistant-translations.php:159
+#, fuzzy
+msgid "Add a product category"
+msgstr "제품 카테고리 추가"
+
+#: admin/class-hostinger-ai-assistant-translations.php:129
+#, fuzzy
+msgid "Add blog post"
+msgstr "블로그 게시물 추가"
+
+#: admin/class-hostinger-ai-assistant-translations.php:74
+#, fuzzy
+msgid "Add Comment"
+msgstr "댓글 추가"
+
+#: admin/class-hostinger-ai-assistant-translations.php:109
+#, fuzzy
+msgid "Add WordPress page"
+msgstr "워드프레스 페이지 추가"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:313
+#, fuzzy
+msgid "Advanced users willing to test and exclude items"
+msgstr "항목을 테스트하고 제외할 의향이 있는 고급 사용자"
+
+#: admin/class-hostinger-ai-assistant-translations.php:88
+msgid "After clearing history you won't be able to access previous chats."
+msgstr "대화 내용을 지우고 나면 이전 대화에 액세스할 수 없습니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:93
+msgid "After starting new chat, you will be able to access previous chats from the history."
+msgstr "새 채팅을 시작하면 기록에서 이전 채팅에 액세스할 수 있습니다."
+
+#: admin/class-hostinger-ai-assistant-admin.php:144
+#: admin/class-hostinger-ai-assistant-admin.php:145
+#: admin/class-hostinger-ai-assistant-admin.php:158
+#: admin/partials/hostinger-ai-assistant-tab-view.php:24
+msgid "AI Content Creator"
+msgstr "AI 콘텐츠 크리에이터"
+
+#: admin/class-hostinger-ai-assistant-translations.php:52
+msgid "AI may produce inaccurate information"
+msgstr "AI는 부정확한 정보를 생성할 수 있습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:34
+msgid "AI-generated image"
+msgstr "AI 생성 이미지"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:217
+#, fuzzy
+msgid "All LiteSpeed caches have been purged successfully."
+msgstr "모든 LiteSpeed 캐시가 성공적으로 삭제되었습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:249
+#, fuzzy
+msgid "All websites, new users, simple websites, or cache-oriented development"
+msgstr "모든 웹사이트, 신규 사용자, 단순 웹사이트 또는 캐시 지향 개발"
+
+#: includes/class-hostinger-ai-assistant-errors.php:17
+msgid "An unexpected error occurred. Please try again or contact support."
+msgstr "예기치 않은 오류가 발생했습니다. 다시 시도하거나 지원팀에 문의하세요."
+
+#: includes-psr4/Mcp/McpServer.php:64
+#, fuzzy
+msgid "API key required"
+msgstr "API 키 필요"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:120
+#, fuzzy
+msgid "Apply a predefined optimization preset to LiteSpeed Cache settings. Available presets: basic (minimal optimization), advanced (balanced), aggressive (more optimization), essentials (core features), extreme (maximum optimization). A backup of current settings will be created automatically."
+msgstr "미리 정의된 최적화 사전 설정을 LiteSpeed 캐시 설정에 적용합니다. 사용 가능한 사전 설정: 기본(최소 최적화), 고급(균형 잡힌 최적화), 공격적(최적화 강화), 필수(핵심 기능), 극단(최대 최적화). 현재 설정의 백업이 자동으로 생성됩니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:119
+#, fuzzy
+msgid "Apply LiteSpeed Cache Preset"
+msgstr "라이트스피드 캐시 프리셋 적용"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:244
+msgid "Are you sure you want to replace your existing content with a new one ?"
+msgstr "기존 콘텐츠를 새 콘텐츠로 교체하시겠습니까?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:53
+msgid "Ask Kodee"
+msgstr "코디에게 물어보세요"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:293
+#, fuzzy
+msgid "Asynchronous CSS Loading with Critical CSS"
+msgstr "중요 CSS를 사용한 비동기 CSS 로딩"
+
+#. %s: PHP version
+#: hostinger-ai-assistant.php:131
+#: admin/class-hostinger-ai-assistant-notices.php:22
+msgid "Attention:"
+msgstr "주의:"
+
+#: admin/class-hostinger-ai-assistant-translations.php:72
+#, fuzzy
+msgid "Bad response"
+msgstr "잘못된 응답"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:139
+msgid "Balances depth and readability, engaging audiences and driving leads."
+msgstr "깊이 있는 내용과 가독성 사이 균형을 맞춰 독자의 관심을 끌고 잠재 고객을 이끌어냅니다"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:205
+msgid "Brewing content with magic"
+msgstr "마법으로 콘텐츠 제작하기"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:247
+#, fuzzy
+msgid "Browser Cache"
+msgstr "브라우저 캐시"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:69
+#, fuzzy
+msgid "Bypass code for maintenance mode"
+msgstr "유지 관리 모드의 바이패스 코드"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
+#, fuzzy
+msgid "Bypass code for maintenance mode. Needed only when maintenance mode is enabled."
+msgstr "유지 관리 모드용 바이패스 코드입니다. 유지 관리 모드가 활성화된 경우에만 필요합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:89
+#: admin/partials/hostinger-ai-assistant-tab-view.php:251
+msgid "Cancel"
+msgstr "취소"
+
+#: admin/class-hostinger-ai-assistant-translations.php:58
+msgid "Cannot restart the chat when Kodee is responding"
+msgstr "코디가 응답 중일 때 채팅을 다시 시작할 수 없습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:47
+msgid "Cannot restart the chat when talking with the agent"
+msgstr "상담원과 대화할 때 채팅을 다시 시작할 수 없습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:59
+msgid "Cannot start a new chat when Kodee is responding"
+msgstr "코디가 응답 중일 때 새 채팅을 시작할 수 없습니다"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:222
+msgid "characters"
+msgstr "문자"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:152
+msgid "Choose the length of generated content"
+msgstr "생성된 콘텐츠의 길이를 선택하세요"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:93
+msgid "Choose the type of content that will be generated"
+msgstr "생성할 콘텐츠 유형을 선택하세요"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:114
+msgid "Choose your desired emotional impact on readers"
+msgstr "독자에게 원하는 감정적 효과를 선택하세요"
+
+#: admin/class-hostinger-ai-assistant-translations.php:87
+#: admin/class-hostinger-ai-assistant-translations.php:90
+msgid "Clear chat"
+msgstr "채팅 지우기"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:247
+msgid "Clicking <b>Generate new content</b> will permanently delete your existing content and generate a new one on your recent inputs."
+msgstr "<b>새 콘텐츠 생성</b>을 클릭하면 기존 콘텐츠가 영구적으로 삭제되고, 최근 입력한 내용을 바탕으로 새로운 콘텐츠가 생성됩니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:49
+#: admin/class-hostinger-ai-assistant-translations.php:100
+msgid "Close"
+msgstr "닫기"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:121
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:77
+msgid "Content length"
+msgstr "콘텐츠 길이"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:162
+msgid "Content main idea"
+msgstr "콘텐츠 주요 아이디어"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:63
+msgid "Content Type"
+msgstr "콘텐츠 유형"
+
+#: admin/class-hostinger-ai-assistant-translations.php:68
+msgid "Conversation was closed"
+msgstr "대화가 종료되었습니다"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:65
+#, fuzzy
+msgid "Convert emoticons to graphics"
+msgstr "이모티콘을 그래픽으로 변환"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:283
+#, fuzzy
+msgid "Could not determine file type"
+msgstr "파일 유형을 확인할 수 없습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:160
+#, fuzzy
+msgid "Create a new product category in WooCommerce"
+msgstr "WooCommerce에서 새 제품 카테고리 만들기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:235
+#, fuzzy
+msgid "Create a new WooCommerce product brand. Requires name."
+msgstr "새 WooCommerce 제품 브랜드를 생성합니다. 이름이 필요합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:161
+#, fuzzy
+msgid "Create a new WooCommerce product category for my store"
+msgstr "내 스토어에 새 WooCommerce 제품 카테고리 만들기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:100
+#, fuzzy
+msgid "Create a new WooCommerce product category. Requires name."
+msgstr "새 WooCommerce 제품 카테고리를 생성합니다. 이름이 필요합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:156
+#, fuzzy
+msgid "Create a new WooCommerce product for my store"
+msgstr "내 스토어에 새 WooCommerce 제품 만들기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:167
+#, fuzzy
+msgid "Create a new WooCommerce product tag. Requires name."
+msgstr "새 WooCommerce 제품 태그를 생성합니다. 이름이 필요합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:42
+#, fuzzy
+msgid "Create a new WooCommerce product. Requires name and other product details."
+msgstr "새 WooCommerce 제품을 생성합니다. 이름 및 기타 제품 세부 정보가 필요합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:40
+#, fuzzy
+msgid "Create a new WordPress page. Requires title and content."
+msgstr "새 워드프레스 페이지를 만듭니다. 제목과 콘텐츠가 필요합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post category. Requires a name."
+msgstr "새 워드프레스 글 카테고리를 만듭니다. 이름이 필요합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post tag. Requires a name."
+msgstr "새 워드프레스 글 태그를 만듭니다. 이름이 필요합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:40
+#, fuzzy
+msgid "Create a new WordPress post. Requires title and content."
+msgstr "새 워드프레스 글을 만듭니다. 제목과 콘텐츠가 필요합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:58
+#, fuzzy
+msgid "Create a new WordPress user. Requires username and email."
+msgstr "새 워드프레스 사용자를 만듭니다. 사용자 아이디와 이메일이 필요합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:170
+#, fuzzy
+msgid "Create a WooCommerce sales report for a chosen period"
+msgstr "선택한 기간에 대한 WooCommerce 판매 보고서 만들기"
+
+#: admin/class-hostinger-ai-assistant-translations.php:110
+#, fuzzy
+msgid "Create and publish a new page on your WordPress site"
+msgstr "워드프레스 사이트에 새 페이지 만들기 및 게시하기"
+
+#: admin/class-hostinger-ai-assistant-translations.php:130
+#, fuzzy
+msgid "Create and publish a new post on your WordPress site"
+msgstr "워드프레스 사이트에 새 글 작성 및 게시하기"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:39
+#, fuzzy
+msgid "Create Category"
+msgstr "카테고리 만들기"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:195
+msgid "Create content"
+msgstr "콘텐츠 생성"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:181
+#, fuzzy
+msgid "Create Custom Post Type Post"
+msgstr "사용자 정의 글 유형 게시물 만들기"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:39
+#, fuzzy
+msgid "Create Page"
+msgstr "페이지 만들기"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:39
+#, fuzzy
+msgid "Create Post"
+msgstr "게시물 만들기"
+
+#: admin/class-hostinger-ai-assistant-translations.php:33
+msgid "Create Post with AI"
+msgstr "AI로 게시물 작성"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:24
+msgid "Create product with AI"
+msgstr "AI로 제품 제작"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:39
+#, fuzzy
+msgid "Create Tag"
+msgstr "태그 만들기"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:57
+#, fuzzy
+msgid "Create User"
+msgstr "사용자 만들기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:41
+#, fuzzy
+msgid "Create WooCommerce Product"
+msgstr "우커머스 제품 생성"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
+#, fuzzy
+msgid "Create WooCommerce Product Brand"
+msgstr "우커머스 제품 브랜드 생성"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:99
+#, fuzzy
+msgid "Create WooCommerce Product Category"
+msgstr "우커머스 제품 카테고리 생성"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:166
+#, fuzzy
+msgid "Create WooCommerce Product Tag"
+msgstr "우커머스 제품 태그 생성"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:292
+#, fuzzy
+msgid "CSS & JS Combine"
+msgstr "CSS & JS 결합"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:273
+#, fuzzy
+msgid "CSS, JS and HTML Minification"
+msgstr "CSS, JS 및 HTML 축소"
+
+#: includes-psr4/Mcp/McpServer.php:42
+#, fuzzy
+msgid "Custom MCP Server for Hostinger AI Assistant."
+msgstr "Hostinger AI 어시스턴트용 사용자 지정 MCP 서버."
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:49
+#, fuzzy
+msgid "Date format"
+msgstr "날짜 형식"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:245
+#, fuzzy
+msgid "Default Cache"
+msgstr "기본 캐시"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:81
+#, fuzzy
+msgid "Default comment status (open/closed)"
+msgstr "기본 댓글 상태(공개/닫힘)"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:85
+#, fuzzy
+msgid "Default ping status (open/closed)"
+msgstr "기본 핑 상태(개방/폐쇄)"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:69
+#, fuzzy
+msgid "Default post category"
+msgstr "기본 글 카테고리"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:73
+#, fuzzy
+msgid "Default post format"
+msgstr "기본 글 형식"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:261
+#, fuzzy
+msgid "Delete a WooCommerce product brand by ID."
+msgstr "ID로 WooCommerce 제품 브랜드를 삭제합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:68
+#, fuzzy
+msgid "Delete a WooCommerce product by ID. This action cannot be undone."
+msgstr "ID로 WooCommerce 제품을 삭제합니다. 이 작업은 취소할 수 없습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:126
+#, fuzzy
+msgid "Delete a WooCommerce product category by ID."
+msgstr "ID별로 WooCommerce 제품 카테고리를 삭제합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:193
+#, fuzzy
+msgid "Delete a WooCommerce product tag by ID."
+msgstr "ID로 WooCommerce 제품 태그를 삭제합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:66
+#, fuzzy
+msgid "Delete a WordPress category by ID. This action cannot be undone."
+msgstr "ID로 워드프레스 카테고리 삭제하기. 이 작업은 취소할 수 없습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:294
+#, fuzzy
+msgid "Delete a WordPress custom post type post by ID. This action cannot be undone."
+msgstr "ID로 워드프레스 사용자 정의 글 유형 글을 삭제합니다. 이 작업은 되돌릴 수 없습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:56
+#, fuzzy
+msgid "Delete a WordPress media item permanently. This action cannot be undone."
+msgstr "워드프레스 미디어 항목을 영구적으로 삭제합니다. 이 작업은 되돌릴 수 없습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:66
+#, fuzzy
+msgid "Delete a WordPress page by ID. This action cannot be undone."
+msgstr "아이디로 워드프레스 페이지 삭제하기. 이 작업은 취소할 수 없습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:66
+#, fuzzy
+msgid "Delete a WordPress post by ID. This action cannot be undone."
+msgstr "아이디로 워드프레스 글 삭제하기. 이 작업은 되돌릴 수 없습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:66
+#, fuzzy
+msgid "Delete a WordPress tag by ID. This action cannot be undone."
+msgstr "아이디로 워드프레스 태그를 삭제합니다. 이 작업은 취소할 수 없습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:90
+#, fuzzy
+msgid "Delete a WordPress user by ID. This action cannot be undone."
+msgstr "아이디로 워드프레스 사용자 삭제하기. 이 작업은 취소할 수 없습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:65
+#, fuzzy
+msgid "Delete Category"
+msgstr "카테고리 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:293
+#, fuzzy
+msgid "Delete Custom Post Type Post"
+msgstr "사용자 정의 글 유형 게시물 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:55
+#, fuzzy
+msgid "Delete Media"
+msgstr "미디어 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:65
+#, fuzzy
+msgid "Delete Page"
+msgstr "페이지 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:65
+#, fuzzy
+msgid "Delete Post"
+msgstr "게시물 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:65
+#, fuzzy
+msgid "Delete Tag"
+msgstr "태그 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:89
+#, fuzzy
+msgid "Delete User"
+msgstr "사용자 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:67
+#, fuzzy
+msgid "Delete WooCommerce Product"
+msgstr "우커머스 제품 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
+#, fuzzy
+msgid "Delete WooCommerce Product Brand"
+msgstr "우커머스 제품 브랜드 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:125
+#, fuzzy
+msgid "Delete WooCommerce Product Category"
+msgstr "우커머스 제품 카테고리 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:192
+#, fuzzy
+msgid "Delete WooCommerce Product Tag"
+msgstr "우커머스 제품 태그 삭제"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:70
+msgid "Describe your product in short"
+msgstr "제품을 간단히 설명하세요"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:40
+msgid "Description"
+msgstr "설명"
+
+#: includes/class-hostinger-ai-assistant-errors.php:23
+msgid "Description is empty. Please provide a valid description."
+msgstr "설명란이 비어있습니다. 내용을 다시 입력해주세요."
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:85
+#, fuzzy
+msgid "Disable authentication password"
+msgstr "인증 비밀번호 비활성화"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
+#, fuzzy
+msgid "Disable authentication password status"
+msgstr "인증 비밀번호 상태 비활성화"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
+#, fuzzy
+msgid "Disable XML-RPC status"
+msgstr "XML-RPC 상태 비활성화"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:276
+#, fuzzy
+msgid "DNS Prefetch for static files"
+msgstr "정적 파일용 DNS 프리페치"
+
+#: includes/class-hostinger-ai-assistant-surveys.php:24
+msgid "Do you have any comments/suggestions to improve our AI tools?"
+msgstr "AI 도구를 개선하기 위한 의견이나 제안이 있으신가요?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:54
+msgid "Drop files here"
+msgstr "여기에 파일 드롭"
+
+#: admin/class-hostinger-ai-assistant-translations.php:150
+#, fuzzy
+msgid "Edit a WordPress post category by ID"
+msgstr "ID로 워드프레스 글 카테고리 편집"
+
+#: admin/class-hostinger-ai-assistant-translations.php:145
+#, fuzzy
+msgid "Edit a WordPress post tag (e.g., rename or update it)"
+msgstr "워드프레스 글 태그 편집(예: 이름 바꾸기 또는 업데이트)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:115
+#, fuzzy
+msgid "Edit an existing WordPress page by its ID"
+msgstr "ID로 기존 워드프레스 페이지 편집"
+
+#: admin/class-hostinger-ai-assistant-translations.php:135
+#, fuzzy
+msgid "Edit an existing WordPress post by its ID"
+msgstr "기존 워드프레스 글의 ID로 해당 글 수정하기"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:229
+msgid "Edit as a draft"
+msgstr "임시 글로 편집"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:48
+msgid "Edit site"
+msgstr "사이트 편집"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:89
+#, fuzzy
+msgid "Enable llms.txt generation"
+msgstr "Llms.txt 생성 사용"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
+#, fuzzy
+msgid "Enable llms.txt status"
+msgstr "Llms.txt 상태 활성화"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:65
+#, fuzzy
+msgid "Enable or disable maintenance mode"
+msgstr "유지 관리 모드 활성화 또는 비활성화"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:73
+#, fuzzy
+msgid "Enable or disable XML-RPC"
+msgstr "XML-RPC 활성화 또는 비활성화"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:314
+#, fuzzy
+msgid "Enables the maximum level of optimizations for improved page speed scores. Extensive testing required."
+msgstr "페이지 속도 점수 향상을 위해 최대 수준의 최적화를 활성화합니다. 광범위한 테스트가 필요합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:30
+#: admin/partials/hostinger-ai-assistant-tab-view.php:175
+msgid "Enter at least 10 characters"
+msgstr "10자 이상 입력"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:261
+#, fuzzy
+msgid "Enthusiastic beginners"
+msgstr "열정적인 초보자"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:291
+#, fuzzy
+msgid "Everything in Advanced"
+msgstr "고급 기능의 모든 것"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:306
+#, fuzzy
+msgid "Everything in Aggressive"
+msgstr "공격적인 모든 것"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:271
+#, fuzzy
+msgid "Everything in Basic"
+msgstr "기본 기능의 모든 것"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:257
+#, fuzzy
+msgid "Everything in Essentials"
+msgstr "에센셜의 모든 것"
+
+#: admin/class-hostinger-ai-assistant-translations.php:29
+msgid "Example: website development, WordPress tutorial, ..."
+msgstr "예: 웹사이트 개발, 워드프레스 튜토리얼, ..."
+
+#: admin/class-hostinger-ai-assistant-translations.php:81
+msgid "Excellent"
+msgstr "훌륭함"
+
+#: includes/content/class-hostinger-ai-assistant-content-filters.php:86
+msgid "External Featured Image"
+msgstr "외부 추천 이미지"
+
+#: admin/class-hostinger-ai-assistant-translations.php:36
+msgid "External featured image"
+msgstr "외부 추천 이미지"
+
+#. %s: Preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:373
+#, fuzzy,php-format
+msgid "Failed to apply preset: %s"
+msgstr "사전 설정을 적용하지 못했습니다: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:530
+#, fuzzy
+msgid "Failed to delete post"
+msgstr "글을 삭제하지 못했습니다"
+
+#. %s: Error message
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:223
+#, fuzzy,php-format
+msgid "Failed to flush cache: %s"
+msgstr "캐시를 플러시하지 못했습니다: %s"
+
+#. %s: Setting name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:193
+#, fuzzy,php-format
+msgid "Failed to get settings: %s"
+msgstr "설정을 가져오지 못했습니다: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:265
+#, fuzzy
+msgid "File is required"
+msgstr "파일 필요"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:227
+#, fuzzy
+msgid "File not found"
+msgstr "파일을 찾을 수 없음"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:99
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:101
+#, fuzzy
+msgid "Filter by author ID"
+msgstr "작성자 ID로 필터링"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:93
+#, fuzzy
+msgid "Filter by media type (image, video, audio, application)"
+msgstr "미디어 유형별 필터링(이미지, 동영상, 오디오, 애플리케이션)"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:97
+#, fuzzy
+msgid "Filter by MIME type (e.g., image/jpeg, video/mp4)"
+msgstr "MIME 유형별 필터링(예: 이미지/jpeg, 동영상/mp4)"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:105
+#, fuzzy
+msgid "Filter by parent post ID"
+msgstr "상위 글 ID로 필터링"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:103
+#, fuzzy
+msgid "Filter by post status (publish, draft, pending, etc.)"
+msgstr "글 상태별 필터링(게시, 초안, 보류 중 등)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:140
+#, fuzzy
+msgid "Find and filter posts with pagination options"
+msgstr "페이지 매김 옵션으로 글 찾기 및 필터링"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:58
+#, fuzzy
+msgid "Flush LiteSpeed Cache"
+msgstr "라이트스피드 캐시 플러시"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:274
+#, fuzzy
+msgid "Font Display Optimization"
+msgstr "글꼴 표시 최적화"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:132
+#, fuzzy
+msgid "Force category deletion"
+msgstr "카테고리 강제 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:77
+#, fuzzy
+msgid "Force HTTPS redirects"
+msgstr "강제 HTTPS 리디렉션"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
+#, fuzzy
+msgid "Force HTTPS status"
+msgstr "HTTPS 상태 강제 적용"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:267
+#, fuzzy
+msgid "Force Product Brand deletion"
+msgstr "제품 브랜드 강제 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:199
+#, fuzzy
+msgid "Force tag deletion"
+msgstr "태그 강제 삭제"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:81
+#, fuzzy
+msgid "Force WWW in URLs"
+msgstr "URL에 WWW 강제 삽입"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
+#, fuzzy
+msgid "Force WWW status"
+msgstr "강제 WWW 상태"
+
+#: admin/class-hostinger-ai-assistant-translations.php:24
+#: admin/partials/hostinger-ai-assistant-tab-view.php:106
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:89
+msgid "Formal"
+msgstr "공식"
+
+#: admin/class-hostinger-ai-assistant-translations.php:26
+#: admin/partials/hostinger-ai-assistant-tab-view.php:108
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:91
+msgid "Friendly"
+msgstr "친절"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:254
+msgid "Generate new content"
+msgstr "새로운 콘텐츠 생성"
+
+#: admin/class-hostinger-ai-assistant-translations.php:169
+#, fuzzy
+msgid "Generate sales report"
+msgstr "판매 보고서 생성"
+
+#: admin/class-hostinger-ai-assistant-translations.php:171
+#, fuzzy
+msgid "Generate WooCommerce sales report for my store"
+msgstr "내 스토어에 대한 WooCommerce 판매 보고서 생성"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:264
+#: admin/partials/hostinger-ai-assistant-tab-view.php:267
+msgid "Generating content..."
+msgstr "콘텐츠 생성하기..."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:91
+#, fuzzy
+msgid "Get a list of all available LiteSpeed Cache optimization presets with their descriptions, features, risk levels, and requirements."
+msgstr "설명, 기능, 위험 수준, 요구 사항과 함께 사용 가능한 모든 LiteSpeed 캐시 최적화 사전 설정 목록을 확인하세요."
+
+#: admin/class-hostinger-ai-assistant-translations.php:164
+#, fuzzy
+msgid "Get a list of orders"
+msgstr "주문 목록 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:20
+#, fuzzy
+msgid "Get a list of WooCommerce orders with search and filter capabilities. Returns a list of orders matching the criteria."
+msgstr "검색 및 필터링 기능을 통해 WooCommerce 주문 목록을 가져옵니다. 조건과 일치하는 주문 목록을 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:31
+#, fuzzy
+msgid "Get a single WooCommerce product by ID. Returns the full product object with all fields."
+msgstr "ID로 단일 WooCommerce 제품을 가져옵니다. 모든 필드가 포함된 전체 제품 개체를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:29
+#, fuzzy
+msgid "Get a single WordPress category by ID. Returns the full category object with all fields."
+msgstr "ID로 단일 워드프레스 카테고리를 가져옵니다. 모든 필드가 포함된 전체 카테고리 객체를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:29
+#, fuzzy
+msgid "Get a single WordPress page by ID. Returns the full page object with all fields."
+msgstr "ID로 단일 워드프레스 페이지를 가져옵니다. 모든 필드가 포함된 전체 페이지 객체를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:29
+#, fuzzy
+msgid "Get a single WordPress post by ID. Returns the full post object with all fields."
+msgstr "ID로 단일 워드프레스 글을 가져옵니다. 모든 필드가 포함된 전체 게시물 객체를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:29
+#, fuzzy
+msgid "Get a single WordPress tag by ID. Returns the full tag object with all fields."
+msgstr "ID로 단일 워드프레스 태그를 가져옵니다. 모든 필드가 포함된 전체 태그 객체를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:44
+#, fuzzy
+msgid "Get a single WordPress user by ID. Returns the full user object with all fields."
+msgstr "ID로 단일 워드프레스 사용자를 가져옵니다. 모든 필드가 포함된 전체 사용자 객체를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:142
+#, fuzzy
+msgid "Get a WordPress custom post type post by ID"
+msgstr "ID로 워드프레스 사용자 정의 글 유형 게시물 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:32
+#, fuzzy
+msgid "Get a WordPress media item details by ID. Returns the full media object with all fields."
+msgstr "ID로 워드프레스 미디어 항목 세부 정보를 가져옵니다. 모든 필드가 포함된 전체 미디어 객체를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:28
+#, fuzzy
+msgid "Get Category"
+msgstr "카테고리 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:28
+#, fuzzy
+msgid "Get current Hostinger plugin settings including maintenance mode, XML-RPC, HTTPS, and other security options."
+msgstr "유지 관리 모드, XML-RPC, HTTPS 및 기타 보안 옵션을 포함한 최신 Hostinger 플러그인 설정을 확인하세요."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:30
+#, fuzzy
+msgid "Get current LiteSpeed Cache settings including active preset, cache status, and key configuration options."
+msgstr "활성 프리셋, 캐시 상태 및 주요 구성 옵션을 포함한 현재 LiteSpeed 캐시 설정을 가져옵니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:118
+#, fuzzy
+msgid "Get Current User"
+msgstr "현재 사용자 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:141
+#, fuzzy
+msgid "Get Custom Post Type Post"
+msgstr "맞춤 포스트 유형 게시물 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:20
+#, fuzzy
+msgid "Get General Settings"
+msgstr "일반 설정 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:27
+#, fuzzy
+msgid "Get Hostinger Plugin Settings"
+msgstr "Hostinger 플러그인 설정 받기"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:29
+#, fuzzy
+msgid "Get LiteSpeed Cache Settings"
+msgstr "LiteSpeed 캐시 설정 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:31
+#, fuzzy
+msgid "Get Media"
+msgstr "미디어 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:142
+#, fuzzy
+msgid "Get Media File"
+msgstr "미디어 파일 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:28
+#, fuzzy
+msgid "Get Page"
+msgstr "페이지 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:28
+#, fuzzy
+msgid "Get Post"
+msgstr "게시물 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:16
+#, fuzzy
+msgid "Get Site Info"
+msgstr "사이트 정보 얻기"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:28
+#, fuzzy
+msgid "Get Tag"
+msgstr "태그 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:143
+#, fuzzy
+msgid "Get the actual file content (blob) of a WordPress media item."
+msgstr "워드프레스 미디어 항목의 실제 파일 콘텐츠(블롭)를 가져옵니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:119
+#, fuzzy
+msgid "Get the current logged-in user information."
+msgstr "현재 로그인한 사용자 정보를 가져옵니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:43
+#, fuzzy
+msgid "Get User"
+msgstr "사용자 가져오기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:37
+#, fuzzy
+msgid "Get WooCommerce Coupons Report"
+msgstr "우커머스 쿠폰 보고서 받기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:38
+#, fuzzy
+msgid "Get WooCommerce coupons totals report. Returns count of coupons by coupon type."
+msgstr "WooCommerce 쿠폰 합계 보고서 받기. 쿠폰 유형별 쿠폰 반품 횟수입니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:44
+#, fuzzy
+msgid "Get WooCommerce Customers Report"
+msgstr "WooCommerce 고객 보고서 받기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:45
+#, fuzzy
+msgid "Get WooCommerce customers totals report. Returns statistics about customers."
+msgstr "WooCommerce 고객 합계 보고서를 받습니다. 고객에 대한 통계를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:51
+#, fuzzy
+msgid "Get WooCommerce Orders Report"
+msgstr "우커머스 주문 보고서 받기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:52
+#, fuzzy
+msgid "Get WooCommerce orders totals report. Returns statistics about orders."
+msgstr "WooCommerce 주문 합계 보고서를 받습니다. 주문에 대한 통계를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:30
+#, fuzzy
+msgid "Get WooCommerce Product"
+msgstr "우커머스 제품 받기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:58
+#, fuzzy
+msgid "Get WooCommerce Products Report"
+msgstr "우커머스 제품 보고서 받기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:59
+#, fuzzy
+msgid "Get WooCommerce products totals report. Returns statistics about products."
+msgstr "WooCommerce 제품 합계 보고서를 받습니다. 제품에 대한 통계를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:65
+#, fuzzy
+msgid "Get WooCommerce Reviews Report"
+msgstr "WooCommerce 리뷰 보고서 받기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:66
+#, fuzzy
+msgid "Get WooCommerce reviews totals report. Returns statistics about product reviews."
+msgstr "WooCommerce 리뷰 총계 보고서 받기. 제품 리뷰에 대한 통계를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:72
+#, fuzzy
+msgid "Get WooCommerce Sales Report"
+msgstr "WooCommerce 판매 보고서 받기"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:73
+#, fuzzy
+msgid "Get WooCommerce sales report. Returns detailed sales statistics and revenue data."
+msgstr "WooCommerce 판매 보고서를 받습니다. 자세한 판매 통계 및 매출 데이터를 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:21
+#, fuzzy
+msgid "Get WordPress general site settings including title, description, timezone, and other configuration options."
+msgstr "제목, 설명, 표준 시간대 및 기타 구성 옵션을 포함한 워드프레스 일반 사이트 설정을 가져옵니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:119
+#, fuzzy
+msgid "Get WordPress site information"
+msgstr "워드프레스 사이트 정보 얻기"
+
+#: admin/class-hostinger-ai-assistant-translations.php:71
+#, fuzzy
+msgid "Good response"
+msgstr "좋은 반응"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:277
+#, fuzzy
+msgid "Gravatar Cache"
+msgstr "그라바타 캐시"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:272
+#, fuzzy
+msgid "Guest Mode and Guest Optimization"
+msgstr "게스트 모드 및 게스트 최적화"
+
+#: admin/class-hostinger-ai-assistant-translations.php:64
+#, fuzzy
+msgid "Hello 👋"
+msgstr "안녕하세요 👋"
+
+#: admin/class-hostinger-ai-assistant-translations.php:42
+msgid "Hi, I'm Kodee, your personal AI assistant. You can ask me any questions you have regarding WordPress. I'm still learning, so sometimes can make mistakes. What questions do you have?"
+msgstr "안녕하세요, 저는 여러분의 AI 개인 비서입니다. 워드프레스에 관해 궁금한 점이 있으면 무엇이든 물어보세요. 아직 배우는 중이라 가끔 실수를 할 수 있습니다. 어떤 질문이 있으신가요?"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:246
+#, fuzzy
+msgid "Higher TTL"
+msgstr "더 높은 TTL"
+
+#: admin/class-hostinger-ai-assistant-translations.php:50
+msgid "History"
+msgstr "기록"
+
+#. Author of the plugin
+msgid "Hostinger"
+msgstr "호스팅어"
+
+#. Name of the plugin
+msgid "Hostinger AI"
+msgstr "호스팅어 AI"
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:75
+#, fuzzy
+msgid "Hostinger AI Abilities"
+msgstr "Hostinger AI 능력"
+
+#. Description of the plugin
+msgid "Hostinger AI plugin for WordPress."
+msgstr "워드프레스 전용 호스팅어 AI 플러그인."
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:124
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:139
+#, fuzzy
+msgid "Hostinger plugin settings option not defined"
+msgstr "Hostinger 플러그인 설정 옵션이 정의되지 않았습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:65
+#, fuzzy
+msgid "How can I help you today?"
+msgstr "오늘은 무엇을 도와드릴까요?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:79
+msgid "How can we improve your experience?"
+msgstr "사용자 경험을 개선하려면 어떻게 해야 하나요?"
+
+#: includes/class-hostinger-ai-assistant-surveys.php:23
+msgid "How would you rate your experience using our AI Assistant plugin for content generation? (Scale 1-10)"
+msgstr "AI 어시스턴트 플러그인으로 콘텐츠를 만들어본 경험은 어떠셨나요? (1~10점에서 선택)"
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://hostinger.com"
+msgstr "https://hostinger.com"
+
+#: admin/class-hostinger-ai-assistant-translations.php:105
+msgid "I'm sorry, I didn't understand your question. Could you please rephrase it or ask something different?"
+msgstr "죄송합니다. 질문을 이해하지 못했습니다. 다시 말씀해 주시거나 다른 질문을 해 주시겠습니까?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:182
+msgid "If you skip this part, AI will automatically generate keyword suggestions after you generate the content"
+msgstr "이 부분을 건너뛰면 콘텐츠를 생성한 후 AI가 자동으로 키워드를 제안합니다"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:258
+#, fuzzy
+msgid "Image Optimization"
+msgstr "이미지 최적화"
+
+#: includes/content/class-hostinger-ai-assistant-content-filters.php:105
+msgid "Image URL:"
+msgstr "이미지 URL:"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:283
+#, fuzzy
+msgid "Includes many optimizations known to improve page speed scores."
+msgstr "페이지 속도 점수를 향상시키는 것으로 알려진 많은 최적화가 포함되어 있습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:298
+#, fuzzy
+msgid "Includes many optimizations known to improve page speed scores. Testing recommended."
+msgstr "페이지 속도 점수를 향상시키는 것으로 알려진 많은 최적화가 포함되어 있습니다. 테스트를 권장합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:262
+#, fuzzy
+msgid "Includes optimizations known to improve site score in page speed measurement tools."
+msgstr "페이지 속도 측정 도구에서 사이트 점수를 향상시키는 것으로 알려진 최적화가 포함되어 있습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:311
+#, fuzzy
+msgid "Inline CSS added to Combine"
+msgstr "결합에 인라인 CSS 추가"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:310
+#, fuzzy
+msgid "Inline JS added to Combine"
+msgstr "결합에 인라인 JS 추가"
+
+#: admin/class-hostinger-ai-assistant-translations.php:37
+msgid "Insert this image inside content"
+msgstr "콘텐츠 안에 이 이미지 삽입"
+
+#: includes-psr4/Mcp/McpServer.php:72
+#, fuzzy
+msgid "Invalid API key"
+msgstr "잘못된 API 키"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:275
+#, fuzzy
+msgid "Invalid base64 data"
+msgstr "잘못된 base64 데이터"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:222
+#, fuzzy
+msgid "Invalid media ID"
+msgstr "잘못된 미디어 ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:354
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:399
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:423
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:459
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:510
+#, fuzzy
+msgid "Invalid post type"
+msgstr "잘못된 게시물 유형"
+
+#. %s: Allowed preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:348
+#, fuzzy,php-format
+msgid "Invalid preset. Allowed presets: %s"
+msgstr "잘못된 사전 설정입니다. 허용된 사전 설정: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:275
+#, fuzzy
+msgid "JS Defer for both external and inline JS"
+msgstr "외부 및 인라인 JS 모두에 대한 JS Defer"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:309
+#, fuzzy
+msgid "JS Delayed"
+msgstr "JS 지연"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:9
+msgid "Keywords"
+msgstr "키워드"
+
+#: admin/class-hostinger-ai-assistant-translations.php:43
+msgid "Kodee"
+msgstr "Kodee"
+
+#: admin/class-hostinger-ai-assistant-translations.php:55
+#, fuzzy
+msgid "Kodee only supports JPEG, JPG, PNG, GIF, HEIC, and DNG files"
+msgstr "코디는 JPEG, JPG, PNG, GIF, HEIC 및 DNG 파일만 지원합니다"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:295
+#, fuzzy
+msgid "Lazy Load for Iframes"
+msgstr "아이프레임용 지연 로드"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:307
+#, fuzzy
+msgid "Lazy Load for Images"
+msgstr "이미지 지연 로드"
+
+#: admin/class-hostinger-ai-assistant-translations.php:45
+#: admin/class-hostinger-ai-assistant-translations.php:75
+msgid "Leave feedback"
+msgstr "피드백 남기기"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:164
+msgid "Let us know more about your content idea. For example: Article about how to use WordPress to dive into website development including tutorials how to use it in a simple way..."
+msgstr "콘텐츠 아이디어에 대해 자세히 알려주세요. 예를 들어 워드프레스를 사용하여 웹사이트 개발에 뛰어드는 방법에 대한 글(간단한 사용 방법 튜토리얼 포함)..."
+
+#: admin/class-hostinger-ai-assistant-translations.php:31
+msgid "Let us now more about your post idea. Share more details for better results"
+msgstr "이제 여러분의 포스트 아이디어에 대해 자세히 알려주세요. 더 나은 결과를 위해 세부 사항을 최대한 공유 해주세요"
+
+#. %s: post type names
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:39
+#, fuzzy,php-format
+msgid "List all available WordPress custom post types including %s"
+msgstr "를 포함하여 사용 가능한 모든 워드프레스 사용자 지정 게시물 유형을 나열합니다"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:224
+#, fuzzy
+msgid "List all WooCommerce product brands. Returns a list of product brands."
+msgstr "모든 WooCommerce 제품 브랜드를 나열합니다. 제품 브랜드 목록을 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:89
+#, fuzzy
+msgid "List all WooCommerce product categories. Returns a list of product categories."
+msgstr "모든 WooCommerce 제품 카테고리를 나열합니다. 제품 카테고리 목록을 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:156
+#, fuzzy
+msgid "List all WooCommerce product tags. Returns a list of product tags."
+msgstr "모든 WooCommerce 제품 태그를 나열합니다. 제품 태그 목록을 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:18
+#, fuzzy
+msgid "List all WordPress post categories with pagination and filtering."
+msgstr "페이지 매김 및 필터링으로 모든 워드프레스 글 카테고리를 나열합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:18
+#, fuzzy
+msgid "List all WordPress post tags with pagination and filtering."
+msgstr "페이지 매김 및 필터링 기능을 사용하여 모든 워드프레스 글 태그를 나열합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:17
+#, fuzzy
+msgid "List Categories"
+msgstr "카테고리 목록"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:90
+#, fuzzy
+msgid "List LiteSpeed Cache Presets"
+msgstr "LiteSpeed 캐시 사전 설정 목록"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:20
+#, fuzzy
+msgid "List Media"
+msgstr "미디어 목록"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:36
+#, fuzzy
+msgid "List Post Types"
+msgstr "글 유형 나열"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:17
+#, fuzzy
+msgid "List Tags"
+msgstr "태그 목록"
+
+#: admin/class-hostinger-ai-assistant-translations.php:124
+#, fuzzy
+msgid "List users with their roles"
+msgstr "역할이 있는 사용자 목록"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
+#, fuzzy
+msgid "List WooCommerce Product Brands"
+msgstr "WooCommerce 제품 브랜드 나열"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:88
+#, fuzzy
+msgid "List WooCommerce Product Categories"
+msgstr "우커머스 제품 카테고리 나열"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:155
+#, fuzzy
+msgid "List WooCommerce Product Tags"
+msgstr "우커머스 제품 태그 나열"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:21
+#, fuzzy
+msgid "List WordPress media items with pagination and filtering."
+msgstr "페이지 매김 및 필터링으로 워드프레스 미디어 항목을 나열합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:159
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:203
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:233
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:327
+#, fuzzy
+msgid "LiteSpeed Cache plugin is not active"
+msgstr "LiteSpeed 캐시 플러그인이 활성화되어 있지 않습니다"
+
+#. %s: Preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:365
+#, fuzzy,php-format
+msgid "LiteSpeed Cache preset \"%s\" has been applied successfully. A backup of your previous settings was created automatically."
+msgstr "라이트스피드 캐시 사전 설정 \"%s\"가 성공적으로 적용되었습니다. 이전 설정의 백업이 자동으로 생성되었습니다."
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:143
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:81
+msgid "Long"
+msgstr "긴"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:183
+#, fuzzy
+msgid "Maintenance mode status"
+msgstr "유지 관리 모드 상태"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:137
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:80
+msgid "Medium"
+msgstr "중간"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:29
+msgid "Meta description"
+msgstr "메타 디스크립션"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:30
+msgid "Meta descriptions offer concise page summaries in search results, aiding user understanding before clicking."
+msgstr "메타 디스크립션은 검색 결과에 페이지 내용을 간단히 보여주어, 사용자가 클릭하기 전에 내용을 파악할 수 있게 해줍니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:259
+#, fuzzy
+msgid "Mobile Cache"
+msgstr "모바일 캐시"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:282
+#, fuzzy
+msgid "Most websites"
+msgstr "대부분의 웹사이트"
+
+#: admin/class-hostinger-ai-assistant-translations.php:23
+#: admin/partials/hostinger-ai-assistant-tab-view.php:105
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:88
+msgid "Neutral"
+msgstr "중립"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:114
+#, fuzzy
+msgid "Number of items per page"
+msgstr "페이지당 항목 수"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:112
+#, fuzzy
+msgid "Number of posts per page"
+msgstr "페이지당 게시물 수"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:77
+#, fuzzy
+msgid "Number of posts to show per page"
+msgstr "페이지당 표시할 글 수"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:29
+msgid "Open guide"
+msgstr "가이드 열기"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:93
+#, fuzzy
+msgid "Opt-in to MCP"
+msgstr "MCP 옵트인"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
+#, fuzzy
+msgid "Opt-in Web2Agent MCP status"
+msgstr "옵트인 웹2에이전트 MCP 상태"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:179
+msgid "Optional"
+msgstr "선택 사항"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:154
+#, fuzzy
+msgid "Optional. The size of the image to retrieve (thumbnail, medium, large, full). Defaults to full/original size."
+msgstr "선택 사항입니다. 검색할 이미지의 크기(썸네일, 중간, 큰, 전체)입니다. 기본값은 전체/원본 크기입니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:109
+#, fuzzy
+msgid "Page number for pagination"
+msgstr "페이지 매김을 위한 페이지 번호"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:107
+#, fuzzy
+msgid "Page number for pagination (starts from 1)"
+msgstr "페이지 매김을 위한 페이지 번호(1부터 시작)"
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:16
+#, fuzzy
+msgid "Plugins Information"
+msgstr "플러그인 정보"
+
+#: admin/class-hostinger-ai-assistant-translations.php:80
+msgid "Poor"
+msgstr "불편함"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:409
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:469
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:520
+#, fuzzy
+msgid "Post not found"
+msgstr "게시물을 찾을 수 없습니다"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:38
+msgid "Powered by"
+msgstr "제공:"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:335
+#, fuzzy
+msgid "Preset parameter is required"
+msgstr "사전 설정 매개변수 필요"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:186
+msgid "Press Enter key to finalize a keyword"
+msgstr "Enter 키를 눌러 키워드를 완성합니다"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:39
+msgid "Preview site"
+msgstr "사이트 미리보기"
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about active and available WordPress plugins"
+msgstr "활성 및 사용 가능한 워드프레스 플러그인에 대한 자세한 정보를 제공합니다"
+
+#: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about registered WordPress users and their roles"
+msgstr "등록된 워드프레스 사용자 및 역할에 대한 자세한 정보를 제공합니다"
+
+#: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:17
+#, fuzzy
+msgid "Provides detailed information about the active WordPress theme and its parent theme if applicable"
+msgstr "활성 워드프레스 테마 및 해당되는 경우 상위 테마에 대한 자세한 정보를 제공합니다"
+
+#: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:17
+#, fuzzy
+msgid "Provides detailed information about the WordPress site like site name, url, description, admin email, plugins, themes, users, and more."
+msgstr "사이트 이름, URL, 설명, 관리자 이메일, 플러그인, 테마, 사용자 등 워드프레스 사이트에 대한 자세한 정보를 제공합니다."
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:17
+#, fuzzy
+msgid "Provides detailed information about WordPress site settings including general, reading, discussion, media, permalink, privacy, and writing settings"
+msgstr "일반, 읽기, 토론, 미디어, 퍼머링크, 개인정보, 글쓰기 설정을 포함한 워드프레스 사이트 설정에 대한 자세한 정보를 제공합니다"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:17
+#, fuzzy
+msgid "Provides general information about the WordPress site including site details, plugins, themes, and users"
+msgstr "사이트 세부 정보, 플러그인, 테마, 사용자 등 워드프레스 사이트에 대한 일반 정보를 제공합니다"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:235
+msgid "Publish"
+msgstr "게시"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:59
+#, fuzzy
+msgid "Purge all LiteSpeed caches including LSCache, CSS/JS, localized resources, object cache, and opcache."
+msgstr "LSCache, CSS/JS, 로컬라이즈된 리소스, 오브젝트 캐시, 옵캐시를 포함한 모든 LiteSpeed 캐시를 제거합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:73
+#, fuzzy
+msgid "Rate your conversation"
+msgstr "대화 평가하기"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:280
+#, fuzzy
+msgid "Remove Noscript Tags"
+msgstr "노스크립트 태그 제거"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:278
+#, fuzzy
+msgid "Remove Query Strings from Static Files"
+msgstr "정적 파일에서 쿼리 문자열 제거"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:279
+#, fuzzy
+msgid "Remove WordPress Emoji"
+msgstr "워드프레스 이모티콘 제거"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:294
+#, fuzzy
+msgid "Removed Unused CSS for Users"
+msgstr "사용자를 위해 사용하지 않는 CSS 제거"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:80
+#, fuzzy
+msgid "Report period. Options: week, month, last_month, year."
+msgstr "보고 기간. 옵션: 주, 월, 마지막_월, 연도."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:239
+#, fuzzy
+msgid "Requested size not found"
+msgstr "요청한 크기를 찾을 수 없습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:46
+msgid "Restart chatbot"
+msgstr "챗봇 다시 시작"
+
+#: admin/class-hostinger-ai-assistant-translations.php:165
+#, fuzzy
+msgid "Retrieve a list of WooCommerce orders with filters"
+msgstr "필터를 사용하여 WooCommerce 주문 목록 검색하기"
+
+#: admin/class-hostinger-ai-assistant-translations.php:121
+#, fuzzy
+msgid "Retrieve detailed information about my WordPress site"
+msgstr "내 워드프레스 사이트에 대한 자세한 정보 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:89
+#, fuzzy
+msgid "Return sales for a specific end date. Format: YYYY-MM-DD."
+msgstr "특정 종료 날짜에 대한 반품 판매. 형식: YYYY-MM-DD."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:85
+#, fuzzy
+msgid "Return sales for a specific start date. Format: YYYY-MM-DD."
+msgstr "특정 시작 날짜에 대한 반품 판매. 형식: YYYY-MM-DD."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:20
+#, fuzzy
+msgid "Search and filter WooCommerce products with pagination. Returns a list of products matching the search criteria."
+msgstr "페이지 매김으로 WooCommerce 제품을 검색하고 필터링합니다. 검색 기준과 일치하는 제품 목록을 반환합니다."
+
+#. %s: post type names
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:82
+#, fuzzy,php-format
+msgid "Search and filter WordPress custom post types posts including %s with pagination"
+msgstr "페이지 매김이 있는 %s를 포함한 워드프레스 사용자 지정 게시물 유형 게시물 검색 및 필터링"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress pages with pagination. Returns a list of pages matching the search criteria."
+msgstr "페이지 매김으로 워드프레스 페이지를 검색하고 필터링합니다. 검색 조건과 일치하는 페이지 목록을 반환합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress posts with pagination. Returns a list of posts matching the search criteria."
+msgstr "페이지 매김으로 워드프레스 글을 검색하고 필터링합니다. 검색 기준과 일치하는 글 목록을 반환합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:125
+#, fuzzy
+msgid "Search and filter WordPress users with pagination"
+msgstr "페이지 매김으로 워드프레스 사용자 검색 및 필터링"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:18
+#, fuzzy
+msgid "Search and filter WordPress users with pagination. Returns a list of users matching the search criteria."
+msgstr "페이지 매김으로 워드프레스 사용자를 검색하고 필터링합니다. 검색 조건과 일치하는 사용자 목록을 반환합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:139
+#, fuzzy
+msgid "Search blog posts"
+msgstr "블로그 게시물 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:79
+#, fuzzy
+msgid "Search Custom Post Types Posts"
+msgstr "사용자 정의 글 유형 게시물 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:81
+#, fuzzy
+msgid "Search Media"
+msgstr "미디어 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:17
+#, fuzzy
+msgid "Search Pages"
+msgstr "페이지 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:17
+#, fuzzy
+msgid "Search Posts"
+msgstr "게시물 검색"
+
+#: admin/class-hostinger-ai-assistant-translations.php:141
+#, fuzzy
+msgid "Search posts on my WordPress website"
+msgstr "내 워드프레스 웹사이트의 글 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:89
+#, fuzzy
+msgid "Search term to look for in media titles, captions, and descriptions"
+msgstr "미디어 제목, 캡션 및 설명에서 찾을 검색어"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:95
+#, fuzzy
+msgid "Search term to look for in post titles and content"
+msgstr "글 제목과 콘텐츠에서 찾을 검색어"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:17
+#, fuzzy
+msgid "Search Users"
+msgstr "사용자 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:19
+#, fuzzy
+msgid "Search WooCommerce Orders"
+msgstr "우커머스 주문 검색"
+
+#: admin/class-hostinger-ai-assistant-translations.php:166
+#, fuzzy
+msgid "Search WooCommerce orders for my store"
+msgstr "내 스토어에 대한 WooCommerce 주문 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:19
+#, fuzzy
+msgid "Search WooCommerce Products"
+msgstr "우커머스 제품 검색"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:82
+#, fuzzy
+msgid "Search WordPress media items by title, caption, or description with filtering options."
+msgstr "필터링 옵션을 사용하여 제목, 캡션 또는 설명으로 워드프레스 미디어 항목을 검색합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:126
+#, fuzzy
+msgid "Search WordPress users on my website"
+msgstr "내 웹사이트의 워드프레스 사용자 검색"
+
+#: admin/class-hostinger-ai-assistant-translations.php:56
+msgid "Selected file type is not supported"
+msgstr "선택한 파일 형식이 지원되지 않습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:83
+msgid "Send"
+msgstr "보내기"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:10
+msgid "SEO keywords improve web content visibility on search engines like Google by being relevant and naturally placed"
+msgstr "SEO 키워드를 자연스럽고 연관성 있게 사용하면 구글 등의 검색 엔진에서 웹 콘텐츠가 더 잘 노출됩니다"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:125
+#: admin/partials/hostinger-ai-assistant-tab-view.php:131
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:79
+msgid "Short"
+msgstr "짧은"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:16
+#, fuzzy
+msgid "Site Information"
+msgstr "사이트 정보"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:61
+#, fuzzy
+msgid "Site language"
+msgstr "사이트 언어"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:16
+#, fuzzy
+msgid "Site Settings"
+msgstr "사이트 설정"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:41
+#, fuzzy
+msgid "Site tagline/description"
+msgstr "사이트 태그 라인/설명"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:45
+#, fuzzy
+msgid "Site timezone"
+msgstr "사이트 시간대"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:37
+#, fuzzy
+msgid "Site title"
+msgstr "사이트 제목"
+
+#: admin/class-hostinger-ai-assistant-translations.php:103
+msgid "Sorry, the AI Chatbot is currently unavailable. Please try again later."
+msgstr "죄송합니다. 현재 AI 챗봇을 사용할 수 없습니다. 나중에 다시 시도해 주세요."
+
+#: admin/class-hostinger-ai-assistant-translations.php:104
+msgid "Sorry, the AI Chatbot request timed out. Please try again later."
+msgstr "AI 챗봇 요청 시간이 초과되었습니다. 나중에 다시 시도해 주세요."
+
+#: admin/class-hostinger-ai-assistant-translations.php:48
+#: admin/class-hostinger-ai-assistant-translations.php:92
+#: admin/class-hostinger-ai-assistant-translations.php:94
+msgid "Start new chat"
+msgstr "새 채팅 시작하기"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:57
+#, fuzzy
+msgid "Start of week (0 = Sunday, 1 = Monday, etc.)"
+msgstr "요일 시작(0 = 일요일, 1 = 월요일 등)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:99
+msgid "Talking to Kodee is in the works, we'll keep you posted once it's out!"
+msgstr "코디와의 대화는 준비 중이며, 출시되면 계속 알려드리겠습니다!"
+
+#: admin/class-hostinger-ai-assistant-translations.php:84
+msgid "Thank you for your feedback"
+msgstr "피드백을 보내주셔서 감사합니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:77
+msgid "Thanks for letting us know"
+msgstr "알려주셔서 감사합니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:76
+msgid "Thanks for letting us know. Click the button below if you want to leave additional feedback."
+msgstr "알려주셔서 감사합니다. 추가 피드백을 남기려면 아래 버튼을 클릭하세요."
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:197
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:255
+#, fuzzy
+msgid "The content of the post"
+msgstr "게시물의 내용"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:189
+#, fuzzy
+msgid "The custom post type to create"
+msgstr "생성할 사용자 정의 글 유형"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:301
+#, fuzzy
+msgid "The custom post type to delete"
+msgstr "삭제할 사용자 정의 글 유형"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:149
+#, fuzzy
+msgid "The custom post type to get"
+msgstr "가져올 사용자 정의 게시물 유형"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:91
+#, fuzzy
+msgid "The custom post type to search"
+msgstr "검색할 사용자 정의 글 유형"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:243
+#, fuzzy
+msgid "The custom post type to update"
+msgstr "업데이트할 사용자 정의 글 유형"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:201
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:259
+#, fuzzy
+msgid "The excerpt of the post"
+msgstr "게시물 발췌문"
+
+#: hostinger-ai-assistant.php:131
+#, php-format
+msgid "The Hostinger AI plugin requires minimum PHP version of <b>%s</b>. "
+msgstr "호스팅어 AI 플러그인을 사용하려면 PHP 버전 <b>%s</b> 이상이 필요합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:150
+#, fuzzy
+msgid "The ID of the media item"
+msgstr "미디어 항목의 ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:305
+#, fuzzy
+msgid "The ID of the post to delete"
+msgstr "삭제할 게시물의 ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:153
+#, fuzzy
+msgid "The ID of the post to get"
+msgstr "가져올 게시물의 ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:247
+#, fuzzy
+msgid "The ID of the post to update"
+msgstr "업데이트할 게시물의 ID"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:127
+#, fuzzy
+msgid "The preset to apply"
+msgstr "적용할 사전 설정"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:205
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:263
+#, fuzzy
+msgid "The status of the post (publish, draft, pending, etc.)"
+msgstr "글의 상태(게시, 임시글, 보류 중 등)"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:193
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:251
+#, fuzzy
+msgid "The title of the post"
+msgstr "게시물 제목"
+
+#: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:16
+#, fuzzy
+msgid "Theme Information"
+msgstr "테마 정보"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:20
+msgid "These keywords can help your article and website rank higher in search engines. You can input up to 5 keywords."
+msgstr "이 키워드들은 검색엔진에서 콘텐츠와 웹사이트 순위를 높이는 데 도움이 됩니다. 키워드는 최대 5개까지 입력 가능합니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:61
+#, fuzzy
+msgid "Thinking"
+msgstr "사고"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:254
+#, fuzzy
+msgid "This low-risk preset introduces basic optimizations for speed and user experience. Appropriate for enthusiastic beginners."
+msgstr "이 위험도가 낮은 프리셋은 속도와 사용자 경험을 위한 기본 최적화를 도입합니다. 열정적인 초보자에게 적합합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:242
+#, fuzzy
+msgid "This no-risk preset is appropriate for all websites. Good for new users, simple websites, or cache-oriented development."
+msgstr "이 무위험 프리셋은 모든 웹사이트에 적합합니다. 신규 사용자, 간단한 웹사이트 또는 캐시 위주의 개발에 적합합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:303
+#, fuzzy
+msgid "This preset almost certainly will require testing and exclusions for some CSS, JS and Lazy Loaded images. Pay special attention to logos, or HTML-based slider images."
+msgstr "이 사전 설정은 일부 CSS, JS 및 지연 로드된 이미지에 대한 테스트 및 제외가 거의 확실합니다. 로고 또는 HTML 기반 슬라이더 이미지에 특히 주의하세요."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:268
+#, fuzzy
+msgid "This preset is good for most websites, and is unlikely to cause conflicts. Any CSS or JS conflicts may be resolved with Page Optimization > Tuning tools."
+msgstr "이 사전 설정은 대부분의 웹사이트에 적합하며 충돌을 일으킬 가능성이 낮습니다. CSS 또는 JS 충돌은 페이지 최적화 > 튜닝 도구를 사용하여 해결할 수 있습니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:288
+#, fuzzy
+msgid "This preset might work out of the box for some websites, but be sure to test! Some CSS or JS exclusions may be necessary in Page Optimization > Tuning."
+msgstr "일부 웹사이트에서는 이 사전 설정이 바로 작동할 수 있지만 반드시 테스트해 보세요! 페이지 최적화 > 튜닝에서 일부 CSS 또는 JS를 제외해야 할 수도 있습니다."
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:270
+msgid "This will only take a moment"
+msgstr "잠시만 기다려주세요"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:53
+#, fuzzy
+msgid "Time format"
+msgstr "시간 형식"
+
+#: admin/class-hostinger-ai-assistant-notices.php:22
+msgid "To unlock the exclusive features of <b>Hostinger AI</b>, you must possess a unique API token, which is exclusively provided to Hostinger clients"
+msgstr "<b>호스팅어 AI</b>의 고급 기능은 호스팅어 고객에게만 제공되는 API 토큰으로 이용하실 수 있습니다."
+
+#. 1: minimum expiration time in seconds, 2: maximum expiration time in seconds
+#: includes-psr4/Mcp/Rest/JwtAuth.php:66
+#, fuzzy,php-format
+msgid "Token expiration must be between %1$d seconds (1 hour) and %2$d seconds (1 day)"
+msgstr "토큰 만료는 %1$d초(1시간)에서 %2$d초(1일) 사이여야 합니다"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:34
+#, fuzzy
+msgid "Token expiration time in seconds (3600-86400)"
+msgstr "토큰 만료 시간(초)(3600-86400)"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:81
+#, fuzzy
+msgid "Token ID is required."
+msgstr "토큰 ID가 필요합니다."
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:112
+#, fuzzy
+msgid "Token is invalid, expired, or has been revoked."
+msgstr "토큰이 유효하지 않거나 만료되었거나 해지되었습니다."
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:118
+#, fuzzy
+msgid "Token is malformed: missing user_id."
+msgstr "토큰이 잘못되었습니다: 사용자 아이디가 누락되었습니다."
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:89
+#, fuzzy
+msgid "Token not found in registry."
+msgstr "레지스트리에서 토큰을 찾을 수 없습니다."
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:99
+#, fuzzy
+msgid "Token revoked successfully."
+msgstr "토큰이 성공적으로 해지되었습니다."
+
+#. %s: error message from JWT library
+#: includes-psr4/Mcp/Rest/JwtAuth.php:135
+#, fuzzy,php-format
+msgid "Token validation failed: %s"
+msgstr "토큰 유효성 검사에 실패했습니다: %s"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:100
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:86
+msgid "Tone of voice"
+msgstr "톤앤매너"
+
+#: admin/class-hostinger-ai-assistant-translations.php:21
+msgid "tones selected"
+msgstr "톤으로 선택됨"
+
+#: admin/class-hostinger-ai-assistant-translations.php:25
+#: admin/partials/hostinger-ai-assistant-tab-view.php:107
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:90
+msgid "Trustworthy"
+msgstr "신뢰할 수 있는"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:104
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:129
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:140
+#, fuzzy
+msgid "Unique identifier for the resource"
+msgstr "리소스의 고유 식별자"
+
+#: includes/class-hostinger-ai-assistant-errors.php:36
+msgid "Unknown error code."
+msgstr "알 수 없는 오류 코드입니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:151
+#, fuzzy
+msgid "Update a post category on my WordPress website"
+msgstr "내 워드프레스 웹사이트의 글 카테고리 업데이트"
+
+#: admin/class-hostinger-ai-assistant-translations.php:146
+#, fuzzy
+msgid "Update a post tag on my WordPress website"
+msgstr "내 워드프레스 웹사이트의 글 태그 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:236
+#, fuzzy
+msgid "Update a WordPress custom post type post by ID"
+msgstr "ID로 워드프레스 사용자 정의 글 유형 게시물 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:43
+#, fuzzy
+msgid "Update a WordPress media item metadata. Only provided fields will be updated."
+msgstr "워드프레스 미디어 항목 메타데이터를 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:116
+#, fuzzy
+msgid "Update an existing page on my WordPress website"
+msgstr "내 워드프레스 웹사이트의 기존 페이지 업데이트"
+
+#: admin/class-hostinger-ai-assistant-translations.php:136
+#, fuzzy
+msgid "Update an existing post on my WordPress site"
+msgstr "내 워드프레스 사이트의 기존 글 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:248
+#, fuzzy
+msgid "Update an existing WooCommerce product brand by ID."
+msgstr "기존 WooCommerce 제품 브랜드를 ID로 업데이트합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:55
+#, fuzzy
+msgid "Update an existing WooCommerce product by ID. Only provided fields will be updated."
+msgstr "ID로 기존 WooCommerce 제품을 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:113
+#, fuzzy
+msgid "Update an existing WooCommerce product category by ID."
+msgstr "기존 WooCommerce 제품 카테고리를 ID별로 업데이트합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:180
+#, fuzzy
+msgid "Update an existing WooCommerce product tag by ID."
+msgstr "기존 WooCommerce 제품 태그를 ID로 업데이트합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress category by ID. Only provided fields will be updated."
+msgstr "ID로 기존 워드프레스 카테고리를 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress page by ID. Only provided fields will be updated."
+msgstr "ID로 기존 워드프레스 페이지를 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress post by ID. Only provided fields will be updated."
+msgstr "아이디로 기존 워드프레스 글을 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:53
+#, fuzzy
+msgid "Update an existing WordPress tag by ID. Only provided fields will be updated."
+msgstr "ID로 기존 워드프레스 태그를 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:74
+#, fuzzy
+msgid "Update an existing WordPress user by ID. Only provided fields will be updated."
+msgstr "아이디로 기존 워드프레스 사용자를 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:134
+#, fuzzy
+msgid "Update blog post"
+msgstr "블로그 게시물 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:52
+#, fuzzy
+msgid "Update Category"
+msgstr "카테고리 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:132
+#, fuzzy
+msgid "Update Current User"
+msgstr "현재 사용자 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:235
+#, fuzzy
+msgid "Update Custom Post Type Post"
+msgstr "사용자 정의 글 유형 게시물 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:31
+#, fuzzy
+msgid "Update General Settings"
+msgstr "일반 설정 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:57
+#, fuzzy
+msgid "Update Hostinger Plugin Settings"
+msgstr "Hostinger 플러그인 설정 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:58
+#, fuzzy
+msgid "Update Hostinger plugin settings. Only provided fields will be updated."
+msgstr "Hostinger 플러그인 설정을 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:42
+#, fuzzy
+msgid "Update Media"
+msgstr "미디어 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:52
+#, fuzzy
+msgid "Update Page"
+msgstr "업데이트 페이지"
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:52
+#, fuzzy
+msgid "Update Post"
+msgstr "게시물 업데이트"
+
+#: admin/class-hostinger-ai-assistant-translations.php:149
+#, fuzzy
+msgid "Update post category"
+msgstr "게시물 카테고리 업데이트"
+
+#: admin/class-hostinger-ai-assistant-translations.php:144
+#, fuzzy
+msgid "Update post tag"
+msgstr "게시물 태그 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:52
+#, fuzzy
+msgid "Update Tag"
+msgstr "태그 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:133
+#, fuzzy
+msgid "Update the current logged-in user information."
+msgstr "현재 로그인한 사용자 정보를 업데이트합니다."
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:73
+#, fuzzy
+msgid "Update User"
+msgstr "사용자 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:54
+#, fuzzy
+msgid "Update WooCommerce Product"
+msgstr "우커머스 제품 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
+#, fuzzy
+msgid "Update WooCommerce Product Brand"
+msgstr "우커머스 제품 브랜드 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:112
+#, fuzzy
+msgid "Update WooCommerce Product Category"
+msgstr "우커머스 제품 카테고리 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:179
+#, fuzzy
+msgid "Update WooCommerce Product Tag"
+msgstr "우커머스 제품 태그 업데이트"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:32
+#, fuzzy
+msgid "Update WordPress general site settings. Only provided fields will be updated."
+msgstr "워드프레스 일반 사이트 설정을 업데이트합니다. 제공된 필드만 업데이트됩니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:114
+#, fuzzy
+msgid "Update WordPress page"
+msgstr "워드프레스 페이지 업데이트"
+
+#: admin/class-hostinger-ai-assistant-translations.php:35
+msgid "Use this image as:"
+msgstr "이 이미지를 다음과 같이 사용합니다:"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:125
+#, fuzzy
+msgid "User associated with token no longer exists."
+msgstr "토큰과 연결된 사용자가 더 이상 존재하지 않습니다."
+
+#: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:16
+#, fuzzy
+msgid "Users Information"
+msgstr "사용자 정보"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:133
+msgid "Usually used for video, infographics, or product descriptions"
+msgstr "일반적으로 동영상, 인포그래픽 또는 제품 설명에 사용됩니다"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:145
+msgid "Usually used to make high-ranked articles that will generate more leads"
+msgstr "검색 순위가 높은 글을 작성하여 더 많은 잠재 고객을 확보하는 데 주로 사용됩니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:120
+#, fuzzy
+msgid "View site details like name, URL, description, admin email, plugins, themes, and users"
+msgstr "이름, URL, 설명, 관리자 이메일, 플러그인, 테마, 사용자 등의 사이트 세부 정보 보기"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:308
+#, fuzzy
+msgid "Viewport Image Generation"
+msgstr "뷰포트 이미지 생성"
+
+#: admin/class-hostinger-ai-assistant-translations.php:98
+msgid "Voice feature is coming soon"
+msgstr "음성 기능 곧 출시 예정"
+
+#: includes/class-hostinger-ai-assistant-errors.php:20
+msgid "We apologize for the inconvenience. The AI content generation process encountered a server error. Please try again later."
+msgstr "불편을 드려 죄송합니다. AI 콘텐츠 생성 과정에서 서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:297
+#, fuzzy
+msgid "Websites willing to test and tune settings"
+msgstr "설정을 테스트하고 조정할 의향이 있는 웹사이트"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:179
+msgid "What are the focus keywords of your content?"
+msgstr "콘텐츠의 핵심 키워드는 무엇인가요?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:56
+msgid "What do you want to make today?"
+msgstr "오늘은 무엇을 만들고 싶으신가요?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:157
+msgid "What is your content about?"
+msgstr "콘텐츠의 주제는 무엇인가요?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:27
+#: admin/partials/hostinger-ai-assistant-tab-view.php:109
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:92
+msgid "Witty"
+msgstr "위트있는"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:220
+msgid "words"
+msgstr "단어"
+
+#: admin/class-hostinger-ai-assistant-translations.php:82
+msgid "Write your feedback (optional)"
+msgstr "피드백 작성(선택 사항)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:51
+msgid "Write your question"
+msgstr "질문 작성하기"
+
+#. %s: PHP version
+#: hostinger-ai-assistant.php:135
+#, php-format
+msgid "You are running <b>%s</b> PHP version."
+msgstr "<b>%s</b> PHP 버전을 실행 중입니다."
+
+#: admin/class-hostinger-ai-assistant-translations.php:57
+msgid "You can only upload up to 6 files"
+msgstr "최대 6개 파일만 업로드할 수 있습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:78
+msgid "You rated your conversation"
+msgstr "대화를 평가했습니다"
+
+#: admin/class-hostinger-ai-assistant-translations.php:32
+msgid "You're good to go, but you can share more details for better results"
+msgstr "지금도 바로 시작 가능합니다만, 더 좋은 결과를 원하시면 자세한 내용을 추가해주세요"

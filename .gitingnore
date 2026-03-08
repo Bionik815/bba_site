@@ -1,0 +1,47 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Node / frontend tooling
+node_modules/
+dist/
+build/
+.next/
+coverage/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# WordPress runtime/cache
+wordpress/wp-content/cache/
+wordpress/wp-content/upgrade/
+wordpress/wp-content/uploads/cache/
+wordpress/wp-content/advanced-cache.php
+wordpress/wp-content/debug.log
+
+# Backups / dumps
+*.sql
+*.tar
+*.tar.gz
+*.zip
+backup*/
+backups*/

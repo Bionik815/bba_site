@@ -1,0 +1,1879 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hostinger AI Assistant 1.7.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hostinger-ai-assistant\n"
+"Last-Translator: \n"
+"Language-Team: Hindi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-03-25T14:33:28+00:00\n"
+"PO-Revision-Date: 2025-12-16 08:15+0000\n"
+"Language: hi_IN\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: hostinger-ai-assistant\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.29\n"
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:76
+msgid "Abilities that provide a way of interacting with WordPress site."
+msgstr ""
+
+#: includes/class-hostinger-ai-assistant-errors.php:14
+msgid "Action Failed. Try again or contact support. Apologies."
+msgstr "क्षमा करें, यह क्रिया विफल रही। दोबारा प्रयास करें या सपोर्ट से संपर्क करें।"
+
+#: admin/class-hostinger-ai-assistant-translations.php:60
+msgid "Active"
+msgstr "सक्रिय"
+
+#: admin/class-hostinger-ai-assistant-translations.php:111
+msgid "Add a new page to my WordPress website"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:131
+msgid "Add a new post to my WordPress website"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:155
+msgid "Add a new product to your WooCommerce store"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:182
+msgid "Add a new WordPress custom post type post"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:154
+msgid "Add a product"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:159
+msgid "Add a product category"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:129
+msgid "Add blog post"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:74
+msgid "Add Comment"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:109
+msgid "Add WordPress page"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:313
+msgid "Advanced users willing to test and exclude items"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:88
+msgid "After clearing history you won't be able to access previous chats."
+msgstr "हिस्ट्री मिटाने के बाद आप पुराने चैट्स ऐक्सेस नहीं कर पाएंगे।"
+
+#: admin/class-hostinger-ai-assistant-translations.php:93
+msgid "After starting new chat, you will be able to access previous chats from the history."
+msgstr "नई चैट शुरू करने के बाद आप अपनी हिस्ट्री से पुरानी चैट्स ऐक्सेस कर पाएंगे।"
+
+#: admin/class-hostinger-ai-assistant-admin.php:144
+#: admin/class-hostinger-ai-assistant-admin.php:145
+#: admin/class-hostinger-ai-assistant-admin.php:158
+#: admin/partials/hostinger-ai-assistant-tab-view.php:24
+msgid "AI Content Creator"
+msgstr "AI कॉन्टेंट क्रिएटर"
+
+#: admin/class-hostinger-ai-assistant-translations.php:52
+msgid "AI may produce inaccurate information"
+msgstr "AI गलत जानकारी उत्पन्न कर सकता है"
+
+#: admin/class-hostinger-ai-assistant-translations.php:34
+msgid "AI-generated image"
+msgstr "AI-जनरेटेड इमेज"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:217
+msgid "All LiteSpeed caches have been purged successfully."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:249
+msgid "All websites, new users, simple websites, or cache-oriented development"
+msgstr ""
+
+#: includes/class-hostinger-ai-assistant-errors.php:17
+msgid "An unexpected error occurred. Please try again or contact support."
+msgstr "एक अप्रत्याशित त्रुटि पेश आई है। कृपया दोबारा प्रयास करें या सपोर्ट से संपर्क करें।"
+
+#: includes-psr4/Mcp/McpServer.php:64
+msgid "API key required"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:120
+msgid "Apply a predefined optimization preset to LiteSpeed Cache settings. Available presets: basic (minimal optimization), advanced (balanced), aggressive (more optimization), essentials (core features), extreme (maximum optimization). A backup of current settings will be created automatically."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:119
+msgid "Apply LiteSpeed Cache Preset"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:244
+msgid "Are you sure you want to replace your existing content with a new one ?"
+msgstr "क्या आप अपना मौजूदा कॉन्टेंट किसी नई कॉन्टेंट से बदलना चाहते हैं?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:53
+msgid "Ask Kodee"
+msgstr "Kodee से पूछें"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:293
+msgid "Asynchronous CSS Loading with Critical CSS"
+msgstr ""
+
+#. %s: PHP version
+#: hostinger-ai-assistant.php:131
+#: admin/class-hostinger-ai-assistant-notices.php:22
+msgid "Attention:"
+msgstr "कृपया ध्यान दें:"
+
+#: admin/class-hostinger-ai-assistant-translations.php:72
+msgid "Bad response"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:139
+msgid "Balances depth and readability, engaging audiences and driving leads."
+msgstr "कॉन्टेंट की गहराई और स्पष्टता को संतुलित करता है, दर्शकों का ध्यान बनाए रखता है और लीडस् में बढ़ोतरी करता है।"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:205
+msgid "Brewing content with magic"
+msgstr "कॉन्टेंट तैयार करना मानो जैसे जादू"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:247
+msgid "Browser Cache"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:69
+msgid "Bypass code for maintenance mode"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
+msgid "Bypass code for maintenance mode. Needed only when maintenance mode is enabled."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:89
+#: admin/partials/hostinger-ai-assistant-tab-view.php:251
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: admin/class-hostinger-ai-assistant-translations.php:58
+msgid "Cannot restart the chat when Kodee is responding"
+msgstr "Kodee के जवाब देते समय चैट को रिस्टार्ट नहीं किया जा सकता है"
+
+#: admin/class-hostinger-ai-assistant-translations.php:47
+msgid "Cannot restart the chat when talking with the agent"
+msgstr "एजेंट से बात करते समय चैट को रिस्टार्ट नहीं किया जा सकता है"
+
+#: admin/class-hostinger-ai-assistant-translations.php:59
+msgid "Cannot start a new chat when Kodee is responding"
+msgstr "Kodee के जवाब देते समय नई चैट शुरू नहीं की जा सकती है"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:222
+msgid "characters"
+msgstr "वर्ण"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:152
+msgid "Choose the length of generated content"
+msgstr "जनरेट किए गए कॉन्टेंट की लंबाई तय करें"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:93
+msgid "Choose the type of content that will be generated"
+msgstr "चुनें कि आप किस प्रकार का कॉन्टेंट जनरेट करना चाहते हैं"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:114
+msgid "Choose your desired emotional impact on readers"
+msgstr "चुनें कि आप अपने पाठकों पर किस तरह का भावनात्मक प्रभाव छोड़ना चाहते हैं"
+
+#: admin/class-hostinger-ai-assistant-translations.php:87
+#: admin/class-hostinger-ai-assistant-translations.php:90
+msgid "Clear chat"
+msgstr "चैट मिटाएं"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:247
+msgid "Clicking <b>Generate new content</b> will permanently delete your existing content and generate a new one on your recent inputs."
+msgstr "<b>नया कॉन्टेंट जनरेट करें</b> पर क्लिक करने से आपका मौजूदा कॉन्टेंट स्थायी रूप से हट जाएगा और आपके हाल के इनपुट पर आधारित नया कॉन्टेंट तैयार किया जाएगा।"
+
+#: admin/class-hostinger-ai-assistant-translations.php:49
+#: admin/class-hostinger-ai-assistant-translations.php:100
+msgid "Close"
+msgstr "बंद करें"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:121
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:77
+msgid "Content length"
+msgstr "कॉन्टेंट की लंबाई"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:162
+msgid "Content main idea"
+msgstr "कॉन्टेंट का मुख्य आईडिया"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:63
+msgid "Content Type"
+msgstr "कॉन्टेंट का प्रकार"
+
+#: admin/class-hostinger-ai-assistant-translations.php:68
+msgid "Conversation was closed"
+msgstr "चैट बंद कर दी गई"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:65
+msgid "Convert emoticons to graphics"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:283
+msgid "Could not determine file type"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:160
+msgid "Create a new product category in WooCommerce"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:235
+msgid "Create a new WooCommerce product brand. Requires name."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:161
+msgid "Create a new WooCommerce product category for my store"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:100
+msgid "Create a new WooCommerce product category. Requires name."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:156
+msgid "Create a new WooCommerce product for my store"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:167
+msgid "Create a new WooCommerce product tag. Requires name."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:42
+msgid "Create a new WooCommerce product. Requires name and other product details."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:40
+msgid "Create a new WordPress page. Requires title and content."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:40
+msgid "Create a new WordPress post category. Requires a name."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:40
+msgid "Create a new WordPress post tag. Requires a name."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:40
+msgid "Create a new WordPress post. Requires title and content."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:58
+msgid "Create a new WordPress user. Requires username and email."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:170
+msgid "Create a WooCommerce sales report for a chosen period"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:110
+msgid "Create and publish a new page on your WordPress site"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:130
+msgid "Create and publish a new post on your WordPress site"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:39
+msgid "Create Category"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:195
+msgid "Create content"
+msgstr "कॉन्टेंट बनाएं"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:181
+msgid "Create Custom Post Type Post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:39
+msgid "Create Page"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:39
+msgid "Create Post"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:33
+msgid "Create Post with AI"
+msgstr "AI के साथ पोस्ट बनाएं"
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:24
+msgid "Create product with AI"
+msgstr "AI के साथ उत्पाद बनाएं"
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:39
+msgid "Create Tag"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:57
+msgid "Create User"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:41
+msgid "Create WooCommerce Product"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
+msgid "Create WooCommerce Product Brand"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:99
+msgid "Create WooCommerce Product Category"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:166
+msgid "Create WooCommerce Product Tag"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:292
+msgid "CSS & JS Combine"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:273
+msgid "CSS, JS and HTML Minification"
+msgstr ""
+
+#: includes-psr4/Mcp/McpServer.php:42
+msgid "Custom MCP Server for Hostinger AI Assistant."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:49
+msgid "Date format"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:245
+msgid "Default Cache"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:81
+msgid "Default comment status (open/closed)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:85
+msgid "Default ping status (open/closed)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:69
+msgid "Default post category"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:73
+msgid "Default post format"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:261
+msgid "Delete a WooCommerce product brand by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:68
+msgid "Delete a WooCommerce product by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:126
+msgid "Delete a WooCommerce product category by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:193
+msgid "Delete a WooCommerce product tag by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:66
+msgid "Delete a WordPress category by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:294
+msgid "Delete a WordPress custom post type post by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:56
+msgid "Delete a WordPress media item permanently. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:66
+msgid "Delete a WordPress page by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:66
+msgid "Delete a WordPress post by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:66
+msgid "Delete a WordPress tag by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:90
+msgid "Delete a WordPress user by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:65
+msgid "Delete Category"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:293
+msgid "Delete Custom Post Type Post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:55
+msgid "Delete Media"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:65
+msgid "Delete Page"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:65
+msgid "Delete Post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:65
+msgid "Delete Tag"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:89
+msgid "Delete User"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:67
+msgid "Delete WooCommerce Product"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
+msgid "Delete WooCommerce Product Brand"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:125
+msgid "Delete WooCommerce Product Category"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:192
+msgid "Delete WooCommerce Product Tag"
+msgstr ""
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:70
+msgid "Describe your product in short"
+msgstr "अपने उत्पाद का संक्षिप्त वर्णन करें"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:40
+msgid "Description"
+msgstr "विवरण"
+
+#: includes/class-hostinger-ai-assistant-errors.php:23
+msgid "Description is empty. Please provide a valid description."
+msgstr "विवरण रिक्त है। कृपया विवरण दर्ज करें।"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:85
+msgid "Disable authentication password"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
+msgid "Disable authentication password status"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
+msgid "Disable XML-RPC status"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:276
+msgid "DNS Prefetch for static files"
+msgstr ""
+
+#: includes/class-hostinger-ai-assistant-surveys.php:24
+msgid "Do you have any comments/suggestions to improve our AI tools?"
+msgstr "क्या हमारे AI टूल्स बेहतर बनाने के लिए आपके पास कोई सुझाव हैं?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:54
+msgid "Drop files here"
+msgstr "यहां फाइल्स ड्रॉप करें"
+
+#: admin/class-hostinger-ai-assistant-translations.php:150
+msgid "Edit a WordPress post category by ID"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:145
+msgid "Edit a WordPress post tag (e.g., rename or update it)"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:115
+msgid "Edit an existing WordPress page by its ID"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:135
+msgid "Edit an existing WordPress post by its ID"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:229
+msgid "Edit as a draft"
+msgstr "ड्राफ्ट के तौर पर एडिट करें"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:48
+msgid "Edit site"
+msgstr "साइट एडिट करें"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:89
+msgid "Enable llms.txt generation"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
+msgid "Enable llms.txt status"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:65
+msgid "Enable or disable maintenance mode"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:73
+msgid "Enable or disable XML-RPC"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:314
+msgid "Enables the maximum level of optimizations for improved page speed scores. Extensive testing required."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:30
+#: admin/partials/hostinger-ai-assistant-tab-view.php:175
+msgid "Enter at least 10 characters"
+msgstr "कम से कम 10 वर्ण दर्ज करें"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:261
+msgid "Enthusiastic beginners"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:291
+msgid "Everything in Advanced"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:306
+msgid "Everything in Aggressive"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:271
+msgid "Everything in Basic"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:257
+msgid "Everything in Essentials"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:29
+msgid "Example: website development, WordPress tutorial, ..."
+msgstr "उदाहरण: वेबसाइट डेवलपमेंट, WordPress ट्यूटोरियल, .."
+
+#: admin/class-hostinger-ai-assistant-translations.php:81
+msgid "Excellent"
+msgstr "बहुत अच्छे"
+
+#: includes/content/class-hostinger-ai-assistant-content-filters.php:86
+msgid "External Featured Image"
+msgstr "एक्सटर्नल फीचर्ड इमेज"
+
+#: admin/class-hostinger-ai-assistant-translations.php:36
+msgid "External featured image"
+msgstr "बाहरी फीचर्ड इमेज"
+
+#. %s: Preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:373
+#, php-format
+msgid "Failed to apply preset: %s"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:530
+msgid "Failed to delete post"
+msgstr ""
+
+#. %s: Error message
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:223
+#, php-format
+msgid "Failed to flush cache: %s"
+msgstr ""
+
+#. %s: Setting name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:193
+#, php-format
+msgid "Failed to get settings: %s"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:265
+msgid "File is required"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:227
+msgid "File not found"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:99
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:101
+msgid "Filter by author ID"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:93
+msgid "Filter by media type (image, video, audio, application)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:97
+msgid "Filter by MIME type (e.g., image/jpeg, video/mp4)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:105
+msgid "Filter by parent post ID"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:103
+msgid "Filter by post status (publish, draft, pending, etc.)"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:140
+msgid "Find and filter posts with pagination options"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:58
+msgid "Flush LiteSpeed Cache"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:274
+msgid "Font Display Optimization"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:132
+msgid "Force category deletion"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:77
+msgid "Force HTTPS redirects"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
+msgid "Force HTTPS status"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:267
+msgid "Force Product Brand deletion"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:199
+msgid "Force tag deletion"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:81
+msgid "Force WWW in URLs"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
+msgid "Force WWW status"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:24
+#: admin/partials/hostinger-ai-assistant-tab-view.php:106
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:89
+msgid "Formal"
+msgstr "औपचारिक"
+
+#: admin/class-hostinger-ai-assistant-translations.php:26
+#: admin/partials/hostinger-ai-assistant-tab-view.php:108
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:91
+msgid "Friendly"
+msgstr "मित्रतापूर्ण"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:254
+msgid "Generate new content"
+msgstr "नया कॉन्टेंट जनरेट करें"
+
+#: admin/class-hostinger-ai-assistant-translations.php:169
+msgid "Generate sales report"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:171
+msgid "Generate WooCommerce sales report for my store"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:264
+#: admin/partials/hostinger-ai-assistant-tab-view.php:267
+msgid "Generating content..."
+msgstr "कॉन्टेंट जनरेट किया जा रहा है..."
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:91
+msgid "Get a list of all available LiteSpeed Cache optimization presets with their descriptions, features, risk levels, and requirements."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:164
+msgid "Get a list of orders"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:20
+msgid "Get a list of WooCommerce orders with search and filter capabilities. Returns a list of orders matching the criteria."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:31
+msgid "Get a single WooCommerce product by ID. Returns the full product object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:29
+msgid "Get a single WordPress category by ID. Returns the full category object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:29
+msgid "Get a single WordPress page by ID. Returns the full page object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:29
+msgid "Get a single WordPress post by ID. Returns the full post object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:29
+msgid "Get a single WordPress tag by ID. Returns the full tag object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:44
+msgid "Get a single WordPress user by ID. Returns the full user object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:142
+msgid "Get a WordPress custom post type post by ID"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:32
+msgid "Get a WordPress media item details by ID. Returns the full media object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:28
+msgid "Get Category"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:28
+msgid "Get current Hostinger plugin settings including maintenance mode, XML-RPC, HTTPS, and other security options."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:30
+msgid "Get current LiteSpeed Cache settings including active preset, cache status, and key configuration options."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:118
+msgid "Get Current User"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:141
+msgid "Get Custom Post Type Post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:20
+msgid "Get General Settings"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:27
+msgid "Get Hostinger Plugin Settings"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:29
+msgid "Get LiteSpeed Cache Settings"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:31
+msgid "Get Media"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:142
+msgid "Get Media File"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:28
+msgid "Get Page"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:28
+msgid "Get Post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:16
+msgid "Get Site Info"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:28
+msgid "Get Tag"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:143
+msgid "Get the actual file content (blob) of a WordPress media item."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:119
+msgid "Get the current logged-in user information."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:43
+msgid "Get User"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:37
+msgid "Get WooCommerce Coupons Report"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:38
+msgid "Get WooCommerce coupons totals report. Returns count of coupons by coupon type."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:44
+msgid "Get WooCommerce Customers Report"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:45
+msgid "Get WooCommerce customers totals report. Returns statistics about customers."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:51
+msgid "Get WooCommerce Orders Report"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:52
+msgid "Get WooCommerce orders totals report. Returns statistics about orders."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:30
+msgid "Get WooCommerce Product"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:58
+msgid "Get WooCommerce Products Report"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:59
+msgid "Get WooCommerce products totals report. Returns statistics about products."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:65
+msgid "Get WooCommerce Reviews Report"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:66
+msgid "Get WooCommerce reviews totals report. Returns statistics about product reviews."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:72
+msgid "Get WooCommerce Sales Report"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:73
+msgid "Get WooCommerce sales report. Returns detailed sales statistics and revenue data."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:21
+msgid "Get WordPress general site settings including title, description, timezone, and other configuration options."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:119
+msgid "Get WordPress site information"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:71
+msgid "Good response"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:277
+msgid "Gravatar Cache"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:272
+msgid "Guest Mode and Guest Optimization"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:64
+msgid "Hello 👋"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:42
+msgid "Hi, I'm Kodee, your personal AI assistant. You can ask me any questions you have regarding WordPress. I'm still learning, so sometimes can make mistakes. What questions do you have?"
+msgstr "नमस्ते। मेरा नाम Kodee है और मैं आपका पर्सनल AI असिस्टेंट हूं! आप मुझसे WordPress से जुड़े कोई भी प्रश्न पूछ सकते हैं। मैं अभी भी सीख रहा हूं, इसलिए मैं कभी-कभी गलतियां कर सकता हूं। आपके क्या प्रश्न हैं?"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:246
+msgid "Higher TTL"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:50
+msgid "History"
+msgstr "हिस्ट्री"
+
+#. Author of the plugin
+msgid "Hostinger"
+msgstr "Hostinger"
+
+#. Name of the plugin
+msgid "Hostinger AI"
+msgstr "Hostinger AI"
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:75
+msgid "Hostinger AI Abilities"
+msgstr ""
+
+#. Description of the plugin
+msgid "Hostinger AI plugin for WordPress."
+msgstr "WordPress के लिए Hostinger AI"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:124
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:139
+msgid "Hostinger plugin settings option not defined"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:65
+msgid "How can I help you today?"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:79
+msgid "How can we improve your experience?"
+msgstr "हम आपका अनुभव बेहतर कैसे बना सकते हैं?"
+
+#: includes/class-hostinger-ai-assistant-surveys.php:23
+msgid "How would you rate your experience using our AI Assistant plugin for content generation? (Scale 1-10)"
+msgstr "कॉन्टेंट जनरेशन के लिए हमारे AI असिस्टेंट प्लगइन के साथ अपने अनुभव को क्या रेटिंग देंगे? (स्केल 1-10)"
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://hostinger.com"
+msgstr "https://hostinger.com"
+
+#: admin/class-hostinger-ai-assistant-translations.php:105
+msgid "I'm sorry, I didn't understand your question. Could you please rephrase it or ask something different?"
+msgstr "क्षमा करें, मैं आपका प्रश्‍न समझ नहीं पाया। क्या आप कृपया इसे अपना प्रश्‍न लिख ​​सकते हैं या कुछ अलग पूछ सकते हैं?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:182
+msgid "If you skip this part, AI will automatically generate keyword suggestions after you generate the content"
+msgstr "यदि आप इस भाग को छोड़ देते हैं, तो कॉन्टेंट तैयार करने के बाद AI स्वचालित रूप से कीवर्ड सुझाव जनरेट करेगा"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:258
+msgid "Image Optimization"
+msgstr ""
+
+#: includes/content/class-hostinger-ai-assistant-content-filters.php:105
+msgid "Image URL:"
+msgstr "इमेज URL:"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:283
+msgid "Includes many optimizations known to improve page speed scores."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:298
+msgid "Includes many optimizations known to improve page speed scores. Testing recommended."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:262
+msgid "Includes optimizations known to improve site score in page speed measurement tools."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:311
+msgid "Inline CSS added to Combine"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:310
+msgid "Inline JS added to Combine"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:37
+msgid "Insert this image inside content"
+msgstr "इस इमेज को कॉन्टेंट के अंदर डालें"
+
+#: includes-psr4/Mcp/McpServer.php:72
+msgid "Invalid API key"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:275
+msgid "Invalid base64 data"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:222
+msgid "Invalid media ID"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:354
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:399
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:423
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:459
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:510
+msgid "Invalid post type"
+msgstr ""
+
+#. %s: Allowed preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:348
+#, php-format
+msgid "Invalid preset. Allowed presets: %s"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:275
+msgid "JS Defer for both external and inline JS"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:309
+msgid "JS Delayed"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:9
+msgid "Keywords"
+msgstr "कीवर्ड्स"
+
+#: admin/class-hostinger-ai-assistant-translations.php:43
+msgid "Kodee"
+msgstr "Kodee"
+
+#: admin/class-hostinger-ai-assistant-translations.php:55
+msgid "Kodee only supports JPEG, JPG, PNG, GIF, HEIC, and DNG files"
+msgstr "Kodee केवल JPEG, JPG, PNG, GIF, HEIC और DNG फाइल्स सपोर्ट करता है"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:295
+msgid "Lazy Load for Iframes"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:307
+msgid "Lazy Load for Images"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:45
+#: admin/class-hostinger-ai-assistant-translations.php:75
+msgid "Leave feedback"
+msgstr "अपना फीडबैक साझा करें"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:164
+msgid "Let us know more about your content idea. For example: Article about how to use WordPress to dive into website development including tutorials how to use it in a simple way..."
+msgstr "हमें अपने कॉन्टेंट आईडिया के बारे में बताएं। उदाहरण के लिए: वेबसाइट डेवलपमेंट में WordPress का उपयोग करने के बारे में लेख, जिसमें ट्यूटोरियल्स का भी समावेश है..."
+
+#: admin/class-hostinger-ai-assistant-translations.php:31
+msgid "Let us now more about your post idea. Share more details for better results"
+msgstr "बेहतर परिणामों पाने के लिए पोस्ट को लेकर आपके आइडिया के बारे में अधिक जानकारी दें"
+
+#. %s: post type names
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:39
+#, php-format
+msgid "List all available WordPress custom post types including %s"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:224
+msgid "List all WooCommerce product brands. Returns a list of product brands."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:89
+msgid "List all WooCommerce product categories. Returns a list of product categories."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:156
+msgid "List all WooCommerce product tags. Returns a list of product tags."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:18
+msgid "List all WordPress post categories with pagination and filtering."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:18
+msgid "List all WordPress post tags with pagination and filtering."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:17
+msgid "List Categories"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:90
+msgid "List LiteSpeed Cache Presets"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:20
+msgid "List Media"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:36
+msgid "List Post Types"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:17
+msgid "List Tags"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:124
+msgid "List users with their roles"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
+msgid "List WooCommerce Product Brands"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:88
+msgid "List WooCommerce Product Categories"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:155
+msgid "List WooCommerce Product Tags"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:21
+msgid "List WordPress media items with pagination and filtering."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:159
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:203
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:233
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:327
+msgid "LiteSpeed Cache plugin is not active"
+msgstr ""
+
+#. %s: Preset name
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:365
+#, php-format
+msgid "LiteSpeed Cache preset \"%s\" has been applied successfully. A backup of your previous settings was created automatically."
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:143
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:81
+msgid "Long"
+msgstr "लंबा"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:183
+msgid "Maintenance mode status"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:137
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:80
+msgid "Medium"
+msgstr "मध्यम"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:29
+msgid "Meta description"
+msgstr "मेटा डिस्क्रिप्शन"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:30
+msgid "Meta descriptions offer concise page summaries in search results, aiding user understanding before clicking."
+msgstr "मेटा डिस्क्रिप्शन खोज परिणामों में किसी पेज का संक्षिप्त सारांश प्रदान करते हैं, जिससे क्लिक करने से पहले यूजर को समझने में सहायता मिलती है।"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:259
+msgid "Mobile Cache"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:282
+msgid "Most websites"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:23
+#: admin/partials/hostinger-ai-assistant-tab-view.php:105
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:88
+msgid "Neutral"
+msgstr "तटस्थ"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:114
+msgid "Number of items per page"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:112
+msgid "Number of posts per page"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:77
+msgid "Number of posts to show per page"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:29
+msgid "Open guide"
+msgstr "गाइड खोलें"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:93
+msgid "Opt-in to MCP"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
+msgid "Opt-in Web2Agent MCP status"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:179
+msgid "Optional"
+msgstr "वैकल्पिक"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:154
+msgid "Optional. The size of the image to retrieve (thumbnail, medium, large, full). Defaults to full/original size."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:109
+msgid "Page number for pagination"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:107
+msgid "Page number for pagination (starts from 1)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:16
+msgid "Plugins Information"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:80
+msgid "Poor"
+msgstr "खराब"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:409
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:469
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:520
+msgid "Post not found"
+msgstr ""
+
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:38
+msgid "Powered by"
+msgstr "प्रचालक"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:335
+msgid "Preset parameter is required"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:186
+msgid "Press Enter key to finalize a keyword"
+msgstr "किसी कीवर्ड को फाइनलाईज़ करने के लिए Enter कुंजी दबाएं"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:39
+msgid "Preview site"
+msgstr "साइट का प्रीव्यू देखें"
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:17
+msgid "Provides detailed information about active and available WordPress plugins"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:17
+msgid "Provides detailed information about registered WordPress users and their roles"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:17
+msgid "Provides detailed information about the active WordPress theme and its parent theme if applicable"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:17
+msgid "Provides detailed information about the WordPress site like site name, url, description, admin email, plugins, themes, users, and more."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:17
+msgid "Provides detailed information about WordPress site settings including general, reading, discussion, media, permalink, privacy, and writing settings"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:17
+msgid "Provides general information about the WordPress site including site details, plugins, themes, and users"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:235
+msgid "Publish"
+msgstr "पब्लिश करें"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:59
+msgid "Purge all LiteSpeed caches including LSCache, CSS/JS, localized resources, object cache, and opcache."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:73
+msgid "Rate your conversation"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:280
+msgid "Remove Noscript Tags"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:278
+msgid "Remove Query Strings from Static Files"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:279
+msgid "Remove WordPress Emoji"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:294
+msgid "Removed Unused CSS for Users"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:80
+msgid "Report period. Options: week, month, last_month, year."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:239
+msgid "Requested size not found"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:46
+msgid "Restart chatbot"
+msgstr "चैटबॉट दोबारा शुरू करें"
+
+#: admin/class-hostinger-ai-assistant-translations.php:165
+msgid "Retrieve a list of WooCommerce orders with filters"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:121
+msgid "Retrieve detailed information about my WordPress site"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:89
+msgid "Return sales for a specific end date. Format: YYYY-MM-DD."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:85
+msgid "Return sales for a specific start date. Format: YYYY-MM-DD."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:20
+msgid "Search and filter WooCommerce products with pagination. Returns a list of products matching the search criteria."
+msgstr ""
+
+#. %s: post type names
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:82
+#, php-format
+msgid "Search and filter WordPress custom post types posts including %s with pagination"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:18
+msgid "Search and filter WordPress pages with pagination. Returns a list of pages matching the search criteria."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:18
+msgid "Search and filter WordPress posts with pagination. Returns a list of posts matching the search criteria."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:125
+msgid "Search and filter WordPress users with pagination"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:18
+msgid "Search and filter WordPress users with pagination. Returns a list of users matching the search criteria."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:139
+msgid "Search blog posts"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:79
+msgid "Search Custom Post Types Posts"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:81
+msgid "Search Media"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:17
+msgid "Search Pages"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:17
+msgid "Search Posts"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:141
+msgid "Search posts on my WordPress website"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:89
+msgid "Search term to look for in media titles, captions, and descriptions"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:95
+msgid "Search term to look for in post titles and content"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:17
+msgid "Search Users"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:19
+msgid "Search WooCommerce Orders"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:166
+msgid "Search WooCommerce orders for my store"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:19
+msgid "Search WooCommerce Products"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:82
+msgid "Search WordPress media items by title, caption, or description with filtering options."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:126
+msgid "Search WordPress users on my website"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:56
+msgid "Selected file type is not supported"
+msgstr "चुनी गई फाइल का प्रकार सपोर्ट नहीं किया जाता है"
+
+#: admin/class-hostinger-ai-assistant-translations.php:83
+msgid "Send"
+msgstr "भेजें"
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:10
+msgid "SEO keywords improve web content visibility on search engines like Google by being relevant and naturally placed"
+msgstr "प्रासंगिक और स्वाभाविक रूप से परिनियोजित किए गए SEO कीवर्ड Google जैसे सर्च इंजन पर वेब कॉन्टेंट की दृश्यता में सुधार करते हैं"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:125
+#: admin/partials/hostinger-ai-assistant-tab-view.php:131
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:79
+msgid "Short"
+msgstr "संक्षिप्त"
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:16
+msgid "Site Information"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:61
+msgid "Site language"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:16
+msgid "Site Settings"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:41
+msgid "Site tagline/description"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:45
+msgid "Site timezone"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:37
+msgid "Site title"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:103
+msgid "Sorry, the AI Chatbot is currently unavailable. Please try again later."
+msgstr "क्षमा करें, इस समय AI चैटबॉट उपलब्ध नहीं है। कृपया बाद में दोबारा प्रयास करें।"
+
+#: admin/class-hostinger-ai-assistant-translations.php:104
+msgid "Sorry, the AI Chatbot request timed out. Please try again later."
+msgstr "क्षमा करें, AI चैटबॉट आवेदन का टाइम-आउट हो गया। कृपया थोड़ी देर में दोबारा प्रयास करें।"
+
+#: admin/class-hostinger-ai-assistant-translations.php:48
+#: admin/class-hostinger-ai-assistant-translations.php:92
+#: admin/class-hostinger-ai-assistant-translations.php:94
+msgid "Start new chat"
+msgstr "नई चैट शुरू करें"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:57
+msgid "Start of week (0 = Sunday, 1 = Monday, etc.)"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:99
+msgid "Talking to Kodee is in the works, we'll keep you posted once it's out!"
+msgstr "Kodee से वॉइस द्वारा बात करने के फीचर पर काम किया जा रहा है। इसके आते ही हम आपको सूचित करेंगे।"
+
+#: admin/class-hostinger-ai-assistant-translations.php:84
+msgid "Thank you for your feedback"
+msgstr "अपना फीडबैक साझा करने के लिए धन्यवाद"
+
+#: admin/class-hostinger-ai-assistant-translations.php:77
+msgid "Thanks for letting us know"
+msgstr "हमें बताने के लिए धन्यवाद"
+
+#: admin/class-hostinger-ai-assistant-translations.php:76
+msgid "Thanks for letting us know. Click the button below if you want to leave additional feedback."
+msgstr "हमें बताने के लिए धन्यवाद। यदि आप अतिरिक्त फीडबैक देना चाहते हैं तो नीचे दिया बटन दबाएं।"
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:197
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:255
+msgid "The content of the post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:189
+msgid "The custom post type to create"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:301
+msgid "The custom post type to delete"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:149
+msgid "The custom post type to get"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:91
+msgid "The custom post type to search"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:243
+msgid "The custom post type to update"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:201
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:259
+msgid "The excerpt of the post"
+msgstr ""
+
+#: hostinger-ai-assistant.php:131
+#, php-format
+msgid "The Hostinger AI plugin requires minimum PHP version of <b>%s</b>. "
+msgstr "Hostinger AI प्लगइन को न्यूनतम PHP <b>%s</b> संस्करण की आवश्यकता होती है।"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:150
+msgid "The ID of the media item"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:305
+msgid "The ID of the post to delete"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:153
+msgid "The ID of the post to get"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:247
+msgid "The ID of the post to update"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:127
+msgid "The preset to apply"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:205
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:263
+msgid "The status of the post (publish, draft, pending, etc.)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:193
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:251
+msgid "The title of the post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:16
+msgid "Theme Information"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-seo-meta-view.php:20
+msgid "These keywords can help your article and website rank higher in search engines. You can input up to 5 keywords."
+msgstr "ये कीवर्ड्स आपके लेख और वेबसाइट को सर्च इंजन पर उच्च रैंक प्राप्त करने में मदद कर सकते हैं। आप अधिकतम 5 कीवर्ड्स इनपुट कर सकते हैं।"
+
+#: admin/class-hostinger-ai-assistant-translations.php:61
+msgid "Thinking"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:254
+msgid "This low-risk preset introduces basic optimizations for speed and user experience. Appropriate for enthusiastic beginners."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:242
+msgid "This no-risk preset is appropriate for all websites. Good for new users, simple websites, or cache-oriented development."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:303
+msgid "This preset almost certainly will require testing and exclusions for some CSS, JS and Lazy Loaded images. Pay special attention to logos, or HTML-based slider images."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:268
+msgid "This preset is good for most websites, and is unlikely to cause conflicts. Any CSS or JS conflicts may be resolved with Page Optimization > Tuning tools."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:288
+msgid "This preset might work out of the box for some websites, but be sure to test! Some CSS or JS exclusions may be necessary in Page Optimization > Tuning."
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:270
+msgid "This will only take a moment"
+msgstr "इसमें केवल एक मिनट का समय लगेगा"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:53
+msgid "Time format"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-notices.php:22
+msgid "To unlock the exclusive features of <b>Hostinger AI</b>, you must possess a unique API token, which is exclusively provided to Hostinger clients"
+msgstr "<b>Hostinger AI असिस्टेंट</b> की विशेष सुविधाओं को अनलॉक करने के लिए आपके पास एक यूनिक API टोकन होना चाहिए, जो विशेष रूप से Hostinger ग्राहकों को प्रदान किया जाता है"
+
+#. 1: minimum expiration time in seconds, 2: maximum expiration time in seconds
+#: includes-psr4/Mcp/Rest/JwtAuth.php:66
+#, php-format
+msgid "Token expiration must be between %1$d seconds (1 hour) and %2$d seconds (1 day)"
+msgstr ""
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:34
+msgid "Token expiration time in seconds (3600-86400)"
+msgstr ""
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:81
+msgid "Token ID is required."
+msgstr ""
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:112
+msgid "Token is invalid, expired, or has been revoked."
+msgstr ""
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:118
+msgid "Token is malformed: missing user_id."
+msgstr ""
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:89
+msgid "Token not found in registry."
+msgstr ""
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:99
+msgid "Token revoked successfully."
+msgstr ""
+
+#. %s: error message from JWT library
+#: includes-psr4/Mcp/Rest/JwtAuth.php:135
+#, php-format
+msgid "Token validation failed: %s"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:100
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:86
+msgid "Tone of voice"
+msgstr "बोली का लहज़ा"
+
+#: admin/class-hostinger-ai-assistant-translations.php:21
+msgid "tones selected"
+msgstr "चयनित किया गया टोन"
+
+#: admin/class-hostinger-ai-assistant-translations.php:25
+#: admin/partials/hostinger-ai-assistant-tab-view.php:107
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:90
+msgid "Trustworthy"
+msgstr "भरोसेमंद"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:104
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:129
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:140
+msgid "Unique identifier for the resource"
+msgstr ""
+
+#: includes/class-hostinger-ai-assistant-errors.php:36
+msgid "Unknown error code."
+msgstr "अज्ञात त्रुटि कोड"
+
+#: admin/class-hostinger-ai-assistant-translations.php:151
+msgid "Update a post category on my WordPress website"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:146
+msgid "Update a post tag on my WordPress website"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:236
+msgid "Update a WordPress custom post type post by ID"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:43
+msgid "Update a WordPress media item metadata. Only provided fields will be updated."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:116
+msgid "Update an existing page on my WordPress website"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:136
+msgid "Update an existing post on my WordPress site"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:248
+msgid "Update an existing WooCommerce product brand by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:55
+msgid "Update an existing WooCommerce product by ID. Only provided fields will be updated."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:113
+msgid "Update an existing WooCommerce product category by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:180
+msgid "Update an existing WooCommerce product tag by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:53
+msgid "Update an existing WordPress category by ID. Only provided fields will be updated."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:53
+msgid "Update an existing WordPress page by ID. Only provided fields will be updated."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:53
+msgid "Update an existing WordPress post by ID. Only provided fields will be updated."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:53
+msgid "Update an existing WordPress tag by ID. Only provided fields will be updated."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:74
+msgid "Update an existing WordPress user by ID. Only provided fields will be updated."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:134
+msgid "Update blog post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:52
+msgid "Update Category"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:132
+msgid "Update Current User"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:235
+msgid "Update Custom Post Type Post"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:31
+msgid "Update General Settings"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:57
+msgid "Update Hostinger Plugin Settings"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:58
+msgid "Update Hostinger plugin settings. Only provided fields will be updated."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:42
+msgid "Update Media"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:52
+msgid "Update Page"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:52
+msgid "Update Post"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:149
+msgid "Update post category"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:144
+msgid "Update post tag"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:52
+msgid "Update Tag"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:133
+msgid "Update the current logged-in user information."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:73
+msgid "Update User"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:54
+msgid "Update WooCommerce Product"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
+msgid "Update WooCommerce Product Brand"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:112
+msgid "Update WooCommerce Product Category"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:179
+msgid "Update WooCommerce Product Tag"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:32
+msgid "Update WordPress general site settings. Only provided fields will be updated."
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:114
+msgid "Update WordPress page"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:35
+msgid "Use this image as:"
+msgstr "इस इमेज का उपयोग ऐसे करें:"
+
+#: includes-psr4/Mcp/Rest/JwtAuth.php:125
+msgid "User associated with token no longer exists."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:16
+msgid "Users Information"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:133
+msgid "Usually used for video, infographics, or product descriptions"
+msgstr "आमतौर पर वीडियो, इन्फोग्राफिक्स या उत्पादों के विवरण के लिए इस्तेमाल किया जाता है"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:145
+msgid "Usually used to make high-ranked articles that will generate more leads"
+msgstr "आमतौर पर उच्च-रैंक वाले लेख बनाने के लिए इस्तेमाल किया जाता है जो अधिक लीडस् उत्पन्न कर सकते हैं"
+
+#: admin/class-hostinger-ai-assistant-translations.php:120
+msgid "View site details like name, URL, description, admin email, plugins, themes, and users"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:308
+msgid "Viewport Image Generation"
+msgstr ""
+
+#: admin/class-hostinger-ai-assistant-translations.php:98
+msgid "Voice feature is coming soon"
+msgstr "वॉइस फीचर जल्द ही आ रहा है"
+
+#: includes/class-hostinger-ai-assistant-errors.php:20
+msgid "We apologize for the inconvenience. The AI content generation process encountered a server error. Please try again later."
+msgstr "असुविधा के लिए खेद है। AI कॉन्टेंट जनरेशन प्रक्रिया में सर्वर त्रुटि पेश आई है। कृपया बाद में दोबारा प्रयास करें।"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:297
+msgid "Websites willing to test and tune settings"
+msgstr ""
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:179
+msgid "What are the focus keywords of your content?"
+msgstr "आपके कॉन्टेंट के फोकस कीवर्ड्स क्या हैं?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:56
+msgid "What do you want to make today?"
+msgstr "आज आप क्या बनाना चाहते हैं?"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:157
+msgid "What is your content about?"
+msgstr "आपका कॉन्टेंट किस बारे में है?"
+
+#: admin/class-hostinger-ai-assistant-translations.php:27
+#: admin/partials/hostinger-ai-assistant-tab-view.php:109
+#: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:92
+msgid "Witty"
+msgstr "विनोदपूर्ण"
+
+#: admin/partials/hostinger-ai-assistant-tab-view.php:220
+msgid "words"
+msgstr "शब्द"
+
+#: admin/class-hostinger-ai-assistant-translations.php:82
+msgid "Write your feedback (optional)"
+msgstr "अपना फीडबैक लिखें (वैकल्पिक)"
+
+#: admin/class-hostinger-ai-assistant-translations.php:51
+msgid "Write your question"
+msgstr "अपना सवाल लिखें"
+
+#. %s: PHP version
+#: hostinger-ai-assistant.php:135
+#, php-format
+msgid "You are running <b>%s</b> PHP version."
+msgstr "आप PHP <b>%s</b> संस्करण चला रहे हैं।"
+
+#: admin/class-hostinger-ai-assistant-translations.php:57
+msgid "You can only upload up to 6 files"
+msgstr "आप केवल 6 फाइल ही अपलोड कर सकते हैं"
+
+# The translation would be different if it's followed by a rating (number).
+#: admin/class-hostinger-ai-assistant-translations.php:78
+msgid "You rated your conversation"
+msgstr "आप अपनी बातचीत को रेटिंग दे चुके हैं"
+
+#: admin/class-hostinger-ai-assistant-translations.php:32
+msgid "You're good to go, but you can share more details for better results"
+msgstr "आप आगे बढ़ने के लिए तैयार हैं, लेकिन बेहतर परिणाम पाने के लिए आप अधिक जानकारी साझा कर सकते हैं"

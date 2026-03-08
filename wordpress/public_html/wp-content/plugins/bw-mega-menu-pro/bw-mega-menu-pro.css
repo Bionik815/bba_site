@@ -1,0 +1,76 @@
+.bw-mega{position:relative;z-index:9999;display:inline-block}
+.bw-mega__toggle{display:flex;align-items:center;gap:.5rem;background:#eef2f6;color:#0b0f14;border:1px solid #d8dee6;font-weight:800;letter-spacing:.08em;padding:.65rem 1rem;border-radius:12px;cursor:pointer}
+.bw-mega__toggle:hover{background:#e8edf3}
+.bw-mega__panel{position:fixed;left:0;right:0;top:var(--bw-mega-top,80px);background:#fff;border-bottom:1px solid #e7e7ea;box-shadow:0 16px 40px rgba(0,0,0,.1);z-index:9998;border-radius:0 0 14px 14px}
+.bw-mega__inner{max-width:var(--ast-container-width,1280px);margin:0 auto;padding:22px 24px}
+.bw-group{padding:18px 0}
+.bw-group:nth-child(even){background:#fafbfc}
+.bw-group__head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 2px 12px}
+.bw-group__title{margin:0;font-size:1.4rem;font-weight:800;letter-spacing:.02em}
+.bw-group__all{font-weight:700;text-decoration:none;color:#111;opacity:.8;white-space:nowrap}
+.bw-group__all:hover{opacity:1;text-decoration:underline}
+.bw-row{position:relative;display:flex;align-items:center;gap:12px}
+.bw-row__nav{appearance:none;border:0;background:#0b0f14;color:#fff;font-size:22px;line-height:1;width:38px;height:38px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.bw-row__nav[disabled]{opacity:.35;cursor:default}
+.bw-logos{list-style:none;padding:0;margin:0;flex:1 1 auto;display:flex;gap:14px;overflow:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.bw-logo{flex:0 0 220px;scroll-snap-align:start}
+.bw-logo a{display:block;border:1px solid #eef0f3;border-radius:12px;padding:12px;text-align:center;background:#fff}
+.bw-logo img{width:100%;height:auto;display:block;filter:grayscale(1);opacity:.95;transition:.2s ease}
+.bw-logo a:hover img{filter:none;opacity:1;transform:translateY(-1px)}
+.bw-logo .bw-logo-text{display:block;padding:16px 10px;font-weight:700}
+.bw-all{padding:18px 0 4px}
+.bw-all__link{font-weight:900;text-transform:uppercase;letter-spacing:.05em;color:#000;text-decoration:none}
+.bw-all__link:hover{text-decoration:underline}
+.ast-primary-header-bar,.main-header-bar{overflow:visible!important}
+.site-header,.ast-primary-header-bar{position:relative;z-index:30}
+@media (max-width:700px){.bw-mega__inner{padding:18px}.bw-row__nav{width:34px;height:34px;font-size:18px}.bw-logo{flex-basis:180px}}
+
+/* ... keep the rest of your existing CSS ... */
+
+/* Scrollable logos */
+.bw-logos{list-style:none;padding:0;margin:0;flex:1 1 auto;display:flex;gap:14px;overflow:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.bw-logo{flex:0 0 220px;scroll-snap-align:start}
+.bw-logo a{display:block;border:1px solid #eef0f3;border-radius:12px;padding:12px;text-align:center;background:#fff}
+
+/* DEFAULT: full-color logos */
+.bw-logo img{width:100%;height:auto;display:block;filter:none;opacity:1;transition:transform .2s ease}
+.bw-logo a:hover img{transform:translateY(-1px)}
+
+/* Make the card stack vertically so caption sits under the image */
+.bw-logo a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; /* space between image and caption */
+}
+
+/* Caption styling under each logo */
+.bw-logo-name {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0b0f14;
+  text-align: center;
+  line-height: 1.2;
+  padding: 0 6px;
+  /* clamp long names */
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* If you want wrapping instead of ellipsis, use: */
+/*
+.bw-logo-name {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+}
+*/
+
+
+/* If admin toggle enabled OR shortcode sets grayscale="on" */
+.bw-mega.is-gray .bw-logo img{filter:grayscale(1);opacity:.95;transition:.2s ease}
+.bw-mega.is-gray .bw-logo a:hover img{filter:none;opacity:1;transform:translateY(-1px)}
