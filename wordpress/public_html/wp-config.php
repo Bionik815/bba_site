@@ -27,13 +27,13 @@ define( 'WP_CACHE', true );
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', getenv( 'WP_DB_NAME' ) ?: 'u632291655_CIS0T' );
+define( 'DB_NAME', getenv( 'WP_DB_NAME' ) ?: 'change_me_wp_db_name' );
 
 /** Database username */
-define( 'DB_USER', getenv( 'WP_DB_USER' ) ?: 'u632291655_O8isY' );
+define( 'DB_USER', getenv( 'WP_DB_USER' ) ?: 'change_me_wp_db_user' );
 
 /** Database password */
-define( 'DB_PASSWORD', getenv( 'WP_DB_PASSWORD' ) ?: 'FUh7tIXmE1' );
+define( 'DB_PASSWORD', getenv( 'WP_DB_PASSWORD' ) ?: 'change_me_wp_db_password' );
 
 /** Database hostname */
 define( 'DB_HOST', getenv( 'WP_DB_HOST' ) ?: '127.0.0.1' );
@@ -55,15 +55,15 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',          'ED1%@Uk(xWyx)Op<O4}L>QqX,FLH?A?)0 vrKVJVNCNnJ)/#^SS$Bg~1(uQ& &o3' );
-define( 'SECURE_AUTH_KEY',   'POyQMP/7FxwTOHH7ld{9n*aBf}%-2&FJw]wr2^ <wI#zc!*w@ A1=HyJM`F<=i<O' );
-define( 'LOGGED_IN_KEY',     'Aq;9y<3KEhAPnVCWhYZge5INPM+,eH7QJD}sT]0Q@Yj.]P~jb2fvY%T,xQ}bzbZ6' );
-define( 'NONCE_KEY',         '*F~vK?Tz7)pmu~mHl~<hp[T#X~=W~fzT_G78)eS)v LH]3|;~U@Fg2#~b+aq0Dh{' );
-define( 'AUTH_SALT',         'PsX<|z_k;.)gU3wmX_PTiX{h:Tx@e|ySAx<e|>;iHJb!dr-8}fFdI`1#_FEQx7Dt' );
-define( 'SECURE_AUTH_SALT',  '.+6p;T i3[3ykvqXs[U$bamZbb?r_wj(?N{2ea]ef{7,#$6>4ATo*zmxb_Z~w,^|' );
-define( 'LOGGED_IN_SALT',    'Q7ihTI;KFe/{?S&zKAfrYtau#VKka3S?{7N)owCV64$9aFCC7&h&)m1*/#)_1P]K' );
-define( 'NONCE_SALT',        'F1$-e5U_!V%]VUwaLZ.R_2>=~ZeUiju?VH[X{h3Utkx}zcpsPQjctq7]K5pViy]`' );
-define( 'WP_CACHE_KEY_SALT', 'K&b^p$GBH&!h^aK?qXO%=/4YT,?2R/z1%-h@8Kt/0+QTkPJDlraPW^{RE9C<:D2j' );
+define( 'AUTH_KEY',          getenv( 'WP_AUTH_KEY' ) ?: 'change_me_auth_key' );
+define( 'SECURE_AUTH_KEY',   getenv( 'WP_SECURE_AUTH_KEY' ) ?: 'change_me_secure_auth_key' );
+define( 'LOGGED_IN_KEY',     getenv( 'WP_LOGGED_IN_KEY' ) ?: 'change_me_logged_in_key' );
+define( 'NONCE_KEY',         getenv( 'WP_NONCE_KEY' ) ?: 'change_me_nonce_key' );
+define( 'AUTH_SALT',         getenv( 'WP_AUTH_SALT' ) ?: 'change_me_auth_salt' );
+define( 'SECURE_AUTH_SALT',  getenv( 'WP_SECURE_AUTH_SALT' ) ?: 'change_me_secure_auth_salt' );
+define( 'LOGGED_IN_SALT',    getenv( 'WP_LOGGED_IN_SALT' ) ?: 'change_me_logged_in_salt' );
+define( 'NONCE_SALT',        getenv( 'WP_NONCE_SALT' ) ?: 'change_me_nonce_salt' );
+define( 'WP_CACHE_KEY_SALT', getenv( 'WP_CACHE_KEY_SALT' ) ?: 'change_me_cache_key_salt' );
 
 
 /**#@-*/
@@ -98,7 +98,7 @@ if ( ! defined( 'WP_DEBUG' ) ) {
 }
 
 define( 'FS_METHOD', 'direct' );
-define( 'COOKIEHASH', '6e577a1441f636e49fcf31deaa190438' );
+define( 'COOKIEHASH', getenv( 'WP_COOKIEHASH' ) ?: md5( (string) ( getenv( 'WP_DB_NAME' ) ?: 'local' ) ) );
 define( 'WP_AUTO_UPDATE_CORE', 'minor' );
 /* That's all, stop editing! Happy publishing. */
 

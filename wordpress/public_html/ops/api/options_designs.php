@@ -1,5 +1,8 @@
 <?php
+require __DIR__.'/../bootstrap.php';
 require __DIR__.'/../db.php';
+require __DIR__.'/../auth.php';
+require_login();
 header('Content-Type: application/json');
 $pdo = db();
 $client  = (int)($_GET['client_id'] ?? 0);

@@ -26,3 +26,25 @@ function require_login(string $role = null): void {
     exit;
   }
 }
+
+function csrf_token(): string {
+  if (empty($_SESSION['_csrf_token'])) {
+    $_SESSION['_csrf_token'] = bin2hex(random_bytes(32));
+  }
+  return (string)$_SESSION['_csrf_token'];
+}
+
+function csrf_input(): string {
+  $token = htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8');
+  return '<input type="hidden" name="_csrf" value="' . $token . '">';
+}
+
+function verify_csrf_or_die(?string $token = null): void {
+  $provided = $token ?? ($_POST['_csrf'] ?? '');
+  $session = $_SESSION['_csrf_token'] ?? '';
+  if (!is_string($provided) || !is_string($session) || $provided === '' || !hash_equals($session, $provided)) {
+    http_response_code(403);
+    echo "Invalid CSRF token";
+    exit;
+  }
+}

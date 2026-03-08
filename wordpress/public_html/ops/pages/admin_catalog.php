@@ -2,7 +2,7 @@
 require __DIR__ . '/../auth.php';
 require_login('admin');
 
-ini_set('display_errors',1); error_reporting(E_ALL);
+require __DIR__ . '/../bootstrap.php';
 
 $root = realpath(__DIR__ . '/..'); if (!$root) die('Path error');
 $cfg  = require $root . '/config.php';
@@ -18,6 +18,10 @@ function opts($rows, $value='id', $label='name'){
 
 $notice = '';
 $do = $_GET['do'] ?? '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  verify_csrf_or_die();
+}
 
 try {
   if ($do === 'add_product' && !empty($_POST['name'])) {
@@ -259,6 +263,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
 <div class="card">
   <h3>Add Product</h3>
   <form method="post" action="?do=add_product">
+    <?= csrf_input() ?>
     <div class="content-narrow">
       <label>Name</label><input name="name" required>
       <label>SKU</label>
@@ -274,6 +279,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
   <div class="card">
     <h3>Add Color</h3>
     <form method="post" action="?do=add_color">
+      <?= csrf_input() ?>
       <label>Name</label><input name="name" required>
       <label>Hex (#RRGGBB)</label><input name="hex" placeholder="#000000">
       <button type="submit">Add Color</button>
@@ -283,6 +289,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
 <div class="card">
   <h3>Add Size</h3>
   <form method="post" action="?do=add_size">
+    <?= csrf_input() ?>
     <div class="content-narrow">
       <div class="row-3">
         <div>
@@ -307,6 +314,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
   <div class="card">
     <h3>Assign Products to Client</h3>
     <form method="post" action="?do=link_products">
+      <?= csrf_input() ?>
       <label>Client</label>
       <select name="client_id" required>
         <option value="">Select client…</option>
@@ -346,6 +354,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
         <div class="kit small">— none linked —</div>
       <?php else: ?>
         <form method="post" action="?do=unlink_products">
+          <?= csrf_input() ?>
           <input type="hidden" name="client_id" value="<?= (int)$clientIdForList ?>">
           <div class="kit">
             <?php foreach ($currentProducts as $p): ?>
@@ -365,6 +374,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
   <div class="card">
     <h3>Allowed Colors (Client + Products)</h3>
     <form method="post" action="?do=link_colors" id="formColors">
+      <?= csrf_input() ?>
       <label>Client</label>
       <select name="client_id" id="clientForColors" required>
         <option value="">Select client…</option>
@@ -386,6 +396,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
   <div class="card">
     <h3>Allowed Sizes (Client + Products)</h3>
     <form method="post" action="?do=link_sizes" id="formSizes">
+      <?= csrf_input() ?>
       <label>Client</label>
       <select name="client_id" id="clientForSizes" required>
         <option value="">Select client…</option>
@@ -410,6 +421,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
   <div class="card">
     <h3>Add Design (per Client)</h3>
     <form method="post" action="?do=add_design">
+      <?= csrf_input() ?>
       <label>Client</label>
       <select name="client_id" required>
         <option value="">Select client…</option>
@@ -424,6 +436,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
   <div class="card">
     <h3>Link Designs (Client + Product)</h3>
     <form method="post" action="?do=link_designs">
+      <?= csrf_input() ?>
       <label>Client</label>
       <select name="client_id" id="clientForDesign" required>
         <option value="">Select client…</option>
@@ -456,6 +469,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
     <h3>Duplicate Catalog (Clone from Client)</h3>
 
     <form method="post" action="?do=clone_all">
+      <?= csrf_input() ?>
       <div class="col2">
         <div>
           <label>Source Client</label>
@@ -486,6 +500,7 @@ hr.sep { border:none; border-top:1px solid #242424; margin:12px 0; }
     <hr class="sep">
 
     <form method="post" action="?do=duplicate_product" id="dupForm">
+      <?= csrf_input() ?>
       <div class="col2">
         <div>
           <label>Source Client</label>

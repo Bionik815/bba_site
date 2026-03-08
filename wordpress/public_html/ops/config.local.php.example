@@ -1,0 +1,16 @@
+<?php
+
+return [
+  'db' => [
+    'host' => '127.0.0.1',
+    'name' => 'barebones_ops',
+    'user' => 'ops_user',
+    'pass' => 'ops_password',
+    'port' => 3306,
+    'charset' => 'utf8mb4',
+  ],
+  'app' => [
+    'base_path' => '/ops',
+    'logo_url' => '/wp-content/uploads/2025/09/BArebones_White.png',
+  ],
+];

@@ -1,7 +1,10 @@
 <?php
-ini_set('display_errors',1); error_reporting(E_ALL); // remove later
+require __DIR__.'/../bootstrap.php';
 
 require __DIR__.'/../db.php';
+require __DIR__.'/../auth.php';
+require_login();
+verify_csrf_or_die();
 $cfg  = require __DIR__.'/../config.php';
 $base = rtrim($cfg['app']['base_path'] ?? '', '/');
 $pdo = db();

@@ -1,9 +1,9 @@
 <?php
 // /ops/tools/create_user.php — full file
-ini_set('display_errors', 1); error_reporting(E_ALL);
+require __DIR__ . '/../bootstrap.php';
 
 require __DIR__ . '/../db.php';
-require __DIR__ . '/../config.php';
+$cfg = require __DIR__ . '/../config.php';
 require __DIR__ . '/../auth.php';
 
 $pdo = db();

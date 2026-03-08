@@ -1,5 +1,9 @@
 <?php
+require __DIR__.'/../bootstrap.php';
 require __DIR__.'/../db.php';
+require __DIR__.'/../auth.php';
+require_login();
+verify_csrf_or_die();
 $cfg  = require __DIR__.'/../config.php';
 $base = rtrim($cfg['app']['base_path'] ?? '', '/');
 $pdo = db();

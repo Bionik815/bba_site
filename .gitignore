@@ -49,3 +49,5 @@ backups*/
 # Local WordPress development
 wordpress/.env.local
 wordpress/wp-config-local.php
+wordpress/public_html/ops/config.local.php
+wordpress/public_html/ops/runtime/

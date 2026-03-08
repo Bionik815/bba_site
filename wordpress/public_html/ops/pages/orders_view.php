@@ -1,20 +1,16 @@
 <?php
+require __DIR__ . '/../bootstrap.php';
 require __DIR__ . '/../auth.php';
 require_login();
 
 // /public_html/ops/pages/orders_view.php
-ini_set('display_errors',1); error_reporting(E_ALL);
 
 $root = realpath(__DIR__ . '/..'); if (!$root) die('Path error');
 $cfg  = require $root . '/config.php';
 $base = rtrim($cfg['app']['base_path'] ?? '', '/');
 
-$authPath = $root . '/auth.php';
-if (file_exists($authPath)) { require $authPath; if (function_exists('require_login')) require_login(); }
-
 require $root . '/db.php'; 
 $pdo = db();
-session_start();
 
 function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 function minutes_ago($ts){
@@ -56,6 +52,8 @@ if ($orderId <= 0) { http_response_code(400); exit('Missing order id'); }
 
 // Reopen action
 if (($_GET['do'] ?? '') === 'reopen' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+  verify_csrf_or_die();
+
   $to  = $_POST['to_status'] ?: 'in_production';
   $st  = $pdo->prepare("SELECT status FROM orders WHERE id=?");
   $st->execute([$orderId]);
@@ -81,6 +79,8 @@ if (($_GET['do'] ?? '') === 'reopen' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Update status (and optionally tracking)
 if (($_GET['do'] ?? '') === 'update_status' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+  verify_csrf_or_die();
+
   $new = $_POST['status'] ?? '';
   if (!isset($STATUS[$new])) { http_response_code(400); exit('Bad status'); }
 
@@ -126,6 +126,8 @@ if (($_GET['do'] ?? '') === 'update_status' && $_SERVER['REQUEST_METHOD'] === 'P
 
 // Update basic customer fields
 if (($_GET['do'] ?? '') === 'update_customer' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+  verify_csrf_or_die();
+
   $st = $pdo->prepare("SELECT customer_name, customer_email, customer_phone FROM orders WHERE id=?");
   $st->execute([$orderId]);
   $old = $st->fetch(PDO::FETCH_ASSOC) ?: ['customer_name'=>'','customer_email'=>'','customer_phone'=>''];
@@ -222,6 +224,7 @@ input,select,textarea{width:100%;padding:8px 10px;background:#111;color:#eee;bor
       </div>
       <div>
         <form method="post" action="?id=<?= (int)$orderId ?>&do=update_status">
+          <?= csrf_input() ?>
           <label>Status</label>
           <select name="status" onchange="document.getElementById('tnWrap').style.display=(this.value==='shipped')?'block':'none'">
             <?php foreach($STATUS as $k=>$v): ?>
@@ -239,6 +242,7 @@ input,select,textarea{width:100%;padding:8px 10px;background:#111;color:#eee;bor
 
             <?php if (in_array($order['status'],$DONE,true)): ?>
               <form method="post" action="?id=<?= (int)$orderId ?>&do=reopen" style="display:inline">
+                <?= csrf_input() ?>
                 <input type="hidden" name="to_status" value="in_production">
                 <button class="btn" type="submit">Reopen Order</button>
               </form>
@@ -253,6 +257,7 @@ input,select,textarea{width:100%;padding:8px 10px;background:#111;color:#eee;bor
   <div class="card">
     <h3 style="margin:0 0 8px 0;">Customer</h3>
     <form method="post" action="?id=<?= (int)$orderId ?>&do=update_customer">
+      <?= csrf_input() ?>
       <div class="grid2">
         <div>
           <label>Name</label>

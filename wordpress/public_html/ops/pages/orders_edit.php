@@ -2,7 +2,7 @@
 require __DIR__ . '/../auth.php';
 require_login();
 
-ini_set('display_errors',1); error_reporting(E_ALL);
+require __DIR__ . '/../bootstrap.php';
 
 $root = realpath(__DIR__ . '/..'); if (!$root) die('Path error');
 $cfg  = require $root . '/config.php';
@@ -70,6 +70,7 @@ include $root . '/partials/header.php';
 
 <div class="card">
   <form method="post" action="<?= $base ?>/api/orders_update.php" id="orderForm">
+    <?= csrf_input() ?>
     <input type="hidden" name="order_id" value="<?= (int)$o['id'] ?>">
 
     <label>Client (Storefront)</label>

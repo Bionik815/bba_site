@@ -1,6 +1,6 @@
 <?php
 // /ops/pages/orders_new.php
-ini_set('display_errors', 1); error_reporting(E_ALL);
+require __DIR__ . '/../bootstrap.php';
 
 $root = realpath(__DIR__ . '/..'); if (!$root) die('Path error');
 
@@ -93,6 +93,8 @@ if (isset($_GET['api']) && $_GET['api'] === 'options') {
 // ---------- create order ----------
 $notice = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['__action'] ?? '') === 'create') {
+  verify_csrf_or_die();
+
   $customer_id = (int)($_POST['customer_id'] ?? 0); // selected customer
   $product_id  = (int)($_POST['product_id'] ?? 0);
   $color_id    = (int)($_POST['color_id'] ?? 0);
@@ -166,6 +168,7 @@ button{padding:8px 12px;border:1px solid #2a2a2a;background:#1b1b1b;border-radiu
 <?php if ($notice): ?><div class="notice"><?= $notice ?></div><?php endif; ?>
 
 <form method="post" id="orderForm">
+  <?= csrf_input() ?>
   <input type="hidden" name="__action" value="create">
 
   <div class="card">

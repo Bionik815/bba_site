@@ -2,7 +2,7 @@
 require __DIR__ . '/../auth.php';
 require_login();
 
-ini_set('display_errors',1); error_reporting(E_ALL); // remove later
+require __DIR__ . '/../bootstrap.php';
 
 $root = realpath(__DIR__ . '/..'); if (!$root) die('Path error');
 $cfg  = require $root . '/config.php';
