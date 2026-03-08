@@ -1,0 +1,8 @@
+<?php
+// Optional local overrides loaded by wp-config.php when copied to wp-config-local.php.
+// This file should not contain production credentials.
+
+putenv( 'WP_DB_NAME=barebones_wp' );
+putenv( 'WP_DB_USER=wp_user' );
+putenv( 'WP_DB_PASSWORD=wp_password' );
+putenv( 'WP_DB_HOST=db:3306' );

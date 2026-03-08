@@ -1,4 +1,8 @@
 <?php
+if ( file_exists( __DIR__ . '/wp-config-local.php' ) ) {
+	require_once __DIR__ . '/wp-config-local.php';
+}
+
 define( 'WP_CACHE', true );
 
 /**
@@ -23,16 +27,16 @@ define( 'WP_CACHE', true );
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'u632291655_CIS0T' );
+define( 'DB_NAME', getenv( 'WP_DB_NAME' ) ?: 'u632291655_CIS0T' );
 
 /** Database username */
-define( 'DB_USER', 'u632291655_O8isY' );
+define( 'DB_USER', getenv( 'WP_DB_USER' ) ?: 'u632291655_O8isY' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'FUh7tIXmE1' );
+define( 'DB_PASSWORD', getenv( 'WP_DB_PASSWORD' ) ?: 'FUh7tIXmE1' );
 
 /** Database hostname */
-define( 'DB_HOST', '127.0.0.1' );
+define( 'DB_HOST', getenv( 'WP_DB_HOST' ) ?: '127.0.0.1' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );

@@ -1,0 +1,48 @@
+services:
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-barebones_wp}
+      MYSQL_USER: ${MYSQL_USER:-wp_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-wp_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:php8.2-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+    env_file:
+      - .env.local
+    environment:
+      WP_DB_NAME: ${MYSQL_DATABASE:-barebones_wp}
+      WP_DB_USER: ${MYSQL_USER:-wp_user}
+      WP_DB_PASSWORD: ${MYSQL_PASSWORD:-wp_password}
+      WP_DB_HOST: db:3306
+    ports:
+      - "8080:80"
+    volumes:
+      - ./public_html:/var/www/html
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.2
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    ports:
+      - "8081:80"
+
+volumes:
+  mysql_data:
