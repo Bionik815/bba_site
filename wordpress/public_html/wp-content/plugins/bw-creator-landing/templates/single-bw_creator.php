@@ -16,18 +16,36 @@ $store_url  = get_post_meta($creator_id, '_bw_creator_link', true);
 $cta_text   = get_post_meta($creator_id, '_bw_creator_cta_text', true) ?: 'Shop Now';
 $wc_cat     = get_post_meta($creator_id, '_bw_creator_wc_category', true);
 $wc_tag     = get_post_meta($creator_id, '_bw_creator_wc_tag', true);
+$subtitle   = get_post_meta($creator_id, '_bw_creator_subtitle', true) ?: 'Official storefront';
+$banner     = get_post_meta($creator_id, '_bw_creator_banner_url', true);
+$banner_mobile = get_post_meta($creator_id, '_bw_creator_banner_mobile_url', true);
+$brand      = get_post_meta($creator_id, '_bw_creator_brand_color', true) ?: '#111111';
+$bg         = get_post_meta($creator_id, '_bw_creator_bg_color', true) ?: '#0b0f14';
+$text       = get_post_meta($creator_id, '_bw_creator_text_color', true) ?: '#ffffff';
 
-// Allow site admins to set a brand color per page using Elementor Custom CSS var if they want.
-// We just provide sensible default colors via CSS declared in assets.
+$hero_classes = 'bwcl-hero';
+if (!empty($banner)) {
+  $hero_classes .= ' has-banner';
+}
+if (!empty($banner_mobile)) {
+  $hero_classes .= ' has-mobile-banner';
+}
+$hero_style = '--brand:' . esc_attr($brand) . ';--bg:' . esc_attr($bg) . ';--text:' . esc_attr($text) . ';';
+if (!empty($banner)) {
+  $hero_style .= '--banner-image:url("' . esc_url($banner) . '");';
+}
+if (!empty($banner_mobile)) {
+  $hero_style .= '--banner-image-mobile:url("' . esc_url($banner_mobile) . '");';
+}
 ?>
 <main id="primary" class="site-main">
 
-  <section class="bwcl-hero">
+  <section class="<?php echo esc_attr($hero_classes); ?>" style="<?php echo esc_attr($hero_style); ?>">
     <div class="bwcl-inner">
       <div class="bwcl-logo"><?php echo $logo; ?></div>
       <div class="bwcl-copy">
         <h1><?php echo esc_html($name); ?></h1>
-        <p><?php echo esc_html__('Official storefront', 'bw'); ?></p>
+        <p><?php echo esc_html($subtitle); ?></p>
         <?php if ($store_url): ?>
           <a class="bwcl-btn" href="<?php echo esc_url($store_url); ?>">
             <?php echo esc_html($cta_text); ?>

@@ -23,6 +23,7 @@ class BW_Mega_Menu_Pro {
   public function __construct(){
     add_action('init', [$this,'register_types']);
     add_action('admin_init', [$this,'maybe_seed_terms']);
+    add_filter('use_block_editor_for_post_type', [$this, 'maybe_disable_block_editor'], 10, 2);
 
     // term meta (Groups)
     add_action(self::TAX_GROUP.'_add_form_fields',  [$this,'group_add_fields']);
@@ -61,6 +62,13 @@ class BW_Mega_Menu_Pro {
       'supports'=>['title','editor','thumbnail','page-attributes'],'has_archive'=>false,'rewrite'=>['slug'=>'creator'],'show_in_rest'=>true,
     ]);
     add_image_size('bw_logo', 220, 120, false);
+  }
+
+  public function maybe_disable_block_editor($use_block_editor, $post_type) {
+    if ($post_type === self::CPT_CREATOR) {
+      return false;
+    }
+    return $use_block_editor;
   }
   public function maybe_seed_terms(){
     $defaults = ['Barebones Apparel','Athletes','Businesses','Music','Schools'];
@@ -171,11 +179,11 @@ class BW_Mega_Menu_Pro {
 
   /* ---------- Assets + Shortcode ---------- */
   public function register_assets(){
-    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '3.2.0');
+    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '3.3.7');
     // Astra safety
     $astra = ".ast-primary-header-bar, .main-header-bar { overflow:visible!important } .site-header, .ast-primary-header-bar{position:relative;z-index:30}";
     wp_add_inline_style('bw-mega-menu-pro',$astra);
-    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '3.1.0', true);
+    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '3.3.0', true);
   }
 
   public function shortcode($atts){
@@ -202,70 +210,82 @@ class BW_Mega_Menu_Pro {
 
     $gray_class = ($atts['grayscale']==='on') ? ' is-gray' : '';
 
+    $instance_id = wp_unique_id('bw-mega-');
+
     ob_start(); ?>
     <div class="bw-mega<?php echo esc_attr($gray_class.' '.$atts['class']); ?>">
-      <button class="bw-mega__toggle" aria-expanded="false" aria-controls="bw-mega-panel">
+      <button class="bw-mega__toggle" aria-expanded="false" aria-controls="<?php echo esc_attr($instance_id . '-panel'); ?>">
         <?php echo esc_html($atts['label']); ?><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
       </button>
-      <div id="bw-mega-panel" class="bw-mega__panel" hidden>
+      <div id="<?php echo esc_attr($instance_id . '-panel'); ?>" class="bw-mega__panel" hidden>
   <div class="bw-mega__inner">
     <div class="bw-panel-head">
       <h2 style="margin:0"><?php echo esc_html($atts['label']); ?></h2>
       <button type="button" class="bw-close" aria-label="Close">&times;</button>
     </div>
-          <?php foreach($groups as $g):
+          <div class="bw-tabs" role="tablist" aria-label="<?php echo esc_attr($atts['label']); ?> groups">
+            <?php foreach($groups as $i => $g):
+              $tab_id = $instance_id . '-tab-' . $g->term_id;
+              $panel_id = $instance_id . '-group-' . $g->term_id;
+              ?>
+              <button
+                type="button"
+                class="bw-tab<?php echo $i === 0 ? ' is-active' : ''; ?>"
+                id="<?php echo esc_attr($tab_id); ?>"
+                role="tab"
+                aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
+                aria-controls="<?php echo esc_attr($panel_id); ?>"
+                tabindex="<?php echo $i === 0 ? '0' : '-1'; ?>">
+                <?php echo esc_html($g->name); ?>
+              </button>
+            <?php endforeach; ?>
+          </div>
+
+          <?php foreach($groups as $i => $g):
             $browse = get_term_meta($g->term_id,self::TM_BROWSE,true) ?: get_term_link($g);
+            $panel_id = $instance_id . '-group-' . $g->term_id;
+            $tab_id = $instance_id . '-tab-' . $g->term_id;
             $creators = get_posts([
               'post_type'=>self::CPT_CREATOR,'posts_per_page'=>(int)$atts['limit'],'order'=>$atts['order'],
               'orderby'=>'meta_value_num','meta_key'=>self::PM_ORDER,
               'tax_query'=>[['taxonomy'=>self::TAX_GROUP,'field'=>'term_id','terms'=>[$g->term_id]]],
               'meta_query'=>[['key'=>self::PM_SHOW,'value'=>'1']]
             ]);
-            $row_id='logos-row-'.$g->term_id; ?>
-            <section class="bw-group">
+            ?>
+            <section class="bw-group-panel<?php echo $i === 0 ? ' is-active' : ''; ?>"
+              id="<?php echo esc_attr($panel_id); ?>"
+              role="tabpanel"
+              aria-labelledby="<?php echo esc_attr($tab_id); ?>"
+              <?php echo $i === 0 ? '' : 'hidden'; ?>>
               <div class="bw-group__head">
                 <h3 class="bw-group__title"><?php echo esc_html($g->name); ?></h3>
                 <a class="bw-group__all" href="<?php echo esc_url($browse); ?>"><?php echo esc_html($atts['show_all_tx']); ?> <span class="arrow">›</span></a>
               </div>
-              <div class="bw-row">
-                <button class="bw-row__nav bw-row__nav--prev" aria-controls="<?php echo esc_attr($row_id); ?>">‹</button>
-                <ul id="<?php echo esc_attr($row_id); ?>" class="bw-logos" tabindex="0">
-                  <?php if ($creators): foreach($creators as $c):
-  $u    = get_post_meta($c->ID,self::PM_LINK,true) ?: '#';
-  $name = get_the_title($c->ID);
-  $thumb_html = get_the_post_thumbnail($c->ID,'bw_logo',['alt'=>$name]);
+              <ul class="bw-logos-grid">
+                <?php if ($creators): foreach($creators as $c):
+                  $u = $this->resolve_creator_url((int)$c->ID);
+                  $name = get_the_title($c->ID);
+                  $thumb_html = get_the_post_thumbnail($c->ID,'bw_logo',['alt'=>$name, 'class'=>'bwmm-img']);
 
-  if ($thumb_html) {
-  // Wrapped tile + caption
-  $thumb_html = get_the_post_thumbnail(
-    $c->ID,
-    'bw_logo',
-    ['alt' => $name, 'class' => 'bwmm-img'] // add class for CSS targeting
-  );
-
-  echo '<li class="bw-logo">
-          <a class="bwmm-card" href="'.esc_url($u).'" aria-label="'.esc_attr($name).'">
-            <div class="bwmm-tile">'.$thumb_html.'</div>
-            <div class="bwmm-caption">'.esc_html($name).'</div>
-          </a>
-        </li>';
-} else {
-  // Text-only fallback still gets caption box
-  echo '<li class="bw-logo">
-          <a class="bwmm-card" href="'.esc_url($u).'">
-            <div class="bwmm-tile"><span class="bw-logo-text">'.esc_html($name).'</span></div>
-            <div class="bwmm-caption">'.esc_html($name).'</div>
-          </a>
-        </li>';
-}
-
-endforeach; else: ?>
-
-                    <li class="bw-logo bw-logo--empty"><em>No items yet.</em></li>
-                  <?php endif; ?>
-                </ul>
-                <button class="bw-row__nav bw-row__nav--next" aria-controls="<?php echo esc_attr($row_id); ?>">›</button>
-              </div>
+                  if ($thumb_html) {
+                    echo '<li class="bw-logo">
+                            <a class="bwmm-card" href="'.esc_url($u).'" aria-label="'.esc_attr($name).'">
+                              <div class="bwmm-tile">'.$thumb_html.'</div>
+                              <div class="bwmm-caption">'.esc_html($name).'</div>
+                            </a>
+                          </li>';
+                  } else {
+                    echo '<li class="bw-logo">
+                            <a class="bwmm-card" href="'.esc_url($u).'" aria-label="'.esc_attr($name).'">
+                              <div class="bwmm-tile"><span class="bw-logo-text">'.esc_html($name).'</span></div>
+                              <div class="bwmm-caption">'.esc_html($name).'</div>
+                            </a>
+                          </li>';
+                  }
+                endforeach; else: ?>
+                  <li class="bw-logo bw-logo--empty"><em>No items yet.</em></li>
+                <?php endif; ?>
+              </ul>
             </section>
           <?php endforeach; ?>
           <?php if (!empty($atts['all_link'])): ?>
@@ -275,6 +295,22 @@ endforeach; else: ?>
       </div>
     </div>
     <?php return ob_get_clean();
+  }
+
+  private function resolve_creator_url(int $creator_id): string {
+    $stored = (string) get_post_meta($creator_id, self::PM_LINK, true);
+    $perma  = (string) get_permalink($creator_id);
+
+    if ($stored === '' || str_contains($stored, '?post_type=' . self::CPT_CREATOR . '&p=')) {
+      $stored = $perma;
+    }
+
+    $resolved = apply_filters('bwmm_creator_link', $stored, $creator_id);
+    if (!is_string($resolved) || $resolved === '') {
+      $resolved = $perma;
+    }
+
+    return $resolved !== '' ? $resolved : '#';
   }
 }
 new BW_Mega_Menu_Pro();

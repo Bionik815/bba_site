@@ -12,7 +12,7 @@ add_action('admin_enqueue_scripts', function($hook){
   $js = <<<JS
   (function(){
     // try to find the input by its name attribute
-    var el = document.querySelector('input[name="_bw_creator_link"]');
+    var el = document.querySelector('input[name="bw_creator_link"]');
     if(!el) return;
     try{
       el.type = 'text'; // remove URL validation

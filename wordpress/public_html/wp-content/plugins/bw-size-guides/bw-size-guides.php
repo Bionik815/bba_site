@@ -231,8 +231,56 @@ public function admin_assets($hook){
   /* ================= Frontend display ================= */
 
   public function frontend_assets(){
-    $css = '.bwsg-tab img{max-width:100%;height:auto;border:1px solid #e5e7eb;border-radius:8px;padding:6px;background:#fff}';
+    $css = <<<CSS
+.bwsg-tab img{max-width:100%;height:auto;border:1px solid #e5e7eb;border-radius:8px;padding:6px;background:#fff}
+.bwsg-zoom-link{display:block;cursor:zoom-in}
+.bwsg-zoom-link img{display:block;max-width:100%;height:auto}
+.bwsg-lightbox{position:fixed;inset:0;background:rgba(8,12,20,.88);display:none;align-items:center;justify-content:center;z-index:999999}
+.bwsg-lightbox.is-open{display:flex}
+.bwsg-lightbox img{max-width:94vw;max-height:86vh;width:auto;height:auto;border-radius:10px;background:#fff}
+.bwsg-lightbox-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:999px;border:0;background:#fff;color:#111;font-size:26px;line-height:1;cursor:pointer}
+CSS;
     wp_add_inline_style('woocommerce-inline', $css);
+
+    $js = <<<JS
+(function(){
+  function ensureModal(){
+    var m = document.getElementById('bwsg-lightbox');
+    if (m) return m;
+    m = document.createElement('div');
+    m.id = 'bwsg-lightbox';
+    m.className = 'bwsg-lightbox';
+    m.setAttribute('aria-hidden', 'true');
+    m.innerHTML = '<button type="button" class="bwsg-lightbox-close" aria-label="Close">×</button><img alt="Size guide zoom">';
+    document.body.appendChild(m);
+    var closeBtn = m.querySelector('.bwsg-lightbox-close');
+    closeBtn.addEventListener('click', function(){ closeModal(m); });
+    m.addEventListener('click', function(e){ if (e.target === m) closeModal(m); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(m); });
+    return m;
+  }
+  function openModal(src, alt){
+    var m = ensureModal();
+    var img = m.querySelector('img');
+    img.src = src;
+    img.alt = alt || 'Size guide zoom';
+    m.classList.add('is-open');
+    m.setAttribute('aria-hidden', 'false');
+  }
+  function closeModal(m){
+    if (!m) return;
+    m.classList.remove('is-open');
+    m.setAttribute('aria-hidden', 'true');
+  }
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('.bwsg-zoom-link');
+    if (!link) return;
+    e.preventDefault();
+    openModal(link.getAttribute('href'), link.getAttribute('data-bwsg-alt') || '');
+  });
+})();
+JS;
+    wp_add_inline_script('jquery-core', $js, 'after');
   }
 
   public function add_size_tab($tabs){
@@ -248,8 +296,12 @@ public function admin_assets($hook){
       'title'    => __('Size Guide','bwsg'),
       'priority' => 55,
       'callback' => function() use ($image_id){
+        $full = wp_get_attachment_image_url($image_id, 'full');
+        $alt  = esc_attr__('Size Guide', 'bwsg');
         echo '<div class="bwsg-tab">';
+        echo '<a class="bwsg-zoom-link" href="'.esc_url($full).'" data-bwsg-alt="'.$alt.'">';
         echo wp_get_attachment_image($image_id, 'large', false, ['alt'=>__('Size Guide','bwsg')]);
+        echo '</a>';
         echo '</div>';
       }
     ];
@@ -265,13 +317,14 @@ public function admin_assets($hook){
   if (!$image_id) return;
 
   // Collapsible inline block (keeps page tidy)
-  $url = wp_get_attachment_image_url($image_id, 'large');
+  $url = wp_get_attachment_image_url($image_id, 'full');
   $img = wp_get_attachment_image($image_id, 'large', false, ['alt'=>__('Size Guide','bwsg')]);
+  $alt = esc_attr__('Size Guide', 'bwsg');
 
   echo '<div class="bwsg-inline" style="margin-top:14px">';
   echo '  <details class="bwsg-details">';
   echo '    <summary class="bwsg-summary">'.esc_html__('Size Guide','bwsg').'</summary>';
-  echo '    <div class="bwsg-inline-wrap">'.$img.'</div>';
+  echo '    <div class="bwsg-inline-wrap"><a class="bwsg-zoom-link" href="'.esc_url($url).'" data-bwsg-alt="'.$alt.'">'.$img.'</a></div>';
   echo '  </details>';
   echo '</div>';
 }
