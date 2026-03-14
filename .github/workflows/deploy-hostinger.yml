@@ -1,0 +1,58 @@
+name: Deploy to Hostinger
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/deploy-hostinger.yml"
+      - "wordpress/public_html/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Upload WordPress files
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_PROTOCOL: ${{ secrets.HOSTINGER_PROTOCOL }}
+          HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          HOSTINGER_REMOTE_DIR: ${{ secrets.HOSTINGER_REMOTE_DIR }}
+        run: |
+          test -n "$HOSTINGER_HOST"
+          test -n "$HOSTINGER_USERNAME"
+          test -n "$HOSTINGER_PASSWORD"
+          test -n "$HOSTINGER_REMOTE_DIR"
+
+          lftp -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" "${HOSTINGER_PROTOCOL:-sftp}://$HOSTINGER_HOST:${HOSTINGER_PORT:-22}" <<EOF
+          set cmd:fail-exit yes
+          set ssl:verify-certificate no
+          set sftp:auto-confirm yes
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=4 \
+            --exclude-glob .git* \
+            --exclude-glob .DS_Store \
+            --exclude-glob wp-config-local.php \
+            --exclude-glob ops/config.local.php \
+            --exclude ^ops/runtime/ \
+            --exclude ^wp-content/cache/ \
+            --exclude ^wp-content/litespeed/ \
+            --exclude ^wp-content/upgrade/ \
+            --exclude ^wp-content/uploads/ \
+            wordpress/public_html "$HOSTINGER_REMOTE_DIR"
+          bye
+          EOF

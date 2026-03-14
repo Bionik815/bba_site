@@ -37,6 +37,14 @@ wordpress/wp-content/upgrade/
 wordpress/wp-content/uploads/cache/
 wordpress/wp-content/advanced-cache.php
 wordpress/wp-content/debug.log
+wordpress/public_html/wp-content/cache/
+wordpress/public_html/wp-content/upgrade/
+wordpress/public_html/wp-content/uploads/cache/
+wordpress/public_html/wp-content/advanced-cache.php
+wordpress/public_html/wp-content/debug.log
+wordpress/public_html/wp-content/litespeed/
+wordpress/public_html/ops/runtime/
+wordpress/public_html/.htaccess.bk
 
 # Backups / dumps
 *.sql
