@@ -46,7 +46,9 @@ jobs:
             --parallel=4 \
             --exclude-glob .git* \
             --exclude-glob .DS_Store \
+            --exclude-glob wp-config.php \
             --exclude-glob wp-config-local.php \
+            --exclude-glob ops/config.php \
             --exclude-glob ops/config.local.php \
             --exclude ^ops/runtime/ \
             --exclude ^wp-content/cache/ \

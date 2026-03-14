@@ -20,7 +20,7 @@ Create these repository secrets before enabling the workflow:
 - `HOSTINGER_PROTOCOL`: `sftp`
 - `HOSTINGER_USERNAME`: your Hostinger SSH/SFTP username
 - `HOSTINGER_PASSWORD`: your Hostinger SSH/SFTP password
-- `HOSTINGER_REMOTE_DIR`: the full remote path for the site, for example `/home/u123456789/domains/example.com/public_html`
+- `HOSTINGER_REMOTE_DIR`: the actual web root on Hostinger. For this project, prefer `public_html` unless Hostinger explicitly requires an absolute path.
 
 The workflow lives at `.github/workflows/deploy-hostinger.yml` and runs on pushes to `main` or manual dispatch.
 
@@ -39,6 +39,7 @@ That file is already git-ignored, so the credentials stay off GitHub.
 
 ## Notes
 
+- The deploy workflow intentionally does not overwrite `wp-config.php` or `ops/config.php`, because those may contain production-only database settings on Hostinger.
 - The deploy workflow intentionally skips `wp-content/uploads/` so production media is not overwritten by local files.
 - It also skips local override files and runtime/cache directories.
 - If you later want Git to fully own WordPress core, plugins, and uploads, we should do that as a separate cleanup pass instead of mixing it into the first production rollout.
