@@ -7,7 +7,9 @@ on:
       - main
     paths:
       - ".github/workflows/deploy-hostinger.yml"
-      - "wordpress/public_html/**"
+      - "wordpress/public_html/ops/**"
+      - "wordpress/public_html/wp-content/mu-plugins/**"
+      - "wordpress/public_html/wp-content/plugins/bw-*/**"
 
 jobs:
   deploy:
@@ -22,7 +24,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y lftp
 
-      - name: Upload WordPress files
+      - name: Upload app files
         env:
           HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
           HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
@@ -40,21 +42,36 @@ jobs:
           set cmd:fail-exit yes
           set ssl:verify-certificate no
           set sftp:auto-confirm yes
+
+          mkdir -p "$HOSTINGER_REMOTE_DIR/ops"
+          mkdir -p "$HOSTINGER_REMOTE_DIR/wp-content/mu-plugins"
+          mkdir -p "$HOSTINGER_REMOTE_DIR/wp-content/plugins"
+
           mirror -R \
             --verbose \
             --only-newer \
-            --parallel=4 \
-            --exclude-glob .git* \
-            --exclude-glob .DS_Store \
-            --exclude-glob wp-config.php \
-            --exclude-glob wp-config-local.php \
-            --exclude-glob ops/config.php \
-            --exclude-glob ops/config.local.php \
-            --exclude ^ops/runtime/ \
-            --exclude ^wp-content/cache/ \
-            --exclude ^wp-content/litespeed/ \
-            --exclude ^wp-content/upgrade/ \
-            --exclude ^wp-content/uploads/ \
-            wordpress/public_html "$HOSTINGER_REMOTE_DIR"
+            --parallel=2 \
+            --exclude-glob config.php \
+            --exclude-glob config.local.php \
+            --exclude ^runtime/ \
+            wordpress/public_html/ops "$HOSTINGER_REMOTE_DIR/ops"
+
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=2 \
+            wordpress/public_html/wp-content/mu-plugins "$HOSTINGER_REMOTE_DIR/wp-content/mu-plugins"
+
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=2 \
+            wordpress/public_html/wp-content/plugins/bw-gang-sheet-builder "$HOSTINGER_REMOTE_DIR/wp-content/plugins/bw-gang-sheet-builder"
+
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=2 \
+            wordpress/public_html/wp-content/plugins/bw-project-quote-tool "$HOSTINGER_REMOTE_DIR/wp-content/plugins/bw-project-quote-tool"
           bye
           EOF
