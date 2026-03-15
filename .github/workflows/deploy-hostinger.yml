@@ -43,10 +43,6 @@ jobs:
           set ssl:verify-certificate no
           set sftp:auto-confirm yes
 
-          mkdir -p "$HOSTINGER_REMOTE_DIR/ops"
-          mkdir -p "$HOSTINGER_REMOTE_DIR/wp-content/mu-plugins"
-          mkdir -p "$HOSTINGER_REMOTE_DIR/wp-content/plugins"
-
           mirror -R \
             --verbose \
             --only-newer \
