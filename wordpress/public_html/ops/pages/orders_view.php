@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../bootstrap.php';
+require __DIR__ . '/../statuses.php';
 require __DIR__ . '/../auth.php';
 require_login();
 
@@ -32,18 +33,7 @@ function save_edit($pdo,$orderId,$userId,$field,$old,$new){
       ->execute([$orderId]);
 }
 
-// status map in display order you wanted
-$STATUS = [
-  'received'           => 'Received',
-  'supplies_ordered'   => 'Supplies Ordered',
-  'awaiting_supplies'  => 'Awaiting Supplies',
-  'supplies_received'  => 'Supplies Received',
-  'in_production'      => 'In Production',
-  'ready_for_pickup'   => 'Ready for Customer',
-  'shipped'            => 'Shipped',
-  'delivered'          => 'Order Complete',
-];
-$DONE = ['shipped','delivered'];
+$STATUS = ops_statuses();
 
 $orderId = (int)($_GET['id'] ?? 0);
 if ($orderId <= 0) { http_response_code(400); exit('Missing order id'); }
@@ -102,7 +92,7 @@ if (($_GET['do'] ?? '') === 'update_status' && $_SERVER['REQUEST_METHOD'] === 'P
 
   // compute completed_at rules
   $completedAtSql = 'completed_at = NULL';
-  if (in_array($new, $DONE, true)) $completedAtSql = 'completed_at = IF(completed_at IS NULL, NOW(), completed_at)';
+  if (ops_is_final_status($new)) $completedAtSql = 'completed_at = IF(completed_at IS NULL, NOW(), completed_at)';
 
   // update row
   $sql = "UPDATE orders SET status=?, updated_at=NOW(), $completedAtSql".
@@ -160,6 +150,7 @@ $st = $pdo->prepare("
 $st->execute([$orderId]);
 $order = $st->fetch(PDO::FETCH_ASSOC);
 if (!$order) { http_response_code(404); exit('Order not found'); }
+$currentStatus = ops_normalize_status($order['status'] ?? 'received');
 
 $age     = minutes_ago($order['created_at']);
 $stageForAge = minutes_ago($order['updated_at']);
@@ -201,10 +192,10 @@ input,select,textarea{width:100%;padding:8px 10px;background:#111;color:#eee;bor
 
 <h2>Order #<?= (int)$order['id'] ?> <?= $order['external_ref'] ? '· '.h($order['external_ref']) : '' ?></h2>
 <div class="row">
-  <span class="badge"><?= h($STATUS[$order['status']] ?? $order['status']) ?></span>
+  <span class="badge"><?= h(ops_status_label($order['status'])) ?></span>
   <span class="small">Age: <?= h($age) ?></span>
   <span class="small">In current stage: <?= h($stageForAge) ?></span>
-  <?php if (in_array($order['status'],$DONE,true)): ?>
+  <?php if (ops_is_final_status($order['status'])): ?>
     <span class="small">Completed: <?= h($order['completed_at'] ?: '') ?></span>
   <?php endif; ?>
 </div>
@@ -228,11 +219,11 @@ input,select,textarea{width:100%;padding:8px 10px;background:#111;color:#eee;bor
           <label>Status</label>
           <select name="status" onchange="document.getElementById('tnWrap').style.display=(this.value==='shipped')?'block':'none'">
             <?php foreach($STATUS as $k=>$v): ?>
-              <option value="<?= h($k) ?>" <?= $order['status']===$k?'selected':'' ?>><?= h($v) ?></option>
+              <option value="<?= h($k) ?>" <?= $currentStatus === $k ? 'selected' : '' ?>><?= h($v) ?></option>
             <?php endforeach; ?>
           </select>
 
-          <div id="tnWrap" style="display:<?= $order['status']==='shipped'?'block':'none' ?>;margin-top:8px;">
+          <div id="tnWrap" style="display:<?= $currentStatus === 'shipped' ? 'block' : 'none' ?>;margin-top:8px;">
             <label>Tracking Number</label>
             <input name="tracking_number" value="<?= h($order['tracking_number'] ?? '') ?>" placeholder="Optional but nice">
           </div>
@@ -240,12 +231,8 @@ input,select,textarea{width:100%;padding:8px 10px;background:#111;color:#eee;bor
           <div class="row" style="margin-top:10px;">
             <button class="btn" type="submit">Update Status</button>
 
-            <?php if (in_array($order['status'],$DONE,true)): ?>
-              <form method="post" action="?id=<?= (int)$orderId ?>&do=reopen" style="display:inline">
-                <?= csrf_input() ?>
-                <input type="hidden" name="to_status" value="in_production">
-                <button class="btn" type="submit">Reopen Order</button>
-              </form>
+            <?php if (ops_is_final_status($order['status'])): ?>
+              <button class="btn" type="submit" formaction="?id=<?= (int)$orderId ?>&do=reopen" formmethod="post" name="to_status" value="in_production">Reopen Order</button>
             <?php endif; ?>
           </div>
         </form>
@@ -274,7 +261,7 @@ input,select,textarea{width:100%;padding:8px 10px;background:#111;color:#eee;bor
           <input name="customer_phone" value="<?= h($order['customer_phone'] ?? '') ?>">
         </div>
         <div>
-          <?php if ($order['status']==='shipped'): ?>
+          <?php if ($currentStatus === 'shipped'): ?>
             <label>Tracking Number</label>
             <input disabled value="<?= h($order['tracking_number'] ?? '') ?>">
           <?php else: ?>
@@ -321,7 +308,7 @@ input,select,textarea{width:100%;padding:8px 10px;background:#111;color:#eee;bor
           <div class="row">
             <a class="btn" href="<?= $base ?>/pages/orders_view.php?id=<?= (int)$r['id'] ?>">View</a>
             <div>#<?= (int)$r['id'] ?> <?= $r['external_ref'] ? '· '.h($r['external_ref']) : '' ?></div>
-            <div class="small"><?= h($STATUS[$r['status']] ?? $r['status']) ?></div>
+            <div class="small"><?= h(ops_status_label($r['status'])) ?></div>
             <div class="small">Created <?= h($r['created_at']) ?></div>
           </div>
         <?php endforeach; ?>

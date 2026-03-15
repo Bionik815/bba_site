@@ -3,6 +3,7 @@ require __DIR__ . '/../auth.php';
 require_login();
 
 require __DIR__ . '/../bootstrap.php';
+require __DIR__ . '/../statuses.php';
 
 $root = realpath(__DIR__ . '/..'); if (!$root) die('Path error');
 $cfg  = require $root . '/config.php';
@@ -11,16 +12,7 @@ $base = rtrim($cfg['app']['base_path'] ?? '', '/');
 require $root . '/db.php';
 $pdo = db();
 
-/* Status columns in your chosen order */
-$columns = [
-  'received'          => 'Received',
-  'supplies_ordered'  => 'Supplies Ordered',
-  'awaiting_supplies' => 'Awaiting Supplies',
-  'supplies_received' => 'Supplies Received',
-  'in_production'     => 'In Production',
-  'ready_for_customer'=> 'Ready for Customer',
-  'shipped'           => 'Shipped',
-];
+$columns = ops_board_statuses();
 
 /* Helpers */
 function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
@@ -77,7 +69,7 @@ SELECT
   ) AS first_item_name
 FROM orders o
 LEFT JOIN clients c ON c.id = o.client_id
-WHERE o.status <> 'complete'
+WHERE o.status NOT IN ('delivered', 'complete', 'completed')
 ORDER BY o.priority DESC, o.created_at DESC;
 ";
 $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -86,7 +78,7 @@ $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 $byStatus = [];
 foreach ($columns as $key => $_) $byStatus[$key] = [];
 foreach ($rows as $r) {
-  $st = $r['status'] ?? 'received';
+  $st = ops_normalize_status($r['status'] ?? 'received');
   if (!isset($byStatus[$st])) $byStatus[$st] = [];
   $byStatus[$st][] = $r;
 }

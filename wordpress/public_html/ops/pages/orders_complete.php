@@ -3,6 +3,7 @@ require __DIR__ . '/../auth.php';
 require_login();
 
 require __DIR__ . '/../bootstrap.php';
+require __DIR__ . '/../statuses.php';
 
 $root = realpath(__DIR__ . '/..'); if (!$root) die('Path error');
 $cfg  = require $root . '/config.php';
@@ -22,7 +23,7 @@ function tracking_url($tn){
   return "https://track.aftership.com/".urlencode($up);
 }
 
-$finals = ["complete","completed","delivered","shipped"];
+$finals = ops_final_statuses();
 $in = "'" . implode("','", array_map('addslashes', $finals)) . "'";
 
 $sql = "
@@ -98,7 +99,7 @@ a.trk { color:#a6c8ff; text-decoration:underline; }
                 <?php endif; ?>
               <?php endif; ?>
             </td>
-            <td><span class="badge"><?= h($r['status']) ?></span></td>
+            <td><span class="badge"><?= h(ops_status_label($r['status'])) ?></span></td>
             <td class="actions">
               <a class="btn" href="<?= $base ?>/pages/orders_view.php?id=<?= (int)$r['id'] ?>">Details</a>
             </td>

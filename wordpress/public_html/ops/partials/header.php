@@ -58,6 +58,10 @@ main { padding:16px; }
     <a href="<?= $base ?>/index.php"                 class="<?= $current==='index.php'?'active':'' ?>">Dashboard</a>
     <a href="<?= $base ?>/pages/orders_board.php"    class="<?= $current==='orders_board.php'?'active':'' ?>">Board</a>
     <a href="<?= $base ?>/pages/orders_new.php"      class="<?= $current==='orders_new.php'?'active':'' ?>">New Order</a>
+    <a href="<?= $base ?>/pages/quotes_new.php"      class="<?= $current==='quotes_new.php'?'active':'' ?>">Quotes</a>
+    <?php if ($role === 'admin'): ?>
+      <a href="<?= $base ?>/pages/quotes_review.php"   class="<?= in_array($current,['quotes_review.php','quotes_view.php'], true)?'active':'' ?>">Quote Review</a>
+    <?php endif; ?>
     <a href="<?= $base ?>/pages/orders_search.php"   class="<?= $current==='orders_search.php'?'active':'' ?>">Search</a>
     <a href="<?= $base ?>/pages/orders_complete.php" class="<?= $current==='orders_complete.php'?'active':'' ?>">Completed</a>
     <?php if ($role === 'admin'): ?>
