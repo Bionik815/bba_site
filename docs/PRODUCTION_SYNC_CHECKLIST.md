@@ -14,6 +14,17 @@ Created from the 2026-06-05 security audit + red-tier remediation.
       `change_me_*` fallbacks.
 - [ ] (Minor) Consider setting `WP_COOKIEHASH` to a real secret; today it falls back to `md5(db_name)`.
 
+## Creator-link plugin consolidation (manual — these plugins are NOT in the deploy mirror)
+- [ ] **Deactivate + delete `bw-creator-link-admin-fix` on production.** Its functionality (admin field
+      UX + save normalizer) was merged into `bw-creator-link-helper`. It's been removed from the repo and
+      deactivated locally. On prod: Plugins → deactivate "BW Creator Link — Admin Fix" → delete it, and
+      make sure `bw-creator-link-helper` is present/active.
+- [ ] (Separate, behavior-changing) `mu-plugins/bw-normalize-creator-links.php` read normalizer is a no-op:
+      its `get_metadata_raw($object_id, $meta_key, true)` has the wrong argument order
+      (`get_metadata_raw($meta_type, $object_id, $meta_key, $single)`), so read-time normalization never runs.
+      Links work via the save normalizer. Fixing the arg order would activate read normalization site-wide —
+      do it deliberately and re-test the mega menu / creator links.
+
 ## Preview gate (deploys via mu-plugins)
 - [ ] Decide gate state for launch: keep enabled for private preview, or disable for public. The audit fix
       makes the gate also cover `/wp-json` + `/xmlrpc.php` for anonymous users while it is enabled.

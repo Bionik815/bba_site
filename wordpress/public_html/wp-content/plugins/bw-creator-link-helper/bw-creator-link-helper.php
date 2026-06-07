@@ -1,10 +1,34 @@
 <?php
 /**
  * Plugin Name: BW Creator Link Helper
- * Description: Allows entering relative paths for Creator “Store URL” and saves them as absolute to current site.
+ * Description: Lets you enter relative paths for the Creator "Store URL" and normalizes them to this site's absolute URL — on save and on read (domain-move safe). Consolidates the former "BW Creator Link — Admin Fix" plugin (admin field UX + save normalizer + read normalizer).
  */
 if (!defined('ABSPATH')) exit;
 
+// Admin UX: allow a relative path in the "Store URL" field (drop URL validation) + hint.
+add_action('admin_enqueue_scripts', function($hook){
+  $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+  if (!$screen || $screen->id !== 'bw_creator') return;
+  $js = <<<JS
+  (function(){
+    var el = document.querySelector('input[name="bw_creator_link"]');
+    if(!el) return;
+    try{
+      el.type = 'text'; // remove browser URL validation so relative paths are allowed
+      el.placeholder = '/creator/your-client/';
+      var hint = document.createElement('div');
+      hint.style.fontSize = '11px';
+      hint.style.opacity = '0.8';
+      hint.style.marginTop = '4px';
+      hint.textContent = 'Tip: you can enter a relative path like /creator/axe-n-dagger/; it will be saved as a full URL for this site.';
+      el.parentNode.appendChild(hint);
+    }catch(e){}
+  })();
+JS;
+  wp_add_inline_script('jquery-core', $js);
+});
+
+// Normalize on save: relative -> absolute; old host -> current host.
 add_action('save_post_bw_creator', function($post_id){
   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
   if (!current_user_can('edit_post', $post_id)) return;
@@ -13,25 +37,27 @@ add_action('save_post_bw_creator', function($post_id){
   if (!$val || !is_string($val)) return;
 
   $val = trim($val);
-  // If relative like "/creator/axe-n-dagger/", convert to absolute
-  if ($val !== '' && $val[0] === '/') {
-    $abs = home_url($val);
-    update_post_meta($post_id, '_bw_creator_link', esc_url_raw($abs));
+  if ($val === '') return;
+
+  // Relative path -> absolute for this site.
+  if ($val[0] === '/') {
+    update_post_meta($post_id, '_bw_creator_link', esc_url_raw(home_url($val)));
+    return;
+  }
+
+  // Absolute URL with a different host -> swap host/scheme to the current site.
+  $home = wp_parse_url(home_url('/'));
+  $s    = wp_parse_url($val);
+  if ($s && $home && !empty($s['host']) && !empty($home['host']) && strtolower($s['host']) !== strtolower($home['host'])) {
+    $rebuilt = ($home['scheme'] ?? 'https') . '://' . $home['host'] . ($s['path'] ?? '/')
+             . (!empty($s['query']) ? '?'.$s['query'] : '')
+             . (!empty($s['fragment']) ? '#'.$s['fragment'] : '');
+    update_post_meta($post_id, '_bw_creator_link', esc_url_raw($rebuilt));
   }
 }, 20);
 
-// Safety: normalize on read too (plays nice with domain moves)
-add_filter('get_post_metadata', function($value, $object_id, $meta_key, $single){
-  if ($meta_key !== '_bw_creator_link') return $value;
-  $stored = get_metadata_raw($object_id, $meta_key, true);
-  if (!$stored) return $value;
-  // If it’s relative, prefix; if it’s absolute with old host, swap to current.
-  $home = home_url('/');
-  if ($stored[0] === '/') return $single ? home_url($stored) : [home_url($stored)];
-  $h = wp_parse_url($home); $s = wp_parse_url($stored);
-  if ($s && $h && !empty($s['host']) && !empty($h['host']) && strtolower($s['host']) !== strtolower($h['host'])) {
-    $rebuilt = ($h['scheme'] ?? 'https').'://'.$h['host'].($s['path'] ?? '/').(!empty($s['query'])?'?'.$s['query']:'').(!empty($s['fragment'])?'#'.$s['fragment']:'');
-    return $single ? $rebuilt : [$rebuilt];
-  }
-  return $value;
-}, 10, 4);
+// Read-time normalization is handled by the must-use plugin bw-normalize-creator-links
+// (single owner). NOTE: that mu-plugin's get_metadata_raw() call has a wrong-argument
+// order, so read-time normalization is currently a no-op site-wide; links work because
+// the save normalizer above stores absolute/current-host URLs. Fixing the mu-plugin would
+// activate read normalization everywhere — a deliberate, separate change.
