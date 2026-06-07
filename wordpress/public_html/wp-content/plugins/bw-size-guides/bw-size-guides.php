@@ -60,6 +60,7 @@ class BW_Size_Guides {
       $id   = isset($row['id']) && $row['id'] !== '' ? sanitize_text_field($row['id']) : wp_generate_uuid4();
       $name = isset($row['name']) ? sanitize_text_field($row['name']) : '';
       $img  = isset($row['image_id']) ? intval($row['image_id']) : 0;
+      if ($img && !wp_attachment_is_image($img)) $img = 0; // only accept real image attachments
       if ($name === '') continue;
       $out[] = ['id'=>$id, 'name'=>$name, 'image_id'=>$img];
     }
@@ -220,6 +221,7 @@ public function admin_assets($hook){
 
     $company = isset($_POST['bwsg_company']) ? sanitize_text_field($_POST['bwsg_company']) : '';
     $override = isset($_POST['bwsg_override_id']) ? intval($_POST['bwsg_override_id']) : 0;
+    if ($override && !wp_attachment_is_image($override)) $override = 0; // only accept real image attachments
 
     if ($company === '') delete_post_meta($post_id, self::META_COMPANY);
     else update_post_meta($post_id, self::META_COMPANY, $company);

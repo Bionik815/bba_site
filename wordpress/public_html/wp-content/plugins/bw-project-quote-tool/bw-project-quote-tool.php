@@ -1868,10 +1868,12 @@ class BW_Project_Quote_Tool
 
     private function is_ops_context()
     {
+        // Typo fix: was is_logged_in() (not a WordPress function), so this path was
+        // always false. BWQT_OPS_CONTEXT is only defined inside the self-authenticated
+        // ops app; when set, the quote tool trusts any logged-in user there.
         return defined('BWQT_OPS_CONTEXT')
             && BWQT_OPS_CONTEXT
-            && function_exists('is_logged_in')
-            && is_logged_in();
+            && is_user_logged_in();
     }
 
     private function money_value($value)

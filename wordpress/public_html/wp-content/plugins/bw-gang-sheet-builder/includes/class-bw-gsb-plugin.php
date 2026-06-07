@@ -1355,6 +1355,14 @@ class BW_GSB_Plugin
             return new WP_Error('bw_gsb_no_imagick', __('Imagick is required to generate print files.', 'bw-gsb'));
         }
 
+        // Cap Imagick resources so a malicious/oversized uploaded image cannot
+        // exhaust memory/CPU (decompression-bomb DoS) during print generation.
+        Imagick::setResourceLimit(Imagick::RESOURCETYPE_MEMORY, 256 * 1024 * 1024);
+        Imagick::setResourceLimit(Imagick::RESOURCETYPE_MAP, 512 * 1024 * 1024);
+        Imagick::setResourceLimit(Imagick::RESOURCETYPE_AREA, 80 * 1024 * 1024);
+        Imagick::setResourceLimit(Imagick::RESOURCETYPE_DISK, 1024 * 1024 * 1024);
+        $max_source_pixels = (int) apply_filters('bw_gsb_max_source_pixels', 60 * 1000 * 1000);
+
         $submission = $this->get_submission($submission_id);
         if (!$submission) {
             return new WP_Error('bw_gsb_submission_missing', __('Gang sheet submission not found.', 'bw-gsb'));
@@ -1388,7 +1396,16 @@ class BW_GSB_Plugin
                 continue;
             }
 
-            $asset = new Imagick($source_path);
+            // Bomb guard: skip source images with an implausibly large pixel area.
+            $dims = @getimagesize($source_path);
+            if ($dims && isset($dims[0], $dims[1]) && ($dims[0] * $dims[1]) > $max_source_pixels) {
+                continue;
+            }
+            try {
+                $asset = new Imagick($source_path);
+            } catch (\Exception $e) {
+                continue;
+            }
             $asset->setImageBackgroundColor(new ImagickPixel('transparent'));
             $item_width_px = max(1, (int) round(((float) $item['width']) * self::EXPORT_DPI));
             $item_height_px = max(1, (int) round(((float) $item['height']) * self::EXPORT_DPI));
