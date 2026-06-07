@@ -69,5 +69,35 @@ jobs:
             --only-newer \
             --parallel=2 \
             wordpress/public_html/wp-content/plugins/bw-project-quote-tool "$HOSTINGER_REMOTE_DIR/wp-content/plugins/bw-project-quote-tool"
+
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=2 \
+            wordpress/public_html/wp-content/plugins/bw-player-packs "$HOSTINGER_REMOTE_DIR/wp-content/plugins/bw-player-packs"
+
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=2 \
+            wordpress/public_html/wp-content/plugins/bw-product-templates "$HOSTINGER_REMOTE_DIR/wp-content/plugins/bw-product-templates"
+
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=2 \
+            wordpress/public_html/wp-content/plugins/bw-client-codes-export "$HOSTINGER_REMOTE_DIR/wp-content/plugins/bw-client-codes-export"
+
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=2 \
+            wordpress/public_html/wp-content/plugins/bw-creator-store-builder "$HOSTINGER_REMOTE_DIR/wp-content/plugins/bw-creator-store-builder"
+
+          mirror -R \
+            --verbose \
+            --only-newer \
+            --parallel=2 \
+            wordpress/public_html/wp-content/plugins/fm-surcharges "$HOSTINGER_REMOTE_DIR/wp-content/plugins/fm-surcharges"
           bye
           EOF

@@ -48,12 +48,14 @@ function bba_preview_gate_cookie_value(): string {
 function bba_preview_gate_is_public_request(): bool {
 	$uri = $_SERVER['REQUEST_URI'] ?? '/';
 
+	// NOTE: /wp-json and /xmlrpc.php are intentionally NOT exempt. On a private
+	// preview they would otherwise leak content/user enumeration via REST and
+	// allow XML-RPC brute force to anonymous visitors. Logged-in users and valid
+	// gate cookies still pass via bba_preview_gate_is_authenticated().
 	$allowed_prefixes = [
 		'/wp-admin',
 		'/wp-login.php',
 		'/wp-cron.php',
-		'/wp-json',
-		'/xmlrpc.php',
 		'/ops/',
 	];
 
@@ -149,7 +151,7 @@ function bba_preview_gate_boot(): void {
 		return;
 	}
 
-	if ( 'POST' === $_SERVER['REQUEST_METHOD'] ) {
+	if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? 'GET' ) ) {
 		$nonce_ok = isset( $_POST['_bba_preview_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_bba_preview_nonce'] ) ), 'bba_preview_gate' );
 		$username = isset( $_POST['bba_preview_username'] ) ? sanitize_text_field( wp_unslash( $_POST['bba_preview_username'] ) ) : '';
 		$password = isset( $_POST['bba_preview_password'] ) ? (string) wp_unslash( $_POST['bba_preview_password'] ) : '';

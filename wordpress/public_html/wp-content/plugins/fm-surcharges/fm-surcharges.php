@@ -285,14 +285,25 @@ class FM_Surcharges {
     }
     return $extra;
   }
+  /** Per-request cache of each cart line's original (pre-surcharge) price. */
+  private $base_price_cache = [];
+
   public function apply_surcharges($cart){
     if (is_admin() && !defined('DOING_AJAX')) return;
-    if (did_action('woocommerce_before_calculate_totals') >= 2) return;
-    foreach ($cart->get_cart() as $item) {
+    foreach ($cart->get_cart() as $key => $item) {
       if (empty($item['data']) || !is_object($item['data'])) continue;
       $product = $item['data'];
-      $base    = (float) $product->get_price('edit');
-      $extra   = $this->sum_term_surcharges($item['variation'] ?? []);
+
+      // Capture the unmodified base price the first time we see this line, so
+      // repeated woocommerce_before_calculate_totals passes stay idempotent.
+      // The cart's product object can remain mutated between passes, so reading
+      // its current price again would compound the surcharge.
+      if (!array_key_exists($key, $this->base_price_cache)) {
+        $this->base_price_cache[$key] = (float) $product->get_price('edit');
+      }
+      $base = $this->base_price_cache[$key];
+
+      $extra = $this->sum_term_surcharges($item['variation'] ?? []);
       if (!empty($item['fm_vinyl_selected'])) $extra += (float) $item['fm_vinyl_price'];
       if (!empty($item['fm_ct_selected']))    $extra += (float) $item['fm_ct_price'];
       if ($extra > 0) $product->set_price($base + $extra);

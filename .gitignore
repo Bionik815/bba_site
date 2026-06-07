@@ -56,6 +56,9 @@ backups*/
 
 # Local WordPress development
 wordpress/.env.local
+# Never commit local secret/URL-override config (match in any location):
+wp-config-local.php
 wordpress/wp-config-local.php
+wordpress/public_html/wp-config-local.php
 wordpress/public_html/ops/config.local.php
 wordpress/public_html/ops/runtime/

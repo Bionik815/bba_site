@@ -317,6 +317,8 @@ class BW_GSB_Plugin
     {
         check_admin_referer(self::ACTION_SUBMIT, 'bw_gsb_nonce');
 
+        $this->enforce_submission_rate_limit();
+
         $settings = $this->get_default_settings();
         $sheet_code = sanitize_text_field(wp_unslash($_POST['sheet_code'] ?? ''));
         $sheet = $this->get_sheet_by_code($sheet_code, $settings['sheet_sizes']);
@@ -376,24 +378,42 @@ class BW_GSB_Plugin
         require_once ABSPATH . 'wp-admin/includes/media.php';
 
         $files = $_FILES['artwork_files'];
-        $count = count($files['name']);
         $allowed_mimes = $this->get_allowed_upload_mimes();
+        $allowed_mime_values = array_values($allowed_mimes);
+
+        // Abuse limits for this anonymous endpoint (filterable).
+        $max_files = max(1, (int) apply_filters('bw_gsb_max_upload_files', 25));
+        $max_bytes = max(1, (int) apply_filters('bw_gsb_max_upload_bytes', 25 * MB_IN_BYTES));
+
+        $count = min(count($files['name']), $max_files);
 
         for ($i = 0; $i < $count; $i++) {
             if (empty($files['name'][$i]) || (int) $files['error'][$i] !== UPLOAD_ERR_OK) {
                 continue;
             }
 
+            // Reject oversized files before doing any processing.
+            if ((int) $files['size'][$i] > $max_bytes) {
+                continue;
+            }
+
             $file_array = [
                 'name' => $files['name'][$i],
-                'type' => $files['type'][$i],
+                'type' => '', // Never trust the client-supplied MIME; let WP derive it.
                 'tmp_name' => $files['tmp_name'][$i],
                 'error' => $files['error'][$i],
                 'size' => $files['size'][$i],
             ];
 
             $check = wp_check_filetype_and_ext($file_array['tmp_name'], $file_array['name'], $allowed_mimes);
-            if (empty($check['type'])) {
+            if (empty($check['type']) || !in_array($check['type'], $allowed_mime_values, true)) {
+                continue;
+            }
+
+            // Verify the bytes are a real image whose true type is allowed
+            // (blocks polyglots / mislabeled SVG/HTML smuggled past the extension check).
+            $image_info = @getimagesize($file_array['tmp_name']);
+            if ($image_info === false || empty($image_info['mime']) || !in_array($image_info['mime'], $allowed_mime_values, true)) {
                 continue;
             }
 
@@ -1004,6 +1024,31 @@ class BW_GSB_Plugin
     {
         $settings = $this->get_default_settings();
         return (array) ($settings['allowed_mimes'] ?? ['png' => 'image/png']);
+    }
+
+    /**
+     * Basic per-IP throttle for the public (nopriv) submission endpoint to limit
+     * automated flooding. Uses REMOTE_ADDR rather than spoofable client headers.
+     */
+    private function enforce_submission_rate_limit()
+    {
+        $max_per_window = max(1, (int) apply_filters('bw_gsb_max_submissions_per_hour', 15));
+        $ip = isset($_SERVER['REMOTE_ADDR']) ? (string) $_SERVER['REMOTE_ADDR'] : '';
+        if ($ip === '') {
+            return;
+        }
+
+        $key = 'bw_gsb_rl_' . md5($ip);
+        $count = (int) get_transient($key);
+        if ($count >= $max_per_window) {
+            wp_die(
+                esc_html__('Too many submissions from your network. Please wait a little while and try again.', 'bw-gsb'),
+                esc_html__('Slow down', 'bw-gsb'),
+                ['response' => 429]
+            );
+        }
+
+        set_transient($key, $count + 1, HOUR_IN_SECONDS);
     }
 
     private function get_sheet_by_code($sheet_code, $sheets)

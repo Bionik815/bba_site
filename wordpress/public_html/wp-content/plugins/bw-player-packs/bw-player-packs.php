@@ -7,10 +7,12 @@
  * License: GPL-2.0+
  */
 if (!defined('ABSPATH')) exit;
-if ( ! class_exists('WooCommerce') ) {
-  // WooCommerce not active; don't run anything.
-  return;
-}
+// Do NOT gate on class_exists('WooCommerce') at include time. This plugin loads
+// before WooCommerce in the active-plugins order, so an include-time guard makes
+// the whole plugin silently no-op: BW_Player_Packs_Run (which extends BW_Player_Packs)
+// is late-bound and never gets declared, so its hooks never register and the product
+// type never appears. Classes are safe to declare now; we instantiate on
+// plugins_loaded below, once WooCommerce is confirmed available.
 
 
 class BW_Player_Packs {
@@ -203,6 +205,7 @@ class BW_Player_Packs_Run extends BW_Player_Packs {
 
     echo '<form class="cart bwpp-form" method="post">';
     echo '<input type="hidden" name="add-bw-pack" value="'.esc_attr($product->get_id()).'">';
+    wp_nonce_field('bwpp_add_to_cart', 'bwpp_cart_nonce');
 
     foreach ($items as $idx => $it){
       $child = wc_get_product((int)$it['product_id']);
@@ -231,16 +234,32 @@ class BW_Player_Packs_Run extends BW_Player_Packs {
       echo '<input type="number" min="'.(int)($it['min_qty']??0).'" '.($it['max_qty']?('max='.(int)$it['max_qty']):'').' name="bwpp_qty['.$child->get_id().']" value="'.($defqty?:($req?1:0)).'" style="width:90px">';
       echo '</label></div>';
 
-      // Render child variation form if variable
+      // Variation selectors for variable children. Fields are namespaced per
+      // child (bwpp_attr[child_id][attr]) so multiple variable items in one pack
+      // don't collide on shared attribute_* names — and we avoid nesting Woo's
+      // own <form> inside the pack form (invalid HTML that breaks submission).
       if ($child->is_type('variable')){
-        // temporarily switch global $product to child to reuse Woo's form
-        $old = $product; $product = $child;
+        $cid      = $child->get_id();
+        $defaults = $child->get_default_attributes();
         echo '<div class="bwpp-variations" style="margin-top:8px">';
-        do_action('woocommerce_before_add_to_cart_form'); // keep compatibility if addons hook here
-        wc_get_template('single-product/add-to-cart/variable.php', ['available_variations' => $child->get_available_variations(), 'attributes' => $child->get_variation_attributes(), 'selected_attributes' => $child->get_default_attributes()]);
-        do_action('woocommerce_after_add_to_cart_form');
+        foreach ($child->get_variation_attributes() as $attr_name => $options){
+          $field   = 'bwpp_attr['.esc_attr($cid).']['.esc_attr($attr_name).']';
+          $default = $defaults[sanitize_title($attr_name)] ?? ($defaults[$attr_name] ?? '');
+          echo '<p class="bwpp-attr" style="margin:6px 0"><label>'.esc_html(wc_attribute_label($attr_name)).': ';
+          echo '<select name="'.$field.'" required>';
+          echo '<option value="">'.esc_html__('Choose an option…','bwpp').'</option>';
+          foreach ($options as $option){
+            if (taxonomy_exists($attr_name)){
+              $term  = get_term_by('slug', $option, $attr_name);
+              $label = ($term && !is_wp_error($term)) ? $term->name : $option;
+            } else {
+              $label = $option;
+            }
+            echo '<option value="'.esc_attr($option).'"'.selected($default, $option, false).'>'.esc_html($label).'</option>';
+          }
+          echo '</select></label></p>';
+        }
         echo '</div>';
-        $product = $old; // restore
       }
 
       echo '</div>'; // .bwpp-item
@@ -261,6 +280,12 @@ class BW_Player_Packs_Run extends BW_Player_Packs {
     $pack = wc_get_product($pack_id);
     if (!$pack || $pack->get_type() !== self::TYPE) return;
 
+    // CSRF: only process a genuine submission from the pack form.
+    if (!isset($_POST['bwpp_cart_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['bwpp_cart_nonce'])), 'bwpp_add_to_cart')){
+      wc_add_notice(__('Your session expired. Please try adding the pack again.','bwpp'), 'error');
+      wp_safe_redirect(wp_get_referer() ?: get_permalink($pack_id)); exit;
+    }
+
     $items = get_post_meta($pack_id, self::META_KEY, true);
     if (!$items || !is_array($items)) return;
 
@@ -275,6 +300,8 @@ class BW_Player_Packs_Run extends BW_Player_Packs {
       if (!$child) continue;
 
       $req   = ($it['required'] === '1');
+      $min   = max(0, (int) ($it['min_qty'] ?? 0));
+      $max   = max(0, (int) ($it['max_qty'] ?? 0));
       $q     = max(0, (int) ($qtys[$pid] ?? 0));
 
       $include = $req ? ($q > 0) : (!empty($sel[$pid]) && $q > 0);
@@ -285,28 +312,45 @@ class BW_Player_Packs_Run extends BW_Player_Packs {
       }
       if (!$include) continue;
 
+      // Enforce the configured min/max server-side; the HTML attributes are advisory only.
+      $effective_min = max(1, $min);
+      if ($q < $effective_min){
+        wc_add_notice(sprintf(__('“%1$s” requires a minimum quantity of %2$d.','bwpp'), $child->get_name(), $effective_min), 'error');
+        wp_safe_redirect(wp_get_referer() ?: get_permalink($pack_id)); exit;
+      }
+      if ($max > 0 && $q > $max){
+        wc_add_notice(sprintf(__('“%1$s” allows a maximum quantity of %2$d.','bwpp'), $child->get_name(), $max), 'error');
+        wp_safe_redirect(wp_get_referer() ?: get_permalink($pack_id)); exit;
+      }
+
       $args = [];
 
       if ($child->is_type('variable')){
-        // Collect chosen attributes/variation_id from posted fields (Woo uses attribute_{taxonomy})
-        $attributes = $child->get_variation_attributes();
+        // Read this child's chosen attributes from its namespaced fields only.
+        $attributes  = $child->get_variation_attributes();
+        $posted_attr = (isset($_POST['bwpp_attr'][$pid]) && is_array($_POST['bwpp_attr'][$pid]))
+          ? (array) wp_unslash($_POST['bwpp_attr'][$pid])
+          : [];
         $chosen = [];
         foreach ($attributes as $tax => $terms){
-          $field = 'attribute_' . sanitize_title($tax);
-          if (isset($_POST[$field]) && $_POST[$field] !== ''){
-            $chosen[$tax] = wc_clean(wp_unslash($_POST[$field]));
+          if (isset($posted_attr[$tax]) && $posted_attr[$tax] !== ''){
+            $chosen[$tax] = wc_clean($posted_attr[$tax]);
           }
         }
-        // Find matching variation
+        // Require a selection for every attribute, then find the matching variation.
         $variation_id = 0;
-        foreach ($child->get_available_variations() as $v){
-          $match = true;
-          foreach ($chosen as $tax => $val){
-            if (!isset($v['attributes']['attribute_'.sanitize_title($tax)]) || $v['attributes']['attribute_'.sanitize_title($tax)] != $val){
-              $match = false; break;
+        if (count($chosen) === count($attributes)){
+          foreach ($child->get_available_variations() as $v){
+            $match = true;
+            foreach ($chosen as $tax => $val){
+              $vk = 'attribute_'.sanitize_title($tax);
+              // An empty value on the variation means "any", which matches anything.
+              if (isset($v['attributes'][$vk]) && $v['attributes'][$vk] !== '' && $v['attributes'][$vk] != $val){
+                $match = false; break;
+              }
             }
+            if ($match){ $variation_id = (int)$v['variation_id']; break; }
           }
-          if ($match){ $variation_id = (int)$v['variation_id']; break; }
         }
         if (!$variation_id){
           wc_add_notice(sprintf(__('Please choose options for: %s','bwpp'), $child->get_name()), 'error');
@@ -359,4 +403,10 @@ class BW_Player_Packs_Run extends BW_Player_Packs {
     }
   }
 }}
-new BW_Player_Packs_Run();
+
+// Instantiate once all plugins (incl. WooCommerce) are loaded, regardless of order.
+add_action('plugins_loaded', function(){
+  if (class_exists('WooCommerce')) {
+    new BW_Player_Packs_Run();
+  }
+}, 25); // after WC_Product_BW_Pack is declared (priority 20)

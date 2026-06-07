@@ -467,6 +467,28 @@ class BW_Client_Codes_Export {
     <?php
   }
 
+  /* ================= CSV safety ================= */
+
+  /**
+   * Neutralize CSV/formula injection. Spreadsheet apps execute a cell whose
+   * first character is = + - @ (or tab/CR). Genuine numbers are left intact so
+   * totals still compute; risky text is prefixed with a single quote.
+   */
+  private function csv_safe($value){
+    $value = (string) $value;
+    if ($value === '' || is_numeric($value)) {
+      return $value;
+    }
+    if (in_array($value[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+      return "'" . $value;
+    }
+    return $value;
+  }
+
+  private function fputcsv_safe($handle, array $row){
+    fputcsv($handle, array_map([$this, 'csv_safe'], $row));
+  }
+
   /* ================= Production CSV handler ================= */
 
   public function handle_export_production(){
@@ -510,7 +532,7 @@ class BW_Client_Codes_Export {
         $prod_name = wp_strip_all_tags($item->get_name());
         $qty       = (int) $item->get_quantity();
 
-        fputcsv($out, [
+        $this->fputcsv_safe($out, [
           $order->get_order_number(),
           $date,
           $client,
@@ -577,7 +599,7 @@ class BW_Client_Codes_Export {
         $qty   = (int) $item->get_quantity();
         $pname = wp_strip_all_tags($item->get_name());
 
-        fputcsv($out, [
+        $this->fputcsv_safe($out, [
           $order->get_order_number(),
           $date,
           $client,
@@ -586,7 +608,7 @@ class BW_Client_Codes_Export {
           $qty,
           number_format($line_total, 2, '.', ''),
           $ctype,
-          ($ctype === 'percent' ? number_format($crate, 2, '.', '') : number_format($crate, 2, '.', '')),
+          number_format($crate, 2, '.', ''),
           number_format($camt, 2, '.', ''),
         ]);
       }
@@ -652,7 +674,7 @@ class BW_Client_Codes_Export {
       $tot_gross  += $gross;
       $tot_comm   += $comm;
 
-      fputcsv($out, [
+      $this->fputcsv_safe($out, [
         $client,
         $code,
         $orders_n,
@@ -665,7 +687,7 @@ class BW_Client_Codes_Export {
     }
 
     // Totals row
-    fputcsv($out, [
+    $this->fputcsv_safe($out, [
       'TOTAL',
       '',
       $tot_orders,

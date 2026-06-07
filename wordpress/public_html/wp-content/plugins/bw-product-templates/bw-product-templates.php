@@ -80,7 +80,7 @@ class BW_Product_Templates {
   }
   public function add_views_filter($views){
     $url = add_query_arg(['bw_tpl_only'=>'1']);
-    $views['bw_tpl'] = '<a href="'.$url.'">'.esc_html__('Templates','bw').'</a>';
+    $views['bw_tpl'] = '<a href="'.esc_url($url).'">'.esc_html__('Templates','bw').'</a>';
     return $views;
   }
   public function row_action($actions, $post){
