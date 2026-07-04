@@ -156,8 +156,11 @@ JS;
     color: #d7dce3 !important;
 }
 
-/* Footer */
+/* Footer (Astra renders each footer row as its own wrap with a white bg) */
 [data-bw-theme="dark"] .site-footer,
+[data-bw-theme="dark"] .site-above-footer-wrap,
+[data-bw-theme="dark"] .site-primary-footer-wrap,
+[data-bw-theme="dark"] .site-below-footer-wrap,
 [data-bw-theme="dark"] .ast-footer-copyright,
 [data-bw-theme="dark"] [data-section="section-footer-builder"] {
     background: #141922 !important;
