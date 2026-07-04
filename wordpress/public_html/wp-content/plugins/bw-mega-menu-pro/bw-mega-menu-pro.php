@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: BW Mega Menu PRO (Creators + Groups)
- * Description: CPT “Creators” (logo + URL) + taxonomy “Groups” (Browse All URL). Shortcode [bw_mega_menu label="APPAREL STORES" all_link="/all-stores"] outputs full-width mega panel with vertical groups and horizontally scrollable logos.
- * Version: 3.2.0
+ * Description: CPT “Creators” (logo + URL) + taxonomy “Groups” (Browse All URL). Shortcode [bw_mega_menu label="APPAREL STORES" all_link="/all-stores"] outputs a Bunker-style header tab bar: one tab per group, each opening a full-width panel of client logo cards.
+ * Version: 4.0.0
  * License: GPL-2.0+
  */
 if (!defined('ABSPATH')) exit;
@@ -179,11 +179,12 @@ class BW_Mega_Menu_Pro {
 
   /* ---------- Assets + Shortcode ---------- */
   public function register_assets(){
-    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '3.3.7');
-    // Astra safety
-    $astra = ".ast-primary-header-bar, .main-header-bar { overflow:visible!important } .site-header, .ast-primary-header-bar{position:relative;z-index:30}";
+    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '4.0.0');
+    // Astra safety: the panel is positioned against the header bar row that
+    // hosts the shortcode, so those bars must allow overflow and anchor it.
+    $astra = ".ast-primary-header-bar, .main-header-bar, .ast-below-header-bar { overflow:visible!important } .site-header, .ast-primary-header-bar, .ast-below-header-bar { position:relative; z-index:30 } .ast-builder-html-element { min-width:0; max-width:100% }";
     wp_add_inline_style('bw-mega-menu-pro',$astra);
-    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '3.3.0', true);
+    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '4.0.0', true);
   }
 
   public function shortcode($atts){
@@ -196,8 +197,8 @@ class BW_Mega_Menu_Pro {
       'order'=>'ASC',
       'class'=>'',
       'all_link'=>'',
-      'show_all_tx'=>'Show All',
-      'grayscale'=>$default_gray, // 'on'|'off'|'inherit' (inherit unused now)
+      'show_all_tx'=>'Shop All',
+      'grayscale'=>$default_gray, // 'on'|'off'
     ], $atts,'bw_mega_menu');
 
     wp_enqueue_style('bw-mega-menu-pro');
@@ -209,42 +210,39 @@ class BW_Mega_Menu_Pro {
     if (is_wp_error($groups) || empty($groups)) return '<!-- BW: no groups -->';
 
     $gray_class = ($atts['grayscale']==='on') ? ' is-gray' : '';
+    $instance_id = wp_unique_id('bw-mm-');
 
-    $instance_id = wp_unique_id('bw-mega-');
-
+    // Bunker-style: group names are top-level tabs in the header bar; each
+    // opens a full-width panel of that group's client logo cards.
     ob_start(); ?>
-    <div class="bw-mega<?php echo esc_attr($gray_class.' '.$atts['class']); ?>">
-      <button class="bw-mega__toggle" aria-expanded="false" aria-controls="<?php echo esc_attr($instance_id . '-panel'); ?>">
-        <?php echo esc_html($atts['label']); ?><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-      </button>
-      <div id="<?php echo esc_attr($instance_id . '-panel'); ?>" class="bw-mega__panel" hidden>
-  <div class="bw-mega__inner">
-    <div class="bw-panel-head">
-      <h2 style="margin:0"><?php echo esc_html($atts['label']); ?></h2>
-      <button type="button" class="bw-close" aria-label="Close">&times;</button>
-    </div>
-          <div class="bw-tabs" role="tablist" aria-label="<?php echo esc_attr($atts['label']); ?> groups">
-            <?php foreach($groups as $i => $g):
-              $tab_id = $instance_id . '-tab-' . $g->term_id;
-              $panel_id = $instance_id . '-group-' . $g->term_id;
-              ?>
-              <button
-                type="button"
-                class="bw-tab<?php echo $i === 0 ? ' is-active' : ''; ?>"
-                id="<?php echo esc_attr($tab_id); ?>"
-                role="tab"
-                aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
-                aria-controls="<?php echo esc_attr($panel_id); ?>"
-                tabindex="<?php echo $i === 0 ? '0' : '-1'; ?>">
-                <?php echo esc_html($g->name); ?>
-              </button>
-            <?php endforeach; ?>
-          </div>
+    <nav class="bw-mm<?php echo esc_attr($gray_class.($atts['class'] ? ' '.$atts['class'] : '')); ?>" data-bw-mm aria-label="<?php echo esc_attr($atts['label']); ?>">
+      <ul class="bw-mm__tabs">
+        <?php foreach($groups as $i => $g):
+          $panel_id = $instance_id . '-group-' . $g->term_id; ?>
+          <li class="bw-mm__tab-item">
+            <button
+              type="button"
+              class="bw-mm__tab"
+              data-bw-mm-tab="<?php echo esc_attr((string)$g->term_id); ?>"
+              aria-expanded="false"
+              aria-controls="<?php echo esc_attr($panel_id); ?>">
+              <?php echo esc_html($g->name); ?>
+              <svg class="bw-mm__caret" aria-hidden="true" width="10" height="10" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
+            </button>
+          </li>
+        <?php endforeach; ?>
+        <?php if (!empty($atts['all_link'])): ?>
+          <li class="bw-mm__tab-item bw-mm__tab-item--all">
+            <a class="bw-mm__tab bw-mm__tab--link" href="<?php echo esc_url($atts['all_link']); ?>"><?php esc_html_e('All Stores'); ?></a>
+          </li>
+        <?php endif; ?>
+      </ul>
 
-          <?php foreach($groups as $i => $g):
+      <div class="bw-mm__panel" data-bw-mm-panel hidden>
+        <div class="bw-mm__panel-inner">
+          <?php foreach($groups as $g):
             $browse = get_term_meta($g->term_id,self::TM_BROWSE,true) ?: get_term_link($g);
             $panel_id = $instance_id . '-group-' . $g->term_id;
-            $tab_id = $instance_id . '-tab-' . $g->term_id;
             $creators = get_posts([
               'post_type'=>self::CPT_CREATOR,'posts_per_page'=>(int)$atts['limit'],'order'=>$atts['order'],
               'orderby'=>'meta_value_num','meta_key'=>self::PM_ORDER,
@@ -252,48 +250,40 @@ class BW_Mega_Menu_Pro {
               'meta_query'=>[['key'=>self::PM_SHOW,'value'=>'1']]
             ]);
             ?>
-            <section class="bw-group-panel<?php echo $i === 0 ? ' is-active' : ''; ?>"
+            <section class="bw-mm__group"
               id="<?php echo esc_attr($panel_id); ?>"
-              role="tabpanel"
-              aria-labelledby="<?php echo esc_attr($tab_id); ?>"
-              <?php echo $i === 0 ? '' : 'hidden'; ?>>
-              <div class="bw-group__head">
-                <h3 class="bw-group__title"><?php echo esc_html($g->name); ?></h3>
-                <a class="bw-group__all" href="<?php echo esc_url($browse); ?>"><?php echo esc_html($atts['show_all_tx']); ?> <span class="arrow">›</span></a>
+              data-bw-mm-group="<?php echo esc_attr((string)$g->term_id); ?>"
+              aria-label="<?php echo esc_attr($g->name); ?>"
+              hidden>
+              <div class="bw-mm__group-head">
+                <h3 class="bw-mm__group-title"><?php echo esc_html($g->name); ?></h3>
+                <a class="bw-mm__group-all" href="<?php echo esc_url($browse); ?>">
+                  <?php echo esc_html($atts['show_all_tx'] . ' ' . $g->name); ?> <span class="arrow" aria-hidden="true">›</span>
+                </a>
               </div>
-              <ul class="bw-logos-grid">
+              <ul class="bw-mm__grid">
                 <?php if ($creators): foreach($creators as $c):
                   $u = $this->resolve_creator_url((int)$c->ID);
                   $name = get_the_title($c->ID);
-                  $thumb_html = get_the_post_thumbnail($c->ID,'bw_logo',['alt'=>$name, 'class'=>'bwmm-img']);
-
-                  if ($thumb_html) {
-                    echo '<li class="bw-logo">
-                            <a class="bwmm-card" href="'.esc_url($u).'" aria-label="'.esc_attr($name).'">
-                              <div class="bwmm-tile">'.$thumb_html.'</div>
-                              <div class="bwmm-caption">'.esc_html($name).'</div>
-                            </a>
-                          </li>';
-                  } else {
-                    echo '<li class="bw-logo">
-                            <a class="bwmm-card" href="'.esc_url($u).'" aria-label="'.esc_attr($name).'">
-                              <div class="bwmm-tile"><span class="bw-logo-text">'.esc_html($name).'</span></div>
-                              <div class="bwmm-caption">'.esc_html($name).'</div>
-                            </a>
-                          </li>';
-                  }
-                endforeach; else: ?>
-                  <li class="bw-logo bw-logo--empty"><em>No items yet.</em></li>
+                  $thumb_html = get_the_post_thumbnail($c->ID,'bw_logo',['alt'=>$name, 'class'=>'bwmm-img', 'loading'=>'lazy']);
+                  ?>
+                  <li class="bw-mm__card-item">
+                    <a class="bwmm-card" href="<?php echo esc_url($u); ?>" aria-label="<?php echo esc_attr($name); ?>">
+                      <div class="bwmm-tile">
+                        <?php echo $thumb_html ?: '<span class="bw-logo-text">'.esc_html($name).'</span>'; ?>
+                      </div>
+                      <div class="bwmm-caption"><?php echo esc_html($name); ?></div>
+                    </a>
+                  </li>
+                <?php endforeach; else: ?>
+                  <li class="bw-mm__card-item bw-mm__card-item--empty"><em><?php esc_html_e('Stores coming soon.'); ?></em></li>
                 <?php endif; ?>
               </ul>
             </section>
           <?php endforeach; ?>
-          <?php if (!empty($atts['all_link'])): ?>
-            <div class="bw-all"><a class="bw-all__link" href="<?php echo esc_url($atts['all_link']); ?>">All Stores</a></div>
-          <?php endif; ?>
         </div>
       </div>
-    </div>
+    </nav>
     <?php return ob_get_clean();
   }
 
