@@ -183,9 +183,18 @@ class BW_GSB_Plugin
             'window.BWGangSheetBuilder=' . wp_json_encode([
                 'sheets' => $settings['sheet_sizes'],
                 'currencySymbol' => $settings['currency_symbol'],
+                'version' => self::VERSION,
+                'dpiGood' => 250,
+                'dpiOk' => 150,
                 'messages' => [
                     'uploadCountSingle' => __('1 file selected', 'bw-gsb'),
                     'uploadCountPlural' => __('files selected', 'bw-gsb'),
+                    'dpiGood' => __('Print ready', 'bw-gsb'),
+                    'dpiOk' => __('Acceptable, 300 DPI recommended', 'bw-gsb'),
+                    'dpiLow' => __('Too low, will print blurry', 'bw-gsb'),
+                    'dpiUnknown' => __('DPI unknown', 'bw-gsb'),
+                    'warnOffSheet' => __('This artwork extends past the sheet edge and would be cut off.', 'bw-gsb'),
+                    'warnOverlap' => __('This artwork overlaps another design on the sheet.', 'bw-gsb'),
                 ],
             ]) . ';',
             'before'
@@ -299,11 +308,35 @@ class BW_GSB_Plugin
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="4"><?php esc_html_e('4in Wide', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="10"><?php esc_html_e('10in Wide', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="12"><?php esc_html_e('12in Wide', 'bw-gsb'); ?></button>
-                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-rotate="-15"><?php esc_html_e('Rotate -15°', 'bw-gsb'); ?></button>
-                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-rotate="15"><?php esc_html_e('Rotate +15°', 'bw-gsb'); ?></button>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-rotate="-90"><?php esc_html_e('Rotate -90°', 'bw-gsb'); ?></button>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-rotate="-15"><?php esc_html_e('-15°', 'bw-gsb'); ?></button>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-rotate="15"><?php esc_html_e('+15°', 'bw-gsb'); ?></button>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-rotate="90"><?php esc_html_e('Rotate +90°', 'bw-gsb'); ?></button>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-duplicate><?php esc_html_e('Duplicate', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-remove><?php esc_html_e('Remove Selected', 'bw-gsb'); ?></button>
                         </div>
-                        <p class="bw-gsb-help"><?php esc_html_e('Tip: select an artwork on the canvas, then drag, resize, or use a preset width button. Each artwork shows its live size in inches.', 'bw-gsb'); ?></p>
+                        <p class="bw-gsb-help"><?php esc_html_e('Tip: select an artwork to move, resize, or rotate it (drag the round handle, hold Shift to snap). Arrow keys nudge; Delete removes. Each artwork shows its live print size and DPI.', 'bw-gsb'); ?></p>
+                    </div>
+                    <div class="bw-gsb-item-panel" data-bw-gsb-item-panel hidden>
+                        <div class="bw-gsb-item-panel-head">
+                            <strong data-bw-gsb-item-name></strong>
+                            <span class="bw-gsb-dpi-badge" data-bw-gsb-item-dpi></span>
+                        </div>
+                        <div class="bw-gsb-item-fields">
+                            <label>
+                                <span><?php esc_html_e('Width (in)', 'bw-gsb'); ?></span>
+                                <input type="number" step="0.05" min="0.5" data-bw-gsb-item-width>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Height (in)', 'bw-gsb'); ?></span>
+                                <input type="number" step="0.05" min="0.5" data-bw-gsb-item-height>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Rotation (°)', 'bw-gsb'); ?></span>
+                                <input type="number" step="1" data-bw-gsb-item-rotation>
+                            </label>
+                        </div>
+                        <p class="bw-gsb-item-warnings" data-bw-gsb-item-warnings hidden></p>
                     </div>
                     <div class="bw-gsb-canvas-shell">
                         <div class="bw-gsb-canvas" data-bw-gsb-canvas>

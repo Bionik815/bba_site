@@ -48,6 +48,8 @@
         }
 
         var config = window.BWGangSheetBuilder;
+        var dpiGood = Number(config.dpiGood || 250);
+        var dpiOk = Number(config.dpiOk || 150);
         var sheetSelect = form.querySelector('[data-bw-gsb-sheet-select]');
         var priceEl = form.querySelector('[data-bw-gsb-price]');
         var labelEl = form.querySelector('[data-bw-gsb-sheet-label]');
@@ -61,6 +63,16 @@
         var rotateButtons = form.querySelectorAll('[data-bw-gsb-rotate]');
         var widthPresetButtons = form.querySelectorAll('[data-bw-gsb-width-preset]');
         var removeButton = form.querySelector('[data-bw-gsb-remove]');
+        var duplicateButton = form.querySelector('[data-bw-gsb-duplicate]');
+        var itemPanel = form.querySelector('[data-bw-gsb-item-panel]');
+        var itemPanelName = form.querySelector('[data-bw-gsb-item-name]');
+        var itemPanelDpi = form.querySelector('[data-bw-gsb-item-dpi]');
+        var itemPanelWidth = form.querySelector('[data-bw-gsb-item-width]');
+        var itemPanelHeight = form.querySelector('[data-bw-gsb-item-height]');
+        var itemPanelRotation = form.querySelector('[data-bw-gsb-item-rotation]');
+        var itemPanelWarnings = form.querySelector('[data-bw-gsb-item-warnings]');
+
+        var MIN_ITEM_INCHES = 0.5;
 
         var state = {
             sheet: null,
@@ -77,6 +89,102 @@
             }
 
             return null;
+        }
+
+        function effectiveDpi(item) {
+            if (!item || !item.naturalWidth || !item.naturalHeight || item.width <= 0 || item.height <= 0) {
+                return 0;
+            }
+
+            return Math.round(Math.min(item.naturalWidth / item.width, item.naturalHeight / item.height));
+        }
+
+        function dpiLevel(dpi) {
+            if (dpi <= 0) {
+                return 'unknown';
+            }
+
+            if (dpi >= dpiGood) {
+                return 'good';
+            }
+
+            if (dpi >= dpiOk) {
+                return 'ok';
+            }
+
+            return 'low';
+        }
+
+        function dpiLabel(dpi) {
+            var level = dpiLevel(dpi);
+            if (level === 'good') {
+                return dpi + ' DPI - ' + (config.messages.dpiGood || 'Print ready');
+            }
+
+            if (level === 'ok') {
+                return dpi + ' DPI - ' + (config.messages.dpiOk || 'Acceptable');
+            }
+
+            if (level === 'low') {
+                return dpi + ' DPI - ' + (config.messages.dpiLow || 'Too low, will print blurry');
+            }
+
+            return config.messages.dpiUnknown || 'DPI unknown';
+        }
+
+        // Half-extents of the axis-aligned box that encloses the item after rotation.
+        function rotatedHalfExtents(item) {
+            var radians = (item.rotation || 0) * Math.PI / 180;
+            var cos = Math.abs(Math.cos(radians));
+            var sin = Math.abs(Math.sin(radians));
+            return {
+                x: (item.width * cos + item.height * sin) / 2,
+                y: (item.width * sin + item.height * cos) / 2
+            };
+        }
+
+        function itemBounds(item) {
+            var half = rotatedHalfExtents(item);
+            var centerX = item.x + item.width / 2;
+            var centerY = item.y + item.height / 2;
+            return {
+                left: centerX - half.x,
+                right: centerX + half.x,
+                top: centerY - half.y,
+                bottom: centerY + half.y
+            };
+        }
+
+        function isOffSheet(item) {
+            if (!state.sheet) {
+                return false;
+            }
+
+            var bounds = itemBounds(item);
+            var epsilon = 0.01;
+            return bounds.left < -epsilon || bounds.top < -epsilon || bounds.right > state.sheet.width + epsilon || bounds.bottom > state.sheet.height + epsilon;
+        }
+
+        function boundsOverlap(a, b) {
+            return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+        }
+
+        function computeWarnings() {
+            var boundsById = {};
+            state.items.forEach(function (item) {
+                boundsById[item.id] = itemBounds(item);
+                item.offSheet = isOffSheet(item);
+                item.overlapping = false;
+            });
+
+            for (var i = 0; i < state.items.length; i += 1) {
+                for (var j = i + 1; j < state.items.length; j += 1) {
+                    if (boundsOverlap(boundsById[state.items[i].id], boundsById[state.items[j].id])) {
+                        state.items[i].overlapping = true;
+                        state.items[j].overlapping = true;
+                    }
+                }
+            }
         }
 
         function serializeState() {
@@ -97,10 +205,15 @@
                         width: Number(item.width.toFixed(2)),
                         height: Number(item.height.toFixed(2)),
                         rotation: Number(item.rotation.toFixed(2)),
-                        z_index: item.zIndex
+                        z_index: item.zIndex,
+                        source_width_px: item.naturalWidth || 0,
+                        source_height_px: item.naturalHeight || 0,
+                        effective_dpi: effectiveDpi(item),
+                        off_sheet: !!item.offSheet,
+                        overlapping: !!item.overlapping
                     };
                 }),
-                builder_version: '0.1.0'
+                builder_version: config.version || '0.3.0'
             });
         }
 
@@ -113,11 +226,11 @@
         }
 
         function canvasScale() {
-            if (!canvas || !state.sheet) {
+            if (!canvas || !state.sheet || !state.sheet.width) {
                 return 1;
             }
 
-            return canvas.clientWidth / state.sheet.width;
+            return (canvas.clientWidth || 1) / state.sheet.width;
         }
 
         function sizeCanvas() {
@@ -135,6 +248,8 @@
                 return;
             }
 
+            computeWarnings();
+
             Array.prototype.slice.call(canvas.querySelectorAll('.bw-gsb-canvas-item')).forEach(function (node) {
                 node.remove();
             });
@@ -142,8 +257,21 @@
             var scale = canvasScale();
 
             state.items.forEach(function (item) {
+                var dpi = effectiveDpi(item);
+                var level = dpiLevel(dpi);
+                var classes = 'bw-gsb-canvas-item';
+                if (item.id === state.activeId) {
+                    classes += ' is-selected';
+                }
+                if (level === 'low') {
+                    classes += ' is-low-dpi';
+                }
+                if (item.overlapping || item.offSheet) {
+                    classes += ' is-warning';
+                }
+
                 var node = document.createElement('div');
-                node.className = 'bw-gsb-canvas-item' + (item.id === state.activeId ? ' is-selected' : '');
+                node.className = classes;
                 node.dataset.itemId = item.id;
                 node.style.left = (item.x * scale) + 'px';
                 node.style.top = (item.y * scale) + 'px';
@@ -155,23 +283,87 @@
                 var image = document.createElement('img');
                 image.src = item.url;
                 image.alt = item.label;
+                image.draggable = false;
 
                 var measurement = document.createElement('div');
                 measurement.className = 'bw-gsb-canvas-item-measurement';
-                measurement.textContent = formatInches(item.width) + ' x ' + formatInches(item.height);
-
-                var handle = document.createElement('div');
-                handle.className = 'bw-gsb-resize-handle';
-                handle.dataset.resizeHandle = '1';
+                measurement.textContent = formatInches(item.width) + ' x ' + formatInches(item.height) + (dpi > 0 ? ' | ' + dpi + ' DPI' : '');
 
                 node.appendChild(image);
                 node.appendChild(measurement);
-                node.appendChild(handle);
+
+                if (item.id === state.activeId) {
+                    var handle = document.createElement('div');
+                    handle.className = 'bw-gsb-resize-handle';
+                    handle.dataset.resizeHandle = '1';
+                    node.appendChild(handle);
+
+                    var rotateHandle = document.createElement('div');
+                    rotateHandle.className = 'bw-gsb-rotate-handle';
+                    rotateHandle.dataset.rotateHandle = '1';
+                    rotateHandle.title = 'Drag to rotate (hold Shift to snap to 15°)';
+                    node.appendChild(rotateHandle);
+                }
+
                 canvas.appendChild(node);
             });
 
             updateCanvasEmpty();
+            updateItemPanel();
             serializeState();
+        }
+
+        function panelInputActive() {
+            var active = document.activeElement;
+            return active && (active === itemPanelWidth || active === itemPanelHeight || active === itemPanelRotation);
+        }
+
+        function updateItemPanel() {
+            if (!itemPanel) {
+                return;
+            }
+
+            var item = activeItem();
+            if (!item) {
+                itemPanel.hidden = true;
+                return;
+            }
+
+            itemPanel.hidden = false;
+
+            if (itemPanelName) {
+                itemPanelName.textContent = item.label;
+            }
+
+            var dpi = effectiveDpi(item);
+            if (itemPanelDpi) {
+                itemPanelDpi.textContent = dpiLabel(dpi);
+                itemPanelDpi.className = 'bw-gsb-dpi-badge is-' + dpiLevel(dpi);
+            }
+
+            if (!panelInputActive()) {
+                if (itemPanelWidth) {
+                    itemPanelWidth.value = item.width.toFixed(2);
+                }
+                if (itemPanelHeight) {
+                    itemPanelHeight.value = item.height.toFixed(2);
+                }
+                if (itemPanelRotation) {
+                    itemPanelRotation.value = Math.round(item.rotation);
+                }
+            }
+
+            if (itemPanelWarnings) {
+                var warnings = [];
+                if (item.offSheet) {
+                    warnings.push(config.messages.warnOffSheet || 'This artwork extends past the sheet edge and would be cut off.');
+                }
+                if (item.overlapping) {
+                    warnings.push(config.messages.warnOverlap || 'This artwork overlaps another design on the sheet.');
+                }
+                itemPanelWarnings.hidden = warnings.length === 0;
+                itemPanelWarnings.textContent = warnings.join(' ');
+            }
         }
 
         function updateSheetMeta() {
@@ -263,6 +455,10 @@
                 var meta = document.createElement('p');
                 meta.textContent = upload.name;
 
+                var pixels = document.createElement('p');
+                pixels.className = 'bw-gsb-upload-pixels';
+                pixels.textContent = upload.width + ' x ' + upload.height + ' px';
+
                 var button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'bw-gsb-tool-button';
@@ -273,6 +469,7 @@
 
                 card.appendChild(preview);
                 card.appendChild(meta);
+                card.appendChild(pixels);
                 card.appendChild(button);
                 uploadList.appendChild(card);
             });
@@ -305,10 +502,13 @@
             }
 
             var ratio = upload.width > 0 && upload.height > 0 ? (upload.height / upload.width) : 1;
-            var width = Math.min(state.sheet.width * 0.3, Math.max(2, upload.width / 100));
+
+            // Default placement: natural print size at 300 DPI, capped to fit the sheet.
+            var width = upload.width > 0 ? upload.width / 300 : state.sheet.width * 0.3;
+            width = clamp(width, MIN_ITEM_INCHES, state.sheet.width * 0.9);
             var height = width * ratio;
-            if (height > state.sheet.height * 0.5) {
-                height = state.sheet.height * 0.5;
+            if (height > state.sheet.height * 0.9) {
+                height = state.sheet.height * 0.9;
                 width = height / Math.max(ratio, 0.01);
             }
 
@@ -318,6 +518,8 @@
                 fileName: upload.name,
                 label: upload.name,
                 url: upload.url,
+                naturalWidth: upload.width,
+                naturalHeight: upload.height,
                 x: 1,
                 y: 1,
                 width: Number(width.toFixed(2)),
@@ -328,6 +530,26 @@
 
             state.items.push(item);
             state.activeId = item.id;
+            renderItems();
+        }
+
+        function duplicateSelected() {
+            var item = activeItem();
+            if (!item || !state.sheet) {
+                return;
+            }
+
+            var copy = {};
+            Object.keys(item).forEach(function (key) {
+                copy[key] = item[key];
+            });
+            copy.id = nextId('item');
+            copy.zIndex = state.items.length + 1;
+            copy.x = clamp(item.x + 0.5, 0, Math.max(0, state.sheet.width - item.width));
+            copy.y = clamp(item.y + 0.5, 0, Math.max(0, state.sheet.height - item.height));
+
+            state.items.push(copy);
+            state.activeId = copy.id;
             renderItems();
         }
 
@@ -379,6 +601,15 @@
             return { x: event.clientX, y: event.clientY };
         }
 
+        function itemCenterOnScreen(item) {
+            var scale = canvasScale();
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: rect.left + (item.x + item.width / 2) * scale,
+                y: rect.top + (item.y + item.height / 2) * scale
+            };
+        }
+
         function handleCanvasPointerDown(event) {
             var itemNode = event.target.closest('.bw-gsb-canvas-item');
             if (!itemNode) {
@@ -395,29 +626,44 @@
 
             setActive(item.id);
 
-            var mode = event.target.dataset.resizeHandle ? 'resize' : 'move';
+            var mode = 'move';
+            if (event.target.dataset.resizeHandle) {
+                mode = 'resize';
+            } else if (event.target.dataset.rotateHandle) {
+                mode = 'rotate';
+            }
+
             var start = pointerPoint(event);
             var startItem = {
                 x: item.x,
                 y: item.y,
                 width: item.width,
-                height: item.height
+                height: item.height,
+                rotation: item.rotation
             };
             var scale = canvasScale();
+            var center = itemCenterOnScreen(item);
 
             function moveHandler(moveEvent) {
                 var point = pointerPoint(moveEvent);
-                var deltaX = (point.x - start.x) / scale;
-                var deltaY = (point.y - start.y) / scale;
 
-                if (mode === 'move') {
+                if (mode === 'rotate') {
+                    var angle = Math.atan2(point.y - center.y, point.x - center.x) * 180 / Math.PI + 90;
+                    if (moveEvent.shiftKey) {
+                        angle = Math.round(angle / 15) * 15;
+                    }
+                    item.rotation = ((Math.round(angle) % 360) + 360) % 360;
+                } else if (mode === 'move') {
+                    var deltaX = (point.x - start.x) / scale;
+                    var deltaY = (point.y - start.y) / scale;
                     item.x = clamp(startItem.x + deltaX, 0, Math.max(0, state.sheet.width - item.width));
                     item.y = clamp(startItem.y + deltaY, 0, Math.max(0, state.sheet.height - item.height));
                 } else {
-                    var nextWidth = clamp(startItem.width + deltaX, 0.75, state.sheet.width);
+                    var resizeDeltaX = (point.x - start.x) / scale;
+                    var nextWidth = clamp(startItem.width + resizeDeltaX, MIN_ITEM_INCHES, state.sheet.width);
                     var ratio = startItem.height / Math.max(startItem.width, 0.01);
                     item.width = nextWidth;
-                    item.height = clamp(nextWidth * ratio, 0.75, state.sheet.height);
+                    item.height = clamp(nextWidth * ratio, MIN_ITEM_INCHES, state.sheet.height);
                     item.x = clamp(item.x, 0, Math.max(0, state.sheet.width - item.width));
                     item.y = clamp(item.y, 0, Math.max(0, state.sheet.height - item.height));
                 }
@@ -450,24 +696,34 @@
             renderItems();
         }
 
-        function applyWidthPreset(width) {
+        function setSelectedSize(width, height) {
             var item = activeItem();
             if (!item || !state.sheet) {
                 return;
             }
 
-            var targetWidth = Number(width || 0);
-            if (targetWidth <= 0) {
-                return;
-            }
+            var ratio = item.naturalWidth > 0 && item.naturalHeight > 0
+                ? item.naturalHeight / item.naturalWidth
+                : item.height / Math.max(item.width, 0.01);
 
-            var ratio = item.height / Math.max(item.width, 0.01);
-            var nextWidth = clamp(targetWidth, 0.75, state.sheet.width);
-            var nextHeight = Math.max(0.75, nextWidth * ratio);
+            var nextWidth;
+            var nextHeight;
+
+            if (width !== null) {
+                nextWidth = clamp(Number(width), MIN_ITEM_INCHES, state.sheet.width);
+                nextHeight = nextWidth * ratio;
+            } else {
+                nextHeight = clamp(Number(height), MIN_ITEM_INCHES, state.sheet.height);
+                nextWidth = nextHeight / Math.max(ratio, 0.01);
+            }
 
             if (nextHeight > state.sheet.height) {
                 nextHeight = state.sheet.height;
                 nextWidth = nextHeight / Math.max(ratio, 0.01);
+            }
+            if (nextWidth > state.sheet.width) {
+                nextWidth = state.sheet.width;
+                nextHeight = nextWidth * ratio;
             }
 
             item.width = Number(nextWidth.toFixed(2));
@@ -475,6 +731,10 @@
             item.x = clamp(item.x, 0, Math.max(0, state.sheet.width - item.width));
             item.y = clamp(item.y, 0, Math.max(0, state.sheet.height - item.height));
             renderItems();
+        }
+
+        function applyWidthPreset(width) {
+            setSelectedSize(width, null);
         }
 
         function removeSelected() {
@@ -487,6 +747,51 @@
             });
             state.activeId = null;
             renderItems();
+        }
+
+        function isTypingTarget(target) {
+            if (!target) {
+                return false;
+            }
+
+            var tag = (target.tagName || '').toLowerCase();
+            return tag === 'input' || tag === 'textarea' || tag === 'select' || target.isContentEditable;
+        }
+
+        function handleKeydown(event) {
+            var item = activeItem();
+            if (!item || isTypingTarget(event.target)) {
+                return;
+            }
+
+            var step = event.shiftKey ? 0.5 : 0.1;
+            var handled = true;
+
+            switch (event.key) {
+                case 'ArrowLeft':
+                    item.x = clamp(item.x - step, 0, Math.max(0, state.sheet.width - item.width));
+                    break;
+                case 'ArrowRight':
+                    item.x = clamp(item.x + step, 0, Math.max(0, state.sheet.width - item.width));
+                    break;
+                case 'ArrowUp':
+                    item.y = clamp(item.y - step, 0, Math.max(0, state.sheet.height - item.height));
+                    break;
+                case 'ArrowDown':
+                    item.y = clamp(item.y + step, 0, Math.max(0, state.sheet.height - item.height));
+                    break;
+                case 'Delete':
+                case 'Backspace':
+                    removeSelected();
+                    return;
+                default:
+                    handled = false;
+            }
+
+            if (handled) {
+                event.preventDefault();
+                renderItems();
+            }
         }
 
         if (sheetSelect) {
@@ -517,6 +822,54 @@
         if (removeButton) {
             removeButton.addEventListener('click', removeSelected);
         }
+
+        if (duplicateButton) {
+            duplicateButton.addEventListener('click', duplicateSelected);
+        }
+
+        if (itemPanelWidth) {
+            itemPanelWidth.addEventListener('input', function () {
+                if (itemPanelWidth.value !== '' && Number(itemPanelWidth.value) > 0) {
+                    setSelectedSize(Number(itemPanelWidth.value), null);
+                }
+            });
+        }
+
+        if (itemPanelHeight) {
+            itemPanelHeight.addEventListener('input', function () {
+                if (itemPanelHeight.value !== '' && Number(itemPanelHeight.value) > 0) {
+                    setSelectedSize(null, Number(itemPanelHeight.value));
+                }
+            });
+        }
+
+        if (itemPanelRotation) {
+            itemPanelRotation.addEventListener('input', function () {
+                var item = activeItem();
+                if (!item || itemPanelRotation.value === '') {
+                    return;
+                }
+
+                item.rotation = ((Math.round(Number(itemPanelRotation.value)) % 360) + 360) % 360;
+                renderItems();
+            });
+        }
+
+        // Enter inside builder inputs should not submit the whole form.
+        [itemPanelWidth, itemPanelHeight, itemPanelRotation].forEach(function (input) {
+            if (!input) {
+                return;
+            }
+
+            input.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    input.blur();
+                }
+            });
+        });
+
+        document.addEventListener('keydown', handleKeydown);
 
         window.addEventListener('resize', function () {
             sizeCanvas();
