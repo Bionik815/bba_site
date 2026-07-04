@@ -1,0 +1,1248 @@
+<?php
+/**
+ * WooCommerce Square
+ *
+ * This source file is subject to the GNU General Public License v3.0
+ * that is bundled with this package in the file license.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0 or later
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@woocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade WooCommerce Square to newer
+ * versions in the future. If you wish to customize WooCommerce Square for your
+ * needs please refer to https://docs.woocommerce.com/document/woocommerce-square/
+ *
+ * @author    WooCommerce
+ * @copyright Copyright: (c) 2019, Automattic, Inc.
+ * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0 or later
+ */
+
+namespace WooCommerce\Square;
+
+use WooCommerce\Square\API\Requests;
+use WooCommerce\Square\API\Responses;
+use WooCommerce\Square\Framework\Api\Base;
+use WooCommerce\Square\Utilities\Coupon_Utility;
+use Square\Models\CatalogObject;
+use Square\Models\ListCatalogResponse;
+use Square\SquareClient;
+use Square\Environment;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * WooCommerce Square API class
+ *
+ * @since 2.0.0
+ */
+class API extends Base {
+
+
+	/** catalog request type */
+	const REQUEST_TYPE_CATALOG = 'catalog';
+
+	/** inventory request type */
+	const REQUEST_TYPE_INVENTORY = 'inventory';
+
+	/** tax type inclusive */
+	const TAX_TYPE_INCLUSIVE = 'INCLUSIVE';
+
+	/** tax type additive */
+	const TAX_TYPE_ADDITIVE = 'ADDITIVE';
+
+
+	/** @var \Square\SquareClient Square API client instance */
+	protected $client;
+
+
+	/**
+	 * Constructs the main Square API wrapper class.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $access_token Square API access token
+	 * @param bool   $is_sandbox   If sandbox access is desired
+	 */
+	public function __construct( $access_token, $is_sandbox = null ) {
+		$this->client = new SquareClient(
+			array(
+				'accessToken' => $access_token,
+				'environment' => $is_sandbox ? Environment::SANDBOX : Environment::PRODUCTION,
+			)
+		);
+	}
+
+
+	/** Catalog API Methods *******************************************************************************************/
+
+
+	/**
+	 * Batch-deletes an array of catalog objects.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string[] $object_ids array of square catalog object IDs
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function batch_delete_catalog_objects( array $object_ids ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_batch_delete_catalog_objects_data( $object_ids );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Batch-retrieves an array of catalog objects.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string[] $object_ids array of square catalog object IDs
+	 * @param bool $include_related_objects whether or not to include related objects in the response
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function batch_retrieve_catalog_objects( array $object_ids, $include_related_objects = false ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_batch_retrieve_catalog_objects_data( $object_ids, (bool) $include_related_objects );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Batch-upserts an array of catalog objects.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $idempotency_key a UUID for this request
+	 * @param array $batches an array of batches to upsert
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function batch_upsert_catalog_objects( $idempotency_key, array $batches ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_batch_upsert_catalog_objects_data( $idempotency_key, $batches );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Returns info about the Catalog API, including helpful info like request size limits.
+	 *
+	 * @since 2.0.0
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function catalog_info() {
+
+		$request = $this->get_catalog_request();
+		$request->set_catalog_info_data();
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Deletes an object from the Square catalog.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $object_id Square catalog object ID
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function delete_catalog_object( $object_id ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_delete_catalog_object_data( $object_id );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Returns a list of Square catalog items.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $cursor the cursor to list from
+	 * @param string[] $types the item types to filter by
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function list_catalog( $cursor = '', $types = array() ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_list_catalog_data( $cursor, $types );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Retrieves a single catalog object.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $object_id the Square catalog object ID
+	 * @param bool $include_related_objects whether or not to include related objects (such as categories)
+	 * @param int|null $object_version The specific version of the object to retrieve. Optional - defaults to latest.
+	 *                                 If the specified version of the object does not exist, the Square API will
+	 *                                 return the latest version. If the version provided is not known to exist consumers
+	 *                                 of this function should validate the version returned by the API.
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function retrieve_catalog_object( $object_id, $include_related_objects = false, $object_version = null ) {
+		$request = $this->get_catalog_request();
+		$request->set_retrieve_catalog_object_data( $object_id, $include_related_objects, $object_version );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Searches the catalog for objects.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $args see Catalog::set_search_catalog_objects_data() for list of args
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function search_catalog_objects( $args = array() ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_search_catalog_objects_data( $args );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Updates the modifier lists that apply to given items.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string[] $item_ids array of Square catalog item IDs
+	 * @param string[] $modifier_lists_to_enable (optional) modifier list IDs to enable
+	 * @param string[] $modifier_lists_to_disable (optional) modifier list IDs to disable
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function update_item_modifier_lists( array $item_ids, array $modifier_lists_to_enable = array(), array $modifier_lists_to_disable = array() ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_update_item_modifier_lists_data( $item_ids, $modifier_lists_to_enable, $modifier_lists_to_disable );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Updates an item's applied taxes.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string[] $item_ids array of Square catalog item IDs
+	 * @param string[] $taxes_to_enable (optional) tax IDs to enable
+	 * @param string[] $taxes_to_disable (optional) tax IDs to disable
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function update_item_taxes( array $item_ids, array $taxes_to_enable = array(), array $taxes_to_disable = array() ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_update_item_taxes_data( $item_ids, $taxes_to_enable, $taxes_to_disable );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Upserts an object into the catalog.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $idempotency_key UUID for this request
+	 * @param \Square\Models\CatalogObject $object the object to upsert
+	 * @return Responses\Catalog
+	 * @throws \Exception
+	 */
+	public function upsert_catalog_object( $idempotency_key, $object ) {
+
+		$request = $this->get_catalog_request();
+		$request->set_upsert_catalog_object_data( $idempotency_key, $object );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Creates an image in Square.
+	 *
+	 * Note that this method uses a custom request, since the Square SDK does not yet provide a method for image creation.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param $image_path
+	 * @param string $square_item_id
+	 * @param string $caption optional image caption
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function create_image( $image_path, $square_item_id = '', $caption = '' ) {
+
+		if ( ! is_readable( $image_path ) ) {
+			throw new \Exception( 'Image file is not readable' );
+		}
+
+		$image = file_get_contents( $image_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$headers = array(
+			'accept'         => 'application/json',
+			'content-type'   => 'multipart/form-data; boundary="boundary"',
+			'Square-Version' => '2019-05-08',
+			'Authorization'  => 'Bearer ' . wc_square()->get_settings_handler()->get_access_token(),
+		);
+
+		$body  = '--boundary' . "\r\n";
+		$body .= 'Content-Disposition: form-data; name="request"' . "\r\n";
+		$body .= 'Content-Type: application/json' . "\r\n\r\n";
+
+		$request = array(
+			'idempotency_key' => wc_square()->get_idempotency_key(),
+			'image'           => array(
+				'type'       => 'IMAGE',
+				'id'         => '#TEMP_ID',
+				'image_data' => array(
+					'caption' => esc_attr( $caption ),
+				),
+			),
+		);
+
+		if ( $square_item_id ) {
+			$request['object_id'] = $square_item_id;
+		}
+
+		$body .= json_encode( $request ); // phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
+
+		$body .= "\r\n";
+
+		$body .= '--boundary' . "\r\n";
+		$body .= 'Content-Disposition: form-data; name="file"; filename="' . esc_attr( basename( $image_path ) ) . '"' . "\r\n";
+		$body .= 'Content-Type: image/jpeg' . "\r\n\r\n";
+		$body .= $image . "\r\n";
+		$body .= '--boundary--';
+
+		$url = $this->client->getBaseUri() . '/v2/catalog/images';
+
+		$response = wp_remote_post(
+			$url,
+			array(
+				'headers' => $headers,
+				'body'    => $body,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			throw new \Exception( esc_html( $response->get_error_message() ) );
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+		$body = json_decode( $body, true );
+
+		if ( ! is_array( $body ) ) {
+			throw new \Exception( 'Response was malformed' );
+		}
+
+		if ( ! empty( $body['errors'] ) || empty( $body['image']['id'] ) ) {
+
+			if ( ! empty( $body['errors'][0]['detail'] ) ) {
+				$message = $body['errors'][0]['detail'];
+			} else {
+				$message = 'Unknown error';
+			}
+
+			throw new \Exception( esc_html( $message ) );
+		}
+
+		return $body['image']['id'];
+	}
+
+
+	/** Inventory API Methods *****************************************************************************************/
+
+
+	/**
+	 * Adds a count of inventory as "in-stock" to the given Square item variation ID as a result of a refund.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $square_id Square object ID
+	 * @param int $amount amount of inventory to add
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function add_inventory_from_refund( $square_id, $amount ) {
+
+		return $this->add_inventory( $square_id, $amount, 'NONE' );
+	}
+
+
+	/**
+	 * Adds a count of inventory as "in-stock" to the given Square item variation ID.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $square_id Square object ID
+	 * @param int $amount amount of inventory to add
+	 * @param string $from_state the API state the inventory is coming from
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function add_inventory( $square_id, $amount, $from_state = 'NONE' ) {
+
+		return $this->adjust_inventory( $square_id, $amount, $from_state, 'IN_STOCK' );
+	}
+
+
+	/**
+	 * Removes a count of inventory as "in-stock" to the given Square item variation ID.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $square_id Square object ID
+	 * @param int $amount amount of inventory to remove
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function remove_inventory( $square_id, $amount ) {
+
+		return $this->adjust_inventory( $square_id, $amount, 'IN_STOCK', 'SOLD' );
+	}
+
+
+	/**
+	 * Performs an inventory adjustment.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $square_id Square object ID
+	 * @param int $amount amount of inventory to add
+	 * @param string $from_state the API state the inventory is coming from
+	 * @param string $to_state the API state the inventory is changing to
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	protected function adjust_inventory( $square_id, $amount, $from_state, $to_state ) {
+
+		$date = new \DateTime();
+
+		$change = new \Square\Models\InventoryChange();
+		$change->setType( 'ADJUSTMENT' );
+
+		$inventory_adjustment = new \Square\Models\InventoryAdjustment();
+		$inventory_adjustment->setCatalogObjectId( $square_id );
+		$inventory_adjustment->setLocationId( $this->get_plugin()->get_settings_handler()->get_location_id() );
+		$inventory_adjustment->setQuantity( (string) absint( $amount ) );
+		$inventory_adjustment->setFromState( $from_state );
+		$inventory_adjustment->setToState( $to_state );
+		$inventory_adjustment->setOccurredAt( $date->format( DATE_ATOM ) );
+
+		$change->setAdjustment( $inventory_adjustment );
+
+		return $this->batch_change_inventory(
+			uniqid( '', false ),
+			array(
+				$change,
+			)
+		);
+	}
+
+
+	/**
+	 * Performs a Batch Change Inventory request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $idempotency_key UUID for this request
+	 * @param \Square\Models\InventoryChange[] $changes array of Inventory Changes
+	 * @param bool $ignore_unchanged_counts whether the current physical count should be ignored if the quantity is unchanged since the last physical count
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function batch_change_inventory( $idempotency_key, $changes, $ignore_unchanged_counts = true ) {
+
+		$request = $this->get_inventory_request();
+		$request->set_batch_change_inventory_data( $idempotency_key, $changes, $ignore_unchanged_counts );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Performs a Batch Retrieve Inventory Changes request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $args see Requests\Inventory::set_batch_retrieve_inventory_changes_data() for accepted arguments
+	 *
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function batch_retrieve_inventory_changes( array $args = array() ) {
+
+		$request = $this->get_inventory_request();
+		$request->set_batch_retrieve_inventory_changes_data( $args );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Performs a Batch Retrieve Inventory Counts request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $args see Requests\Inventory::set_batch_retrieve_inventory_counts_data() for accepted arguments
+	 *
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function batch_retrieve_inventory_counts( array $args = array() ) {
+
+		$request = $this->get_inventory_request();
+		$request->set_batch_retrieve_inventory_counts_data( $args );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Performs a Retrieve Inventory Adjustment request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $adjustment_id the InventoryAdjustment ID to retrieve
+	 *
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function retrieve_inventory_adjustment( $adjustment_id ) {
+
+		$request = $this->get_inventory_request();
+		$request->set_retrieve_inventory_adjustment_data( $adjustment_id );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Performs a Retrieve Inventory Changes request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $catalog_object_id the CatalogObject ID to retrieve
+	 *
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function retrieve_inventory_changes( $catalog_object_id ) {
+
+		$request = $this->get_inventory_request();
+		$request->set_retrieve_inventory_changes_data( $catalog_object_id );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Performs a Retrieve Inventory Count request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $catalog_object_id the CatalogObject ID to retrieve
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function retrieve_inventory_count( $catalog_object_id ) {
+
+		$request = $this->get_inventory_request();
+		$request->set_retrieve_inventory_count_data( $catalog_object_id, $this->get_plugin()->get_settings_handler()->get_location_id() );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/**
+	 * Performs a Retrieve Inventory Physical Count request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $physical_count_id the InventoryPhysicalCount ID to retrieve
+	 *
+	 * @return Responses\Inventory
+	 * @throws \Exception
+	 */
+	public function retrieve_inventory_physical_count( $physical_count_id ) {
+
+		$request = $this->get_inventory_request();
+		$request->set_retrieve_inventory_physical_count_data( $physical_count_id );
+
+		return $this->perform_request( $request );
+	}
+
+	/**
+	 * Fetch the option (attribute) names from Square.
+	 *
+	 * @since 4.9.0
+	 *
+	 * @throws \Exception
+	 */
+	public function retrieve_options_data( $cursor = '', $refresh = false ) {
+		$options_data = get_transient( 'wc_square_options_data' );
+
+		// Stop if transient exists and we don't want to refresh.
+		if ( $options_data && ! $refresh ) {
+			if ( $this->options_transient_needs_refresh( $options_data ) ) {
+				$refresh      = true;
+				$options_data = array();
+				delete_transient( 'wc_square_options_data' );
+			} else {
+				return array( '', $options_data, $cursor );
+			}
+		}
+
+		// If transient doesn't exist, initialize the array.
+		if ( ! is_array( $options_data ) ) {
+			$options_data = array();
+		}
+
+		$response = $this->list_catalog( $cursor, array( 'ITEM_OPTION' ) );
+
+		if ( ! $response->get_data() instanceof ListCatalogResponse ) {
+			throw new \Exception( 'API response data is invalid' );
+		}
+
+		$objects = $response->get_data()->getObjects() ? $response->get_data()->getObjects() : array();
+
+		foreach ( $objects as $object ) {
+			$option_name                              = $this->get_item_option_name_from_catalog_object( $object );
+			$options_data[ $object->getId() ]['name'] = $option_name;
+
+			$option_values_object = $object->getItemOptionData()->getValues();
+			$option_values        = array();
+			$option_values_ids    = array();
+
+			foreach ( $option_values_object as $option_value ) {
+				$option_values[]                             = $option_value->getItemOptionValueData()->getName();
+				$option_values_ids[ $option_value->getId() ] = $option_value->getItemOptionValueData()->getName();
+			}
+			$options_data[ $object->getId() ]['values']    = $option_values;
+			$options_data[ $object->getId() ]['value_ids'] = $option_values_ids;
+		}
+
+		$cursor = $response->get_data()->getCursor();
+		if ( ! $cursor ) {
+			set_transient( 'wc_square_options_data', $options_data, DAY_IN_SECONDS );
+		}
+
+		return array( $response, $options_data, $cursor );
+	}
+
+	/**
+	 * Create options and values in Square.
+	 *
+	 * @since 4.9.0
+	 *
+	 * @param string $option_id Option ID.
+	 * @param string $attribute_name Attribute name.
+	 * @param array  $attribute_option_values Attribute option values.
+	 *
+	 * @return \Square\Models\CatalogObject
+	 */
+	public function create_options_and_values( $option_id = false, $attribute_name = '', $attribute_option_values = array() ) {
+		$options_value_data = array();
+
+		if ( $option_id ) {
+			$response = $this->retrieve_catalog_object( $option_id );
+			$option   = $response->get_data()->getObject();
+
+			// Filter out the existing option values from the attribute values.
+			$square_existing_option_objects = $option->getItemOptionData()->getValues();
+			$options_value_data             = $square_existing_option_objects;
+
+			$square_existing_option_values = array();
+			foreach ( $square_existing_option_objects as $option_object ) {
+				$square_existing_option_values[] = $option_object->getItemOptionValueData()->getName();
+			}
+			$attribute_option_values = array_diff( $attribute_option_values, $square_existing_option_values );
+		} else {
+			// Initialize the option object with a temp ID prefixed with #.
+			$option = new \Square\Models\CatalogObject( 'ITEM_OPTION', '' );
+
+			if ( $attribute_name ) {
+				$option->setId( $option_id ? $option_id : '#' . $attribute_name );
+			}
+
+			$option->setItemOptionData( new \Square\Models\CatalogItemOption() );
+			$option->getItemOptionData()->setName( $attribute_name );
+			$option->getItemOptionData()->setDisplayName( $attribute_name );
+		}
+
+		// Loop through the attribute values to create option values.
+		foreach ( $attribute_option_values as $attribute_option_value ) {
+			$option_value = new \Square\Models\CatalogObject( 'ITEM_OPTION_VAL', '#' . $attribute_name . '_' . $attribute_option_value );
+			$option_value->setItemOptionValueData( new \Square\Models\CatalogItemOptionValue() );
+			$option_value->getItemOptionValueData()->setName( $attribute_option_value );
+
+			$options_value_data[] = $option_value;
+		}
+
+		// Set the option values.
+		$option->getItemOptionData()->setValues( $options_value_data );
+
+		// Push option object to Square to create a new one. Used timestamp as idempotency_key.
+		try {
+			$new_option = $this->upsert_catalog_object( md5( serialize( $option ) ) . time() . '_upsert_option', $option ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
+
+			$id_mappings = $new_option->get_data()->getIdMappings();
+
+			if ( isset( $id_mappings[0] ) ) {
+				$option_id = $id_mappings[0]->getObjectId();
+			}
+
+			$response = $this->retrieve_catalog_object( $option_id );
+			$option   = $response->get_data()->getObject();
+
+			$option_values_object = $option->getItemOptionData()->getValues();
+			$option_value_ids     = array();
+			$option_values        = array();
+
+			foreach ( $option_values_object as $option_value ) {
+				$option_value_ids[] = $option_value->getId();
+				$option_values[]    = $option_value->getItemOptionValueData()->getName();
+			}
+
+			$result       = $this->retrieve_options_data();
+			$options_data = isset( $result[1] ) ? $result[1] : array();
+
+			$options_data[ $option_id ] = array(
+				'name'      => $attribute_name,
+				'values'    => $option_values,
+				'value_ids' => array_combine( $option_value_ids, $option_values ),
+			);
+			set_transient( 'wc_square_options_data', $options_data, DAY_IN_SECONDS );
+
+		} catch ( \Exception $e ) {
+			/**
+			 * if we encounter an error, mostly it would be because Option or its Value
+			 * already exists in Square. In such case, we need to refetch the latest data
+			 * and restart the Runner Job using `woocommerce_square_refresh_sync_cycle` option.
+			 * This is required to reactivate `fetch_all_options` step to get the latest data.
+			 */
+			update_option( 'woocommerce_square_refresh_sync_cycle', true );
+			delete_transient( 'wc_square_options_data' );
+
+			// Log the error and throw it.
+			wc_square()->log( sprintf( 'Resetting the Sync Job. Failed to create option in Square: %s. The system will refetch latest Options from Square.', $e->getMessage() ) );
+			throw $e;
+		}
+
+		return $option;
+	}
+
+	/**
+	 * Determines the best available name for a catalog option.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param \Square\Models\CatalogObject $catalog_object Catalog option object.
+	 * @return string
+	 */
+	public function get_item_option_name_from_catalog_object( ?CatalogObject $catalog_object ) {
+
+		if ( ! $catalog_object instanceof CatalogObject || ! $catalog_object->getItemOptionData() ) {
+			return '';
+		}
+
+		$option_data = $catalog_object->getItemOptionData();
+		$name        = $option_data->getName();
+		$name        = is_string( $name ) ? trim( $name ) : '';
+
+		if ( '' === $name && method_exists( $option_data, 'getDisplayName' ) ) {
+			$display_name = $option_data->getDisplayName();
+			$name         = is_string( $display_name ) ? trim( $display_name ) : '';
+		}
+
+		return $name;
+	}
+
+	/**
+	 * Checks if the cached options data is missing names and needs refreshing.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param mixed $options_data Cached options data.
+	 * @return bool
+	 */
+	private function options_transient_needs_refresh( $options_data ) {
+
+		if ( ! is_array( $options_data ) ) {
+			return true;
+		}
+
+		foreach ( $options_data as $option_data ) {
+			$name = '';
+
+			if ( is_array( $option_data ) && isset( $option_data['name'] ) ) {
+				$name = is_string( $option_data['name'] ) ? trim( $option_data['name'] ) : '';
+			}
+
+			if ( '' === $name ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+	/** Locations methods *********************************************************************************************/
+
+
+	/**
+	 * Gets the available locations.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return \Square\Models\Location[]
+	 * @throws \Exception
+	 */
+	public function get_locations() {
+
+		$request = new API\Requests\Locations( $this->client );
+
+		$request->set_list_locations_data();
+
+		$this->set_response_handler( API\Responses\Locations::class );
+
+		/* @type API\Responses\Locations $response */
+		$response = $this->perform_request( $request );
+
+		return $response->get_locations();
+	}
+
+
+	/** Customer methods **********************************************************************************************/
+
+
+	/**
+	 * Gets all customers.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $cursor pagination cursor
+	 * @return API\Response
+	 * @throws \Exception
+	 */
+	public function get_customers( $cursor = '' ) {
+
+		$request = new API\Requests\Customers( $this->client );
+
+		$request->set_get_customers_data( $cursor );
+
+		$this->set_response_handler( API\Response::class );
+
+		return $this->perform_request( $request );
+	}
+
+
+	/** Request Helper Methods ****************************************************************************************/
+
+
+	/**
+	 * Gets a new Catalog API request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return Requests\Catalog
+	 * @throws \Exception
+	 */
+	protected function get_catalog_request() {
+
+		return $this->get_new_request( self::REQUEST_TYPE_CATALOG );
+	}
+
+
+	/**
+	 * Gets a new Inventory API request.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return Requests\Inventory
+	 * @throws \Exception
+	 */
+	protected function get_inventory_request() {
+
+		return $this->get_new_request( self::REQUEST_TYPE_INVENTORY );
+	}
+
+
+	/**
+	 * Gets a new request object.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $type desired request type
+	 * @return Requests\Catalog|Requests\Inventory
+	 * @throws \Exception
+	 */
+	protected function get_new_request( $type = '' ) {
+
+		switch ( $type ) {
+
+			case self::REQUEST_TYPE_CATALOG:
+				$request          = new Requests\Catalog( $this->client );
+				$response_handler = Responses\Catalog::class;
+				break;
+
+			case self::REQUEST_TYPE_INVENTORY:
+				$request          = new Requests\Inventory( $this->client );
+				$response_handler = Responses\Inventory::class;
+				break;
+
+			default:
+				throw new \Exception( 'Invalid request type.' );
+		}
+
+		$this->set_response_handler( $response_handler );
+
+		return $request;
+	}
+
+
+	/**
+	 * Performs an API request.
+	 *
+	 * @see Base::perform_request()
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param API\Request $request request object
+	 * @return API\Response
+	 * @throws \Exception
+	 */
+	protected function perform_request( $request ) {
+
+		// ensure API is in its default state
+		$this->reset_response();
+
+		// save the request object
+		$this->request = $request;
+
+		$start_time = microtime( true );
+
+		try {
+
+			// set the request URI to the Square SDK method for better logging
+			$this->request_uri    = $this->get_request()->get_square_api_method();
+			$this->request_method = '';
+
+			// add any query args to the logged request URI for easier debugging
+			foreach ( $this->get_request()->get_square_api_args() as $arg ) {
+
+				if ( is_string( $arg ) ) {
+					$this->request_uri .= "/{$arg}";
+				}
+			}
+
+			// perform the request
+			$response = $this->do_square_request( $this->get_request()->get_square_api(), $this->get_request()->get_square_api_method(), $this->get_request()->get_square_api_args() );
+
+			// calculate request duration
+			$this->request_duration = round( microtime( true ) - $start_time, 5 );
+
+			// parse & validate response
+			$response = $this->handle_response( $response );
+
+		} catch ( \Exception $e ) {
+
+			// alert other actors that a request has been made
+			$this->broadcast_request();
+
+			throw $e;
+		}
+
+		return $response;
+	}
+
+
+	/**
+	 * Handles and parses the response.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array|\WP_Error $response response data
+	 * @throws \Exception
+	 * @return API_Response|object request class instance that implements API_Request
+	 */
+	protected function handle_response( $response ) {
+		// parse the response body and tie it to the request
+		$this->response = $this->get_parsed_response( $this->raw_response_body );
+
+		// allow child classes to validate response after parsing -- this is useful
+		// for checking error codes/messages included in a parsed response
+		$this->do_post_parse_response_validation();
+
+		// fire do_action() so other actors can act on request/response data,
+		// primarily used for logging
+		$this->broadcast_request();
+
+		return $this->response;
+	}
+
+
+	/**
+	 * Validates the response data after it's been parsed.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
+	protected function do_post_parse_response_validation() {
+
+		if ( ! $this->get_response()->has_errors() ) {
+			return true;
+		}
+
+		$errors = array();
+
+		/** @var \Square\Models\Error $error */
+		foreach ( $this->get_response()->get_errors() as $error ) {
+			$error_code = $error->getCode();
+			if ( empty( $error_code ) ) {
+				continue;
+			}
+
+			$errors[] = trim( "[{$error_code}] {$error->getDetail()}" );
+
+			// Last attempt to refresh access token.
+			if ( in_array( $error_code, array( 'ACCESS_TOKEN_EXPIRED', 'UNAUTHORIZED' ), true ) ) {
+				if ( 'ACCESS_TOKEN_EXPIRED' === $error_code ) {
+					$this->get_plugin()->log( 'Access Token Expired, attempting a refresh.' );
+				} else {
+					$this->get_plugin()->log( 'Authorization error occurred, attempting a refresh.' );
+				}
+
+				$this->get_plugin()->get_connection_handler()->refresh_connection();
+
+				$failure_value = get_option( 'wc_square_refresh_failed', 'yes' );
+
+				if ( empty( $failure_value ) ) {
+					// Successfully refreshed on the last attempt
+					$this->get_plugin()->log( 'Connection successfully refreshed.' );
+					return true;
+				}
+			}
+
+			// if the error indicates that access token is bad, disconnect the plugin to prevent further attempts
+			if ( in_array( $error_code, array( 'ACCESS_TOKEN_EXPIRED', 'ACCESS_TOKEN_REVOKED', 'UNAUTHORIZED' ), true ) ) {
+				$this->get_plugin()->get_connection_handler()->disconnect();
+				$this->get_plugin()->log( 'Disconnected due to invalid authorization. Please try connecting again.' );
+			}
+		}
+
+		// At this point we could not validate the response and assume a failed attempt.
+		throw new \Exception( esc_html( implode( ' | ', $errors ) ) );
+	}
+
+	/**
+	 * Get currency from Square order with fallback to store currency.
+	 *
+	 * @param \Square\Models\Order $square_order Square order object.
+	 * @return string Currency code.
+	 */
+	private function get_square_order_currency_or_store_default( $square_order ) {
+		$total_money = $square_order->getTotalMoney();
+
+		return $total_money ? $total_money->getCurrency() : get_woocommerce_currency();
+	}
+
+	/**
+	 * Performs a remote request with the Square API class.
+	 *
+	 * Note: This method handles both standard SDK methods and special cases like calculateOrder.
+	 * The Square PHP SDK's CalculateOrderRequest only supports order and proposed_rewards (loyalty).
+	 * We need to send proposed_discount_codes (discount code IDs), so we handle calculateOrder
+	 * as a special case using direct HTTP to maintain consistency with the plugin's request/response pattern.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param Object $square_api the square API class instance
+	 * @param string $method the class method to call
+	 * @param array $args the args to send with the method call
+	 * @throws \Exception
+	 */
+	protected function do_square_request( $square_api, $method, $args ) {
+		// Handle calculateOrder as a special case: we need to send proposed_discount_codes,
+		// which the SDK's CalculateOrderRequest does not support (it only has order and proposed_rewards).
+		if ( 'calculateOrder' === $method ) {
+			// Get the request object to access stored data (square_order, proposed_discount_codes, etc.).
+			$request = $this->get_request();
+
+			// Get Square order and proposed discount codes from request object.
+			$square_order            = $request->square_order;
+			$proposed_discount_codes = $request->proposed_discount_codes;
+
+			// Convert Square Order object to array for JSON encoding.
+			// The Square SDK Order object implements JsonSerializable.
+			$order_data = $square_order->jsonSerialize();
+
+			// Build request body.
+			$request_body = array(
+				'order' => $order_data,
+			);
+
+			// Add proposed discount codes if provided.
+			// These are the discount code IDs that Square will use to calculate the order.
+			if ( ! empty( $proposed_discount_codes ) ) {
+				$proposed_discount_codes_array = array();
+				foreach ( $proposed_discount_codes as $discount_code_id ) {
+					if ( ! empty( $discount_code_id ) ) {
+						$proposed_discount_codes_array[] = array(
+							'id' => $discount_code_id,
+						);
+					}
+				}
+
+				if ( ! empty( $proposed_discount_codes_array ) ) {
+					$request_body['proposed_discount_codes'] = $proposed_discount_codes_array;
+				}
+			}
+
+			// Make direct HTTP request via wrapper (SDK's CalculateOrderRequest does not support proposed_discount_codes).
+			$result = Coupon_Utility::square_api_post( 'orders/calculate', $request_body );
+
+			if ( is_wp_error( $result ) ) {
+				$error_message = $result->get_error_message();
+				$error_code    = $result->get_error_code();
+				$this->get_plugin()->log(
+					/* translators: %1$s: error code, %2$s: error message */
+					sprintf( __( 'Square CalculateOrder API error [%1$s]: %2$s', 'woocommerce-square' ), ( $error_code ? $error_code : 'unknown' ), $error_message ),
+					'square-coupons'
+				);
+				throw new \Exception( esc_html__( 'We couldn\'t apply the discount. Please try again later.', 'woocommerce-square' ) );
+			}
+
+			$data = isset( $result['body'] ) ? $result['body'] : array();
+
+			if ( empty( $data['order'] ) ) {
+				throw new \Exception( 'Square API did not return order data.' );
+			}
+
+			// Store raw response data in request object for later access.
+			// This is needed when return_raw_response is true, as the raw JSON contains
+			// per-line-item discount details that aren't easily accessible from the Order object.
+			$request->raw_calculate_order_response = $data['order'];
+
+			// Update the original Square Order object with calculated values from the response.
+			// This preserves all line items, taxes, etc. from the original order.
+			// and only updates the calculated totals (total_money, net_amounts, version).
+			$calculated_order_data = $data['order'];
+
+			// Update total_money from response (this is the key calculated value).
+			if ( isset( $calculated_order_data['total_money'] ) ) {
+				$total_money = new \Square\Models\Money();
+				if ( isset( $calculated_order_data['total_money']['amount'] ) ) {
+					$total_money->setAmount( $calculated_order_data['total_money']['amount'] );
+				}
+				if ( isset( $calculated_order_data['total_money']['currency'] ) ) {
+					$total_money->setCurrency( $calculated_order_data['total_money']['currency'] );
+				} else {
+					$total_money->setCurrency( $this->get_square_order_currency_or_store_default( $square_order ) );
+				}
+				$square_order->setTotalMoney( $total_money );
+			}
+
+			// Update version from response if provided.
+			if ( isset( $calculated_order_data['version'] ) ) {
+				$square_order->setVersion( $calculated_order_data['version'] );
+			}
+
+			// Update net_amounts if provided in response.
+			if ( isset( $calculated_order_data['net_amounts'] ) && isset( $calculated_order_data['net_amounts']['total_money'] ) ) {
+				$net_amounts = new \Square\Models\OrderMoneyAmounts();
+				$net_total   = new \Square\Models\Money();
+				if ( isset( $calculated_order_data['net_amounts']['total_money']['amount'] ) ) {
+					$net_total->setAmount( $calculated_order_data['net_amounts']['total_money']['amount'] );
+				}
+				if ( isset( $calculated_order_data['net_amounts']['total_money']['currency'] ) ) {
+					$net_total->setCurrency( $calculated_order_data['net_amounts']['total_money']['currency'] );
+				} else {
+					$net_total->setCurrency( $this->get_square_order_currency_or_store_default( $square_order ) );
+				}
+				$net_amounts->setTotalMoney( $net_total );
+				$square_order->setNetAmounts( $net_amounts );
+			}
+
+			// Set response data for the response handler.
+			// The response handler expects raw_response_body to contain the result.
+			$this->raw_response_body = $square_order;
+			$this->response_code     = 200;
+
+			// Return a mock response object to satisfy the response handling flow.
+			// The actual response data is already set in raw_response_body above.
+			$mock_response             = new \stdClass();
+			$mock_response->result     = $square_order;
+			$mock_response->statusCode = 200; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			$mock_response->isSuccess  = true; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+
+			return $mock_response;
+		}
+
+		// Standard SDK method handling for all other API methods.
+		if ( ! is_callable( array( $square_api, $method ) ) ) {
+			throw new \Exception( 'Invalid API method' );
+		}
+
+		// perform the request
+		$response = call_user_func_array( array( $square_api, $method ), $args );
+
+		if ( $response instanceof \Square\Http\ApiResponse ) {
+			$this->response_code    = $response->getStatusCode();
+			$this->response_headers = $response->getHeaders();
+
+			if ( $response->isSuccess() ) {
+				$this->raw_response_body = $response->getResult();
+			} else {
+				$this->raw_response_body = $response->getErrors();
+			}
+		}
+	}
+
+
+	/**
+	 * Gets the main plugin instance.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return \WooCommerce\Square\Plugin
+	 */
+	public function get_plugin() {
+
+		return wc_square();
+	}
+}
