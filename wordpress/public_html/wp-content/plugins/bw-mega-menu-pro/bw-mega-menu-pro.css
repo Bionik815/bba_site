@@ -282,3 +282,64 @@
     gap: 6px;
   }
 }
+
+/* ---------- DTF Builder header button (header-html-3) ---------- */
+
+.bw-dtf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #8d5b2c;
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 0.86rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.62rem 1.15rem;
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(141, 91, 44, 0.35);
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bw-dtf-btn:hover,
+.bw-dtf-btn:focus-visible {
+  background: #7a4c22;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(141, 91, 44, 0.45);
+}
+
+/* Compact header buttons on phones so CS | logo | DTF fits one row */
+@media (max-width: 540px) {
+  .bw-mm__trigger {
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    padding: 0.55rem 0.35rem calc(0.55rem - 3px);
+    gap: 0.25rem;
+  }
+
+  .bw-dtf-btn {
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    padding: 0.5rem 0.7rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .bw-mm__trigger {
+    font-size: 0.6rem;
+    padding: 0.5rem 0.25rem calc(0.5rem - 3px);
+  }
+
+  .bw-dtf-btn {
+    font-size: 0.58rem;
+    padding: 0.45rem 0.55rem;
+  }
+
+  .ast-header-break-point .site-header .custom-logo {
+    max-width: 92px;
+    height: auto;
+  }
+}
