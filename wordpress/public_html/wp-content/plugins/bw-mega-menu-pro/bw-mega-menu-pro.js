@@ -2,17 +2,19 @@
     'use strict';
 
     function initMegaMenu(nav) {
-        var tabs = Array.prototype.slice.call(nav.querySelectorAll('[data-bw-mm-tab]'));
+        var trigger = nav.querySelector('[data-bw-mm-trigger]');
         var panel = nav.querySelector('[data-bw-mm-panel]');
+        var cats = Array.prototype.slice.call(nav.querySelectorAll('[data-bw-mm-tab]'));
         var groups = Array.prototype.slice.call(nav.querySelectorAll('[data-bw-mm-group]'));
-        if (!tabs.length || !panel) {
+        if (!trigger || !panel || !cats.length) {
             return;
         }
 
         var hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
         var openTimer = null;
         var closeTimer = null;
-        var activeGroup = null;
+        var isOpen = false;
+        var activeGroup = cats[0].getAttribute('data-bw-mm-tab');
 
         function clearTimers() {
             if (openTimer) { clearTimeout(openTimer); openTimer = null; }
@@ -21,28 +23,31 @@
 
         function showGroup(groupId) {
             activeGroup = groupId;
-            panel.hidden = false;
-            nav.classList.add('is-open');
-
             groups.forEach(function (section) {
                 section.hidden = section.getAttribute('data-bw-mm-group') !== groupId;
             });
-
-            tabs.forEach(function (tab) {
-                var isActive = tab.getAttribute('data-bw-mm-tab') === groupId;
-                tab.classList.toggle('is-active', isActive);
-                tab.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            cats.forEach(function (cat) {
+                var isActive = cat.getAttribute('data-bw-mm-tab') === groupId;
+                cat.classList.toggle('is-active', isActive);
+                cat.setAttribute('aria-expanded', isActive ? 'true' : 'false');
             });
         }
 
+        function openPanel() {
+            isOpen = true;
+            panel.hidden = false;
+            nav.classList.add('is-open');
+            trigger.classList.add('is-active');
+            trigger.setAttribute('aria-expanded', 'true');
+            showGroup(activeGroup);
+        }
+
         function closePanel() {
-            activeGroup = null;
+            isOpen = false;
             panel.hidden = true;
             nav.classList.remove('is-open');
-            tabs.forEach(function (tab) {
-                tab.classList.remove('is-active');
-                tab.setAttribute('aria-expanded', 'false');
-            });
+            trigger.classList.remove('is-active');
+            trigger.setAttribute('aria-expanded', 'false');
         }
 
         function scheduleClose() {
@@ -50,37 +55,44 @@
             closeTimer = setTimeout(closePanel, 180);
         }
 
-        tabs.forEach(function (tab) {
-            var groupId = tab.getAttribute('data-bw-mm-tab');
+        trigger.addEventListener('click', function () {
+            clearTimers();
+            if (isOpen) {
+                closePanel();
+            } else {
+                openPanel();
+            }
+        });
 
-            tab.addEventListener('click', function () {
-                clearTimers();
-                if (activeGroup === groupId) {
-                    closePanel();
-                } else {
-                    showGroup(groupId);
-                }
-            });
+        trigger.addEventListener('mouseenter', function () {
+            if (!hoverMedia.matches) {
+                return;
+            }
+            clearTimers();
+            if (!isOpen) {
+                openTimer = setTimeout(openPanel, 80);
+            }
+        });
 
-            tab.addEventListener('mouseenter', function () {
-                if (!hoverMedia.matches) {
-                    return;
-                }
-                clearTimers();
-                // Small intent delay only when opening fresh; switching
-                // between tabs while open is instant.
-                if (activeGroup) {
-                    showGroup(groupId);
-                } else {
-                    openTimer = setTimeout(function () { showGroup(groupId); }, 80);
-                }
-            });
-
-            tab.addEventListener('mouseleave', function () {
-                if (!hoverMedia.matches) {
-                    return;
-                }
+        trigger.addEventListener('mouseleave', function () {
+            if (hoverMedia.matches) {
                 scheduleClose();
+            }
+        });
+
+        cats.forEach(function (cat) {
+            var groupId = cat.getAttribute('data-bw-mm-tab');
+
+            cat.addEventListener('click', function () {
+                clearTimers();
+                showGroup(groupId);
+            });
+
+            cat.addEventListener('mouseenter', function () {
+                if (hoverMedia.matches) {
+                    clearTimers();
+                    showGroup(groupId);
+                }
             });
         });
 
@@ -97,13 +109,14 @@
         });
 
         document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape' && activeGroup) {
+            if (event.key === 'Escape' && isOpen) {
                 closePanel();
+                trigger.focus();
             }
         });
 
         document.addEventListener('click', function (event) {
-            if (activeGroup && !nav.contains(event.target)) {
+            if (isOpen && !nav.contains(event.target)) {
                 closePanel();
             }
         });
@@ -112,7 +125,7 @@
         // leaves the whole nav.
         nav.addEventListener('focusout', function () {
             setTimeout(function () {
-                if (activeGroup && !nav.contains(document.activeElement)) {
+                if (isOpen && !nav.contains(document.activeElement)) {
                     closePanel();
                 }
             }, 0);

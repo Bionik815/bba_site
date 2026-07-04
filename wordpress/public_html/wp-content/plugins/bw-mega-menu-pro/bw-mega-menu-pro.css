@@ -1,4 +1,4 @@
-/* BW Mega Menu v4.0.0 — Bunker-style header tab bar + full-width panel */
+/* BW Mega Menu v4.1.0 — single CLIENT STORES trigger; category tabs inside the panel */
 
 .bw-mm {
   --bw-ink: #1f2a44;
@@ -9,60 +9,35 @@
   --bw-surface-hover: #f2f6fa;
   --bw-accent: #8d5b2c;
   position: static;
-  display: block;
-  width: 100%;
+  display: inline-block;
   min-width: 0;
   max-width: 100vw;
 }
 
-/* ---------- Tab bar ---------- */
+/* ---------- Header trigger ---------- */
 
-.bw-mm__tabs {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  gap: 2px;
-  overflow-x: auto;
-  max-width: 100%;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.bw-mm__tabs::-webkit-scrollbar {
-  display: none;
-}
-
-.bw-mm__tab-item {
-  margin: 0;
-  flex: 0 0 auto;
-}
-
-.bw-mm__tab {
+.bw-mm__trigger {
   appearance: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.45rem;
   background: transparent;
   border: 0;
   border-bottom: 3px solid transparent;
   color: var(--bw-ink);
   font-weight: 800;
-  font-size: 0.86rem;
-  letter-spacing: 0.07em;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.9rem 0.9rem calc(0.9rem - 3px);
+  padding: 0.9rem 1rem calc(0.9rem - 3px);
   cursor: pointer;
   white-space: nowrap;
-  text-decoration: none;
   transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 }
 
-.bw-mm__tab:hover,
-.bw-mm__tab:focus-visible,
-.bw-mm__tab.is-active {
+.bw-mm__trigger:hover,
+.bw-mm__trigger:focus-visible,
+.bw-mm__trigger.is-active {
   color: var(--bw-accent);
   border-bottom-color: var(--bw-accent);
   background: var(--bw-surface-hover);
@@ -72,12 +47,8 @@
   transition: transform 0.15s ease;
 }
 
-.bw-mm__tab.is-active .bw-mm__caret {
+.bw-mm__trigger.is-active .bw-mm__caret {
   transform: rotate(180deg);
-}
-
-.bw-mm__tab--link {
-  border-bottom-color: transparent;
 }
 
 /* ---------- Full-width panel ---------- */
@@ -93,14 +64,74 @@
   border-bottom: 1px solid var(--bw-line);
   box-shadow: 0 24px 48px rgba(15, 23, 42, 0.16);
   z-index: 9998;
-  max-height: min(72vh, 640px);
+  max-height: min(74vh, 680px);
   overflow-y: auto;
 }
+
+/* ---------- Category tabs inside the panel ---------- */
+
+.bw-mm__cats-bar {
+  position: sticky;
+  top: 0;
+  background: var(--bw-surface);
+  border-bottom: 1px solid var(--bw-line-soft);
+  z-index: 2;
+}
+
+.bw-mm__cats {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 32px;
+  max-width: 1280px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  overflow-x: auto;
+  max-width: min(1280px, 100%);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bw-mm__cats::-webkit-scrollbar {
+  display: none;
+}
+
+.bw-mm__cat-item {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.bw-mm__cat {
+  appearance: none;
+  display: inline-block;
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  color: var(--bw-ink-soft);
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.85rem 0.85rem calc(0.85rem - 3px);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.bw-mm__cat:hover,
+.bw-mm__cat:focus-visible,
+.bw-mm__cat.is-active {
+  color: var(--bw-accent);
+  border-bottom-color: var(--bw-accent);
+}
+
+/* ---------- Group content ---------- */
 
 .bw-mm__panel-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 28px 32px 32px;
+  padding: 22px 32px 30px;
 }
 
 .bw-mm__group-head {
@@ -218,13 +249,22 @@
 /* ---------- Mobile ---------- */
 
 @media (max-width: 920px) {
-  .bw-mm__tab {
-    font-size: 0.78rem;
+  .bw-mm__trigger {
+    font-size: 0.85rem;
+    padding: 0.7rem 0.8rem calc(0.7rem - 3px);
+  }
+
+  .bw-mm__cats {
+    padding: 0 16px;
+  }
+
+  .bw-mm__cat {
+    font-size: 0.75rem;
     padding: 0.7rem 0.7rem calc(0.7rem - 3px);
   }
 
   .bw-mm__panel-inner {
-    padding: 18px 16px 22px;
+    padding: 16px 16px 22px;
   }
 
   .bw-mm__grid {
