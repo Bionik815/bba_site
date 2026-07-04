@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BW Mega Menu PRO (Creators + Groups)
  * Description: CPT “Creators” (logo + URL) + taxonomy “Groups” (Browse All URL). Shortcode [bw_mega_menu label="APPAREL STORES" all_link="/all-stores"] outputs a Bunker-style header tab bar: one tab per group, each opening a full-width panel of client logo cards.
- * Version: 4.1.0
+ * Version: 4.2.0
  * License: GPL-2.0+
  */
 if (!defined('ABSPATH')) exit;
@@ -179,12 +179,12 @@ class BW_Mega_Menu_Pro {
 
   /* ---------- Assets + Shortcode ---------- */
   public function register_assets(){
-    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '4.1.0');
+    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '4.2.0');
     // Astra safety: the panel is positioned against the header bar row that
     // hosts the shortcode, so those bars must allow overflow and anchor it.
     $astra = ".ast-primary-header-bar, .main-header-bar, .ast-below-header-bar { overflow:visible!important } .site-header, .ast-primary-header-bar, .ast-below-header-bar { position:relative; z-index:30 } .ast-builder-html-element { min-width:0; max-width:100% }";
     wp_add_inline_style('bw-mega-menu-pro',$astra);
-    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '4.1.0', true);
+    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '4.2.0', true);
   }
 
   public function shortcode($atts){
@@ -276,14 +276,13 @@ class BW_Mega_Menu_Pro {
                 <?php if ($creators): foreach($creators as $c):
                   $u = $this->resolve_creator_url((int)$c->ID);
                   $name = get_the_title($c->ID);
-                  $thumb_html = get_the_post_thumbnail($c->ID,'bw_logo',['alt'=>$name, 'class'=>'bwmm-img', 'loading'=>'lazy']);
+                  $thumb_html = get_the_post_thumbnail($c->ID,'medium',['alt'=>$name, 'class'=>'bwmm-img', 'loading'=>'lazy']);
                   ?>
                   <li class="bw-mm__card-item">
-                    <a class="bwmm-card" href="<?php echo esc_url($u); ?>" aria-label="<?php echo esc_attr($name); ?>">
+                    <a class="bwmm-card" href="<?php echo esc_url($u); ?>" aria-label="<?php echo esc_attr($name); ?>" title="<?php echo esc_attr($name); ?>">
                       <div class="bwmm-tile">
                         <?php echo $thumb_html ?: '<span class="bw-logo-text">'.esc_html($name).'</span>'; ?>
                       </div>
-                      <div class="bwmm-caption"><?php echo esc_html($name); ?></div>
                     </a>
                   </li>
                 <?php endforeach; else: ?>

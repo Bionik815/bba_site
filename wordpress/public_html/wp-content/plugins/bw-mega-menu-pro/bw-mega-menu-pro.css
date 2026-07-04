@@ -161,23 +161,29 @@
   text-decoration: underline;
 }
 
-/* ---------- Logo card grid ---------- */
+/* ---------- Logo banner grid ----------
+   Fixed-size tiles (banner proportions), whole image always visible via
+   object-fit: contain, no card chrome. Flex rows wrap as the page narrows. */
 
 .bw-mm__grid {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 24px;
+  align-items: flex-start;
 }
 
 .bw-mm__card-item {
   margin: 0;
+  flex: 0 0 auto;
+  width: 250px;
+  max-width: calc(50vw - 28px);
 }
 
 .bw-mm__card-item--empty {
-  grid-column: 1 / -1;
+  width: 100%;
   color: var(--bw-ink-soft);
   padding: 12px 0;
 }
@@ -185,36 +191,32 @@
 .bwmm-card {
   display: block;
   text-decoration: none;
-  border: 1px solid var(--bw-line-soft);
-  border-radius: 14px;
-  background: #fff;
+  border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
 
 .bwmm-card:hover,
 .bwmm-card:focus-visible {
   transform: translateY(-3px);
-  border-color: var(--bw-line);
-  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.14);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
 }
 
 .bwmm-tile {
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 11 / 6;
-  padding: 12px;
-  background: var(--bw-surface-hover);
+  aspect-ratio: 25 / 14;
+  width: 100%;
 }
 
 .bwmm-tile img,
 .bwmm-img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  border-radius: 10px;
 }
 
 .bw-mm.is-gray .bwmm-tile img {
@@ -235,15 +237,15 @@
   letter-spacing: 0.03em;
 }
 
-.bwmm-caption {
-  padding: 8px 10px 10px;
-  text-align: center;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--bw-ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.bw-logo-text {
+  padding: 10px;
+  border: 1px dashed var(--bw-line);
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ---------- Mobile ---------- */
@@ -268,8 +270,11 @@
   }
 
   .bw-mm__grid {
-    grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
-    gap: 10px;
+    gap: 12px 14px;
+  }
+
+  .bw-mm__card-item {
+    width: 160px;
   }
 
   .bw-mm__group-head {
