@@ -59,6 +59,7 @@
         var canvasEmpty = form.querySelector('.bw-gsb-canvas-empty');
         var uploadList = form.querySelector('[data-bw-gsb-upload-list]');
         var rotateButtons = form.querySelectorAll('[data-bw-gsb-rotate]');
+        var widthPresetButtons = form.querySelectorAll('[data-bw-gsb-width-preset]');
         var removeButton = form.querySelector('[data-bw-gsb-remove]');
 
         var state = {
@@ -155,16 +156,16 @@
                 image.src = item.url;
                 image.alt = item.label;
 
-                var label = document.createElement('div');
-                label.className = 'bw-gsb-canvas-item-label';
-                label.textContent = item.label;
+                var measurement = document.createElement('div');
+                measurement.className = 'bw-gsb-canvas-item-measurement';
+                measurement.textContent = formatInches(item.width) + ' x ' + formatInches(item.height);
 
                 var handle = document.createElement('div');
                 handle.className = 'bw-gsb-resize-handle';
                 handle.dataset.resizeHandle = '1';
 
                 node.appendChild(image);
-                node.appendChild(label);
+                node.appendChild(measurement);
                 node.appendChild(handle);
                 canvas.appendChild(node);
             });
@@ -212,7 +213,7 @@
                 return;
             }
 
-            var count = fileInput.files ? fileInput.files.length : 0;
+            var count = state.uploads.length;
             if (!count) {
                 fileSummary.textContent = 'No files selected yet.';
                 return;
@@ -228,6 +229,12 @@
 
         function nextId(prefix) {
             return prefix + '_' + Math.random().toString(36).slice(2, 10);
+        }
+
+        function formatInches(value) {
+            var amount = Number(value || 0);
+            var rounded = Math.round(amount * 100) / 100;
+            return rounded.toFixed(2).replace(/\.00$/, '') + 'in';
         }
 
         function setActive(id) {
@@ -271,6 +278,20 @@
             });
         }
 
+        function syncInputFiles() {
+            if (!fileInput || typeof DataTransfer === 'undefined') {
+                return;
+            }
+
+            var transfer = new DataTransfer();
+            state.uploads.forEach(function (upload) {
+                if (upload.file) {
+                    transfer.items.add(upload.file);
+                }
+            });
+            fileInput.files = transfer.files;
+        }
+
         function addUploadToCanvas(uploadId) {
             if (!state.sheet) {
                 return;
@@ -311,10 +332,8 @@
         }
 
         function readUploads() {
-            updateFileSummary();
-            state.uploads = [];
-
             if (!fileInput || !fileInput.files) {
+                updateFileSummary();
                 renderUploadCards();
                 return;
             }
@@ -324,20 +343,32 @@
                     return;
                 }
 
+                var duplicate = state.uploads.some(function (entry) {
+                    return entry.name === file.name && entry.file && entry.file.size === file.size && entry.file.lastModified === file.lastModified;
+                });
+                if (duplicate) {
+                    return;
+                }
+
                 var url = URL.createObjectURL(file);
                 var image = new Image();
                 image.onload = function () {
                     state.uploads.push({
                         id: nextId('upload_' + index),
                         name: file.name,
+                        file: file,
                         url: url,
                         width: image.naturalWidth || 0,
                         height: image.naturalHeight || 0
                     });
+                    syncInputFiles();
+                    updateFileSummary();
                     renderUploadCards();
                 };
                 image.src = url;
             });
+
+            fileInput.value = '';
         }
 
         function pointerPoint(event) {
@@ -419,6 +450,33 @@
             renderItems();
         }
 
+        function applyWidthPreset(width) {
+            var item = activeItem();
+            if (!item || !state.sheet) {
+                return;
+            }
+
+            var targetWidth = Number(width || 0);
+            if (targetWidth <= 0) {
+                return;
+            }
+
+            var ratio = item.height / Math.max(item.width, 0.01);
+            var nextWidth = clamp(targetWidth, 0.75, state.sheet.width);
+            var nextHeight = Math.max(0.75, nextWidth * ratio);
+
+            if (nextHeight > state.sheet.height) {
+                nextHeight = state.sheet.height;
+                nextWidth = nextHeight / Math.max(ratio, 0.01);
+            }
+
+            item.width = Number(nextWidth.toFixed(2));
+            item.height = Number(nextHeight.toFixed(2));
+            item.x = clamp(item.x, 0, Math.max(0, state.sheet.width - item.width));
+            item.y = clamp(item.y, 0, Math.max(0, state.sheet.height - item.height));
+            renderItems();
+        }
+
         function removeSelected() {
             if (!state.activeId) {
                 return;
@@ -447,6 +505,12 @@
         rotateButtons.forEach(function (button) {
             button.addEventListener('click', function () {
                 rotateSelected(Number(button.getAttribute('data-bw-gsb-rotate') || 0));
+            });
+        });
+
+        widthPresetButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                applyWidthPreset(Number(button.getAttribute('data-bw-gsb-width-preset') || 0));
             });
         });
 

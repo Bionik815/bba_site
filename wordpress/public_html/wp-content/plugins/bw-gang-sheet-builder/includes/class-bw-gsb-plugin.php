@@ -273,6 +273,17 @@ class BW_GSB_Plugin
                     </div>
                 </section>
 
+                <section class="bw-gsb-card bw-gsb-library">
+                    <div class="bw-gsb-library-head">
+                        <div>
+                            <p class="bw-gsb-kicker"><?php esc_html_e('Artwork Library', 'bw-gsb'); ?></p>
+                            <h3><?php esc_html_e('Uploaded Files Ready For Placement', 'bw-gsb'); ?></h3>
+                        </div>
+                        <p><?php esc_html_e('Upload files above, then use this library to add them to the gang sheet as many times as needed.', 'bw-gsb'); ?></p>
+                    </div>
+                    <div class="bw-gsb-upload-list" data-bw-gsb-upload-list></div>
+                </section>
+
                 <section class="bw-gsb-card bw-gsb-builder">
                     <div class="bw-gsb-builder-head">
                         <div>
@@ -285,11 +296,14 @@ class BW_GSB_Plugin
                     </div>
                     <div class="bw-gsb-builder-tools">
                         <div class="bw-gsb-tool-group">
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="4"><?php esc_html_e('4in Wide', 'bw-gsb'); ?></button>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="10"><?php esc_html_e('10in Wide', 'bw-gsb'); ?></button>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="12"><?php esc_html_e('12in Wide', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-rotate="-15"><?php esc_html_e('Rotate -15°', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-rotate="15"><?php esc_html_e('Rotate +15°', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-remove><?php esc_html_e('Remove Selected', 'bw-gsb'); ?></button>
                         </div>
-                        <p class="bw-gsb-help"><?php esc_html_e('Tip: select an artwork on the canvas, then drag or use the lower-right handle to resize it.', 'bw-gsb'); ?></p>
+                        <p class="bw-gsb-help"><?php esc_html_e('Tip: select an artwork on the canvas, then drag, resize, or use a preset width button. Each artwork shows its live size in inches.', 'bw-gsb'); ?></p>
                     </div>
                     <div class="bw-gsb-canvas-shell">
                         <div class="bw-gsb-canvas" data-bw-gsb-canvas>
@@ -299,7 +313,6 @@ class BW_GSB_Plugin
                             </div>
                         </div>
                     </div>
-                    <div class="bw-gsb-upload-list" data-bw-gsb-upload-list></div>
                 </section>
 
                 <section class="bw-gsb-actions">

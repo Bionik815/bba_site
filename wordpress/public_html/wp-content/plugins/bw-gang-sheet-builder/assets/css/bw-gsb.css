@@ -124,6 +124,20 @@
     align-items: start;
 }
 
+.bw-gsb-library-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 18px;
+}
+
+.bw-gsb-library-head p {
+    max-width: 420px;
+    margin: 0;
+    color: #6b7280;
+}
+
 .bw-gsb-builder-tools {
     display: flex;
     justify-content: space-between;
@@ -225,12 +239,13 @@
     pointer-events: none;
 }
 
-.bw-gsb-canvas-item-label {
+.bw-gsb-canvas-item-measurement {
     position: absolute;
-    left: 8px;
-    top: 8px;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
     max-width: calc(100% - 16px);
-    padding: 4px 8px;
+    padding: 4px 10px;
     border-radius: 999px;
     background: rgba(20, 33, 61, 0.8);
     color: #fff;
@@ -461,6 +476,7 @@
     .bw-gsb-actions,
     .bw-gsb-builder-head,
     .bw-gsb-builder-tools,
+    .bw-gsb-library-head,
     .bw-gsb-admin-grid,
     .bw-gsb-admin-grid-wide {
         grid-template-columns: 1fr;
