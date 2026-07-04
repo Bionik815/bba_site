@@ -71,6 +71,7 @@
         var itemPanelHeight = form.querySelector('[data-bw-gsb-item-height]');
         var itemPanelRotation = form.querySelector('[data-bw-gsb-item-rotation]');
         var itemPanelWarnings = form.querySelector('[data-bw-gsb-item-warnings]');
+        var buttonPrice = form.querySelector('[data-bw-gsb-button-price]');
 
         var MIN_ITEM_INCHES = 0.5;
 
@@ -394,6 +395,10 @@
 
             if (dimensionsEl) {
                 dimensionsEl.textContent = state.sheet.width + '" x ' + state.sheet.height + '"';
+            }
+
+            if (buttonPrice) {
+                buttonPrice.textContent = '- ' + money(state.sheet.price, config.currencySymbol);
             }
 
             sizeCanvas();
@@ -870,6 +875,32 @@
         });
 
         document.addEventListener('keydown', handleKeydown);
+
+        form.addEventListener('submit', function (event) {
+            if (!state.items.length) {
+                event.preventDefault();
+                window.alert(config.messages.needArtwork || 'Add at least one artwork to the sheet first.');
+                return;
+            }
+
+            computeWarnings();
+
+            var hasOffSheet = state.items.some(function (item) {
+                return item.offSheet;
+            });
+            if (hasOffSheet) {
+                event.preventDefault();
+                window.alert(config.messages.blockOffSheet || 'Some artwork extends past the sheet edge. Fix it before checking out.');
+                return;
+            }
+
+            var hasSoftIssues = state.items.some(function (item) {
+                return item.overlapping || dpiLevel(effectiveDpi(item)) === 'low';
+            });
+            if (hasSoftIssues && !window.confirm(config.messages.confirmIssues || 'Some artwork has quality warnings. Continue?')) {
+                event.preventDefault();
+            }
+        });
 
         window.addEventListener('resize', function () {
             sizeCanvas();

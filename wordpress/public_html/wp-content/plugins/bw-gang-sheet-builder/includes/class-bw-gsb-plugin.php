@@ -44,6 +44,16 @@ class BW_GSB_Plugin
         add_action('admin_post_' . self::ACTION_CREATE_ORDER, [$this, 'handle_create_order']);
         add_action('admin_post_' . self::ACTION_GENERATE_PRINT_FILE, [$this, 'handle_generate_print_file']);
         add_action('woocommerce_admin_order_data_after_order_details', [$this, 'render_order_submission_files']);
+
+        // Cart/checkout flow: pay first, review before production.
+        add_action('woocommerce_before_calculate_totals', [$this, 'apply_cart_item_pricing'], 20);
+        add_filter('woocommerce_get_item_data', [$this, 'render_cart_item_data'], 10, 2);
+        add_filter('woocommerce_cart_item_thumbnail', [$this, 'cart_item_thumbnail'], 10, 3);
+        add_action('woocommerce_checkout_create_order_line_item', [$this, 'add_order_line_item_meta'], 10, 3);
+        add_action('woocommerce_checkout_order_processed', [$this, 'link_order_to_submissions'], 10, 3);
+        add_action('woocommerce_store_api_checkout_order_processed', [$this, 'link_store_api_order']);
+        add_action('woocommerce_order_status_processing', [$this, 'mark_submissions_paid']);
+        add_action('woocommerce_order_status_completed', [$this, 'mark_submissions_paid']);
     }
 
     public static function activate()
@@ -195,6 +205,9 @@ class BW_GSB_Plugin
                     'dpiUnknown' => __('DPI unknown', 'bw-gsb'),
                     'warnOffSheet' => __('This artwork extends past the sheet edge and would be cut off.', 'bw-gsb'),
                     'warnOverlap' => __('This artwork overlaps another design on the sheet.', 'bw-gsb'),
+                    'needArtwork' => __('Add at least one artwork to the sheet before adding it to your cart.', 'bw-gsb'),
+                    'blockOffSheet' => __('Some artwork extends past the sheet edge and would be cut off. Please move or resize it before checking out.', 'bw-gsb'),
+                    'confirmIssues' => __('Heads up: some artwork overlaps another design or is below the recommended print resolution. Add to cart anyway?', 'bw-gsb'),
                 ],
             ]) . ';',
             'before'
@@ -219,13 +232,13 @@ class BW_GSB_Plugin
                 <section class="bw-gsb-hero">
                     <div>
                         <p class="bw-gsb-kicker"><?php esc_html_e('DTF Gang Sheet Builder', 'bw-gsb'); ?></p>
-                        <h2><?php esc_html_e('Build Your Sheet And Send It For Review', 'bw-gsb'); ?></h2>
-                        <p><?php esc_html_e('This first version is set up for fixed-size sheets, file uploads, layout planning, and manual approval before production.', 'bw-gsb'); ?></p>
+                        <h2><?php esc_html_e('Build Your Gang Sheet And Order It Online', 'bw-gsb'); ?></h2>
+                        <p><?php esc_html_e('Upload your artwork, lay out the sheet exactly how you want it, and check out right away. Our team double-checks every sheet before it goes to press.', 'bw-gsb'); ?></p>
                     </div>
                     <div class="bw-gsb-card bw-gsb-summary">
                         <div><span><?php esc_html_e('Selected Sheet', 'bw-gsb'); ?></span><strong data-bw-gsb-sheet-label><?php echo esc_html($default_sheet['label']); ?></strong></div>
-                        <div><span><?php esc_html_e('Estimated Price', 'bw-gsb'); ?></span><strong data-bw-gsb-price><?php echo esc_html($this->format_money($default_sheet['price'])); ?></strong></div>
-                        <p><?php esc_html_e('Pricing is currently configured by sheet size so we can finalize the builder flow while production rules are being confirmed.', 'bw-gsb'); ?></p>
+                        <div><span><?php esc_html_e('Price', 'bw-gsb'); ?></span><strong data-bw-gsb-price><?php echo esc_html($this->format_money($default_sheet['price'])); ?></strong></div>
+                        <p><?php esc_html_e('Flat pricing per sheet size. Fill the sheet with as many designs as fit.', 'bw-gsb'); ?></p>
                     </div>
                 </section>
 
@@ -262,23 +275,13 @@ class BW_GSB_Plugin
                     </div>
 
                     <div class="bw-gsb-card">
-                        <h3><?php esc_html_e('Customer Information', 'bw-gsb'); ?></h3>
-                        <label>
-                            <span><?php esc_html_e('Full Name', 'bw-gsb'); ?></span>
-                            <input type="text" name="customer_name" required>
-                        </label>
-                        <label>
-                            <span><?php esc_html_e('Email', 'bw-gsb'); ?></span>
-                            <input type="email" name="customer_email" required>
-                        </label>
-                        <label>
-                            <span><?php esc_html_e('Phone', 'bw-gsb'); ?></span>
-                            <input type="text" name="customer_phone">
-                        </label>
-                        <label>
-                            <span><?php esc_html_e('Company', 'bw-gsb'); ?></span>
-                            <input type="text" name="company_name">
-                        </label>
+                        <h3><?php esc_html_e('How It Works', 'bw-gsb'); ?></h3>
+                        <ol class="bw-gsb-steps">
+                            <li><?php esc_html_e('Pick your sheet size and upload PNG artwork.', 'bw-gsb'); ?></li>
+                            <li><?php esc_html_e('Place, resize, rotate, and duplicate designs until the sheet is full.', 'bw-gsb'); ?></li>
+                            <li><?php esc_html_e('Add the sheet to your cart and check out securely.', 'bw-gsb'); ?></li>
+                            <li><?php esc_html_e('We review every sheet before printing and reach out if anything needs attention.', 'bw-gsb'); ?></li>
+                        </ol>
                     </div>
                 </section>
 
@@ -349,8 +352,11 @@ class BW_GSB_Plugin
                 </section>
 
                 <section class="bw-gsb-actions">
-                    <button type="submit" class="bw-gsb-button"><?php esc_html_e('Submit For Review', 'bw-gsb'); ?></button>
-                    <p><?php esc_html_e('Submissions are stored separately from checkout so we can review and approve the layout before tying it into WooCommerce ordering.', 'bw-gsb'); ?></p>
+                    <button type="submit" class="bw-gsb-button">
+                        <?php esc_html_e('Add To Cart', 'bw-gsb'); ?>
+                        <span data-bw-gsb-button-price><?php echo esc_html('- ' . $this->format_money($default_sheet['price'])); ?></span>
+                    </button>
+                    <p><?php esc_html_e('Pay online now. Every sheet is reviewed by our team before it prints, and we will contact you if anything needs a fix.', 'bw-gsb'); ?></p>
                 </section>
             </form>
         </div>
@@ -373,6 +379,12 @@ class BW_GSB_Plugin
             wp_die(esc_html__('Invalid gang sheet size selected.', 'bw-gsb'), 400);
         }
 
+        $layout_json = $this->sanitize_layout_json($_POST['layout_json'] ?? '');
+        $layout = $this->decode_layout_json($layout_json);
+        if (empty($layout['items']) || !is_array($layout['items'])) {
+            wp_die(esc_html__('Add at least one artwork to the sheet before adding it to your cart.', 'bw-gsb'), 400);
+        }
+
         $submission = [
             'customer_name' => sanitize_text_field(wp_unslash($_POST['customer_name'] ?? '')),
             'customer_email' => sanitize_email(wp_unslash($_POST['customer_email'] ?? '')),
@@ -384,14 +396,10 @@ class BW_GSB_Plugin
             'price' => (float) $sheet['price'],
             'currency' => $settings['currency'],
             'notes' => sanitize_textarea_field(wp_unslash($_POST['notes'] ?? '')),
-            'layout_json' => $this->sanitize_layout_json($_POST['layout_json'] ?? ''),
-            'status' => 'submitted',
+            'layout_json' => $layout_json,
+            'status' => 'awaiting_payment',
             'session_key' => wp_generate_uuid4(),
         ];
-
-        if (!$submission['customer_name'] || !$submission['customer_email']) {
-            wp_die(esc_html__('Name and email are required.', 'bw-gsb'), 400);
-        }
 
         global $wpdb;
         $inserted = $wpdb->insert($this->table('submissions'), $submission);
@@ -403,14 +411,220 @@ class BW_GSB_Plugin
         $submission_id = (int) $wpdb->insert_id;
         $this->handle_uploaded_assets($submission_id);
 
-        $redirect = !empty($_POST['redirect_to']) ? esc_url_raw(wp_unslash($_POST['redirect_to'])) : home_url('/');
-        $redirect = add_query_arg([
-            'bw_gsb_notice' => 'submitted',
-            'bw_gsb_submission' => $submission_id,
-        ], $redirect);
+        if (!$this->get_submission_assets($submission_id)) {
+            $wpdb->delete($this->table('submissions'), ['id' => $submission_id]);
+            wp_die(esc_html__('Your artwork files could not be processed. Please upload PNG files and try again.', 'bw-gsb'), 400);
+        }
+
+        $redirect = $this->add_submission_to_cart($submission_id);
+
+        if (!$redirect) {
+            // WooCommerce unavailable: fall back to the review-only flow.
+            $wpdb->update($this->table('submissions'), ['status' => 'submitted'], ['id' => $submission_id]);
+            $redirect = !empty($_POST['redirect_to']) ? esc_url_raw(wp_unslash($_POST['redirect_to'])) : home_url('/');
+            $redirect = add_query_arg([
+                'bw_gsb_notice' => 'submitted',
+                'bw_gsb_submission' => $submission_id,
+            ], $redirect);
+        }
 
         wp_safe_redirect($redirect);
         exit;
+    }
+
+    /**
+     * Put a saved submission into the WooCommerce cart. Returns the cart URL
+     * on success or empty string when WooCommerce cannot take the item.
+     */
+    private function add_submission_to_cart($submission_id)
+    {
+        if (!function_exists('WC') || !function_exists('wc_load_cart')) {
+            return '';
+        }
+
+        // admin-post.php requests do not boot the frontend cart/session.
+        if (null === WC()->cart) {
+            wc_load_cart();
+        }
+
+        if (!WC()->cart) {
+            return '';
+        }
+
+        if (WC()->session && !WC()->session->has_session()) {
+            WC()->session->set_customer_session_cookie(true);
+        }
+
+        $product = $this->get_or_create_order_product();
+        if (!$product) {
+            return '';
+        }
+
+        $cart_item_key = WC()->cart->add_to_cart($product->get_id(), 1, 0, [], [
+            'bw_gsb_submission_id' => $submission_id,
+            'bw_gsb_unique_key' => wp_generate_uuid4(),
+        ]);
+
+        if (!$cart_item_key) {
+            return '';
+        }
+
+        return wc_get_cart_url();
+    }
+
+    public function apply_cart_item_pricing($cart)
+    {
+        if (!is_object($cart) || !method_exists($cart, 'get_cart')) {
+            return;
+        }
+
+        foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+            if (empty($cart_item['bw_gsb_submission_id'])) {
+                // Direct adds of the hidden gang sheet product bypass the
+                // builder; drop them so a $0 line can never be purchased.
+                $gsb_product_id = (int) get_option('bw_gsb_order_product_id', 0);
+                if ($gsb_product_id > 0 && !empty($cart_item['product_id']) && (int) $cart_item['product_id'] === $gsb_product_id) {
+                    $cart->remove_cart_item($cart_item_key);
+                }
+                continue;
+            }
+
+            $submission = $this->get_submission((int) $cart_item['bw_gsb_submission_id']);
+            if (!$submission) {
+                $cart->remove_cart_item($cart_item_key);
+                continue;
+            }
+
+            if (isset($cart_item['data']) && is_object($cart_item['data'])) {
+                $cart_item['data']->set_name(sprintf(
+                    /* translators: %s: sheet size label */
+                    __('Custom Gang Sheet (%s)', 'bw-gsb'),
+                    $this->format_dimension($submission['sheet_width']) . ' x ' . $this->format_dimension($submission['sheet_height'])
+                ));
+                $cart_item['data']->set_price((float) $submission['price']);
+            }
+        }
+    }
+
+    public function render_cart_item_data($item_data, $cart_item)
+    {
+        if (empty($cart_item['bw_gsb_submission_id'])) {
+            return $item_data;
+        }
+
+        $submission = $this->get_submission((int) $cart_item['bw_gsb_submission_id']);
+        if (!$submission) {
+            return $item_data;
+        }
+
+        $layout = $this->decode_layout_json($submission['layout_json']);
+        $item_count = !empty($layout['items']) && is_array($layout['items']) ? count($layout['items']) : 0;
+
+        $item_data[] = [
+            'key' => __('Sheet Size', 'bw-gsb'),
+            'value' => $this->format_dimension($submission['sheet_width']) . ' x ' . $this->format_dimension($submission['sheet_height']),
+        ];
+        $item_data[] = [
+            'key' => __('Artwork Placements', 'bw-gsb'),
+            'value' => (string) $item_count,
+        ];
+
+        return $item_data;
+    }
+
+    public function cart_item_thumbnail($thumbnail, $cart_item, $cart_item_key)
+    {
+        if (empty($cart_item['bw_gsb_submission_id'])) {
+            return $thumbnail;
+        }
+
+        $assets = $this->get_submission_assets((int) $cart_item['bw_gsb_submission_id']);
+        if (!$assets) {
+            return $thumbnail;
+        }
+
+        $image = wp_get_attachment_image((int) $assets[0]['attachment_id'], 'woocommerce_thumbnail');
+
+        return $image ?: $thumbnail;
+    }
+
+    public function add_order_line_item_meta($item, $cart_item_key, $values)
+    {
+        if (empty($values['bw_gsb_submission_id'])) {
+            return;
+        }
+
+        $submission_id = (int) $values['bw_gsb_submission_id'];
+        $item->add_meta_data('_bw_gsb_submission_id', $submission_id, true);
+
+        $submission = $this->get_submission($submission_id);
+        if ($submission) {
+            $item->add_meta_data(__('Sheet Size', 'bw-gsb'), $submission['sheet_code'], true);
+        }
+    }
+
+    public function link_order_to_submissions($order_id, $posted_data = null, $order = null)
+    {
+        if (!$order instanceof WC_Order) {
+            $order = wc_get_order($order_id);
+        }
+
+        if (!$order) {
+            return;
+        }
+
+        $first_submission_id = 0;
+
+        foreach ($order->get_items() as $item) {
+            $submission_id = (int) $item->get_meta('_bw_gsb_submission_id');
+            if ($submission_id <= 0) {
+                continue;
+            }
+
+            if ($first_submission_id === 0) {
+                $first_submission_id = $submission_id;
+            }
+
+            global $wpdb;
+            $wpdb->update(
+                $this->table('submissions'),
+                [
+                    'woocommerce_order_id' => $order->get_id(),
+                    'woocommerce_product_id' => (int) $item->get_product_id(),
+                    'customer_name' => trim($order->get_billing_first_name() . ' ' . $order->get_billing_last_name()),
+                    'customer_email' => $order->get_billing_email(),
+                    'customer_phone' => $order->get_billing_phone(),
+                    'company_name' => $order->get_billing_company(),
+                ],
+                ['id' => $submission_id]
+            );
+        }
+
+        if ($first_submission_id > 0) {
+            $order->update_meta_data('_bw_gsb_submission_id', $first_submission_id);
+            $order->save();
+        }
+    }
+
+    public function link_store_api_order($order)
+    {
+        if ($order instanceof WC_Order) {
+            $this->link_order_to_submissions($order->get_id(), null, $order);
+        }
+    }
+
+    public function mark_submissions_paid($order_id)
+    {
+        global $wpdb;
+        $wpdb->query(
+            $wpdb->prepare(
+                "UPDATE {$this->table('submissions')}
+                 SET status = 'paid'
+                 WHERE woocommerce_order_id = %d
+                   AND status IN ('awaiting_payment', 'submitted')",
+                $order_id
+            )
+        );
     }
 
     private function handle_uploaded_assets($submission_id)
@@ -1050,6 +1264,8 @@ class BW_GSB_Plugin
                 ],
             ],
             'statuses' => [
+                'awaiting_payment',
+                'paid',
                 'submitted',
                 'reviewing',
                 'needs_changes',
@@ -1309,19 +1525,14 @@ class BW_GSB_Plugin
         if ($product_id > 0) {
             $product = wc_get_product($product_id);
             if ($product) {
-                return $product;
+                return $this->ensure_order_product_flags($product);
             }
         }
 
         $product = new WC_Product_Simple();
         $product->set_name(__('Custom Gang Sheet', 'bw-gsb'));
-        $product->set_status('private');
-        $product->set_catalog_visibility('hidden');
-        $product->set_regular_price('0');
-        $product->set_virtual(true);
-        $product->set_downloadable(true);
         $product->set_sold_individually(false);
-        $product_id = $product->save();
+        $product_id = $this->configure_order_product($product)->save();
 
         if ($product_id > 0) {
             update_option('bw_gsb_order_product_id', $product_id);
@@ -1329,6 +1540,38 @@ class BW_GSB_Plugin
         }
 
         return null;
+    }
+
+    /**
+     * The carrier product must be purchasable by guests (published, priced)
+     * yet invisible in the catalog, and physical so checkout collects a
+     * shipping address. Older installs created it private/virtual; heal that.
+     */
+    private function configure_order_product($product)
+    {
+        $product->set_status('publish');
+        $product->set_catalog_visibility('hidden');
+        $product->set_regular_price('0');
+        $product->set_virtual(false);
+        $product->set_downloadable(false);
+
+        return $product;
+    }
+
+    private function ensure_order_product_flags($product)
+    {
+        $needs_fix = $product->get_status() !== 'publish'
+            || $product->get_catalog_visibility() !== 'hidden'
+            || $product->is_virtual()
+            || $product->is_downloadable()
+            || $product->get_regular_price() === '';
+
+        if ($needs_fix) {
+            $this->configure_order_product($product)->save();
+            $product = wc_get_product($product->get_id());
+        }
+
+        return $product;
     }
 
     private function normalize_filename_key($filename)

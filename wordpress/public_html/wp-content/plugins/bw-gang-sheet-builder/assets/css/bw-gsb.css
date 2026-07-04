@@ -622,3 +622,17 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* v0.4.0: pay-first flow */
+
+.bw-gsb-steps {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 10px;
+    line-height: 1.5;
+}
+
+.bw-gsb-button span {
+    font-weight: 700;
+}
