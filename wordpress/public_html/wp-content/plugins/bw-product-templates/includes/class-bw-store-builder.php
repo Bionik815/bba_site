@@ -30,8 +30,10 @@ class BW_Store_Builder
     const PAGE_SLUG = 'bw-store-builder';
     const ACTION_BUILD = 'bw_sb_build';
     const ACTION_SEED = 'bw_sb_seed';
+    const ACTION_ADD_CLIENT = 'bw_sb_add_client';
     const NONCE = 'bw_sb_nonce';
     const BIG_SIZES = ['2XL', '3XL', '4XL', '5XL', '6XL'];
+    const META_COLOR_IMAGES = '_bw_color_images';
 
     // Shared with bw-creator-store-builder so a client's store is one set.
     const CPT_CREATOR = 'bw_creator';
@@ -45,7 +47,10 @@ class BW_Store_Builder
         add_action('admin_menu', [$this, 'add_admin_page']);
         add_action('admin_post_' . self::ACTION_BUILD, [$this, 'handle_build']);
         add_action('admin_post_' . self::ACTION_SEED, [$this, 'handle_seed']);
+        add_action('admin_post_' . self::ACTION_ADD_CLIENT, [$this, 'handle_add_client']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_media']);
+        // Frontend: swap the product gallery to the selected color's photo set.
+        add_action('wp_footer', [$this, 'color_gallery_frontend']);
     }
 
     public function add_admin_page()
@@ -454,6 +459,8 @@ class BW_Store_Builder
                         esc_html(sanitize_text_field(wp_unslash($_GET['client'] ?? '')))
                     );
                 ?> <a href="<?php echo esc_url(admin_url('edit.php?post_type=product')); ?>"><?php esc_html_e('View products', 'bw'); ?></a></p></div>
+            <?php elseif ($notice === 'client_added') : ?>
+                <div class="notice notice-success is-dismissible"><p><?php esc_html_e('Client added and pre-selected below.', 'bw'); ?></p></div>
             <?php elseif ($notice === 'error') : ?>
                 <div class="notice notice-error"><p><?php echo esc_html(sanitize_text_field(wp_unslash($_GET['reason'] ?? __('Could not create the products.', 'bw')))); ?></p></div>
             <?php endif; ?>
@@ -470,6 +477,20 @@ class BW_Store_Builder
                 </div>
                 <?php return; ?>
             <?php endif; ?>
+
+            <details class="bw-sb-addclient" <?php echo $notice === 'client_added' ? '' : ''; ?>>
+                <summary><?php esc_html_e('+ Add a new client', 'bw'); ?></summary>
+                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="bw-sb-addclient-form">
+                    <?php wp_nonce_field(self::NONCE, self::NONCE); ?>
+                    <input type="hidden" name="action" value="<?php echo esc_attr(self::ACTION_ADD_CLIENT); ?>">
+                    <label><?php esc_html_e('Client name', 'bw'); ?><br>
+                        <input type="text" name="new_client_name" id="bw-sb-new-name" required style="min-width:260px"></label>
+                    <label><?php esc_html_e('Store slug', 'bw'); ?><br>
+                        <input type="text" name="new_client_slug" id="bw-sb-new-slug" required style="min-width:220px" placeholder="client-name"></label>
+                    <button type="submit" class="button"><?php esc_html_e('Create client', 'bw'); ?></button>
+                    <p class="description"><?php esc_html_e('Creates the client (creator) and their store category from the slug. The subdomain will be {slug}.barebones-apparel.com.', 'bw'); ?></p>
+                </form>
+            </details>
 
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="bw-sb-form">
                 <?php wp_nonce_field(self::NONCE, self::NONCE); ?>
@@ -545,6 +566,10 @@ class BW_Store_Builder
 
         <style>
             .bw-sb-card { padding: 16px; margin: 0 0 18px; max-width: 1180px; }
+            .bw-sb-addclient { max-width: 1180px; margin: 0 0 14px; padding: 10px 14px; background: #fff; border: 1px solid #dcdcde; border-radius: 8px; }
+            .bw-sb-addclient summary { cursor: pointer; font-weight: 600; }
+            .bw-sb-addclient-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; margin-top: 12px; }
+            .bw-sb-addclient-form .description { flex-basis: 100%; margin: 0; }
             .bw-sb-row { display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start; }
             .bw-sb-existing { margin-top: 16px; border-top: 1px solid #e5e7eb; padding-top: 12px; }
             .bw-sb-existing-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
@@ -565,9 +590,12 @@ class BW_Store_Builder
             .bw-sb-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
             .bw-sb-chip { background: #f0f0f1; border: 1px solid #dcdcde; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
             .bw-sb-swatch { display: inline-block; width: 13px; height: 13px; border-radius: 3px; border: 1px solid #cbd5e1; }
-            .bw-sb-img-row { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
-            .bw-sb-img-row img { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #dcdcde; display: none; }
-            .bw-sb-img-row .nm { min-width: 130px; font-weight: 600; font-size: 13px; }
+            .bw-sb-img-row { display: flex; align-items: center; gap: 10px; margin: 7px 0; flex-wrap: wrap; }
+            .bw-sb-img-row .nm { min-width: 120px; font-weight: 600; font-size: 13px; }
+            .bw-sb-photos { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+            .bw-sb-photo { position: relative; line-height: 0; }
+            .bw-sb-photo img { width: 42px; height: 42px; object-fit: cover; border-radius: 6px; border: 1px solid #dcdcde; }
+            .bw-sb-photo-x { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; border: 0; background: #d63638; color: #fff; font-size: 12px; line-height: 1; cursor: pointer; padding: 0; }
             .bw-sb-price-row { display: flex; gap: 16px; margin-top: 8px; }
             .bw-sb-field-label { font-weight: 600; display: block; margin: 8px 0 4px; }
         </style>
@@ -664,28 +692,50 @@ class BW_Store_Builder
                 countEl.textContent = n ? (n + ' product' + (n > 1 ? 's' : '') + ' selected') : '';
             }
 
+            function addPhoto(container, t, colorId, att) {
+                var thumb = (att.sizes && att.sizes.thumbnail ? att.sizes.thumbnail.url : att.url);
+                var cell = document.createElement('span');
+                cell.className = 'bw-sb-photo';
+                cell.innerHTML = '<img src="' + thumb + '" alt="">' +
+                    '<button type="button" class="bw-sb-photo-x" title="Remove">&times;</button>' +
+                    '<input type="hidden" name="items[' + t.id + '][color_images][' + colorId + '][]" value="' + att.id + '">';
+                cell.querySelector('.bw-sb-photo-x').addEventListener('click', function () { cell.remove(); });
+                container.appendChild(cell);
+            }
+
             function imageRows(panel, t) {
                 var box = panel.querySelector('.bw-sb-images');
                 var chosen = Array.prototype.map.call(panel.querySelectorAll('.bw-sb-color:checked'), function (c) {
                     return { id: c.value, name: c.getAttribute('data-name') };
                 });
-                box.innerHTML = chosen.length ? '' : '<em>Select colors to attach images.</em>';
+
+                // Keep photos already picked for colors that stay checked.
+                var kept = {};
+                box.querySelectorAll('.bw-sb-img-row').forEach(function (r) {
+                    kept[r.getAttribute('data-color')] = r.querySelector('.bw-sb-photos');
+                });
+
+                box.innerHTML = chosen.length ? '' : '<em>Select colors to attach photos.</em>';
                 chosen.forEach(function (color) {
                     var row = document.createElement('div');
                     row.className = 'bw-sb-img-row';
+                    row.setAttribute('data-color', color.id);
                     row.innerHTML = '<span class="nm">' + color.name + '</span>' +
-                        '<img alt="">' +
-                        '<button type="button" class="button bw-sb-pick">Choose image</button>' +
-                        '<input type="hidden" name="items[' + t.id + '][color_image][' + color.id + ']" value="">';
+                        '<span class="bw-sb-photos"></span>' +
+                        '<button type="button" class="button bw-sb-pick">+ Add photos</button>';
                     box.appendChild(row);
+
+                    var photos = row.querySelector('.bw-sb-photos');
+                    if (kept[color.id]) {
+                        Array.prototype.slice.call(kept[color.id].children).forEach(function (n) { photos.appendChild(n); });
+                    }
+
                     row.querySelector('.bw-sb-pick').addEventListener('click', function () {
-                        var frame = wp.media({ title: 'Image for ' + color.name, multiple: false, library: { type: 'image' } });
+                        var frame = wp.media({ title: 'Photos for ' + color.name, multiple: true, library: { type: 'image' } });
                         frame.on('select', function () {
-                            var att = frame.state().get('selection').first().toJSON();
-                            row.querySelector('input').value = att.id;
-                            var im = row.querySelector('img');
-                            im.src = (att.sizes && att.sizes.thumbnail ? att.sizes.thumbnail.url : att.url);
-                            im.style.display = 'inline-block';
+                            frame.state().get('selection').toJSON().forEach(function (att) {
+                                addPhoto(photos, t, color.id, att);
+                            });
                         });
                         frame.open();
                     });
@@ -779,6 +829,27 @@ class BW_Store_Builder
                     alert('Select a client or a store category.');
                 }
             });
+
+            // Add-client form: auto-fill slug from the name.
+            var newName = document.getElementById('bw-sb-new-name');
+            var newSlug = document.getElementById('bw-sb-new-slug');
+            if (newName && newSlug) {
+                newName.addEventListener('input', function () {
+                    if (!newSlug.dataset.touched) {
+                        newSlug.value = newName.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                    }
+                });
+                newSlug.addEventListener('input', function () { newSlug.dataset.touched = '1'; });
+            }
+
+            // Pre-select a just-created client.
+            var preClient = <?php echo absint($_GET['new_client'] ?? 0); ?>;
+            if (preClient && clientSel.querySelector('option[value="' + preClient + '"]')) {
+                clientSel.value = String(preClient);
+                syncCatFromClient();
+                renderExisting();
+                updateHeaders();
+            }
         }());
         </script>
         <?php
@@ -873,7 +944,15 @@ class BW_Store_Builder
         $logo_ids = array_filter(array_map('absint', (array) ($cfg['logo_options'] ?? [])));
         $base_price = round((float) ($cfg['base_price'] ?? 0), 2);
         $upcharge = round((float) ($cfg['big_size_upcharge'] ?? 0), 2);
-        $color_images = array_map('absint', (array) ($cfg['color_image'] ?? []));
+
+        // Multiple photos per color: { colorId: [attId, attId, ...] }.
+        $color_images = [];
+        foreach ((array) ($cfg['color_images'] ?? []) as $cid => $ids) {
+            $clean = array_values(array_filter(array_map('absint', (array) $ids)));
+            if ($clean) {
+                $color_images[(int) $cid] = $clean;
+            }
+        }
 
         if (!$color_ids || $base_price <= 0) {
             return 0; // incomplete row — skip
@@ -952,18 +1031,27 @@ class BW_Store_Builder
             update_post_meta($product_id, self::META_MANAGED, '1');
         }
 
-        // Featured image + gallery from the per-color images.
-        $gallery = [];
+        // Featured image + full gallery from every color's photos, and store
+        // the per-color sets so the frontend can swap the gallery on color pick.
+        $all_ids = [];
+        $color_gallery = [];
         foreach ($color_ids as $color_id) {
             if (!empty($color_images[$color_id])) {
-                $gallery[] = (int) $color_images[$color_id];
+                $color_gallery[$color_id] = $color_images[$color_id];
+                foreach ($color_images[$color_id] as $id) {
+                    $all_ids[] = $id;
+                }
             }
         }
-        if ($gallery) {
-            set_post_thumbnail($product_id, $gallery[0]);
-            if (count($gallery) > 1) {
-                update_post_meta($product_id, '_product_image_gallery', implode(',', array_slice($gallery, 1)));
+        $all_ids = array_values(array_unique($all_ids));
+        if ($all_ids) {
+            set_post_thumbnail($product_id, $all_ids[0]);
+            if (count($all_ids) > 1) {
+                update_post_meta($product_id, '_product_image_gallery', implode(',', array_slice($all_ids, 1)));
             }
+        }
+        if ($color_gallery) {
+            update_post_meta($product_id, self::META_COLOR_IMAGES, wp_json_encode($color_gallery));
         }
 
         // Variations: color x size (color only for accessories).
@@ -994,7 +1082,9 @@ class BW_Store_Builder
                 $variation->set_regular_price((string) $price);
                 $variation->set_status('publish');
                 if (!empty($color_images[$color_id])) {
-                    $variation->set_image_id((int) $color_images[$color_id]);
+                    // Variation image = first photo for that color; the rest
+                    // show in the frontend color-gallery strip.
+                    $variation->set_image_id((int) $color_images[$color_id][0]);
                 }
                 $variation->save();
             }
@@ -1004,6 +1094,158 @@ class BW_Store_Builder
         wc_delete_product_transients($product_id);
 
         return $product_id;
+    }
+
+    /* ---------------- Inline client creation ---------------- */
+
+    public function handle_add_client()
+    {
+        if (!current_user_can('manage_woocommerce')) {
+            wp_die(esc_html__('Insufficient permissions', 'bw'));
+        }
+        check_admin_referer(self::NONCE, self::NONCE);
+
+        $name = sanitize_text_field(wp_unslash($_POST['new_client_name'] ?? ''));
+        $slug = sanitize_title(wp_unslash($_POST['new_client_slug'] ?? ''));
+        if ($slug === '') {
+            $slug = sanitize_title($name);
+        }
+        if ($name === '' || $slug === '') {
+            $this->redirect_error(__('Enter a client name and store slug.', 'bw'));
+        }
+
+        // Reuse an existing creator with this slug rather than duplicating.
+        $existing = get_page_by_path($slug, OBJECT, self::CPT_CREATOR);
+        if ($existing) {
+            $creator_id = (int) $existing->ID;
+        } else {
+            $creator_id = wp_insert_post([
+                'post_type' => self::CPT_CREATOR,
+                'post_status' => 'publish',
+                'post_title' => $name,
+                'post_name' => $slug,
+            ], true);
+            if (is_wp_error($creator_id) || !$creator_id) {
+                $this->redirect_error(__('Could not create the client.', 'bw'));
+            }
+        }
+
+        $cat_id = $this->ensure_category($slug, $name);
+        update_post_meta($creator_id, self::META_CREATOR_CAT, $slug);
+
+        wp_safe_redirect(add_query_arg([
+            'page' => self::PAGE_SLUG,
+            'bwsb' => 'client_added',
+            'new_client' => $creator_id,
+        ], admin_url('edit.php?post_type=product')));
+        exit;
+    }
+
+    /* ---------------- Frontend: per-color gallery swap ---------------- */
+
+    public function color_gallery_frontend()
+    {
+        if (!function_exists('is_product') || !is_product()) {
+            return;
+        }
+
+        $product = wc_get_product(get_the_ID());
+        if (!$product) {
+            return;
+        }
+
+        $raw = get_post_meta($product->get_id(), self::META_COLOR_IMAGES, true);
+        $map = $raw ? json_decode($raw, true) : [];
+        if (!is_array($map) || !$map) {
+            return;
+        }
+
+        $by_slug = [];
+        foreach ($map as $term_id => $ids) {
+            $term = get_term((int) $term_id, 'pa_color');
+            if (!$term || is_wp_error($term)) {
+                continue;
+            }
+            $images = [];
+            foreach ((array) $ids as $id) {
+                $id = (int) $id;
+                $full = wp_get_attachment_image_url($id, 'woocommerce_single') ?: wp_get_attachment_image_url($id, 'full');
+                if (!$full) {
+                    continue;
+                }
+                $images[] = [
+                    'full' => $full,
+                    'thumb' => wp_get_attachment_image_url($id, 'woocommerce_gallery_thumbnail') ?: wp_get_attachment_image_url($id, 'thumbnail') ?: $full,
+                    'large' => wp_get_attachment_image_url($id, 'full') ?: $full,
+                ];
+            }
+            if ($images) {
+                $by_slug[$term->slug] = $images;
+            }
+        }
+        if (!$by_slug) {
+            return;
+        }
+        ?>
+        <script>
+        (function ($) {
+            var DATA = <?php echo wp_json_encode($by_slug); ?>;
+            var $form = $('.variations_form');
+            if (!$form.length) { return; }
+            var $gallery = $('.woocommerce-product-gallery');
+
+            function $mainImage() {
+                return $gallery.find('.woocommerce-product-gallery__image').first();
+            }
+
+            function setMain(img) {
+                var $cell = $mainImage();
+                $cell.find('img').attr('src', img.full).attr('srcset', img.full)
+                    .attr('data-src', img.large).attr('data-large_image', img.large);
+                $cell.find('a').attr('href', img.large);
+            }
+
+            function renderStrip(slug) {
+                var imgs = DATA[slug];
+                var $strip = $('#bw-color-views');
+                if (!$strip.length) {
+                    $strip = $('<div id="bw-color-views" class="bw-color-views"></div>');
+                    $gallery.after($strip);
+                }
+                $strip.empty();
+                if (!imgs || !imgs.length) { $strip.hide(); return; }
+                imgs.forEach(function (img, i) {
+                    var $t = $('<button type="button" class="bw-color-view"><img src="' + img.thumb + '" alt=""></button>');
+                    $t.on('click', function () {
+                        setMain(img);
+                        $strip.find('.bw-color-view').removeClass('active');
+                        $t.addClass('active');
+                    });
+                    if (i === 0) { $t.addClass('active'); }
+                    $strip.append($t);
+                });
+                $strip.show();
+                setMain(imgs[0]);
+            }
+
+            // Drive the strip purely off the color choice — WooCommerce fires
+            // reset_data whenever the full variation is unresolved (e.g. color
+            // set but size not), which must NOT clear the color photos.
+            function syncFromColor() {
+                var slug = $form.find('select[name="attribute_pa_color"]').val();
+                if (slug && DATA[slug]) { renderStrip(slug); } else { $('#bw-color-views').hide().empty(); }
+            }
+            $form.on('change', 'select[name="attribute_pa_color"]', syncFromColor);
+            syncFromColor();
+        }(jQuery));
+        </script>
+        <style>
+            .bw-color-views { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+            .bw-color-view { padding: 0; border: 2px solid transparent; border-radius: 8px; background: none; cursor: pointer; line-height: 0; }
+            .bw-color-view img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd; }
+            .bw-color-view.active { border-color: #8d5b2c; }
+        </style>
+        <?php
     }
 
     private function is_big_size($size_name)
