@@ -730,14 +730,25 @@ class BW_Store_Builder
                         Array.prototype.slice.call(kept[color.id].children).forEach(function (n) { photos.appendChild(n); });
                     }
 
+                    // One cached frame per color button. Recreating wp.media()
+                    // on every click can inherit a stale single-select state,
+                    // which made the 2nd+ pick deselect the first.
+                    var pickFrame = null;
                     row.querySelector('.bw-sb-pick').addEventListener('click', function () {
-                        var frame = wp.media({ title: 'Photos for ' + color.name, multiple: true, library: { type: 'image' } });
-                        frame.on('select', function () {
-                            frame.state().get('selection').toJSON().forEach(function (att) {
-                                addPhoto(photos, t, color.id, att);
+                        if (!pickFrame) {
+                            pickFrame = wp.media({
+                                title: 'Photos for ' + color.name,
+                                button: { text: 'Add these photos' },
+                                multiple: 'add',
+                                library: { type: 'image' }
                             });
-                        });
-                        frame.open();
+                            pickFrame.on('select', function () {
+                                var sel = pickFrame.state().get('selection');
+                                sel.toJSON().forEach(function (att) { addPhoto(photos, t, color.id, att); });
+                                sel.reset(); // so reopening starts clean, no re-adds
+                            });
+                        }
+                        pickFrame.open();
                     });
                 });
             }
