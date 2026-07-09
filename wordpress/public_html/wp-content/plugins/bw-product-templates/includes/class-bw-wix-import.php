@@ -2,15 +2,15 @@
 /**
  * BW Wix Import — bring the live Wix Stores catalog into WooCommerce.
  *
- * Reads a Wix Stores product CSV export (Store Products -> Export). Each
- * product spans a "Product" row (name, description, images, collections,
- * price, option definitions) plus one "Variant" row per option combination.
- * The importer groups by handleId, maps Wix "Color"/"Size" options to our
- * pa_color / pa_size terms, creates a WooCommerce variable product per item,
- * files it under the collection's client category (creating the client and
- * flagging the product), sideloads images, and builds the variations.
+ * Reads a Wix Stores product CSV export. Groups rows by handleId (a Product
+ * row plus Variant rows), maps Wix Color/Size options to pa_color / pa_size,
+ * creates a WooCommerce product per item, files it under its collections as
+ * client categories, flags the client, downloads images from the Wix CDN,
+ * and builds variations.
  *
- * Two-step + safe: upload -> DRY RUN preview (creates nothing) -> confirm.
+ * Safe + scalable: upload -> DRY-RUN preview (creates nothing; you pick which
+ * collections are client stores) -> batched AJAX import (drafts) that never
+ * times out on a large catalog.
  */
 
 if (!defined('ABSPATH')) {
@@ -21,21 +21,23 @@ class BW_Wix_Import
 {
     const PAGE_SLUG = 'bw-wix-import';
     const ACTION_UPLOAD = 'bw_wix_upload';
-    const ACTION_IMPORT = 'bw_wix_import';
+    const ACTION_START = 'bw_wix_start';
+    const AJAX_BATCH = 'bw_wix_batch';
     const NONCE = 'bw_wix_nonce';
     const TRANSIENT = 'bw_wix_parsed_';
 
-    // Reuse the shared client/product-flag convention.
     const META_CREATOR_ID = '_bwcsb_creator_id';
     const META_MANAGED = '_bwcsb_managed_product';
     const META_CREATOR_CAT = '_bw_creator_wc_category';
     const CPT_CREATOR = 'bw_creator';
+    const WIX_CDN = 'https://static.wixstatic.com/media/';
 
     public function __construct()
     {
         add_action('admin_menu', [$this, 'add_admin_page']);
         add_action('admin_post_' . self::ACTION_UPLOAD, [$this, 'handle_upload']);
-        add_action('admin_post_' . self::ACTION_IMPORT, [$this, 'handle_import']);
+        add_action('admin_post_' . self::ACTION_START, [$this, 'handle_start']);
+        add_action('wp_ajax_' . self::AJAX_BATCH, [$this, 'ajax_batch']);
     }
 
     public function add_admin_page()
@@ -52,28 +54,29 @@ class BW_Wix_Import
 
     /* ---------------- CSV parsing ---------------- */
 
-    /**
-     * Parse the uploaded Wix CSV into a normalized structure:
-     * [ handleId => [ name, description, images[], collections[], price,
-     *   options[ label => values[] ], variants[ [values=>[], price, sku] ] ] ]
-     */
     private function parse_csv($path)
     {
-        $rows = [];
         if (($fh = fopen($path, 'r')) === false) {
             return ['error' => __('Could not open the uploaded file.', 'bw')];
         }
-
         $header = fgetcsv($fh);
         if (!$header) {
             fclose($fh);
             return ['error' => __('The file appears to be empty.', 'bw')];
         }
-        // Normalize headers: lowercase, strip BOM/spaces.
         $header = array_map(static function ($h) {
             return strtolower(trim(str_replace("\xEF\xBB\xBF", '', (string) $h)));
         }, $header);
 
+        $option_slots = [];
+        for ($i = 1; $i <= 6; $i++) {
+            if (in_array('productoptionname' . $i, $header, true)) {
+                $option_slots[] = $i;
+            }
+        }
+
+        $products = [];
+        $order = [];
         while (($data = fgetcsv($fh)) !== false) {
             if (count($data) === 1 && trim((string) $data[0]) === '') {
                 continue;
@@ -82,49 +85,20 @@ class BW_Wix_Import
             foreach ($header as $i => $key) {
                 $row[$key] = isset($data[$i]) ? trim((string) $data[$i]) : '';
             }
-            $rows[] = $row;
-        }
-        fclose($fh);
 
-        if (!$rows) {
-            return ['error' => __('No product rows found.', 'bw')];
-        }
-
-        // Detect option columns present (productoptionname1..N).
-        $option_slots = [];
-        for ($i = 1; $i <= 6; $i++) {
-            if (array_key_exists('productoptionname' . $i, $rows[0])) {
-                $option_slots[] = $i;
-            }
-        }
-
-        $products = [];
-        $order = [];
-        foreach ($rows as $row) {
-            $handle = $row['handleid'] ?? $row['handle'] ?? '';
+            $handle = $row['handleid'] ?? '';
             if ($handle === '') {
                 continue;
             }
-            $field_type = strtolower($row['fieldtype'] ?? '');
+            $is_variant = strtolower($row['fieldtype'] ?? '') === 'variant';
 
             if (!isset($products[$handle])) {
-                $products[$handle] = [
-                    'name' => '',
-                    'description' => '',
-                    'images' => [],
-                    'collections' => [],
-                    'price' => 0.0,
-                    'options' => [],   // label => [values]
-                    'variants' => [],  // [ 'values' => [label=>value], 'price'=>, 'sku'=> ]
-                ];
+                $products[$handle] = ['name' => '', 'description' => '', 'images' => [], 'collections' => [], 'price' => 0.0, 'options' => [], 'variants' => []];
                 $order[] = $handle;
             }
             $p = &$products[$handle];
 
-            $is_variant = ($field_type === 'variant');
-
             if (!$is_variant) {
-                // Product-defining row.
                 if (($row['name'] ?? '') !== '') {
                     $p['name'] = $row['name'];
                 }
@@ -138,7 +112,9 @@ class BW_Wix_Import
                     $p['images'][] = $img;
                 }
                 foreach ($this->split_multi($row['collection'] ?? '') as $col) {
-                    $p['collections'][] = $col;
+                    if (!in_array($col, $p['collections'], true)) {
+                        $p['collections'][] = $col;
+                    }
                 }
                 foreach ($option_slots as $i) {
                     $label = $row['productoptionname' . $i] ?? '';
@@ -148,7 +124,6 @@ class BW_Wix_Import
                     }
                 }
             } else {
-                // Variant row: read chosen values + its price/sku.
                 $values = [];
                 foreach ($option_slots as $i) {
                     $label = $row['productoptionname' . $i] ?? '';
@@ -157,29 +132,29 @@ class BW_Wix_Import
                         $values[$label] = $val;
                     }
                 }
-                $vprice = ($row['price'] ?? '') !== '' ? (float) preg_replace('/[^0-9.]/', '', $row['price']) : null;
-                $surcharge = ($row['surcharge'] ?? '') !== '' ? (float) preg_replace('/[^0-9.]/', '', $row['surcharge']) : null;
                 if ($values) {
                     $p['variants'][] = [
                         'values' => $values,
-                        'price' => $vprice,
-                        'surcharge' => $surcharge,
-                        'sku' => $row['sku'] ?? '',
+                        'price' => ($row['price'] ?? '') !== '' ? (float) preg_replace('/[^0-9.]/', '', $row['price']) : null,
+                        'surcharge' => ($row['surcharge'] ?? '') !== '' ? (float) preg_replace('/[^0-9.]/', '', $row['surcharge']) : null,
                     ];
                 }
             }
             unset($p);
         }
+        fclose($fh);
 
-        // Keep insertion order.
         $ordered = [];
         foreach ($order as $handle) {
             if ($products[$handle]['name'] !== '') {
                 $ordered[$handle] = $products[$handle];
             }
         }
+        if (!$ordered) {
+            return ['error' => __('No products found in the file.', 'bw')];
+        }
 
-        return ['products' => $ordered, 'option_slots' => $option_slots];
+        return ['products' => $ordered];
     }
 
     private function split_multi($value)
@@ -188,12 +163,10 @@ class BW_Wix_Import
         if ($value === '') {
             return [];
         }
-        // Wix separates multi-values with ';'.
         $parts = array_map('trim', explode(';', $value));
         return array_values(array_filter($parts, static fn($v) => $v !== ''));
     }
 
-    /** Which option label maps to which of our taxonomies. */
     private function classify_option($label)
     {
         $l = strtolower($label);
@@ -204,6 +177,17 @@ class BW_Wix_Import
             return 'pa_size';
         }
         return '';
+    }
+
+    /** Guess whether a collection is a client store (vs a category/grouping). */
+    private function looks_like_client($name)
+    {
+        $l = strtolower($name);
+        if (strpos($l, 'all ') === 0 || strpos($l, 'template') !== false) {
+            return false;
+        }
+        $generic = ['mens shirts', 'womens shirts', 'all shirts', 'all t-shirts', 't-shirts', 'hoodies', 'hats', 'accessories', 'apparel', 'new arrivals', 'best sellers', 'sale', 'featured'];
+        return !in_array($l, $generic, true);
     }
 
     /* ---------------- Upload + preview ---------------- */
@@ -218,8 +202,6 @@ class BW_Wix_Import
         if (empty($_FILES['wix_csv']['tmp_name']) || (int) $_FILES['wix_csv']['error'] !== UPLOAD_ERR_OK) {
             $this->redirect('error', ['reason' => __('Please choose a CSV file to upload.', 'bw')]);
         }
-
-        $check = wp_check_filetype_and_ext($_FILES['wix_csv']['tmp_name'], $_FILES['wix_csv']['name'], ['csv' => 'text/csv', 'txt' => 'text/plain']);
         $name = strtolower((string) $_FILES['wix_csv']['name']);
         if (substr($name, -4) !== '.csv' && substr($name, -4) !== '.txt') {
             $this->redirect('error', ['reason' => __('That does not look like a CSV file.', 'bw')]);
@@ -231,8 +213,7 @@ class BW_Wix_Import
         }
 
         $token = wp_generate_password(12, false);
-        set_transient(self::TRANSIENT . $token, $parsed, HOUR_IN_SECONDS);
-
+        set_transient(self::TRANSIENT . $token, $parsed, 2 * HOUR_IN_SECONDS);
         $this->redirect('preview', ['token' => $token]);
     }
 
@@ -241,29 +222,23 @@ class BW_Wix_Import
         if (!current_user_can('manage_woocommerce')) {
             wp_die(esc_html__('Insufficient permissions', 'bw'));
         }
-
         $state = sanitize_text_field(wp_unslash($_GET['bwwix'] ?? ''));
+        $token = sanitize_text_field(wp_unslash($_GET['token'] ?? ''));
         ?>
         <div class="wrap">
             <h1><?php esc_html_e('Import from Wix', 'bw'); ?></h1>
-
             <?php if ($state === 'error') : ?>
                 <div class="notice notice-error"><p><?php echo esc_html(sanitize_text_field(wp_unslash($_GET['reason'] ?? __('Import failed.', 'bw')))); ?></p></div>
-            <?php elseif ($state === 'done') : ?>
-                <div class="notice notice-success is-dismissible"><p><?php
-                    printf(
-                        esc_html__('Imported %1$d products across %2$d client stores as drafts. Review, add prices/photos where needed, then publish.', 'bw'),
-                        (int) ($_GET['products'] ?? 0),
-                        (int) ($_GET['clients'] ?? 0)
-                    );
-                ?> <a href="<?php echo esc_url(admin_url('edit.php?post_type=product')); ?>"><?php esc_html_e('View products', 'bw'); ?></a></p></div>
             <?php endif; ?>
 
             <?php
-            $token = sanitize_text_field(wp_unslash($_GET['token'] ?? ''));
             $parsed = $token ? get_transient(self::TRANSIENT . $token) : false;
             if ($state === 'preview' && is_array($parsed)) {
                 $this->render_preview($token, $parsed);
+                return;
+            }
+            if ($state === 'progress' && is_array($parsed)) {
+                $this->render_progress($token, $parsed);
                 return;
             }
             ?>
@@ -272,7 +247,7 @@ class BW_Wix_Import
                 <h2><?php esc_html_e('Step 1 — Upload your Wix export', 'bw'); ?></h2>
                 <ol>
                     <li><?php esc_html_e('In Wix: Store Products → More Actions → Export to CSV.', 'bw'); ?></li>
-                    <li><?php esc_html_e('Upload the CSV here. Nothing is created yet — you get a preview first.', 'bw'); ?></li>
+                    <li><?php esc_html_e('Upload it here. Nothing is created yet — you preview and choose client stores first.', 'bw'); ?></li>
                 </ol>
                 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data">
                     <?php wp_nonce_field(self::NONCE, self::NONCE); ?>
@@ -287,100 +262,62 @@ class BW_Wix_Import
 
     private function render_preview($token, $parsed)
     {
-        $products = $parsed['products'] ?? [];
-        $clients = [];
-        $color_opts = 0;
-        $size_opts = 0;
+        $products = $parsed['products'];
+        $collections = [];
         $with_images = 0;
-        $unmapped = [];
-
         foreach ($products as $p) {
-            foreach ($p['collections'] ?: ['(no collection)'] as $c) {
-                $clients[$c] = ($clients[$c] ?? 0) + 1;
-            }
-            foreach (array_keys($p['options']) as $label) {
-                $tax = $this->classify_option($label);
-                if ($tax === 'pa_color') {
-                    $color_opts++;
-                } elseif ($tax === 'pa_size') {
-                    $size_opts++;
-                } else {
-                    $unmapped[$label] = true;
-                }
+            foreach ($p['collections'] as $c) {
+                $collections[$c] = ($collections[$c] ?? 0) + 1;
             }
             if ($p['images']) {
                 $with_images++;
             }
         }
-        $sample = array_slice($products, 0, 8, true);
+        ksort($collections);
         ?>
         <div class="card" style="padding:16px;max-width:960px">
-            <h2><?php esc_html_e('Step 2 — Preview (nothing created yet)', 'bw'); ?></h2>
+            <h2><?php esc_html_e('Step 2 — Preview & choose client stores', 'bw'); ?></h2>
             <ul style="list-style:disc;margin-left:20px">
-                <li><strong><?php echo (int) count($products); ?></strong> <?php esc_html_e('products found', 'bw'); ?></li>
-                <li><strong><?php echo (int) count($clients); ?></strong> <?php esc_html_e('client stores (from collections)', 'bw'); ?></li>
-                <li><?php echo (int) $color_opts; ?> <?php esc_html_e('products with a Color option, ', 'bw'); ?><?php echo (int) $size_opts; ?> <?php esc_html_e('with a Size option', 'bw'); ?></li>
-                <li><strong><?php echo (int) $with_images; ?></strong> <?php esc_html_e('products with image URLs', 'bw'); ?></li>
-                <?php if ($unmapped) : ?>
-                    <li style="color:#b26a00"><?php esc_html_e('Options that are not Color/Size (kept as product attributes): ', 'bw'); ?><?php echo esc_html(implode(', ', array_keys($unmapped))); ?></li>
-                <?php endif; ?>
+                <li><strong><?php echo (int) count($products); ?></strong> <?php esc_html_e('products', 'bw'); ?></li>
+                <li><strong><?php echo (int) count($collections); ?></strong> <?php esc_html_e('collections', 'bw'); ?></li>
+                <li><strong><?php echo (int) $with_images; ?></strong> <?php esc_html_e('products have images (downloaded from the Wix CDN on import)', 'bw'); ?></li>
             </ul>
 
-            <h3><?php esc_html_e('Client stores detected', 'bw'); ?></h3>
-            <p><?php
-                $bits = [];
-                foreach ($clients as $name => $n) {
-                    $bits[] = esc_html($name) . ' (' . (int) $n . ')';
-                }
-                echo implode(' · ', $bits); // phpcs:ignore -- escaped above
-            ?></p>
-
-            <h3><?php esc_html_e('Sample products', 'bw'); ?></h3>
-            <table class="widefat striped">
-                <thead><tr>
-                    <th><?php esc_html_e('Name', 'bw'); ?></th>
-                    <th><?php esc_html_e('Client', 'bw'); ?></th>
-                    <th><?php esc_html_e('Price', 'bw'); ?></th>
-                    <th><?php esc_html_e('Colors', 'bw'); ?></th>
-                    <th><?php esc_html_e('Sizes', 'bw'); ?></th>
-                    <th><?php esc_html_e('Images', 'bw'); ?></th>
-                </tr></thead>
-                <tbody>
-                    <?php foreach ($sample as $p) :
-                        $colors = $sizes = [];
-                        foreach ($p['options'] as $label => $vals) {
-                            $tax = $this->classify_option($label);
-                            if ($tax === 'pa_color') { $colors = $vals; }
-                            elseif ($tax === 'pa_size') { $sizes = $vals; }
-                        }
-                        ?>
-                        <tr>
-                            <td><?php echo esc_html($p['name']); ?></td>
-                            <td><?php echo esc_html(implode(', ', $p['collections']) ?: '—'); ?></td>
-                            <td><?php echo $p['price'] ? esc_html('$' . number_format($p['price'], 2)) : '—'; ?></td>
-                            <td><?php echo esc_html((string) count($colors)); ?></td>
-                            <td><?php echo esc_html((string) count($sizes)); ?></td>
-                            <td><?php echo esc_html((string) count($p['images'])); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-
-            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:16px">
+            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <?php wp_nonce_field(self::NONCE, self::NONCE); ?>
-                <input type="hidden" name="action" value="<?php echo esc_attr(self::ACTION_IMPORT); ?>">
+                <input type="hidden" name="action" value="<?php echo esc_attr(self::ACTION_START); ?>">
                 <input type="hidden" name="token" value="<?php echo esc_attr($token); ?>">
-                <label><input type="checkbox" name="fetch_images" value="1" checked> <?php esc_html_e('Download product images from Wix (slower, but brings photos over)', 'bw'); ?></label>
-                <p><button type="submit" class="button button-primary button-hero"><?php esc_html_e('Run import (creates drafts)', 'bw'); ?></button>
-                    <span class="description" style="margin-left:8px"><?php esc_html_e('Products are created as drafts so you can review before they go live.', 'bw'); ?></span></p>
+
+                <h3><?php esc_html_e('Which collections are client stores?', 'bw'); ?></h3>
+                <p class="description"><?php esc_html_e('Checked collections become client stores (a client + category is created and products are flagged to them). Uncheck grouping collections like "All T-Shirts" or "School Template" — products still import, just without a client for those.', 'bw'); ?>
+                    <a href="#" id="bw-wix-all">all</a> / <a href="#" id="bw-wix-none">none</a></p>
+                <div style="column-count:3;column-gap:24px;border:1px solid #e5e7eb;border-radius:8px;padding:12px;max-height:340px;overflow:auto">
+                    <?php foreach ($collections as $name => $n) : ?>
+                        <label style="display:block;break-inside:avoid;padding:2px 0">
+                            <input type="checkbox" class="bw-wix-col" name="client_collections[]" value="<?php echo esc_attr($name); ?>" <?php checked($this->looks_like_client($name)); ?>>
+                            <?php echo esc_html($name); ?> <span style="color:#888">(<?php echo (int) $n; ?>)</span>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+
+                <h3 style="margin-top:18px"><?php esc_html_e('Options', 'bw'); ?></h3>
+                <p><label><input type="checkbox" name="fetch_images" value="1" checked> <?php esc_html_e('Download product images from Wix (recommended — this is how photos come across)', 'bw'); ?></label></p>
+                <p><label><input type="checkbox" name="status_publish" value="1"> <?php esc_html_e('Publish immediately (default: import as drafts to review first)', 'bw'); ?></label></p>
+
+                <p style="margin-top:14px"><button type="submit" class="button button-primary button-hero"><?php esc_html_e('Continue to import', 'bw'); ?></button></p>
             </form>
         </div>
+        <script>
+        (function () {
+            function set(v) { document.querySelectorAll('.bw-wix-col').forEach(function (c) { c.checked = v; }); }
+            document.getElementById('bw-wix-all').addEventListener('click', function (e) { e.preventDefault(); set(true); });
+            document.getElementById('bw-wix-none').addEventListener('click', function (e) { e.preventDefault(); set(false); });
+        }());
+        </script>
         <?php
     }
 
-    /* ---------------- Import ---------------- */
-
-    public function handle_import()
+    public function handle_start()
     {
         if (!current_user_can('manage_woocommerce')) {
             wp_die(esc_html__('Insufficient permissions', 'bw'));
@@ -389,88 +326,178 @@ class BW_Wix_Import
 
         $token = sanitize_text_field(wp_unslash($_POST['token'] ?? ''));
         $parsed = $token ? get_transient(self::TRANSIENT . $token) : false;
-        if (!is_array($parsed) || empty($parsed['products'])) {
-            $this->redirect('error', ['reason' => __('Preview expired — please upload the CSV again.', 'bw')]);
+        if (!is_array($parsed)) {
+            $this->redirect('error', ['reason' => __('Preview expired — please upload again.', 'bw')]);
         }
-        $fetch_images = !empty($_POST['fetch_images']);
+
+        $parsed['client_collections'] = array_map('sanitize_text_field', (array) wp_unslash($_POST['client_collections'] ?? []));
+        $parsed['fetch_images'] = !empty($_POST['fetch_images']);
+        $parsed['status'] = !empty($_POST['status_publish']) ? 'publish' : 'draft';
+        $parsed['handles'] = array_keys($parsed['products']);
+        $parsed['created'] = 0;
+        set_transient(self::TRANSIENT . $token, $parsed, 3 * HOUR_IN_SECONDS);
+
+        $this->redirect('progress', ['token' => $token]);
+    }
+
+    private function render_progress($token, $parsed)
+    {
+        $total = count($parsed['handles'] ?? $parsed['products']);
+        $fetch = !empty($parsed['fetch_images']);
+        $batch = $fetch ? 3 : 15; // image downloads are the slow part
+        ?>
+        <div class="card" style="padding:16px;max-width:720px">
+            <h2><?php esc_html_e('Step 3 — Importing', 'bw'); ?></h2>
+            <p><?php esc_html_e('Keep this tab open. Products import in batches so it will not time out.', 'bw'); ?></p>
+            <div style="background:#eee;border-radius:999px;height:22px;overflow:hidden">
+                <div id="bw-wix-bar" style="background:#8d5b2c;height:100%;width:0;transition:width .2s"></div>
+            </div>
+            <p id="bw-wix-status" style="font-weight:600;margin-top:10px"><?php esc_html_e('Starting…', 'bw'); ?></p>
+            <p id="bw-wix-done" style="display:none"><a href="<?php echo esc_url(admin_url('edit.php?post_type=product')); ?>" class="button button-primary"><?php esc_html_e('View imported products', 'bw'); ?></a></p>
+        </div>
+        <script>
+        (function () {
+            var TOKEN = <?php echo wp_json_encode($token); ?>;
+            var TOTAL = <?php echo (int) $total; ?>;
+            var BATCH = <?php echo (int) $batch; ?>;
+            var NONCE = <?php echo wp_json_encode(wp_create_nonce(self::AJAX_BATCH)); ?>;
+            var AJAX = <?php echo wp_json_encode(admin_url('admin-ajax.php')); ?>;
+            var offset = 0, created = 0;
+            var bar = document.getElementById('bw-wix-bar');
+            var status = document.getElementById('bw-wix-status');
+
+            function run() {
+                var body = new URLSearchParams();
+                body.set('action', <?php echo wp_json_encode(self::AJAX_BATCH); ?>);
+                body.set('token', TOKEN);
+                body.set('offset', offset);
+                body.set('batch', BATCH);
+                body.set('_nonce', NONCE);
+                fetch(AJAX, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (!res || !res.success) { status.textContent = 'Error: ' + ((res && res.data) || 'unknown'); return; }
+                        offset = res.data.offset; created += res.data.created;
+                        var pct = TOTAL ? Math.round(offset / TOTAL * 100) : 100;
+                        bar.style.width = pct + '%';
+                        status.textContent = offset + ' / ' + TOTAL + ' products processed · ' + created + ' created';
+                        if (res.data.done) {
+                            status.textContent = 'Done — ' + created + ' products imported.';
+                            document.getElementById('bw-wix-done').style.display = 'block';
+                        } else {
+                            run();
+                        }
+                    })
+                    .catch(function (e) { status.textContent = 'Network error: ' + e.message + ' (retrying…)'; setTimeout(run, 2000); });
+            }
+            run();
+        }());
+        </script>
+        <?php
+    }
+
+    /* ---------------- Batched import ---------------- */
+
+    public function ajax_batch()
+    {
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error('permission');
+        }
+        check_ajax_referer(self::AJAX_BATCH, '_nonce');
+
+        $token = sanitize_text_field(wp_unslash($_POST['token'] ?? ''));
+        $offset = absint($_POST['offset'] ?? 0);
+        $batch = max(1, min(25, absint($_POST['batch'] ?? 5)));
+        $parsed = $token ? get_transient(self::TRANSIENT . $token) : false;
+        if (!is_array($parsed) || empty($parsed['handles'])) {
+            wp_send_json_error('expired');
+        }
 
         @set_time_limit(0);
-        $clients = [];
-        $count = 0;
-        foreach ($parsed['products'] as $product) {
-            $created = $this->import_one($product, $fetch_images);
-            if ($created) {
-                $count++;
-                foreach ($product['collections'] ?: ['Uncategorized'] as $c) {
-                    $clients[$c] = true;
-                }
+        $handles = $parsed['handles'];
+        $client_cols = array_flip($parsed['client_collections'] ?? []);
+        $fetch = !empty($parsed['fetch_images']);
+        $status = $parsed['status'] ?? 'draft';
+
+        $slice = array_slice($handles, $offset, $batch);
+        $created = 0;
+        foreach ($slice as $handle) {
+            if (empty($parsed['products'][$handle])) {
+                continue;
+            }
+            if ($this->import_one($parsed['products'][$handle], $client_cols, $fetch, $status)) {
+                $created++;
             }
         }
 
-        delete_transient(self::TRANSIENT . $token);
-        $this->redirect('done', ['products' => $count, 'clients' => count($clients)]);
+        $new_offset = $offset + count($slice);
+        $done = $new_offset >= count($handles);
+
+        wp_send_json_success(['offset' => $new_offset, 'created' => $created, 'total' => count($handles), 'done' => $done]);
     }
 
-    private function import_one($p, $fetch_images)
+    private function import_one($p, $client_cols, $fetch_images, $status)
     {
         if (empty($p['name'])) {
             return false;
         }
 
-        // Client + category from the first collection.
-        $collection = $p['collections'][0] ?? '';
+        // Categories = all collections; client = first collection marked as a client store.
+        $category_ids = [];
+        $client_collection = '';
+        foreach ($p['collections'] as $col) {
+            $slug = sanitize_title($col);
+            $cid = $this->ensure_category($slug, $col);
+            if ($cid) {
+                $category_ids[] = $cid;
+            }
+            if ($client_collection === '' && isset($client_cols[$col])) {
+                $client_collection = $col;
+            }
+        }
         $creator_id = 0;
-        $cat_id = 0;
-        if ($collection !== '') {
-            $slug = sanitize_title($collection);
-            $cat_id = $this->ensure_category($slug, $collection);
-            $creator_id = $this->ensure_creator($collection, $slug);
+        if ($client_collection !== '') {
+            $creator_id = $this->ensure_creator($client_collection, sanitize_title($client_collection));
         }
 
-        // Map options to terms.
-        $color_term_ids = [];
-        $size_term_ids = [];
+        // Options -> terms.
+        $color_ids = $size_ids = [];
         $other_attrs = [];
         foreach ($p['options'] as $label => $values) {
             $tax = $this->classify_option($label);
             if ($tax === 'pa_color') {
-                $color_term_ids = $this->term_ids('pa_color', $values, true);
+                $color_ids = $this->term_ids('pa_color', $values);
             } elseif ($tax === 'pa_size') {
-                $size_term_ids = $this->term_ids('pa_size', $values, true);
+                $size_ids = $this->term_ids('pa_size', $values);
             } else {
-                $other_attrs[$label] = $values; // custom (non-taxonomy) attribute
+                $other_attrs[$label] = $values;
             }
         }
 
-        $product = new WC_Product_Variable();
-        $client_name = $collection !== '' ? $collection : '';
-        $product->set_name(($client_name !== '' ? $client_name . ' - ' : '') . $p['name']);
-        $product->set_status('draft');
+        $is_variable = $color_ids || $size_ids;
+        // Wix names already read "Client - Product" — use as-is.
+        $name = $p['name'];
+
+        if ($is_variable) {
+            $product = new WC_Product_Variable();
+        } else {
+            $product = new WC_Product_Simple();
+            if ($p['price'] > 0) {
+                $product->set_regular_price((string) $p['price']);
+            }
+        }
+        $product->set_name($name);
+        $product->set_status($status);
         if ($p['description']) {
             $product->set_description($p['description']);
         }
-        if ($p['price'] > 0) {
-            // base price for variations; stored via variations below
-        }
 
         $attributes = [];
-        if ($color_term_ids) {
-            $a = new WC_Product_Attribute();
-            $a->set_id(wc_attribute_taxonomy_id_by_name('color'));
-            $a->set_name('pa_color');
-            $a->set_options($color_term_ids);
-            $a->set_visible(true);
-            $a->set_variation(true);
-            $attributes[] = $a;
+        if ($color_ids) {
+            $attributes[] = $this->tax_attribute('color', 'pa_color', $color_ids, true);
         }
-        if ($size_term_ids) {
-            $a = new WC_Product_Attribute();
-            $a->set_id(wc_attribute_taxonomy_id_by_name('size'));
-            $a->set_name('pa_size');
-            $a->set_options($size_term_ids);
-            $a->set_visible(true);
-            $a->set_variation(true);
-            $attributes[] = $a;
+        if ($size_ids) {
+            $attributes[] = $this->tax_attribute('size', 'pa_size', $size_ids, true);
         }
         foreach ($other_attrs as $label => $values) {
             $a = new WC_Product_Attribute();
@@ -480,33 +507,17 @@ class BW_Wix_Import
             $a->set_variation(false);
             $attributes[] = $a;
         }
-        $product->set_attributes($attributes);
-
-        // Simple product if no variation attributes.
-        if (!$color_term_ids && !$size_term_ids) {
-            $simple = new WC_Product_Simple();
-            $simple->set_name(($client_name !== '' ? $client_name . ' - ' : '') . $p['name']);
-            $simple->set_status('draft');
-            if ($p['description']) {
-                $simple->set_description($p['description']);
-            }
-            if ($p['price'] > 0) {
-                $simple->set_regular_price((string) $p['price']);
-            }
-            if ($other_attrs) {
-                $simple->set_attributes($attributes);
-            }
-            $product_id = $simple->save();
-        } else {
-            $product_id = $product->save();
+        if ($attributes) {
+            $product->set_attributes($attributes);
         }
 
+        $product_id = $product->save();
         if (!$product_id) {
             return false;
         }
 
-        if ($cat_id) {
-            wp_set_object_terms($product_id, [(int) $cat_id], 'product_cat');
+        if ($category_ids) {
+            wp_set_object_terms($product_id, array_values(array_unique($category_ids)), 'product_cat');
         }
         if ($creator_id) {
             update_post_meta($product_id, self::META_CREATOR_ID, $creator_id);
@@ -514,11 +525,10 @@ class BW_Wix_Import
         }
         update_post_meta($product_id, '_bw_wix_import', '1');
 
-        // Images.
         if ($fetch_images && $p['images']) {
             $ids = [];
-            foreach (array_slice($p['images'], 0, 6) as $url) {
-                $att = $this->sideload_image($url, $product_id);
+            foreach (array_slice($p['images'], 0, 6) as $img) {
+                $att = $this->sideload_image($img, $product_id);
                 if ($att) {
                     $ids[] = $att;
                 }
@@ -531,14 +541,24 @@ class BW_Wix_Import
             }
         }
 
-        // Variations for variable products.
-        if ($color_term_ids || $size_term_ids) {
-            $this->build_variations($product_id, $p, $color_term_ids, $size_term_ids);
+        if ($is_variable) {
+            $this->build_variations($product_id, $p, $color_ids, $size_ids);
             WC_Product_Variable::sync($product_id);
         }
         wc_delete_product_transients($product_id);
 
         return true;
+    }
+
+    private function tax_attribute($slug, $taxonomy, $term_ids, $variation)
+    {
+        $a = new WC_Product_Attribute();
+        $a->set_id(wc_attribute_taxonomy_id_by_name($slug));
+        $a->set_name($taxonomy);
+        $a->set_options($term_ids);
+        $a->set_visible(true);
+        $a->set_variation($variation);
+        return $a;
     }
 
     private function build_variations($product_id, $p, $color_ids, $size_ids)
@@ -547,15 +567,9 @@ class BW_Wix_Import
         $sizes = $size_ids ?: [0];
         $base = $p['price'] > 0 ? $p['price'] : 0;
 
-        // Index explicit variant prices by value-set for overrides.
-        $variant_price = [];
-        foreach ($p['variants'] as $v) {
-            $key = strtolower(implode('|', array_map('strval', $v['values'])));
-            if ($v['price'] !== null) {
-                $variant_price[$key] = $v['price'];
-            } elseif ($v['surcharge'] !== null) {
-                $variant_price[$key] = $base + $v['surcharge'];
-            }
+        // Cap runaway matrices (a few pathological products) to keep imports sane.
+        if (count($colors) * count($sizes) > 200) {
+            $sizes = array_slice($sizes, 0, max(1, (int) floor(200 / max(1, count($colors)))));
         }
 
         foreach ($colors as $cid) {
@@ -565,11 +579,15 @@ class BW_Wix_Import
                 $attrs = [];
                 if ($cid) {
                     $ct = get_term($cid, 'pa_color');
-                    if ($ct && !is_wp_error($ct)) { $attrs['pa_color'] = $ct->slug; }
+                    if ($ct && !is_wp_error($ct)) {
+                        $attrs['pa_color'] = $ct->slug;
+                    }
                 }
                 if ($sid) {
                     $st = get_term($sid, 'pa_size');
-                    if ($st && !is_wp_error($st)) { $attrs['pa_size'] = $st->slug; }
+                    if ($st && !is_wp_error($st)) {
+                        $attrs['pa_size'] = $st->slug;
+                    }
                 }
                 $variation->set_attributes($attrs);
                 $variation->set_regular_price((string) ($base > 0 ? $base : 0));
@@ -581,21 +599,19 @@ class BW_Wix_Import
 
     /* ---------------- Helpers ---------------- */
 
-    private function term_ids($taxonomy, $values, $create)
+    private function term_ids($taxonomy, $values)
     {
         $ids = [];
         foreach ($values as $value) {
             $term = get_term_by('name', $value, $taxonomy);
-            if ((!$term || is_wp_error($term)) && $create) {
+            if (!$term || is_wp_error($term)) {
                 $new = wp_insert_term($value, $taxonomy);
                 if (!is_wp_error($new)) {
                     $ids[] = (int) $new['term_id'];
                 }
                 continue;
             }
-            if ($term && !is_wp_error($term)) {
-                $ids[] = (int) $term->term_id;
-            }
+            $ids[] = (int) $term->term_id;
         }
         return array_values(array_unique($ids));
     }
@@ -630,22 +646,35 @@ class BW_Wix_Import
         return $id;
     }
 
-    private function sideload_image($url, $product_id)
+    /**
+     * Sideload a Wix image. The export gives bare media handles
+     * (f66de1_hash~mv2.jpg) that resolve under the Wix CDN base.
+     */
+    private function sideload_image($ref, $product_id)
     {
-        $url = trim((string) $url);
-        // Wix exports may give bare filenames or wix: refs we can't fetch.
-        if (!preg_match('#^https?://#i', $url)) {
+        $ref = trim((string) $ref);
+        if ($ref === '') {
             return 0;
         }
+        if (!preg_match('#^https?://#i', $ref)) {
+            $ref = self::WIX_CDN . ltrim($ref, '/');
+        }
+
         require_once ABSPATH . 'wp-admin/includes/media.php';
         require_once ABSPATH . 'wp-admin/includes/file.php';
         require_once ABSPATH . 'wp-admin/includes/image.php';
 
-        $tmp = download_url($url, 30);
+        $tmp = download_url($ref, 30);
         if (is_wp_error($tmp)) {
             return 0;
         }
-        $file = ['name' => wp_basename(parse_url($url, PHP_URL_PATH)) ?: 'wix-image.jpg', 'tmp_name' => $tmp];
+        // Give it a clean filename/extension (Wix handles carry ~mv2).
+        $base = wp_basename(parse_url($ref, PHP_URL_PATH));
+        $base = preg_replace('/~mv2/', '', $base);
+        if (!preg_match('/\.(jpe?g|png|gif|webp)$/i', $base)) {
+            $base .= '.jpg';
+        }
+        $file = ['name' => $base, 'tmp_name' => $tmp];
         $id = media_handle_sideload($file, $product_id);
         if (is_wp_error($id)) {
             @unlink($tmp);
