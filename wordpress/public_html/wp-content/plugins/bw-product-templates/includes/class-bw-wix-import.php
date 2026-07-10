@@ -199,8 +199,19 @@ class BW_Wix_Import
         }
         check_admin_referer(self::NONCE, self::NONCE);
 
-        if (empty($_FILES['wix_csv']['tmp_name']) || (int) $_FILES['wix_csv']['error'] !== UPLOAD_ERR_OK) {
+        $err = isset($_FILES['wix_csv']['error']) ? (int) $_FILES['wix_csv']['error'] : UPLOAD_ERR_NO_FILE;
+        if ($err === UPLOAD_ERR_INI_SIZE || $err === UPLOAD_ERR_FORM_SIZE) {
+            $this->redirect('error', ['reason' => sprintf(
+                /* translators: %s: server upload size limit */
+                __('That file is larger than the server upload limit (%s). Raise upload_max_filesize / post_max_size in PHP settings and try again.', 'bw'),
+                ini_get('upload_max_filesize')
+            )]);
+        }
+        if ($err === UPLOAD_ERR_NO_FILE) {
             $this->redirect('error', ['reason' => __('Please choose a CSV file to upload.', 'bw')]);
+        }
+        if ($err !== UPLOAD_ERR_OK || empty($_FILES['wix_csv']['tmp_name'])) {
+            $this->redirect('error', ['reason' => sprintf(__('Upload failed (error code %d). Please try again.', 'bw'), $err)]);
         }
         $name = strtolower((string) $_FILES['wix_csv']['name']);
         if (substr($name, -4) !== '.csv' && substr($name, -4) !== '.txt') {
