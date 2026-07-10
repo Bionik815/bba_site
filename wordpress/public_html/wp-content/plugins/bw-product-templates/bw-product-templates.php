@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BW Product Templates
  * Description: Mark WooCommerce products as "Templates" (hidden, not purchasable) and quickly clone them for clients. Supports bulk generation (multi-templates × multi-client categories) with title patterns.
- * Version: 2.2.0
+ * Version: 2.3.0
  * Author: You
  * License: GPL-2.0+
  */
@@ -329,3 +329,4 @@ new BW_Product_Templates();
 require_once __DIR__ . '/includes/class-bw-store-builder.php';
 require_once __DIR__ . '/includes/class-bw-template-options.php';
 require_once __DIR__ . '/includes/class-bw-wix-import.php';
+require_once __DIR__ . '/includes/class-bw-bulk-publish.php';

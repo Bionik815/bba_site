@@ -412,6 +412,7 @@ class BW_Contact_Chat
             .bw-chat__launch:hover { background: #7a4c22; }
             .bw-chat__launch-icon { font-size: 18px; line-height: 1; }
             .bw-chat__panel { position: absolute; right: 0; bottom: 60px; width: 340px; max-width: calc(100vw - 40px); background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; box-shadow: 0 24px 60px rgba(15,23,42,.28); overflow: hidden; display: flex; flex-direction: column; max-height: 70vh; }
+            .bw-chat__panel[hidden] { display: none; }
             .bw-chat__head { display: flex; justify-content: space-between; align-items: center; background: #14213d; color: #fff; padding: 12px 14px; }
             .bw-chat__close { background: none; border: 0; color: #fff; font-size: 22px; line-height: 1; cursor: pointer; }
             .bw-chat__body { padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
