@@ -17,14 +17,17 @@ class BW_Menu_Setup
     const TAX_GROUP = 'bw_group';
     const PM_SHOW = '_bw_creator_show';
     const PM_ORDER = '_bw_creator_order';
+    const META_CREATOR_CAT = '_bw_creator_wc_category';
     const PAGE_SLUG = 'bw-menu-setup';
     const ACTION = 'bw_menu_setup_save';
+    const ACTION_LOGOS = 'bw_menu_fill_logos';
     const NONCE = 'bw_menu_setup_nonce';
 
     public function __construct()
     {
         add_action('admin_menu', [$this, 'add_admin_page']);
         add_action('admin_post_' . self::ACTION, [$this, 'handle_save']);
+        add_action('admin_post_' . self::ACTION_LOGOS, [$this, 'handle_fill_logos']);
     }
 
     public function add_admin_page()
@@ -121,7 +124,18 @@ class BW_Menu_Setup
 
             <?php if ($notice === 'saved') : ?>
                 <div class="notice notice-success is-dismissible"><p><?php esc_html_e('Menu updated.', 'bw'); ?></p></div>
+            <?php elseif ($notice === 'logos') : ?>
+                <div class="notice notice-success is-dismissible"><p><?php
+                    printf(esc_html__('Filled %d client menu logos from their product photos. Replace with real logos anytime by setting a Featured Image on the client.', 'bw'), (int) ($_GET['filled'] ?? 0));
+                ?></p></div>
             <?php endif; ?>
+
+            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin:8px 0 16px">
+                <?php wp_nonce_field(self::NONCE, self::NONCE); ?>
+                <input type="hidden" name="action" value="<?php echo esc_attr(self::ACTION_LOGOS); ?>">
+                <button type="submit" class="button"><?php esc_html_e('Fill missing logos from product photos', 'bw'); ?></button>
+                <span class="description"><?php esc_html_e('Gives every logo-less client a menu image from their first product, as a placeholder until you upload a real logo.', 'bw'); ?></span>
+            </form>
 
             <p>
                 <strong><?php echo (int) count($creators); ?></strong> <?php esc_html_e('clients ·', 'bw'); ?>
@@ -240,6 +254,65 @@ class BW_Menu_Setup
             'post_type' => self::CPT_CREATOR,
             'page' => self::PAGE_SLUG,
             'bwms' => 'saved',
+        ], admin_url('edit.php')));
+        exit;
+    }
+
+    /**
+     * Give logo-less clients a menu image using their first product's photo,
+     * so the menu is visual immediately. Real logos (a Featured Image on the
+     * client) always win — this only fills the blanks.
+     */
+    public function handle_fill_logos()
+    {
+        if (!current_user_can('manage_options')) {
+            wp_die(esc_html__('Insufficient permissions', 'bw'));
+        }
+        check_admin_referer(self::NONCE, self::NONCE);
+
+        $creators = get_posts([
+            'post_type' => self::CPT_CREATOR,
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+        ]);
+
+        $filled = 0;
+        foreach ($creators as $creator) {
+            if (get_post_thumbnail_id($creator->ID)) {
+                continue; // already has a logo
+            }
+            $slug = get_post_meta($creator->ID, self::META_CREATOR_CAT, true);
+            if ($slug === '') {
+                $slug = sanitize_title($creator->post_name ?: $creator->post_title);
+            }
+            $term = get_term_by('slug', $slug, 'product_cat');
+            if (!$term || is_wp_error($term)) {
+                continue;
+            }
+
+            $product_ids = get_posts([
+                'post_type' => 'product',
+                'post_status' => 'publish',
+                'posts_per_page' => 15,
+                'fields' => 'ids',
+                'tax_query' => [['taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => [$term->term_id]]],
+            ]);
+            foreach ($product_ids as $pid) {
+                $thumb = get_post_thumbnail_id($pid);
+                if ($thumb) {
+                    set_post_thumbnail($creator->ID, (int) $thumb);
+                    update_post_meta($creator->ID, '_bw_logo_placeholder', '1');
+                    $filled++;
+                    break;
+                }
+            }
+        }
+
+        wp_safe_redirect(add_query_arg([
+            'post_type' => self::CPT_CREATOR,
+            'page' => self::PAGE_SLUG,
+            'bwms' => 'logos',
+            'filled' => $filled,
         ], admin_url('edit.php')));
         exit;
     }
