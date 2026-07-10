@@ -17,6 +17,7 @@ class BW_Menu_Setup
     const TAX_GROUP = 'bw_group';
     const PM_SHOW = '_bw_creator_show';
     const PM_ORDER = '_bw_creator_order';
+    const PM_PINNED = '_bw_creator_pinned';
     const META_CREATOR_CAT = '_bw_creator_wc_category';
     const PAGE_SLUG = 'bw-menu-setup';
     const ACTION = 'bw_menu_setup_save';
@@ -157,6 +158,7 @@ class BW_Menu_Setup
                 <table class="widefat striped">
                     <thead><tr>
                         <th><?php esc_html_e('Show', 'bw'); ?></th>
+                        <th title="<?php esc_attr_e('Pin to the top of its group (for promoting an event or person)', 'bw'); ?>">📌 <?php esc_html_e('Pin', 'bw'); ?></th>
                         <th><?php esc_html_e('Client', 'bw'); ?></th>
                         <th><?php esc_html_e('Group', 'bw'); ?></th>
                         <th><?php esc_html_e('Logo', 'bw'); ?></th>
@@ -171,9 +173,11 @@ class BW_Menu_Setup
                             $group_val = $cur_group ?: $guess_group;
                             $show_val = $cur_terms || $cur_show ? $cur_show : $guess_show;
                             $has_logo = (bool) get_post_thumbnail_id($c->ID);
+                            $pinned = get_post_meta($c->ID, self::PM_PINNED, true) === '1';
                             ?>
                             <tr class="bwms-row" data-name="<?php echo esc_attr(strtolower($c->post_title)); ?>">
                                 <td><input type="checkbox" class="bwms-show" name="show[<?php echo (int) $c->ID; ?>]" value="1" <?php checked($show_val); ?>></td>
+                                <td><input type="checkbox" class="bwms-pin" name="pin[<?php echo (int) $c->ID; ?>]" value="1" <?php checked($pinned); ?>></td>
                                 <td><a href="<?php echo esc_url(get_edit_post_link($c->ID)); ?>" target="_blank"><?php echo esc_html($c->post_title); ?></a></td>
                                 <td>
                                     <select class="bwms-group" name="group[<?php echo (int) $c->ID; ?>]"
@@ -224,6 +228,7 @@ class BW_Menu_Setup
 
         $groups = (array) ($_POST['group'] ?? []);
         $show = (array) ($_POST['show'] ?? []);
+        $pin = (array) ($_POST['pin'] ?? []);
 
         // Map group slug -> term_id once.
         $slug_to_id = [];
@@ -245,6 +250,7 @@ class BW_Menu_Setup
 
             $is_shown = !empty($show[$creator_id]);
             update_post_meta($creator_id, self::PM_SHOW, $is_shown ? '1' : '0');
+            update_post_meta($creator_id, self::PM_PINNED, !empty($pin[$creator_id]) ? '1' : '0');
             if (get_post_meta($creator_id, self::PM_ORDER, true) === '') {
                 update_post_meta($creator_id, self::PM_ORDER, 10);
             }

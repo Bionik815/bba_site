@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BW Mega Menu PRO (Creators + Groups)
  * Description: CPT “Creators” (logo + URL) + taxonomy “Groups” (Browse All URL). Shortcode [bw_mega_menu label="APPAREL STORES" all_link="/all-stores"] outputs a Bunker-style header tab bar: one tab per group, each opening a full-width panel of client logo cards.
- * Version: 4.2.1
+ * Version: 4.3.0
  * License: GPL-2.0+
  */
 if (!defined('ABSPATH')) exit;
@@ -15,6 +15,7 @@ class BW_Mega_Menu_Pro {
   const PM_LINK     = '_bw_creator_link';
   const PM_SHOW     = '_bw_creator_show';
   const PM_ORDER    = '_bw_creator_order';
+  const PM_PINNED   = '_bw_creator_pinned';
 
   // settings
   const OPT_SECTION   = 'bwmm_settings';
@@ -179,12 +180,12 @@ class BW_Mega_Menu_Pro {
 
   /* ---------- Assets + Shortcode ---------- */
   public function register_assets(){
-    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '4.2.1');
+    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '4.3.0');
     // Astra safety: the panel is positioned against the header bar row that
     // hosts the shortcode, so those bars must allow overflow and anchor it.
     $astra = ".ast-primary-header-bar, .main-header-bar, .ast-below-header-bar { overflow:visible!important } .site-header, .ast-primary-header-bar, .ast-below-header-bar { position:relative; z-index:30 } .ast-builder-html-element { min-width:0; max-width:100% }";
     wp_add_inline_style('bw-mega-menu-pro',$astra);
-    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '4.2.1', true);
+    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '4.3.0', true);
   }
 
   public function shortcode($atts){
@@ -204,8 +205,9 @@ class BW_Mega_Menu_Pro {
     wp_enqueue_style('bw-mega-menu-pro');
     wp_enqueue_script('bw-mega-menu-pro');
 
+    // Group tabs alphabetical.
     $groups = get_terms([
-      'taxonomy'=>self::TAX_GROUP,'hide_empty'=>false,'meta_key'=>self::TM_ORDER,'orderby'=>'meta_value_num','order'=>'ASC',
+      'taxonomy'=>self::TAX_GROUP,'hide_empty'=>false,'orderby'=>'name','order'=>'ASC',
     ]);
     if (is_wp_error($groups) || empty($groups)) return '<!-- BW: no groups -->';
 
@@ -254,12 +256,19 @@ class BW_Mega_Menu_Pro {
           <?php foreach($groups as $g):
             $browse = get_term_meta($g->term_id,self::TM_BROWSE,true) ?: get_term_link($g);
             $panel_id = $instance_id . '-group-' . $g->term_id;
+            // Alphabetical, then float pinned creators to the top (PHP 8 usort
+            // is stable, so alpha order holds within pinned and unpinned).
             $creators = get_posts([
-              'post_type'=>self::CPT_CREATOR,'posts_per_page'=>(int)$atts['limit'],'order'=>$atts['order'],
-              'orderby'=>'meta_value_num','meta_key'=>self::PM_ORDER,
+              'post_type'=>self::CPT_CREATOR,'posts_per_page'=>(int)$atts['limit'],
+              'orderby'=>'title','order'=>'ASC',
               'tax_query'=>[['taxonomy'=>self::TAX_GROUP,'field'=>'term_id','terms'=>[$g->term_id]]],
               'meta_query'=>[['key'=>self::PM_SHOW,'value'=>'1']]
             ]);
+            usort($creators, function($a,$b){
+              $pa = get_post_meta($a->ID, self::PM_PINNED, true) === '1' ? 1 : 0;
+              $pb = get_post_meta($b->ID, self::PM_PINNED, true) === '1' ? 1 : 0;
+              return $pb <=> $pa;
+            });
             ?>
             <section class="bw-mm__group"
               id="<?php echo esc_attr($panel_id); ?>"
