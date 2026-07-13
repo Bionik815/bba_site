@@ -31,8 +31,9 @@ class BW_Client_Sections {
 .woocommerce ul.products li.product .price{padding:0 12px 8px;display:block;font-weight:700;}
 /* Equal-height cards: summary column stretches, button pins to the bottom */
 .woocommerce ul.products li.product .astra-shop-summary-wrap{display:flex;flex-direction:column;flex:1 1 auto;}
-.woocommerce ul.products li.product .button{margin:8px 12px 0;width:calc(100% - 24px);text-align:center;border-radius:8px;}
-.woocommerce ul.products li.product .astra-shop-summary-wrap .button{margin-top:auto!important;}
+.woocommerce ul.products li.product .button{width:calc(100% - 24px);text-align:center;border-radius:8px;}
+/* auto side margins CENTER the button no matter what the theme sets; auto top pins it to the card bottom */
+.woocommerce ul.products li.product .astra-shop-summary-wrap .button{margin:auto auto 0!important;}
 CSS;
     // Own handle: 'woocommerce-inline' is not reliably enqueued on every page,
     // which silently dropped these styles (the Customizer CSS copy used to
