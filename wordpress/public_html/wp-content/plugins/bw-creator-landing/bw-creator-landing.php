@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BW Creator Landing
  * Description: Pretty single page template for Creators (bw_creator). Hero + CTA + optional product grid by WooCommerce category. No theme overrides required.
- * Version: 1.0.0
+ * Version: 2.0.0
  * Author: You
  * License: GPL-2.0+
  */
@@ -141,15 +141,17 @@ class BW_Creator_Landing {
     </script>
 
     <p class="bwcl-field"><label for="bw_creator_brand_color"><strong><?php esc_html_e('Brand Color', 'bw'); ?></strong></label><br>
-      <input id="bw_creator_brand_color" name="bw_creator_brand_color" type="text" value="<?php echo esc_attr($brand); ?>" placeholder="#111111" />
+      <input id="bw_creator_brand_color" name="bw_creator_brand_color" type="color" value="<?php echo esc_attr($brand); ?>" style="width:64px;height:36px;padding:2px" />
+      <em style="opacity:.75;display:block"><?php esc_html_e('Themes the CTA + product buttons and accents on this store page. Button text auto-switches black/white for contrast.', 'bw'); ?></em>
     </p>
 
     <p class="bwcl-field"><label for="bw_creator_bg_color"><strong><?php esc_html_e('Hero Background Color', 'bw'); ?></strong></label><br>
-      <input id="bw_creator_bg_color" name="bw_creator_bg_color" type="text" value="<?php echo esc_attr($bg); ?>" placeholder="#0b0f14" />
+      <input id="bw_creator_bg_color" name="bw_creator_bg_color" type="color" value="<?php echo esc_attr($bg); ?>" style="width:64px;height:36px;padding:2px" />
+      <em style="opacity:.75;display:block"><?php esc_html_e('Shows behind/through the hero. With no banner set, the logo is blown up as a blurred backdrop over this color.', 'bw'); ?></em>
     </p>
 
     <p class="bwcl-field"><label for="bw_creator_text_color"><strong><?php esc_html_e('Hero Text Color', 'bw'); ?></strong></label><br>
-      <input id="bw_creator_text_color" name="bw_creator_text_color" type="text" value="<?php echo esc_attr($text); ?>" placeholder="#ffffff" />
+      <input id="bw_creator_text_color" name="bw_creator_text_color" type="color" value="<?php echo esc_attr($text); ?>" style="width:64px;height:36px;padding:2px" />
     </p>
 
     <p class="bwcl-field"><label for="bw_creator_wc_category"><strong><?php esc_html_e('WooCommerce Category Slug', 'bw'); ?></strong></label><br>
@@ -203,24 +205,55 @@ class BW_Creator_Landing {
   public function assets(){
     $css = <<<CSS
 /* BW Creator Landing */
-.bwcl-hero{ --brand:#111; --bg:#0b0f14; --text:#fff; background:var(--bg); color:var(--text); padding:80px 20px; position:relative; overflow:hidden; }
-.bwcl-hero.has-banner::before{content:'';position:absolute;inset:0;background-image:var(--banner-image);background-size:cover;background-position:center;opacity:.32}
-.bwcl-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.56))}
-.bwcl-inner{ max-width:1200px; margin:0 auto; display:flex; gap:28px; align-items:center; }
-.bwcl-inner{ position:relative; z-index:1; }
-.bwcl-logo{ width:160px; min-width:120px; }
-.bwcl-logo img{ width:100%; height:auto; display:block; border-radius:14px; box-shadow:0 12px 28px rgba(0,0,0,.25); background:#fff; padding:8px; }
-.bwcl-copy h1{ margin:0 0 8px; font-size:clamp(28px,4vw,40px); line-height:1.1; }
-.bwcl-copy p{ margin:8px 0 18px; font-size:clamp(15px,1.8vw,18px); opacity:.95; }
-.bwcl-btn{ display:inline-block; background:var(--brand); color:#fff; text-decoration:none; padding:12px 18px; border-radius:10px; font-weight:800; letter-spacing:.04em; }
-.bwcl-btn:hover{ filter:brightness(.92); }
+
+/* Full-bleed branded hero: banner spans the viewport at a real height. */
+.bwcl-hero{ --brand:#c99a63; --bg:#0b0f14; --text:#fff;
+  position:relative; overflow:hidden;
+  width:100vw; margin-left:calc(50% - 50vw);
+  min-height:clamp(300px, 38vw, 480px);
+  display:flex; align-items:flex-end;
+  background:var(--bg); color:var(--text);
+}
+.bwcl-hero.has-banner::before{content:'';position:absolute;inset:0;
+  background-image:var(--banner-image);background-size:cover;background-position:center;}
+/* No banner uploaded: the logo itself becomes a soft blurred backdrop */
+.bwcl-hero.is-logo-bg::before{filter:blur(28px) saturate(1.05) brightness(.85);transform:scale(1.25);}
+/* Legibility: fade to dark at the bottom where the copy sits */
+.bwcl-hero::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(5,8,14,.08) 35%, rgba(5,8,14,.82) 100%);}
+@media (max-width:640px){
+  .bwcl-hero.has-mobile-banner::before{background-image:var(--banner-image-mobile);}
+}
+.bwcl-inner{ position:relative; z-index:1; width:100%;
+  max-width:1200px; margin:0 auto; padding:26px 20px;
+  display:flex; gap:26px; align-items:flex-end; }
+.bwcl-logo{ width:170px; min-width:130px; }
+.bwcl-logo img{ width:100%; height:auto; display:block; border-radius:14px; box-shadow:0 12px 28px rgba(0,0,0,.35); background:#fff; padding:8px; }
+.bwcl-copy h1{ margin:0 0 6px; font-size:clamp(30px,4.4vw,46px); line-height:1.08; color:var(--text); text-shadow:0 2px 14px rgba(0,0,0,.45); }
+.bwcl-copy p{ margin:6px 0 16px; font-size:clamp(15px,1.8vw,18px); opacity:.95; text-shadow:0 1px 8px rgba(0,0,0,.5); }
+.bwcl-btn{ display:inline-block; background:var(--bwcl-brand,var(--brand)); color:var(--bwcl-btn-text,#fff); text-decoration:none; padding:12px 20px; border-radius:10px; font-weight:800; letter-spacing:.04em; }
+.bwcl-btn:hover{ filter:brightness(.92); color:var(--bwcl-btn-text,#fff); }
+@media (max-width:640px){
+  .bwcl-hero{ min-height:min(72vw, 420px); }
+  .bwcl-inner{ flex-direction:column; align-items:flex-start; gap:14px; }
+  .bwcl-logo{ width:120px; }
+}
 
 /* Content wrap */
 .bwcl-wrap{ max-width:1200px; margin:24px auto; padding:0 20px; }
 
 /* Products header */
 .bwcl-grid-head{ display:flex; align-items:center; justify-content:space-between; margin:18px 0 10px; }
-.bwcl-grid-head h2{ margin:0; font-size:1.25rem; }
+.bwcl-grid-head h2{ margin:0; font-size:1.25rem; padding-left:12px; border-left:5px solid var(--bwcl-brand,#c99a63); }
+
+/* Per-client theming: the brand color drives the buy buttons on this page */
+body.single-bw_creator .woocommerce ul.products li.product .button{
+  background:var(--bwcl-brand,#046bd2)!important;
+  border-color:var(--bwcl-brand,#046bd2)!important;
+  color:var(--bwcl-btn-text,#fff)!important;
+}
+body.single-bw_creator .woocommerce ul.products li.product .button:hover{ filter:brightness(.92); }
+body.single-bw_creator ul.products li.product .price{ color:inherit; }
 
 /* Product shortcode spacing */
 .bwcl-products{ margin:10px 0 40px; }
@@ -684,7 +717,7 @@ JS;
     if (!is_singular(self::CPT) && !function_exists('is_product')) return;
     if (!is_singular(self::CPT) && !is_product()) return;
 
-    wp_register_style('bwcl-css', false, [], '1.1.1');
+    wp_register_style('bwcl-css', false, [], '2.0.0');
     wp_add_inline_style('bwcl-css', $css);
     wp_enqueue_style('bwcl-css');
     wp_add_inline_script('jquery-core', $js, 'after');
