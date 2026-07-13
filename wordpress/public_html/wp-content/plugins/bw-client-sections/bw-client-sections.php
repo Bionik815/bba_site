@@ -27,7 +27,9 @@ class BW_Client_Sections {
 .woocommerce ul.products li.product:hover{box-shadow:0 12px 30px rgba(0,0,0,.08);transform:translateY(-2px);}
 /* Catalog images are 1000x1000 squares — show the WHOLE image, never crop */
 .woocommerce ul.products li.product a img{aspect-ratio:1/1;width:100%;height:auto;object-fit:contain;background:#fff;display:block;}
-.woocommerce ul.products li.product .woocommerce-loop-product__title{font-size:1rem;padding:10px 12px 4px;margin:0;}
+/* .astra-shop-summary-wrap in the selector out-guns Astra's padding reset */
+.woocommerce ul.products li.product .astra-shop-summary-wrap .woocommerce-loop-product__title{font-size:1rem;padding:10px 12px 4px;margin:0;}
+.woocommerce ul.products li.product .astra-shop-summary-wrap .ast-woo-product-category{padding:0 12px;}
 .woocommerce ul.products li.product .price{padding:0 12px 8px;display:block;font-weight:700;}
 /* Equal-height cards: summary column stretches, button pins to the bottom */
 .woocommerce ul.products li.product .astra-shop-summary-wrap{display:flex;flex-direction:column;flex:1 1 auto;}
