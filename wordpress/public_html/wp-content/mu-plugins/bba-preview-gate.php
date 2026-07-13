@@ -132,6 +132,11 @@ function bba_preview_gate_render(string $message = ''): void {
 }
 
 function bba_preview_gate_boot(): void {
+	// WP-CLI / cron have no browser to gate — bail so remote tooling works.
+	if ( ( defined( 'WP_CLI' ) && WP_CLI ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) || PHP_SAPI === 'cli' ) {
+		return;
+	}
+
 	if ( ! bba_preview_gate_enabled() || ! bba_preview_gate_is_public_request() ) {
 		return;
 	}
