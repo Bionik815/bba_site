@@ -127,7 +127,10 @@ JS;
 [data-bw-theme="dark"] h6 {
     color: #f3f4f6;
 }
-[data-bw-theme="dark"] a:not(.bw-dtf-btn):not(.bwmm-card):not(.bw-gsb-button) { color: #c99a63; }
+[data-bw-theme="dark"] a:not(.bw-dtf-btn):not(.bwmm-card):not(.bw-gsb-button):not(.bwcl-btn) { color: #c99a63; }
+/* Brand CTA buttons keep their computed contrast text (gold link color made
+   the gold button read as a solid blob) */
+[data-bw-theme="dark"] .bwcl-btn { color: var(--bwcl-btn-text, #111111) !important; }
 
 /* Header bars: dark surface, inverted (black -> white) logo */
 [data-bw-theme="dark"] .site-header,

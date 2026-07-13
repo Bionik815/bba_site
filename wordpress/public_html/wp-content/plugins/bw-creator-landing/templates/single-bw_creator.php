@@ -86,11 +86,6 @@ body.single-bw_creator{
       <div class="bwcl-copy">
         <h1><?php echo esc_html($name); ?></h1>
         <p><?php echo esc_html($subtitle); ?></p>
-        <?php if ($store_url): ?>
-          <a class="bwcl-btn" href="<?php echo esc_url($store_url); ?>">
-            <?php echo esc_html($cta_text); ?>
-          </a>
-        <?php endif; ?>
       </div>
     </div>
   </section>
@@ -135,6 +130,12 @@ body.single-bw_creator{
           echo do_shortcode($short);
         ?>
       </div>
+
+      <?php if ($store_url): ?>
+        <div class="bwcl-grid-foot">
+          <a class="bwcl-btn" href="<?php echo esc_url($store_url); ?>"><?php echo esc_html__('Shop All', 'bw'); ?> <span aria-hidden="true">›</span></a>
+        </div>
+      <?php endif; ?>
     <?php endif; ?>
 
   </div>

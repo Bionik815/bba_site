@@ -256,7 +256,10 @@ body.single-bw_creator .woocommerce ul.products li.product .button:hover{ filter
 body.single-bw_creator ul.products li.product .price{ color:inherit; }
 
 /* Product shortcode spacing */
-.bwcl-products{ margin:10px 0 40px; }
+.bwcl-products{ margin:10px 0 12px; }
+
+/* Bottom Shop All, right-aligned to mirror the grid head */
+.bwcl-grid-foot{ display:flex; justify-content:flex-end; margin:0 0 40px; }
 
 /* Product page polish */
 body.single-product div.product{display:block}
