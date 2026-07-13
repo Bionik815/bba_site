@@ -29,6 +29,18 @@ $name       = get_the_title();
 $logo       = get_the_post_thumbnail($creator_id, 'large', ['alt'=>$name]) ?: '';
 $logo_url   = get_the_post_thumbnail_url($creator_id, 'full') ?: '';
 $store_url  = get_post_meta($creator_id, '_bw_creator_link', true);
+// Never send shoppers off-site from their own storefront: the CTA and
+// "Shop All" prefer this client's full on-site catalog (category archive).
+$wc_cat_for_link = get_post_meta($creator_id, '_bw_creator_wc_category', true);
+$catalog_url = '';
+if ($wc_cat_for_link) {
+  $cat_term = get_term_by('slug', sanitize_title($wc_cat_for_link), 'product_cat');
+  if ($cat_term && !is_wp_error($cat_term)) {
+    $link = get_term_link($cat_term);
+    if (!is_wp_error($link)) $catalog_url = $link;
+  }
+}
+$store_url = $catalog_url ?: $store_url;
 $cta_text   = get_post_meta($creator_id, '_bw_creator_cta_text', true) ?: 'Shop Now';
 $wc_cat     = get_post_meta($creator_id, '_bw_creator_wc_category', true);
 $wc_tag     = get_post_meta($creator_id, '_bw_creator_wc_tag', true);
