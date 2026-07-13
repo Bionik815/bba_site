@@ -110,6 +110,9 @@
   color: var(--bw-ink-soft);
   font-weight: 800;
   font-size: 0.82rem;
+  /* Explicit line-height: <button> and <a> otherwise resolve different
+     defaults, which made the All Stores link sit lower than the tabs. */
+  line-height: 1.2;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 0.85rem 0.85rem calc(0.85rem - 3px);
@@ -217,6 +220,24 @@
   height: 100%;
   object-fit: contain;
   border-radius: 10px;
+}
+
+/* Store name label under each banner tile */
+.bwmm-name {
+  display: block;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--bw-ink-soft);
+  transition: color 0.15s ease;
+}
+
+.bwmm-card:hover .bwmm-name,
+.bwmm-card:focus-visible .bwmm-name {
+  color: var(--bw-accent);
 }
 
 .bw-mm.is-gray .bwmm-tile img {

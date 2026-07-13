@@ -20,6 +20,8 @@ cp public_html/ops/config.local.php.example public_html/ops/config.local.php
 ./scripts/start-local.sh
 ```
 
+The local WordPress image is built with `pdo_mysql` enabled so the `/ops` app can connect to MySQL.
+
 - WordPress: `http://localhost:8080`
 - phpMyAdmin: `http://localhost:8081`
 
@@ -29,14 +31,15 @@ cp public_html/ops/config.local.php.example public_html/ops/config.local.php
 ./scripts/import-db.sh
 ```
 
-By default this imports:
+By default this imports both:
 
-`wordpress/u632291655_barebones_ops.sql`
+- `wordpress/u632291655_CIS0T.sql` into the WordPress schema
+- `wordpress/u632291655_barebones_ops.sql` into the ops schema
 
-You can pass another SQL path:
+You can pass custom paths:
 
 ```bash
-./scripts/import-db.sh /absolute/path/to/dump.sql
+./scripts/import-db.sh /absolute/path/to/wordpress.sql /absolute/path/to/ops.sql
 ```
 
 ## Stop local services
@@ -54,4 +57,5 @@ You can pass another SQL path:
 - Set `OPS_DEBUG=1` to show errors in-browser during development (default is off).
 - Set `OPS_ERROR_LOG=/absolute/path/to/log.log` to override log destination (default is `ops/runtime/php-error.log`).
 - The import script updates `wp_options.home` and `wp_options.siteurl` to `http://localhost:8080`.
+- The local setup uses separate schemas for WordPress and ops. `OPS_DB_*` values can be set in `wordpress/.env.local`.
 - If your DB table prefix is not `wp_`, update `scripts/import-db.sh`.

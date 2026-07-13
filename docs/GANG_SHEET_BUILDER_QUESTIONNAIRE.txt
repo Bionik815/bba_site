@@ -1,0 +1,96 @@
+GANG SHEET BUILDER QUESTIONNAIRE
+
+Please answer these questions so we can build the customer-facing DTF gang sheet builder correctly.
+
+
+PRODUCT AND PRICING
+
+1. What gang sheet sizes do we want to sell at launch?
+
+2. What price should each sheet size be?
+
+3. Do we want fixed sizes only, or any custom-size option?
+
+4. Are there rush fees, setup fees, or art cleanup fees?
+
+5. Do we want one sheet per submission, or multiple sheets in one order?
+
+
+ARTWORK UPLOADS
+
+6. What file types should customers be allowed to upload for version 1?
+
+7. What maximum file size should we allow per file?
+
+8. Do uploaded files need transparent backgrounds?
+
+9. Should JPEG files be rejected, warned, or allowed?
+
+10. Should customers be able to upload multiple art files onto one sheet?
+
+
+ARTWORK QUALITY
+
+11. What minimum resolution or DPI is acceptable?
+
+12. What is the smallest design size we should allow?
+
+13. What is the smallest text size that still prints well?
+
+14. What file problems should trigger an automatic warning?
+
+15. What file problems should cause the art to be rejected?
+
+
+LAYOUT AND SPACING
+
+16. What minimum space is required between designs?
+
+17. What minimum space is required from the edge of the sheet?
+
+18. Should rotation be allowed?
+
+19. Should flip or mirror be allowed?
+
+20. Should overlapping artwork be prevented completely?
+
+
+REVIEW AND PRODUCTION
+
+21. Does every gang sheet require manual approval before print?
+
+22. Can staff fix minor problems without asking the customer?
+
+23. If staff changes a layout, does the customer need to approve it again?
+
+24. What statuses should we use from submission through completion?
+
+25. What are the top reasons a submitted gang sheet gets delayed or rejected?
+
+
+CUSTOMER EXPERIENCE
+
+26. Should the customer pay before approval or only after approval?
+
+27. What confirmation should the customer receive immediately after submitting?
+
+28. Should customers be able to track status online?
+
+29. What warnings should we show before submission?
+
+30. What should happen when artwork quality is questionable but still printable?
+
+
+OPTIONAL EXAMPLES
+
+If it is easier, answers can be written like this:
+
+- Sizes: 22x24, 22x36, 22x48
+- Pricing: 22x24 = $__, 22x36 = $__, 22x48 = $__
+- File types: PNG only
+- Max file size: 25 MB
+- Minimum spacing: 0.25 inch
+- Margin from edge: 0.25 inch
+- Approval: yes, every sheet
+- Payment: after approval
+

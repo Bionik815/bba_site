@@ -10,7 +10,7 @@ if [[ ! -f ".env.local" ]]; then
   exit 1
 fi
 
-docker compose up -d db wordpress phpmyadmin
+docker compose up -d --build db wordpress phpmyadmin
 
 echo "Local services started."
 echo "WordPress:  http://localhost:8080"

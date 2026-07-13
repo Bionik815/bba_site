@@ -24,6 +24,41 @@ Create these repository secrets before enabling the workflow:
 
 The workflow lives at `.github/workflows/deploy-hostinger.yml` and runs on pushes to `main` or manual dispatch.
 
+## Staging (bbaprintshop.com)
+
+Staging has its own push-to-deploy workflow: `.github/workflows/deploy-staging.yml`, which runs on pushes to the `staging` branch (or manual dispatch) and mirrors **all** `bw-*` plugins (discovered dynamically — new plugins deploy without editing the workflow), `fm-surcharges`, `mu-plugins`, and `ops` to the staging docroot.
+
+Additional repository secret required:
+
+- `STAGING_REMOTE_DIR`: the bbaprintshop.com web root, e.g. `domains/bbaprintshop.com/public_html`
+
+The existing `HOSTINGER_HOST` / `HOSTINGER_USERNAME` / `HOSTINGER_PASSWORD` secrets are reused (same hosting account).
+
+### Day-to-day flow
+
+```
+# work on feature branches as usual, then:
+git checkout staging
+git merge feature/dtf-builder
+git push origin staging          # → GitHub Actions deploys to bbaprintshop.com
+```
+
+### Instant deploys without GitHub (local rsync)
+
+`wordpress/scripts/deploy-staging.sh` deploys the same file set straight from your Mac over SSH — useful mid-iteration. One-time setup:
+
+1. hPanel → Advanced → **SSH Access** → enable, note host/port (usually 65002).
+2. Create `wordpress/scripts/deploy.env` (gitignored) with `STAGING_SSH_USER`, `STAGING_SSH_HOST`, `STAGING_SSH_PORT`, `STAGING_REMOTE_DIR`.
+3. Optional but recommended: `ssh-copy-id -p 65002 user@host` so you're not typing the password every deploy.
+
+Then `./wordpress/scripts/deploy-staging.sh` (add `--media` to sync uploads, `--dry-run` to preview). The script also purges the LiteSpeed cache after upload.
+
+### What git deploy does NOT cover
+
+- **Database** — products, Astra/Elementor settings, menus. Changes made in the local DB must be re-applied on staging (wp-admin or wp-cli) or moved with a fresh DB export/import.
+- **Media** — synced with `deploy-staging.sh --media` (uploads are gitignored; 1.2G+).
+- **Server-only files** — `wp-config-local.php`, `object-cache.php` (LiteSpeed drop-in), `.htaccess` — never touched by deploys.
+
 ## Preview/password protection
 
 Public WordPress pages can be gated with server-only config. Create `wordpress/public_html/wp-config-local.php` on the Hostinger server with values like:

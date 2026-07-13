@@ -54,6 +54,18 @@ wordpress/public_html/.htaccess.bk
 backup*/
 backups*/
 
+# Design working files (huge PSDs — not code)
+art templates/
+
+# Media library — synced to servers with rsync (deploy-staging.sh --media), not git
+wordpress/public_html/wp-content/uploads/
+
+# Server-managed drop-in: LiteSpeed generates this on prod; local CLI chokes on it
+wordpress/public_html/wp-content/object-cache.php
+
+# Deploy target config (per-machine secrets)
+wordpress/scripts/deploy.env
+
 # Local WordPress development
 wordpress/.env.local
 # Never commit local secret/URL-override config (match in any location):

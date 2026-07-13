@@ -15,7 +15,10 @@ services:
       - mysql_data:/var/lib/mysql
 
   wordpress:
-    image: wordpress:php8.2-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: barebones-wordpress-local:php8.2-apache
     restart: unless-stopped
     depends_on:
       - db
@@ -26,6 +29,11 @@ services:
       WP_DB_USER: ${MYSQL_USER:-wp_user}
       WP_DB_PASSWORD: ${MYSQL_PASSWORD:-wp_password}
       WP_DB_HOST: db:3306
+      OPS_DB_HOST: db
+      OPS_DB_NAME: ${OPS_DB_NAME:-barebones_ops}
+      OPS_DB_USER: ${OPS_DB_USER:-root}
+      OPS_DB_PASS: ${OPS_DB_PASS:-root_password}
+      OPS_DB_PORT: 3306
     ports:
       - "8080:80"
     volumes:

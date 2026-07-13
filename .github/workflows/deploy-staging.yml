@@ -1,0 +1,74 @@
+name: Deploy to Staging (bbaprintshop.com)
+
+# Push-to-deploy: anything merged into the `staging` branch that touches
+# deployable code is mirrored to the bbaprintshop.com docroot on Hostinger.
+# Scope is CODE ONLY — bw-* plugins, mu-plugins, ops. Content/settings live
+# in the staging DB; media syncs separately (see docs/DEPLOYMENT.md).
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - staging
+    paths:
+      - ".github/workflows/deploy-staging.yml"
+      - "wordpress/public_html/ops/**"
+      - "wordpress/public_html/wp-content/mu-plugins/**"
+      - "wordpress/public_html/wp-content/plugins/bw-*/**"
+      - "wordpress/public_html/wp-content/plugins/fm-surcharges/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Upload app files
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_PROTOCOL: ${{ secrets.HOSTINGER_PROTOCOL }}
+          HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          STAGING_REMOTE_DIR: ${{ secrets.STAGING_REMOTE_DIR }}
+        run: |
+          test -n "$HOSTINGER_HOST"
+          test -n "$HOSTINGER_USERNAME"
+          test -n "$HOSTINGER_PASSWORD"
+          test -n "$STAGING_REMOTE_DIR"
+
+          SRC="wordpress/public_html"
+
+          # Build the mirror command list dynamically: every bw-* plugin dir
+          # that exists in the repo gets mirrored, so new plugins deploy
+          # without editing this file.
+          {
+            echo "set cmd:fail-exit yes"
+            echo "set ssl:verify-certificate no"
+            echo "set sftp:auto-confirm yes"
+
+            if [ -d "$SRC/ops" ]; then
+              echo "mirror -R --verbose --only-newer --parallel=2 --exclude-glob config.php --exclude-glob config.local.php --exclude ^runtime/ $SRC/ops \"$STAGING_REMOTE_DIR/ops\""
+            fi
+
+            if [ -d "$SRC/wp-content/mu-plugins" ]; then
+              echo "mirror -R --verbose --delete --parallel=2 $SRC/wp-content/mu-plugins \"$STAGING_REMOTE_DIR/wp-content/mu-plugins\""
+            fi
+
+            for dir in "$SRC"/wp-content/plugins/bw-* "$SRC"/wp-content/plugins/fm-surcharges; do
+              [ -d "$dir" ] || continue
+              name="$(basename "$dir")"
+              echo "mirror -R --verbose --delete --parallel=2 $dir \"$STAGING_REMOTE_DIR/wp-content/plugins/$name\""
+            done
+
+            echo "bye"
+          } > /tmp/lftp-script
+
+          lftp -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" "${HOSTINGER_PROTOCOL:-sftp}://$HOSTINGER_HOST:${HOSTINGER_PORT:-22}" -f /tmp/lftp-script
