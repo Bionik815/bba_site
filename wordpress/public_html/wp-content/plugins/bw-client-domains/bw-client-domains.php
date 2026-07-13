@@ -1,19 +1,16 @@
 <?php
 /**
  * Plugin Name: BW Client Domains
- * Description: Serves each client storefront at {client}.barebones-apparel.com from this single WordPress/WooCommerce install. The subdomain maps to the matching Creator landing page; all other links (products, cart, checkout) stay on the main domain so every customer shares one cart across all client stores.
- * Version: 1.0.0
+ * Description: Gives every client a direct link — {client}.bbaprintshop.com 301-redirects to that client's storefront page on the main domain. Everything stays on ONE WordPress/WooCommerce install and ONE domain for browsing/cart/checkout, so a single order can mix products from any client store. Subdomain defaults to the creator's slug; override per-creator with the Subdomain box.
+ * Version: 2.0.0
  * Author: Barebones Apparel
  * License: GPL-2.0+
  *
- * Production requirements (one-time, outside this plugin):
- * - Wildcard DNS record: *.barebones-apparel.com -> same server as the main site
- * - Hostinger: add wildcard subdomain (*.barebones-apparel.com) pointing at this webroot
- * - Wildcard SSL covering *.barebones-apparel.com
- * - In wp-config.php: define('COOKIE_DOMAIN', ''); must NOT be set to a fixed host,
- *   and for a shared cart across subdomains WooCommerce needs nothing extra because
- *   cart/checkout links resolve to the main domain (home_url) — customers land back
- *   on barebones-apparel.com to buy, keeping one session/cart for all stores.
+ * One-time hosting setup per subdomain (Hostinger hPanel → Subdomains):
+ * - Create the subdomain (e.g. dj-craig) with its document root pointed at the
+ *   MAIN site's public_html (custom folder), so requests reach this WordPress.
+ * - Issue the free SSL for the new subdomain.
+ * DNS is added automatically when the domain uses Hostinger nameservers.
  */
 
 if (!defined('ABSPATH')) {
@@ -25,12 +22,16 @@ class BW_Client_Domains
     /** Subdomains that must never be treated as client stores. */
     const RESERVED = ['www', 'shop', 'store', 'mail', 'smtp', 'ftp', 'api', 'admin', 'staging', 'dev', 'test', 'cdn', 'cpanel', 'webmail', 'autodiscover'];
 
-    private $client_slug = '';
+    const PM_SUBDOMAIN = '_bw_creator_subdomain';
 
     public function __construct()
     {
-        add_filter('request', [$this, 'map_subdomain_request']);
-        add_action('parse_request', [$this, 'maybe_disable_canonical']);
+        // Redirect before the preview gate (init 0) and before any output.
+        add_action('plugins_loaded', [$this, 'maybe_redirect'], 20);
+
+        // Per-creator subdomain override UI.
+        add_action('add_meta_boxes', [$this, 'add_meta_box']);
+        add_action('save_post_bw_creator', [$this, 'save_meta']);
     }
 
     /**
@@ -59,17 +60,14 @@ class BW_Client_Domains
         return (string) wp_parse_url($this->base_home(), PHP_URL_HOST);
     }
 
-    /**
-     * Extract the client slug from the request host, or '' when the request
-     * is for the main site (or a reserved/unknown subdomain).
-     */
-    private function detect_client_slug()
+    /** Subdomain label from the request host, '' when on the main host. */
+    private function request_subdomain()
     {
         $host = isset($_SERVER['HTTP_HOST']) ? strtolower(sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST']))) : '';
         $host = preg_replace('/:\d+$/', '', $host);
         $base = preg_replace('/:\d+$/', '', $this->base_domain());
 
-        if ($host === '' || $host === $base || !str_ends_with($host, '.' . $base)) {
+        if ($host === '' || $base === '' || $host === $base || !str_ends_with($host, '.' . $base)) {
             return '';
         }
 
@@ -77,14 +75,7 @@ class BW_Client_Domains
         if ($sub === '' || strpos($sub, '.') !== false || in_array($sub, self::RESERVED, true)) {
             return '';
         }
-
         if (!preg_match('/^[a-z0-9-]{1,80}$/', $sub)) {
-            return '';
-        }
-
-        // Only map when a published creator with this slug exists.
-        $creator = get_page_by_path($sub, OBJECT, 'bw_creator');
-        if (!$creator || $creator->post_status !== 'publish') {
             return '';
         }
 
@@ -92,43 +83,118 @@ class BW_Client_Domains
     }
 
     /**
-     * Root request on a client subdomain -> serve that creator's landing
-     * page. Any deeper path on the subdomain (cart, products, ...) is
-     * redirected to the same path on the main domain so checkout and
-     * sessions always live in one place.
+     * Resolve a subdomain label to a published creator: explicit subdomain
+     * meta wins, then the creator's own slug. Direct SQL — this runs at
+     * plugins_loaded, before post types are registered.
      */
-    public function map_subdomain_request($query_vars)
+    private function find_creator($sub)
     {
-        $this->client_slug = $this->detect_client_slug();
-        if ($this->client_slug === '') {
-            return $query_vars;
+        global $wpdb;
+
+        $id = $wpdb->get_var($wpdb->prepare(
+            "SELECT p.ID FROM {$wpdb->posts} p
+             JOIN {$wpdb->postmeta} m ON m.post_id = p.ID AND m.meta_key = %s AND m.meta_value = %s
+             WHERE p.post_type = 'bw_creator' AND p.post_status = 'publish' LIMIT 1",
+            self::PM_SUBDOMAIN,
+            $sub
+        ));
+        if (!$id) {
+            $id = $wpdb->get_var($wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts}
+                 WHERE post_type = 'bw_creator' AND post_status = 'publish' AND post_name = %s LIMIT 1",
+                $sub
+            ));
         }
 
-        $path = wp_parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
-
-        if ($path !== '/' && $path !== '') {
-            // Deep paths (cart, checkout, products, ...) always live on the
-            // main domain so every store shares one session and cart.
-            $target = rtrim($this->base_home(), '/') . ($_SERVER['REQUEST_URI'] ?? '/');
-            wp_redirect(esc_url_raw($target), 301);
-            exit;
-        }
-
-        return [
-            'post_type' => 'bw_creator',
-            'bw_creator' => $this->client_slug,
-            'name' => $this->client_slug,
-        ];
+        return $id ? (int) $id : 0;
     }
 
     /**
-     * Stop WordPress canonical redirect from bouncing the subdomain root
-     * over to /creator/{slug}/ on the main domain.
+     * On a client subdomain:
+     *  - root path  -> 301 to the creator's storefront page on the main domain
+     *  - deep paths -> 301 to the same path on the main domain (cart, product
+     *    links, anything) so sessions and the shared cart live in one place
+     *  - unknown subdomain -> 301 to the main homepage
      */
-    public function maybe_disable_canonical()
+    public function maybe_redirect()
     {
-        if ($this->client_slug !== '') {
-            remove_action('template_redirect', 'redirect_canonical');
+        if (defined('WP_CLI') && WP_CLI) {
+            return;
+        }
+
+        $sub = $this->request_subdomain();
+        if ($sub === '') {
+            return;
+        }
+
+        $base = rtrim($this->base_home(), '/');
+        $path = wp_parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+
+        if ($path !== '/' && $path !== '') {
+            $target = $base . ($_SERVER['REQUEST_URI'] ?? '/');
+        } else {
+            $creator_id = $this->find_creator($sub);
+            if ($creator_id) {
+                global $wpdb;
+                $slug = (string) $wpdb->get_var($wpdb->prepare("SELECT post_name FROM {$wpdb->posts} WHERE ID = %d", $creator_id));
+                $target = $base . '/creator/' . rawurlencode($slug) . '/';
+            } else {
+                $target = $base . '/';
+            }
+        }
+
+        wp_redirect(esc_url_raw($target), 301);
+        exit;
+    }
+
+    /* ---------- Admin: per-creator subdomain override ---------- */
+
+    public function add_meta_box()
+    {
+        add_meta_box('bw_client_subdomain', 'Subdomain', [$this, 'render_meta_box'], 'bw_creator', 'side');
+    }
+
+    public function render_meta_box($post)
+    {
+        $value = get_post_meta($post->ID, self::PM_SUBDOMAIN, true);
+        $base  = preg_replace('/:\d+$/', '', $this->base_domain()) ?: 'bbaprintshop.com';
+        wp_nonce_field('bw_client_subdomain_save', 'bw_client_subdomain_nonce');
+        ?>
+        <p>
+            <input type="text" name="bw_client_subdomain" class="widefat"
+                   value="<?php echo esc_attr($value); ?>"
+                   placeholder="<?php echo esc_attr($post->post_name); ?>"
+                   pattern="[a-z0-9-]{1,80}">
+        </p>
+        <p class="description">
+            <?php echo esc_html(($value ?: $post->post_name) . '.' . $base); ?> → this store.
+            Blank = use the slug. Lowercase letters, numbers, dashes.
+            Remember to create the subdomain in Hostinger hPanel too.
+        </p>
+        <?php
+    }
+
+    public function save_meta($post_id)
+    {
+        if (!isset($_POST['bw_client_subdomain_nonce']) || !wp_verify_nonce($_POST['bw_client_subdomain_nonce'], 'bw_client_subdomain_save')) {
+            return;
+        }
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+
+        $raw = strtolower(sanitize_text_field(wp_unslash($_POST['bw_client_subdomain'] ?? '')));
+        if ($raw !== '' && (!preg_match('/^[a-z0-9-]{1,80}$/', $raw) || in_array($raw, self::RESERVED, true))) {
+            $raw = '';
+        }
+
+        if ($raw === '') {
+            delete_post_meta($post_id, self::PM_SUBDOMAIN);
+        } else {
+            update_post_meta($post_id, self::PM_SUBDOMAIN, $raw);
         }
     }
 }
