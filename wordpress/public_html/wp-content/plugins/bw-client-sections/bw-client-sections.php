@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BW Client Sections
  * Description: Shortcode to show client product sections (tabs or stacked) filtered by tags, scoped to a client category. Example: [bw_client_sections client="axe-n-dagger" sections="Jerseys:jersey|Jackets:jacket|Hoodies:hoodie|All:all" per="8" columns="4" layout="tabs"]
- * Version: 1.0.0
+ * Version: 1.1.0
  */
 
 if (!defined('ABSPATH')) exit;
@@ -23,14 +23,23 @@ class BW_Client_Sections {
 .bwcs-panel{display:none}
 .bwcs-panel.is-active{display:block}
 /* product card polish works with Astra/Woo default */
-.woocommerce ul.products li.product{border:1px solid #e7e7ea;border-radius:12px;overflow:hidden;background:#fff;padding:0 0 10px!important;transition:box-shadow .18s,transform .18s;}
+.woocommerce ul.products li.product{border:1px solid #e7e7ea;border-radius:12px;overflow:hidden;background:#fff;padding:0 0 10px!important;transition:box-shadow .18s,transform .18s;display:flex;flex-direction:column;}
 .woocommerce ul.products li.product:hover{box-shadow:0 12px 30px rgba(0,0,0,.08);transform:translateY(-2px);}
-.woocommerce ul.products li.product a img{aspect-ratio:4/3;width:100%;height:auto;object-fit:cover;display:block;}
+/* Catalog images are 1000x1000 squares — show the WHOLE image, never crop */
+.woocommerce ul.products li.product a img{aspect-ratio:1/1;width:100%;height:auto;object-fit:contain;background:#fff;display:block;}
 .woocommerce ul.products li.product .woocommerce-loop-product__title{font-size:1rem;padding:10px 12px 4px;margin:0;}
-.woocommerce ul.products li.product .price{padding:0 12px 4px;display:block;font-weight:700;}
+.woocommerce ul.products li.product .price{padding:0 12px 8px;display:block;font-weight:700;}
+/* Equal-height cards: summary column stretches, button pins to the bottom */
+.woocommerce ul.products li.product .astra-shop-summary-wrap{display:flex;flex-direction:column;flex:1 1 auto;}
 .woocommerce ul.products li.product .button{margin:8px 12px 0;width:calc(100% - 24px);text-align:center;border-radius:8px;}
+.woocommerce ul.products li.product .astra-shop-summary-wrap .button{margin-top:auto!important;}
 CSS;
-    wp_add_inline_style('woocommerce-inline', $css);
+    // Own handle: 'woocommerce-inline' is not reliably enqueued on every page,
+    // which silently dropped these styles (the Customizer CSS copy used to
+    // paper over that — removed 2026-07-12, this is now the single source).
+    wp_register_style('bw-client-sections', false, [], '1.1.0');
+    wp_enqueue_style('bw-client-sections');
+    wp_add_inline_style('bw-client-sections', $css);
 
     $js = <<<JS
 (function(){

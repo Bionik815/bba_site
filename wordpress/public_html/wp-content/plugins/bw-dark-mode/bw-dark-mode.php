@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BW Dark Mode
  * Description: Site-wide dark mode with a floating toggle. Defaults to the visitor's OS preference, persists their choice, and keeps dark client logos readable on light tile backings.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Barebones Apparel
  * License: GPL-2.0+
  */
@@ -186,6 +186,23 @@ JS;
 [data-bw-theme="dark"] .bwmm-card:hover,
 [data-bw-theme="dark"] .bwmm-card:focus-visible {
     box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55);
+}
+
+/* Product cards keep their white surface in dark mode, so everything inside
+   must stay DARK text — the global dark-mode heading/link colors made titles
+   white-on-white. */
+[data-bw-theme="dark"] .woocommerce ul.products li.product .woocommerce-loop-product__title,
+[data-bw-theme="dark"] ul.products li.product .woocommerce-loop-product__title,
+[data-bw-theme="dark"] ul.products li.product .price,
+[data-bw-theme="dark"] ul.products li.product .price .amount {
+    color: #1f2430 !important;
+}
+[data-bw-theme="dark"] ul.products li.product .ast-woo-product-category {
+    color: #6b7280 !important;
+}
+[data-bw-theme="dark"] ul.products li.product a.ast-loop-product__link,
+[data-bw-theme="dark"] ul.products li.product a.woocommerce-LoopProduct-link {
+    color: #1f2430;
 }
 
 /* ---------- WooCommerce + forms ---------- */
