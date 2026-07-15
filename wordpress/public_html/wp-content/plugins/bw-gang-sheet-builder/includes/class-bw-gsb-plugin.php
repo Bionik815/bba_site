@@ -54,6 +54,12 @@ class BW_GSB_Plugin
         add_action('woocommerce_store_api_checkout_order_processed', [$this, 'link_store_api_order']);
         add_action('woocommerce_order_status_processing', [$this, 'mark_submissions_paid']);
         add_action('woocommerce_order_status_completed', [$this, 'mark_submissions_paid']);
+
+        // Saved designs (logged-in customers only).
+        add_action('wp_ajax_bw_gsb_save_design', [$this, 'ajax_save_design']);
+        add_action('wp_ajax_bw_gsb_list_designs', [$this, 'ajax_list_designs']);
+        add_action('wp_ajax_bw_gsb_load_design', [$this, 'ajax_load_design']);
+        add_action('wp_ajax_bw_gsb_delete_design', [$this, 'ajax_delete_design']);
     }
 
     public static function activate()
@@ -196,6 +202,10 @@ class BW_GSB_Plugin
                 'version' => self::VERSION,
                 'dpiGood' => 250,
                 'dpiOk' => 150,
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'designNonce' => wp_create_nonce('bw_gsb_design'),
+                'isLoggedIn' => is_user_logged_in(),
+                'loginUrl' => wp_login_url($this->current_url()),
                 'messages' => [
                     'uploadCountSingle' => __('1 file selected', 'bw-gsb'),
                     'uploadCountPlural' => __('files selected', 'bw-gsb'),
@@ -228,6 +238,7 @@ class BW_GSB_Plugin
                 <input type="hidden" name="action" value="<?php echo esc_attr(self::ACTION_SUBMIT); ?>">
                 <input type="hidden" name="redirect_to" value="<?php echo esc_url($this->current_url()); ?>">
                 <input type="hidden" name="layout_json" value="">
+                <input type="hidden" name="design_source_id" value="" data-bw-gsb-design-source>
 
                 <section class="bw-gsb-hero">
                     <div>
@@ -264,9 +275,10 @@ class BW_GSB_Plugin
 
                         <label>
                             <span><?php esc_html_e('Artwork Files', 'bw-gsb'); ?></span>
-                            <input type="file" name="artwork_files[]" multiple accept=".png,image/png" data-bw-gsb-files>
+                            <input type="file" name="artwork_files[]" multiple accept=".png,.jpg,.jpeg,.webp,.svg,image/png,image/jpeg,image/webp,image/svg+xml" data-bw-gsb-files>
                         </label>
                         <p class="bw-gsb-help" data-bw-gsb-file-summary><?php esc_html_e('No files selected yet.', 'bw-gsb'); ?></p>
+                        <p class="bw-gsb-help"><?php esc_html_e('PNG, JPG, WEBP, and SVG accepted — everything is converted to print-ready PNG right in your browser. PNG with a transparent background prints best; JPG backgrounds print white.', 'bw-gsb'); ?></p>
 
                         <label>
                             <span><?php esc_html_e('Notes', 'bw-gsb'); ?></span>
@@ -277,7 +289,7 @@ class BW_GSB_Plugin
                     <div class="bw-gsb-card">
                         <h3><?php esc_html_e('How It Works', 'bw-gsb'); ?></h3>
                         <ol class="bw-gsb-steps">
-                            <li><?php esc_html_e('Pick your sheet size and upload PNG artwork.', 'bw-gsb'); ?></li>
+                            <li><?php esc_html_e('Pick your sheet size and upload artwork (PNG, JPG, WEBP, or SVG).', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('Place, resize, rotate, and duplicate designs until the sheet is full.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('Add the sheet to your cart and check out securely.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('We review every sheet before printing and reach out if anything needs attention.', 'bw-gsb'); ?></li>
@@ -291,7 +303,10 @@ class BW_GSB_Plugin
                             <p class="bw-gsb-kicker"><?php esc_html_e('Artwork Library', 'bw-gsb'); ?></p>
                             <h3><?php esc_html_e('Uploaded Files Ready For Placement', 'bw-gsb'); ?></h3>
                         </div>
-                        <p><?php esc_html_e('Upload files above, then use this library to add them to the gang sheet as many times as needed.', 'bw-gsb'); ?></p>
+                        <div class="bw-gsb-library-actions">
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-add-all><?php esc_html_e('Add All + Auto-Arrange', 'bw-gsb'); ?></button>
+                            <p><?php esc_html_e('Upload files above, then add them to the sheet as many times as needed.', 'bw-gsb'); ?></p>
+                        </div>
                     </div>
                     <div class="bw-gsb-upload-list" data-bw-gsb-upload-list></div>
                 </section>
@@ -318,7 +333,73 @@ class BW_GSB_Plugin
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-duplicate><?php esc_html_e('Duplicate', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-remove><?php esc_html_e('Remove Selected', 'bw-gsb'); ?></button>
                         </div>
-                        <p class="bw-gsb-help"><?php esc_html_e('Tip: select an artwork to move, resize, or rotate it (drag the round handle, hold Shift to snap). Arrow keys nudge; Delete removes. Each artwork shows its live print size and DPI.', 'bw-gsb'); ?></p>
+                        <div class="bw-gsb-tool-group bw-gsb-tool-group-secondary">
+                            <button type="button" class="bw-gsb-tool-button bw-gsb-tool-button-primary" data-bw-gsb-auto-arrange><?php esc_html_e('Auto-Arrange Sheet', 'bw-gsb'); ?></button>
+                            <label class="bw-gsb-margin-field">
+                                <span><?php esc_html_e('Spacing', 'bw-gsb'); ?></span>
+                                <input type="number" step="0.125" min="0" max="2" value="0.125" data-bw-gsb-margin> in
+                            </label>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-add-text><?php esc_html_e('+ Add Text', 'bw-gsb'); ?></button>
+                            <?php if (is_user_logged_in()) : ?>
+                                <button type="button" class="bw-gsb-tool-button" data-bw-gsb-save-design><?php esc_html_e('Save Design', 'bw-gsb'); ?></button>
+                                <button type="button" class="bw-gsb-tool-button" data-bw-gsb-my-designs><?php esc_html_e('My Designs', 'bw-gsb'); ?></button>
+                            <?php else : ?>
+                                <a class="bw-gsb-tool-button bw-gsb-tool-link" href="<?php echo esc_url(wp_login_url($this->current_url())); ?>"><?php esc_html_e('Log in to save designs', 'bw-gsb'); ?></a>
+                            <?php endif; ?>
+                        </div>
+                        <p class="bw-gsb-help"><?php esc_html_e('Tip: select an artwork to move, resize, or rotate it (drag the round handle, hold Shift to snap). Arrow keys nudge; Delete removes. Double-click a text design to edit it. Auto-Arrange packs everything on the sheet with even spacing.', 'bw-gsb'); ?></p>
+                    </div>
+
+                    <div class="bw-gsb-text-panel" data-bw-gsb-text-panel hidden>
+                        <div class="bw-gsb-item-fields">
+                            <label class="bw-gsb-text-field-wide">
+                                <span><?php esc_html_e('Text', 'bw-gsb'); ?></span>
+                                <input type="text" maxlength="80" placeholder="<?php esc_attr_e('Team Name, Player, 2026…', 'bw-gsb'); ?>" data-bw-gsb-text-input>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Font', 'bw-gsb'); ?></span>
+                                <select data-bw-gsb-text-font>
+                                    <option value="Impact, 'Arial Black', sans-serif">Impact</option>
+                                    <option value="'Arial Black', Arial, sans-serif">Arial Black</option>
+                                    <option value="Georgia, 'Times New Roman', serif">Georgia</option>
+                                    <option value="'Times New Roman', serif">Times Bold</option>
+                                    <option value="'Courier New', monospace">Courier Bold</option>
+                                    <option value="Verdana, sans-serif">Verdana Bold</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Height (in)', 'bw-gsb'); ?></span>
+                                <input type="number" step="0.25" min="0.5" max="12" value="2" data-bw-gsb-text-size>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Color', 'bw-gsb'); ?></span>
+                                <input type="color" value="#000000" data-bw-gsb-text-color>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Outline', 'bw-gsb'); ?></span>
+                                <select data-bw-gsb-text-outline>
+                                    <option value="0"><?php esc_html_e('None', 'bw-gsb'); ?></option>
+                                    <option value="0.04"><?php esc_html_e('Thin', 'bw-gsb'); ?></option>
+                                    <option value="0.09"><?php esc_html_e('Thick', 'bw-gsb'); ?></option>
+                                </select>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Outline Color', 'bw-gsb'); ?></span>
+                                <input type="color" value="#ffffff" data-bw-gsb-text-outline-color>
+                            </label>
+                        </div>
+                        <div class="bw-gsb-tool-group">
+                            <button type="button" class="bw-gsb-tool-button bw-gsb-tool-button-primary" data-bw-gsb-text-apply><?php esc_html_e('Add To Sheet', 'bw-gsb'); ?></button>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-text-cancel><?php esc_html_e('Cancel', 'bw-gsb'); ?></button>
+                        </div>
+                    </div>
+
+                    <div class="bw-gsb-designs-panel" data-bw-gsb-designs-panel hidden>
+                        <div class="bw-gsb-item-panel-head">
+                            <strong><?php esc_html_e('My Saved Designs', 'bw-gsb'); ?></strong>
+                            <button type="button" class="bw-gsb-tool-button" data-bw-gsb-designs-close><?php esc_html_e('Close', 'bw-gsb'); ?></button>
+                        </div>
+                        <div data-bw-gsb-designs-list><p class="bw-gsb-help"><?php esc_html_e('Loading…', 'bw-gsb'); ?></p></div>
                     </div>
                     <div class="bw-gsb-item-panel" data-bw-gsb-item-panel hidden>
                         <div class="bw-gsb-item-panel-head">
@@ -345,7 +426,7 @@ class BW_GSB_Plugin
                         <div class="bw-gsb-canvas" data-bw-gsb-canvas>
                             <div class="bw-gsb-canvas-grid"></div>
                             <div class="bw-gsb-canvas-empty">
-                                <?php esc_html_e('Upload PNG files above to start placing artwork on the sheet.', 'bw-gsb'); ?>
+                                <?php esc_html_e('Upload artwork above to start placing it on the sheet.', 'bw-gsb'); ?>
                             </div>
                         </div>
                     </div>
@@ -399,6 +480,7 @@ class BW_GSB_Plugin
             'layout_json' => $layout_json,
             'status' => 'awaiting_payment',
             'session_key' => wp_generate_uuid4(),
+            'user_id' => get_current_user_id(),
         ];
 
         global $wpdb;
@@ -410,6 +492,13 @@ class BW_GSB_Plugin
 
         $submission_id = (int) $wpdb->insert_id;
         $this->handle_uploaded_assets($submission_id);
+
+        // Sheets rebuilt from a saved design reference already-uploaded
+        // artwork; clone those asset rows instead of requiring a re-upload.
+        $design_source_id = absint($_POST['design_source_id'] ?? 0);
+        if ($design_source_id > 0) {
+            $this->copy_design_assets_to_submission($design_source_id, $submission_id);
+        }
 
         if (!$this->get_submission_assets($submission_id)) {
             $wpdb->delete($this->table('submissions'), ['id' => $submission_id]);
@@ -1067,6 +1156,7 @@ class BW_GSB_Plugin
                     WHERE a.submission_id = s.id
                 ) AS asset_count
             FROM {$submissions} s
+            WHERE s.status != 'design'
             ORDER BY s.created_at DESC
             LIMIT 50
         ", ARRAY_A);
@@ -1261,6 +1351,34 @@ class BW_GSB_Plugin
                     'width' => 22,
                     'height' => 60,
                     'price' => 60.00,
+                ],
+                [
+                    'code' => '22x84',
+                    'label' => '22" x 84" (7 ft)',
+                    'width' => 22,
+                    'height' => 84,
+                    'price' => 84.00,
+                ],
+                [
+                    'code' => '22x120',
+                    'label' => '22" x 120" (10 ft)',
+                    'width' => 22,
+                    'height' => 120,
+                    'price' => 120.00,
+                ],
+                [
+                    'code' => '22x180',
+                    'label' => '22" x 180" (15 ft)',
+                    'width' => 22,
+                    'height' => 180,
+                    'price' => 180.00,
+                ],
+                [
+                    'code' => '22x240',
+                    'label' => '22" x 240" (20 ft)',
+                    'width' => 22,
+                    'height' => 240,
+                    'price' => 240.00,
                 ],
             ],
             'statuses' => [
@@ -1787,6 +1905,211 @@ class BW_GSB_Plugin
 
         if (!$this->submission_table_has_column('export_attachment_id')) {
             $wpdb->query("ALTER TABLE {$table} ADD COLUMN export_attachment_id BIGINT UNSIGNED NOT NULL DEFAULT 0 AFTER preview_attachment_id");
+        }
+
+        // 0.5.0: saved designs live in the same table (status 'design'),
+        // owned by a WordPress user and named for the My Designs list.
+        if (!$this->submission_table_has_column('user_id')) {
+            $wpdb->query("ALTER TABLE {$table} ADD COLUMN user_id BIGINT UNSIGNED NOT NULL DEFAULT 0 AFTER session_key, ADD KEY user_id (user_id)");
+        }
+        if (!$this->submission_table_has_column('design_name')) {
+            $wpdb->query("ALTER TABLE {$table} ADD COLUMN design_name VARCHAR(190) NOT NULL DEFAULT '' AFTER user_id");
+        }
+    }
+
+    /* ---------- Saved designs (logged-in customers) ---------- */
+
+    private function require_design_request()
+    {
+        check_ajax_referer('bw_gsb_design', 'nonce');
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => __('Log in to save and load designs.', 'bw-gsb')], 401);
+        }
+        return get_current_user_id();
+    }
+
+    /** Design row owned by the given user, or null. */
+    private function get_owned_design($design_id, $user_id)
+    {
+        global $wpdb;
+        $row = $wpdb->get_row($wpdb->prepare(
+            "SELECT * FROM {$this->table('submissions')} WHERE id = %d AND status = 'design' AND user_id = %d",
+            $design_id,
+            $user_id
+        ), ARRAY_A);
+        return $row ?: null;
+    }
+
+    public function ajax_save_design()
+    {
+        $user_id = $this->require_design_request();
+
+        $settings = $this->get_default_settings();
+        $sheet = $this->get_sheet_by_code(sanitize_text_field(wp_unslash($_POST['sheet_code'] ?? '')), $settings['sheet_sizes']);
+        if (!$sheet) {
+            wp_send_json_error(['message' => __('Invalid sheet size.', 'bw-gsb')], 400);
+        }
+
+        $layout_json = $this->sanitize_layout_json($_POST['layout_json'] ?? '');
+        $design_name = sanitize_text_field(wp_unslash($_POST['design_name'] ?? ''));
+        if ($design_name === '') {
+            $design_name = __('Untitled design', 'bw-gsb');
+        }
+
+        $design_id = absint($_POST['design_id'] ?? 0);
+        global $wpdb;
+
+        $fields = [
+            'design_name' => $design_name,
+            'sheet_code' => $sheet['code'],
+            'sheet_width' => (float) $sheet['width'],
+            'sheet_height' => (float) $sheet['height'],
+            'price' => (float) $sheet['price'],
+            'currency' => $settings['currency'],
+            'layout_json' => $layout_json,
+        ];
+
+        if ($design_id && $this->get_owned_design($design_id, $user_id)) {
+            $wpdb->update($this->table('submissions'), $fields, ['id' => $design_id]);
+        } else {
+            $fields['status'] = 'design';
+            $fields['user_id'] = $user_id;
+            $fields['session_key'] = wp_generate_uuid4();
+            if ($wpdb->insert($this->table('submissions'), $fields) === false) {
+                wp_send_json_error(['message' => __('Could not save the design.', 'bw-gsb')], 500);
+            }
+            $design_id = (int) $wpdb->insert_id;
+        }
+
+        // New files uploaded alongside the save.
+        $this->handle_uploaded_assets($design_id);
+
+        // Assets carried over from a previously loaded design (no re-upload).
+        $existing_ids = array_filter(array_map('absint', (array) json_decode(wp_unslash($_POST['existing_asset_ids'] ?? '[]'), true)));
+        if ($existing_ids) {
+            $current = wp_list_pluck($this->get_submission_assets($design_id), 'id');
+            foreach ($existing_ids as $asset_id) {
+                if (in_array($asset_id, array_map('intval', $current), true)) {
+                    continue; // already attached to this design
+                }
+                $source = $wpdb->get_row($wpdb->prepare(
+                    "SELECT a.* FROM {$this->table('assets')} a
+                     JOIN {$this->table('submissions')} s ON s.id = a.submission_id
+                     WHERE a.id = %d AND s.user_id = %d",
+                    $asset_id,
+                    $user_id
+                ), ARRAY_A);
+                if ($source) {
+                    $wpdb->insert($this->table('assets'), [
+                        'submission_id' => $design_id,
+                        'attachment_id' => (int) $source['attachment_id'],
+                        'original_filename' => $source['original_filename'],
+                        'mime_type' => $source['mime_type'],
+                        'width_px' => (int) $source['width_px'],
+                        'height_px' => (int) $source['height_px'],
+                        'filesize_bytes' => (int) $source['filesize_bytes'],
+                    ]);
+                }
+            }
+        }
+
+        wp_send_json_success(['design_id' => $design_id, 'design_name' => $design_name]);
+    }
+
+    public function ajax_list_designs()
+    {
+        $user_id = $this->require_design_request();
+        global $wpdb;
+        $rows = $wpdb->get_results($wpdb->prepare(
+            "SELECT s.id, s.design_name, s.sheet_code, s.updated_at,
+                    (SELECT COUNT(*) FROM {$this->table('assets')} a WHERE a.submission_id = s.id) AS asset_count
+             FROM {$this->table('submissions')} s
+             WHERE s.status = 'design' AND s.user_id = %d
+             ORDER BY s.updated_at DESC
+             LIMIT 50",
+            $user_id
+        ), ARRAY_A);
+        wp_send_json_success(['designs' => $rows ?: []]);
+    }
+
+    public function ajax_load_design()
+    {
+        $user_id = $this->require_design_request();
+        $design = $this->get_owned_design(absint($_POST['design_id'] ?? 0), $user_id);
+        if (!$design) {
+            wp_send_json_error(['message' => __('Design not found.', 'bw-gsb')], 404);
+        }
+
+        $assets = [];
+        foreach ($this->get_submission_assets((int) $design['id']) as $asset) {
+            $url = wp_get_attachment_url((int) $asset['attachment_id']);
+            if (!$url) {
+                continue;
+            }
+            $assets[] = [
+                'asset_id' => (int) $asset['id'],
+                'attachment_id' => (int) $asset['attachment_id'],
+                'filename' => $asset['original_filename'],
+                'url' => $url,
+                'width' => (int) $asset['width_px'],
+                'height' => (int) $asset['height_px'],
+            ];
+        }
+
+        wp_send_json_success([
+            'design_id' => (int) $design['id'],
+            'design_name' => $design['design_name'],
+            'sheet_code' => $design['sheet_code'],
+            'layout' => $this->decode_layout_json($design['layout_json']),
+            'assets' => $assets,
+        ]);
+    }
+
+    public function ajax_delete_design()
+    {
+        $user_id = $this->require_design_request();
+        $design = $this->get_owned_design(absint($_POST['design_id'] ?? 0), $user_id);
+        if (!$design) {
+            wp_send_json_error(['message' => __('Design not found.', 'bw-gsb')], 404);
+        }
+
+        global $wpdb;
+        // Asset rows go; media attachments stay (other designs may reuse them).
+        $wpdb->delete($this->table('assets'), ['submission_id' => (int) $design['id']]);
+        $wpdb->delete($this->table('submissions'), ['id' => (int) $design['id']]);
+        wp_send_json_success();
+    }
+
+    /**
+     * When a checkout submission was built from a saved design, clone the
+     * design's asset rows so the submission owns its artwork references.
+     */
+    private function copy_design_assets_to_submission($design_id, $submission_id)
+    {
+        if (!is_user_logged_in()) {
+            return;
+        }
+
+        $design = $this->get_owned_design($design_id, get_current_user_id());
+        if (!$design) {
+            return;
+        }
+
+        global $wpdb;
+        $existing_filenames = wp_list_pluck($this->get_submission_assets($submission_id), 'original_filename');
+        foreach ($this->get_submission_assets((int) $design['id']) as $asset) {
+            if (in_array($asset['original_filename'], $existing_filenames, true)) {
+                continue; // freshly uploaded copy already present
+            }
+            $wpdb->insert($this->table('assets'), [
+                'submission_id' => $submission_id,
+                'attachment_id' => (int) $asset['attachment_id'],
+                'original_filename' => $asset['original_filename'],
+                'mime_type' => $asset['mime_type'],
+                'width_px' => (int) $asset['width_px'],
+                'height_px' => (int) $asset['height_px'],
+                'filesize_bytes' => (int) $asset['filesize_bytes'],
+            ]);
         }
     }
 

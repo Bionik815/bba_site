@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BW_GSB_VERSION', '0.4.0');
+define('BW_GSB_VERSION', '0.5.0');
 define('BW_GSB_FILE', __FILE__);
 define('BW_GSB_PATH', plugin_dir_path(__FILE__));
 define('BW_GSB_URL', plugin_dir_url(__FILE__));

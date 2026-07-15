@@ -64,6 +64,25 @@
         var widthPresetButtons = form.querySelectorAll('[data-bw-gsb-width-preset]');
         var removeButton = form.querySelector('[data-bw-gsb-remove]');
         var duplicateButton = form.querySelector('[data-bw-gsb-duplicate]');
+        var autoArrangeButton = form.querySelector('[data-bw-gsb-auto-arrange]');
+        var marginInput = form.querySelector('[data-bw-gsb-margin]');
+        var addAllButton = form.querySelector('[data-bw-gsb-add-all]');
+        var addTextButton = form.querySelector('[data-bw-gsb-add-text]');
+        var textPanel = form.querySelector('[data-bw-gsb-text-panel]');
+        var textInput = form.querySelector('[data-bw-gsb-text-input]');
+        var textFont = form.querySelector('[data-bw-gsb-text-font]');
+        var textSize = form.querySelector('[data-bw-gsb-text-size]');
+        var textColor = form.querySelector('[data-bw-gsb-text-color]');
+        var textOutline = form.querySelector('[data-bw-gsb-text-outline]');
+        var textOutlineColor = form.querySelector('[data-bw-gsb-text-outline-color]');
+        var textApply = form.querySelector('[data-bw-gsb-text-apply]');
+        var textCancel = form.querySelector('[data-bw-gsb-text-cancel]');
+        var saveDesignButton = form.querySelector('[data-bw-gsb-save-design]');
+        var myDesignsButton = form.querySelector('[data-bw-gsb-my-designs]');
+        var designsPanel = form.querySelector('[data-bw-gsb-designs-panel]');
+        var designsList = form.querySelector('[data-bw-gsb-designs-list]');
+        var designsClose = form.querySelector('[data-bw-gsb-designs-close]');
+        var designSourceInput = form.querySelector('[data-bw-gsb-design-source]');
         var itemPanel = form.querySelector('[data-bw-gsb-item-panel]');
         var itemPanelName = form.querySelector('[data-bw-gsb-item-name]');
         var itemPanelDpi = form.querySelector('[data-bw-gsb-item-dpi]');
@@ -79,7 +98,9 @@
             sheet: null,
             uploads: [],
             items: [],
-            activeId: null
+            activeId: null,
+            designId: 0,        // saved-design row being edited (0 = none)
+            editingTextId: null // upload id while the text panel edits an existing text design
         };
 
         function activeItem() {
@@ -475,6 +496,18 @@
                 card.appendChild(preview);
                 card.appendChild(meta);
                 card.appendChild(pixels);
+                if (upload.noAlpha) {
+                    var flag = document.createElement('p');
+                    flag.className = 'bw-gsb-upload-flag';
+                    flag.textContent = config.messages.jpegFlag || 'JPG: background prints white';
+                    card.appendChild(flag);
+                }
+                if (upload.isText) {
+                    var textFlag = document.createElement('p');
+                    textFlag.className = 'bw-gsb-upload-flag is-text';
+                    textFlag.textContent = config.messages.textFlag || 'Text design';
+                    card.appendChild(textFlag);
+                }
                 card.appendChild(button);
                 uploadList.appendChild(card);
             });
@@ -538,6 +571,84 @@
             renderItems();
         }
 
+        function packMargin() {
+            var value = marginInput ? Number(marginInput.value) : 0.125;
+            if (!isFinite(value) || value < 0) {
+                value = 0.125;
+            }
+            return Math.min(value, 2);
+        }
+
+        /**
+         * Shelf-pack every item on the sheet: tallest first, rows left to
+         * right, even spacing. Items that cannot fit stay where they were and
+         * get reported.
+         */
+        function autoArrange() {
+            if (!state.sheet || !state.items.length) {
+                return;
+            }
+
+            var margin = packMargin();
+            var sorted = state.items.slice().sort(function (a, b) {
+                return rotatedHalfExtents(b).y - rotatedHalfExtents(a).y;
+            });
+
+            var cursorX = margin;
+            var shelfY = margin;
+            var shelfH = 0;
+            var overflow = 0;
+            var epsilon = 0.001;
+
+            sorted.forEach(function (item) {
+                var half = rotatedHalfExtents(item);
+                var w = half.x * 2;
+                var h = half.y * 2;
+
+                if (cursorX + w > state.sheet.width - margin + epsilon) {
+                    cursorX = margin;
+                    shelfY += shelfH + margin;
+                    shelfH = 0;
+                }
+
+                if (shelfY + h > state.sheet.height + epsilon || w > state.sheet.width - margin * 2 + epsilon) {
+                    overflow += 1;
+                    return;
+                }
+
+                // Place so the rotated bounding box's top-left sits at the cursor.
+                item.x = cursorX + half.x - item.width / 2;
+                item.y = shelfY + half.y - item.height / 2;
+
+                cursorX += w + margin;
+                shelfH = Math.max(shelfH, h);
+            });
+
+            renderItems();
+
+            if (overflow > 0) {
+                window.alert(overflow + ' ' + (config.messages.autoArrangeOverflow || 'design(s) did not fit on this sheet size. Pick a bigger sheet or shrink them.'));
+            }
+        }
+
+        function addAllToSheet() {
+            if (!state.uploads.length) {
+                window.alert(config.messages.needUploads || 'Upload artwork files first.');
+                return;
+            }
+
+            state.uploads.forEach(function (upload) {
+                var placed = state.items.some(function (item) {
+                    return item.uploadId === upload.id;
+                });
+                if (!placed) {
+                    addUploadToCanvas(upload.id);
+                }
+            });
+
+            autoArrange();
+        }
+
         function duplicateSelected() {
             var item = activeItem();
             if (!item || !state.sheet) {
@@ -558,6 +669,107 @@
             renderItems();
         }
 
+        var CONVERTIBLE_TYPES = {
+            'image/png': 'png',
+            'image/jpeg': 'jpeg',
+            'image/webp': 'webp',
+            'image/svg+xml': 'svg'
+        };
+
+        function pngName(name) {
+            return String(name || 'artwork').replace(/\.(png|jpe?g|webp|svg)$/i, '') + '.png';
+        }
+
+        function registerUpload(entry) {
+            state.uploads.push(entry);
+            syncInputFiles();
+            updateFileSummary();
+            renderUploadCards();
+        }
+
+        /**
+         * Everything becomes PNG in the browser so the server pipeline
+         * (upload validation, print-file generation) stays PNG-only.
+         */
+        function ingestFile(file) {
+            var kind = CONVERTIBLE_TYPES[file.type];
+            if (!kind) {
+                return;
+            }
+
+            var duplicate = state.uploads.some(function (entry) {
+                return entry.name === pngName(file.name) && entry.file && entry.file.size === file.size;
+            });
+            if (duplicate) {
+                return;
+            }
+
+            var url = URL.createObjectURL(file);
+            var image = new Image();
+
+            image.onload = function () {
+                if (kind === 'png') {
+                    registerUpload({
+                        id: nextId('upload'),
+                        name: file.name,
+                        file: file,
+                        url: url,
+                        width: image.naturalWidth || 0,
+                        height: image.naturalHeight || 0
+                    });
+                    return;
+                }
+
+                // Rasterize / re-encode to PNG. SVGs get a high-res raster so
+                // they stay sharp at large print sizes.
+                var width = image.naturalWidth || 0;
+                var height = image.naturalHeight || 0;
+                if (kind === 'svg') {
+                    var maxSide = Math.max(width, height, 1);
+                    var target = 3000; // ~10in at 300 DPI
+                    var factor = width > 0 ? Math.min(4, Math.max(1, target / maxSide)) : 1;
+                    if (width === 0 || height === 0) {
+                        width = 2048;
+                        height = 2048;
+                        factor = 1;
+                    }
+                    width = Math.round(width * factor);
+                    height = Math.round(height * factor);
+                }
+
+                var raster = document.createElement('canvas');
+                raster.width = Math.max(1, width);
+                raster.height = Math.max(1, height);
+                var ctx = raster.getContext('2d');
+                ctx.drawImage(image, 0, 0, raster.width, raster.height);
+
+                raster.toBlob(function (blob) {
+                    if (!blob) {
+                        return;
+                    }
+                    var converted = new File([blob], pngName(file.name), { type: 'image/png' });
+                    var convertedUrl = URL.createObjectURL(blob);
+                    URL.revokeObjectURL(url);
+                    registerUpload({
+                        id: nextId('upload'),
+                        name: converted.name,
+                        file: converted,
+                        url: convertedUrl,
+                        width: raster.width,
+                        height: raster.height,
+                        noAlpha: kind === 'jpeg'
+                    });
+                }, 'image/png');
+            };
+
+            image.onerror = function () {
+                URL.revokeObjectURL(url);
+                window.alert((config.messages.badFile || 'Could not read this file:') + ' ' + file.name);
+            };
+
+            image.src = url;
+        }
+
         function readUploads() {
             if (!fileInput || !fileInput.files) {
                 updateFileSummary();
@@ -565,36 +777,7 @@
                 return;
             }
 
-            Array.prototype.forEach.call(fileInput.files, function (file, index) {
-                if (!file.type || file.type !== 'image/png') {
-                    return;
-                }
-
-                var duplicate = state.uploads.some(function (entry) {
-                    return entry.name === file.name && entry.file && entry.file.size === file.size && entry.file.lastModified === file.lastModified;
-                });
-                if (duplicate) {
-                    return;
-                }
-
-                var url = URL.createObjectURL(file);
-                var image = new Image();
-                image.onload = function () {
-                    state.uploads.push({
-                        id: nextId('upload_' + index),
-                        name: file.name,
-                        file: file,
-                        url: url,
-                        width: image.naturalWidth || 0,
-                        height: image.naturalHeight || 0
-                    });
-                    syncInputFiles();
-                    updateFileSummary();
-                    renderUploadCards();
-                };
-                image.src = url;
-            });
-
+            Array.prototype.forEach.call(fileInput.files, ingestFile);
             fileInput.value = '';
         }
 
@@ -799,6 +982,362 @@
             }
         }
 
+        /* ---------- Text designs (rendered to PNG client-side) ---------- */
+
+        var TEXT_DPI = 300;
+
+        function openTextPanel(uploadId) {
+            if (!textPanel) {
+                return;
+            }
+
+            state.editingTextId = uploadId || null;
+            var upload = uploadId ? state.uploads.find(function (u) { return u.id === uploadId; }) : null;
+            var meta = upload && upload.textMeta ? upload.textMeta : null;
+
+            if (textInput) textInput.value = meta ? meta.text : '';
+            if (textFont && meta) textFont.value = meta.font;
+            if (textSize) textSize.value = meta ? meta.heightIn : 2;
+            if (textColor) textColor.value = meta ? meta.color : '#000000';
+            if (textOutline) textOutline.value = meta ? String(meta.outline) : '0';
+            if (textOutlineColor) textOutlineColor.value = meta ? meta.outlineColor : '#ffffff';
+
+            if (textApply) {
+                textApply.textContent = meta ? (config.messages.textUpdate || 'Update Text') : (config.messages.textAdd || 'Add To Sheet');
+            }
+
+            textPanel.hidden = false;
+            if (textInput) textInput.focus();
+        }
+
+        function closeTextPanel() {
+            if (textPanel) {
+                textPanel.hidden = true;
+            }
+            state.editingTextId = null;
+        }
+
+        function renderTextPng(meta, done) {
+            var fontPx = Math.round(meta.heightIn * TEXT_DPI);
+            var probe = document.createElement('canvas').getContext('2d');
+            probe.font = '900 ' + fontPx + 'px ' + meta.font;
+            var textWidth = Math.ceil(probe.measureText(meta.text).width);
+
+            var outlinePx = Math.round(meta.outline * fontPx);
+            var pad = Math.max(outlinePx * 2, Math.round(fontPx * 0.12));
+
+            var canvasEl = document.createElement('canvas');
+            canvasEl.width = Math.max(1, textWidth + pad * 2);
+            canvasEl.height = Math.max(1, Math.round(fontPx * 1.3) + pad * 2);
+            var ctx = canvasEl.getContext('2d');
+            ctx.font = '900 ' + fontPx + 'px ' + meta.font;
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            ctx.lineJoin = 'round';
+
+            var cx = canvasEl.width / 2;
+            var cy = canvasEl.height / 2;
+
+            if (outlinePx > 0) {
+                ctx.strokeStyle = meta.outlineColor;
+                ctx.lineWidth = outlinePx * 2;
+                ctx.strokeText(meta.text, cx, cy);
+            }
+            ctx.fillStyle = meta.color;
+            ctx.fillText(meta.text, cx, cy);
+
+            canvasEl.toBlob(function (blob) {
+                if (!blob) {
+                    return;
+                }
+                var slug = meta.text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'text';
+                var name = 'text-' + slug + '-' + Math.random().toString(36).slice(2, 6) + '.png';
+                done({
+                    file: new File([blob], name, { type: 'image/png' }),
+                    url: URL.createObjectURL(blob),
+                    width: canvasEl.width,
+                    height: canvasEl.height
+                });
+            }, 'image/png');
+        }
+
+        function applyTextPanel() {
+            var text = textInput ? textInput.value.trim() : '';
+            if (!text) {
+                window.alert(config.messages.textEmpty || 'Type some text first.');
+                return;
+            }
+
+            var meta = {
+                text: text,
+                font: textFont ? textFont.value : 'Impact, sans-serif',
+                heightIn: clamp(Number(textSize && textSize.value || 2), 0.5, 12),
+                color: textColor ? textColor.value : '#000000',
+                outline: Number(textOutline && textOutline.value || 0),
+                outlineColor: textOutlineColor ? textOutlineColor.value : '#ffffff'
+            };
+
+            renderTextPng(meta, function (result) {
+                if (state.editingTextId) {
+                    var upload = state.uploads.find(function (u) { return u.id === state.editingTextId; });
+                    if (upload) {
+                        if (upload.url && upload.file) {
+                            URL.revokeObjectURL(upload.url);
+                        }
+                        upload.name = result.file.name;
+                        upload.file = result.file;
+                        upload.url = result.url;
+                        upload.width = result.width;
+                        upload.height = result.height;
+                        upload.textMeta = meta;
+                        upload.existingAssetId = 0; // regenerated: needs re-upload
+
+                        state.items.forEach(function (item) {
+                            if (item.uploadId === upload.id) {
+                                item.url = result.url;
+                                item.fileName = result.file.name;
+                                item.label = 'Text: ' + meta.text;
+                                item.naturalWidth = result.width;
+                                item.naturalHeight = result.height;
+                                item.height = meta.heightIn * (result.height / (meta.heightIn * TEXT_DPI));
+                                item.width = item.height * (result.width / result.height);
+                            }
+                        });
+                    }
+                } else {
+                    var entry = {
+                        id: nextId('upload'),
+                        name: result.file.name,
+                        file: result.file,
+                        url: result.url,
+                        width: result.width,
+                        height: result.height,
+                        isText: true,
+                        textMeta: meta
+                    };
+                    registerUpload(entry);
+                    addUploadToCanvas(entry.id);
+                    var item = activeItem();
+                    if (item) {
+                        // Print size honors the requested letter height.
+                        item.height = Number((result.height / TEXT_DPI).toFixed(2));
+                        item.width = Number((result.width / TEXT_DPI).toFixed(2));
+                        item.label = 'Text: ' + meta.text;
+                    }
+                }
+
+                syncInputFiles();
+                renderUploadCards();
+                renderItems();
+                closeTextPanel();
+            });
+        }
+
+        /* ---------- Saved designs ---------- */
+
+        function designRequest(action, fields, done) {
+            var data = new FormData();
+            data.append('action', action);
+            data.append('nonce', config.designNonce || '');
+            Object.keys(fields || {}).forEach(function (key) {
+                data.append(key, fields[key]);
+            });
+
+            fetch(config.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: data })
+                .then(function (response) { return response.json(); })
+                .then(function (payload) {
+                    if (!payload || !payload.success) {
+                        var message = payload && payload.data && payload.data.message ? payload.data.message : 'Request failed.';
+                        window.alert(message);
+                        return;
+                    }
+                    done(payload.data || {});
+                })
+                .catch(function () {
+                    window.alert(config.messages.networkError || 'Network error — please try again.');
+                });
+        }
+
+        function saveDesign() {
+            if (!state.items.length) {
+                window.alert(config.messages.needArtwork || 'Add artwork to the sheet first.');
+                return;
+            }
+
+            var suggested = state.designName || '';
+            var name = window.prompt(config.messages.designNamePrompt || 'Name this design:', suggested);
+            if (name === null) {
+                return;
+            }
+
+            serializeState();
+
+            var data = new FormData();
+            data.append('action', 'bw_gsb_save_design');
+            data.append('nonce', config.designNonce || '');
+            data.append('design_id', state.designId || 0);
+            data.append('design_name', name);
+            data.append('sheet_code', state.sheet ? state.sheet.code : '');
+            data.append('layout_json', layoutInput ? layoutInput.value : '');
+
+            var existingIds = [];
+            state.uploads.forEach(function (upload) {
+                if (upload.file) {
+                    data.append('artwork_files[]', upload.file, upload.name);
+                } else if (upload.existingAssetId) {
+                    existingIds.push(upload.existingAssetId);
+                }
+            });
+            data.append('existing_asset_ids', JSON.stringify(existingIds));
+
+            fetch(config.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: data })
+                .then(function (response) { return response.json(); })
+                .then(function (payload) {
+                    if (!payload || !payload.success) {
+                        window.alert(payload && payload.data && payload.data.message ? payload.data.message : 'Could not save the design.');
+                        return;
+                    }
+                    state.designId = payload.data.design_id;
+                    state.designName = payload.data.design_name;
+                    window.alert(config.messages.designSaved || 'Design saved. Find it under My Designs any time.');
+                })
+                .catch(function () {
+                    window.alert(config.messages.networkError || 'Network error — please try again.');
+                });
+        }
+
+        function renderDesignsList(designs) {
+            if (!designsList) {
+                return;
+            }
+
+            designsList.innerHTML = '';
+            if (!designs.length) {
+                var empty = document.createElement('p');
+                empty.className = 'bw-gsb-help';
+                empty.textContent = config.messages.designsEmpty || 'No saved designs yet. Build a sheet and hit Save Design.';
+                designsList.appendChild(empty);
+                return;
+            }
+
+            designs.forEach(function (design) {
+                var row = document.createElement('div');
+                row.className = 'bw-gsb-design-row';
+
+                var label = document.createElement('div');
+                var title = document.createElement('strong');
+                title.textContent = design.design_name || 'Untitled design';
+                var meta = document.createElement('span');
+                meta.textContent = design.sheet_code + ' · ' + design.asset_count + ' file(s) · ' + String(design.updated_at || '').slice(0, 10);
+                label.appendChild(title);
+                label.appendChild(meta);
+
+                var loadButton = document.createElement('button');
+                loadButton.type = 'button';
+                loadButton.className = 'bw-gsb-tool-button';
+                loadButton.textContent = config.messages.designLoad || 'Load';
+                loadButton.addEventListener('click', function () {
+                    loadDesign(design.id);
+                });
+
+                var deleteButton = document.createElement('button');
+                deleteButton.type = 'button';
+                deleteButton.className = 'bw-gsb-tool-button is-danger';
+                deleteButton.textContent = config.messages.designDelete || 'Delete';
+                deleteButton.addEventListener('click', function () {
+                    if (!window.confirm(config.messages.designDeleteConfirm || 'Delete this saved design?')) {
+                        return;
+                    }
+                    designRequest('bw_gsb_delete_design', { design_id: design.id }, function () {
+                        openDesigns();
+                    });
+                });
+
+                row.appendChild(label);
+                row.appendChild(loadButton);
+                row.appendChild(deleteButton);
+                designsList.appendChild(row);
+            });
+        }
+
+        function openDesigns() {
+            if (!designsPanel) {
+                return;
+            }
+
+            designsPanel.hidden = false;
+            designRequest('bw_gsb_list_designs', {}, function (data) {
+                renderDesignsList(data.designs || []);
+            });
+        }
+
+        function loadDesign(designId) {
+            designRequest('bw_gsb_load_design', { design_id: designId }, function (data) {
+                state.uploads = [];
+                state.items = [];
+                state.activeId = null;
+                state.designId = data.design_id;
+                state.designName = data.design_name;
+
+                if (designSourceInput) {
+                    designSourceInput.value = data.design_id;
+                }
+
+                if (sheetSelect && data.sheet_code) {
+                    sheetSelect.value = data.sheet_code;
+                }
+                updateSheetMeta();
+
+                var uploadsByFilename = {};
+                (data.assets || []).forEach(function (asset) {
+                    var entry = {
+                        id: nextId('upload'),
+                        name: asset.filename,
+                        file: null,
+                        url: asset.url,
+                        width: asset.width,
+                        height: asset.height,
+                        existingAssetId: asset.asset_id,
+                        isText: /^text-/.test(asset.filename)
+                    };
+                    state.uploads.push(entry);
+                    uploadsByFilename[String(asset.filename).toLowerCase()] = entry;
+                });
+
+                var layoutItems = (data.layout && data.layout.items) || [];
+                layoutItems.forEach(function (raw) {
+                    var upload = uploadsByFilename[String(raw.file_name || '').toLowerCase()];
+                    if (!upload) {
+                        return;
+                    }
+                    state.items.push({
+                        id: nextId('item'),
+                        uploadId: upload.id,
+                        fileName: upload.name,
+                        label: raw.label || upload.name,
+                        url: upload.url,
+                        naturalWidth: upload.width,
+                        naturalHeight: upload.height,
+                        x: Number(raw.x || 0),
+                        y: Number(raw.y || 0),
+                        width: Number(raw.width || 1),
+                        height: Number(raw.height || 1),
+                        rotation: Number(raw.rotation || 0),
+                        zIndex: Number(raw.z_index || state.items.length + 1)
+                    });
+                });
+
+                syncInputFiles();
+                updateFileSummary();
+                renderUploadCards();
+                renderItems();
+
+                if (designsPanel) {
+                    designsPanel.hidden = true;
+                }
+            });
+        }
+
         if (sheetSelect) {
             sheetSelect.addEventListener('change', updateSheetMeta);
         }
@@ -830,6 +1369,72 @@
 
         if (duplicateButton) {
             duplicateButton.addEventListener('click', duplicateSelected);
+        }
+
+        if (autoArrangeButton) {
+            autoArrangeButton.addEventListener('click', autoArrange);
+        }
+
+        if (addAllButton) {
+            addAllButton.addEventListener('click', addAllToSheet);
+        }
+
+        if (addTextButton) {
+            addTextButton.addEventListener('click', function () {
+                openTextPanel(null);
+            });
+        }
+
+        if (textApply) {
+            textApply.addEventListener('click', applyTextPanel);
+        }
+
+        if (textCancel) {
+            textCancel.addEventListener('click', closeTextPanel);
+        }
+
+        if (textInput) {
+            textInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    applyTextPanel();
+                }
+            });
+        }
+
+        if (canvas) {
+            canvas.addEventListener('dblclick', function (event) {
+                var itemNode = event.target.closest('.bw-gsb-canvas-item');
+                if (!itemNode) {
+                    return;
+                }
+                var item = state.items.find(function (entry) {
+                    return entry.id === itemNode.dataset.itemId;
+                });
+                if (!item) {
+                    return;
+                }
+                var upload = state.uploads.find(function (entry) {
+                    return entry.id === item.uploadId;
+                });
+                if (upload && upload.textMeta) {
+                    openTextPanel(upload.id);
+                }
+            });
+        }
+
+        if (saveDesignButton) {
+            saveDesignButton.addEventListener('click', saveDesign);
+        }
+
+        if (myDesignsButton) {
+            myDesignsButton.addEventListener('click', openDesigns);
+        }
+
+        if (designsClose) {
+            designsClose.addEventListener('click', function () {
+                designsPanel.hidden = true;
+            });
         }
 
         if (itemPanelWidth) {
