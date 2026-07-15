@@ -52,16 +52,40 @@ $bg         = get_post_meta($creator_id, '_bw_creator_bg_color', true) ?: '#0b0f
 $text       = get_post_meta($creator_id, '_bw_creator_text_color', true) ?: '#ffffff';
 $btn_text   = bwcl_contrast_color($brand);
 
+if (!function_exists('bwcl_image_is_wide')) {
+  /**
+   * True when an image is banner-shaped (roughly 2.5:1 or wider) and so can
+   * fill the hero edge-to-edge without cropping the artwork to pieces.
+   * Squarer logo art gets the blurred-backdrop treatment instead.
+   */
+  function bwcl_image_is_wide($url) {
+    if (!$url) return false;
+    $id = attachment_url_to_postid($url);
+    if (!$id) return false;
+    $meta = wp_get_attachment_metadata($id);
+    $w = (int) ($meta['width'] ?? 0);
+    $h = (int) ($meta['height'] ?? 0);
+    return $h > 0 && ($w / $h) >= 2.5;
+  }
+}
+
 $hero_classes = 'bwcl-hero';
 $hero_style   = '--brand:' . esc_attr($brand) . ';--bg:' . esc_attr($bg) . ';--text:' . esc_attr($text) . ';';
 
-if (!empty($banner)) {
+// Banner falls back to the store's logo so every page is branded either way.
+$hero_image = !empty($banner) ? $banner : $logo_url;
+
+if (!empty($hero_image)) {
   $hero_classes .= ' has-banner';
-  $hero_style   .= '--banner-image:url("' . esc_url($banner) . '");';
-} elseif (!empty($logo_url)) {
-  // No banner uploaded: blow the logo up as a soft blurred backdrop.
-  $hero_classes .= ' has-banner is-logo-bg';
-  $hero_style   .= '--banner-image:url("' . esc_url($logo_url) . '");';
+  $hero_style   .= '--banner-image:url("' . esc_url($hero_image) . '");';
+
+  if (bwcl_image_is_wide($hero_image)) {
+    // Wide banner art: show it crisp, edge to edge.
+    $hero_classes .= ' is-wide-banner';
+  } else {
+    // Logo-shaped art: blurred blow-up backdrop, logo stays crisp on the card.
+    $hero_classes .= ' is-logo-bg';
+  }
 }
 if (!empty($banner_mobile)) {
   $hero_classes .= ' has-mobile-banner';

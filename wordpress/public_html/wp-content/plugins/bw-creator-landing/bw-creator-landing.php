@@ -216,8 +216,12 @@ class BW_Creator_Landing {
 }
 .bwcl-hero.has-banner::before{content:'';position:absolute;inset:0;
   background-image:var(--banner-image);background-size:cover;background-position:center;}
-/* No banner uploaded: the logo itself becomes a soft blurred backdrop */
+/* Logo-shaped art: soft blurred blow-up backdrop; the logo card stays crisp. */
 .bwcl-hero.is-logo-bg::before{filter:blur(28px) saturate(1.05) brightness(.85);transform:scale(1.25);}
+/* Banner-shaped art: shape the hero to the artwork so cover barely crops it,
+   and drop the logo card — the banner already carries the branding. */
+.bwcl-hero.is-wide-banner{aspect-ratio:3.2 / 1;min-height:220px;}
+.bwcl-hero.is-wide-banner .bwcl-logo{display:none;}
 /* Legibility: fade to dark at the bottom where the copy sits */
 .bwcl-hero::after{content:'';position:absolute;inset:0;
   background:linear-gradient(180deg, rgba(5,8,14,.08) 35%, rgba(5,8,14,.82) 100%);}
