@@ -213,7 +213,7 @@ class BW_GSB_Plugin
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'designNonce' => wp_create_nonce('bw_gsb_design'),
                 'convertNonce' => wp_create_nonce('bw_gsb_convert'),
-                'serverFormats' => self::server_convert_formats(),
+                'serverFormats' => $this->allowed_convert_formats(),
                 'customSheet' => $this->get_custom_sheet_config(),
                 'isLoggedIn' => is_user_logged_in(),
                 'loginUrl' => wp_login_url($this->current_url()),
@@ -305,19 +305,27 @@ class BW_GSB_Plugin
                         </label>
                         <input type="hidden" name="custom_height" value="" data-bw-gsb-custom-height>
 
-                        <?php $server_formats = self::server_convert_formats(); ?>
+                        <?php $server_formats = $this->allowed_convert_formats(); ?>
                         <label>
                             <span><?php esc_html_e('Artwork Files', 'bw-gsb'); ?></span>
                             <input type="file" name="artwork_files[]" multiple accept=".png,.jpg,.jpeg,.webp,.svg<?php echo $server_formats ? ',.' . esc_attr(implode(',.', $server_formats)) : ''; ?>,image/png,image/jpeg,image/webp,image/svg+xml" data-bw-gsb-files>
                         </label>
                         <p class="bw-gsb-help" data-bw-gsb-file-summary><?php esc_html_e('No files selected yet.', 'bw-gsb'); ?></p>
                         <p class="bw-gsb-help"><?php
-                            if ($server_formats) {
-                                esc_html_e('PNG, JPG, WEBP, SVG — plus PSD, PDF, AI, EPS, and TIFF, which we convert to print-ready PNG for you. Transparent backgrounds print best; JPG backgrounds print white.', 'bw-gsb');
-                            } else {
-                                esc_html_e('PNG, JPG, WEBP, and SVG accepted — everything is converted to print-ready PNG right in your browser. PNG with a transparent background prints best; JPG backgrounds print white.', 'bw-gsb');
-                            }
+                            printf(
+                                /* translators: %s: list of accepted file formats */
+                                esc_html__('%s accepted — we convert everything to print-ready PNG. A transparent background prints best; JPG backgrounds print white.', 'bw-gsb'),
+                                esc_html($this->accepted_formats_sentence())
+                            );
                         ?></p>
+                        <?php if (!self::ghostscript_convert_formats()) : ?>
+                            <p class="bw-gsb-help"><?php esc_html_e('Working from a PDF, AI, or EPS? Export it as a transparent PNG first, or send it over on the contact page and we will set it up for you.', 'bw-gsb'); ?></p>
+                        <?php elseif (!is_user_logged_in()) : ?>
+                            <p class="bw-gsb-help">
+                                <a href="<?php echo esc_url(wp_login_url($this->current_url())); ?>"><?php esc_html_e('Log in', 'bw-gsb'); ?></a>
+                                <?php esc_html_e('to upload PDF, AI, or EPS artwork.', 'bw-gsb'); ?>
+                            </p>
+                        <?php endif; ?>
 
                         <label>
                             <span><?php esc_html_e('Or Import From A Link', 'bw-gsb'); ?></span>
@@ -337,7 +345,7 @@ class BW_GSB_Plugin
                     <div class="bw-gsb-card">
                         <h3><?php esc_html_e('How It Works', 'bw-gsb'); ?></h3>
                         <ol class="bw-gsb-steps">
-                            <li><?php esc_html_e('Pick your sheet size and upload artwork — PNG, JPG, WEBP, SVG, PSD, PDF, AI, EPS, or straight from a Dropbox/Drive link.', 'bw-gsb'); ?></li>
+                            <li><?php esc_html_e('Pick your sheet size and upload artwork, or pull it in from a Dropbox/Drive link.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('Place, resize, rotate, and duplicate designs until the sheet is full.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('Add the sheet to your cart and check out securely.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('We review every sheet before printing and reach out if anything needs attention.', 'bw-gsb'); ?></li>
@@ -2237,13 +2245,133 @@ class BW_GSB_Plugin
     const CONVERT_MAX_SIDE = 6000;      // px cap on the produced PNG
     const CONVERT_DPI = 300;            // raster density for vector sources
 
-    /** Extensions the server can turn into PNG (requires Imagick). */
+    /**
+     * Formats Imagick rasterizes natively, with no Ghostscript delegate in
+     * the chain. Safe to accept from anonymous visitors.
+     */
     public static function server_convert_formats()
     {
         if (!class_exists('Imagick')) {
             return [];
         }
-        return ['psd', 'pdf', 'ai', 'eps', 'tif', 'tiff'];
+        return ['psd', 'tif', 'tiff'];
+    }
+
+    /**
+     * Formats Imagick hands to the Ghostscript delegate — DISABLED by default.
+     *
+     * Ghostscript executes PostScript, and on this stack it is not contained:
+     * a crafted .eps read through Imagick performed an arbitrary file write
+     * (verified 2026-07-15, reproducible on GS 10.05.1; staging runs 9.27,
+     * which additionally carries known -dSAFER escape CVEs). ImageMagick's
+     * policy.xml declares no PS/EPS/PDF restrictions either. On a web server an
+     * arbitrary write means a PHP shell in the webroot, and because WooCommerce
+     * allows self-registration a login gate buys almost nothing.
+     *
+     * Re-enable ONLY once the delegate is genuinely contained — a policy.xml
+     * that blocks the PS/EPS/PDF coders, Ghostscript >= 9.50 verified to hold
+     * -dSAFER, or conversion moved to an isolated worker:
+     *   add_filter('bw_gsb_enable_ghostscript_formats', '__return_true');
+     * The magic-byte and login checks below remain for that day. They are
+     * defense in depth, not a fix: a *valid* PostScript file is still hostile.
+     */
+    public static function ghostscript_convert_formats()
+    {
+        if (!class_exists('Imagick')) {
+            return [];
+        }
+        if (!apply_filters('bw_gsb_enable_ghostscript_formats', false)) {
+            return [];
+        }
+        return ['pdf', 'ai', 'eps'];
+    }
+
+    /** What the current visitor is actually allowed to convert. */
+    public function allowed_convert_formats()
+    {
+        $formats = self::server_convert_formats();
+        if (is_user_logged_in()) {
+            $formats = array_merge($formats, self::ghostscript_convert_formats());
+        }
+        return $formats;
+    }
+
+    /**
+     * Human list of every accepted format, e.g. "PNG, JPG, WEBP, SVG, PSD,
+     * and TIFF". Derived from what is actually enabled so the copy can never
+     * promise a format the server will reject.
+     */
+    public function accepted_formats_sentence()
+    {
+        $labels = ['PNG', 'JPG', 'WEBP', 'SVG'];
+        foreach ($this->allowed_convert_formats() as $ext) {
+            if ($ext === 'tiff') {
+                continue; // shown as TIF
+            }
+            $labels[] = $ext === 'tif' ? 'TIFF' : strtoupper($ext);
+        }
+
+        $last = array_pop($labels);
+        return implode(', ', $labels) . ', and ' . $last;
+    }
+
+    /**
+     * Identify a file from its bytes. Never trust the filename: the extension
+     * is what selects Imagick's decoder, so a mislabeled file could route
+     * attacker-controlled PostScript into Ghostscript.
+     */
+    private function sniff_format($path)
+    {
+        $head = @file_get_contents($path, false, null, 0, 1024);
+        if ($head === false || $head === '') {
+            return '';
+        }
+
+        if (strncmp($head, "\x89PNG", 4) === 0) {
+            return 'png';
+        }
+        if (strncmp($head, "\xFF\xD8\xFF", 3) === 0) {
+            return 'jpg';
+        }
+        if (strncmp($head, 'RIFF', 4) === 0 && substr($head, 8, 4) === 'WEBP') {
+            return 'webp';
+        }
+        if (strncmp($head, '8BPS', 4) === 0) {
+            return 'psd';
+        }
+        if (strncmp($head, '%PDF', 4) === 0) {
+            return 'pdf';
+        }
+        // PostScript / EPS, including the DOS EPS binary wrapper.
+        if (strncmp($head, '%!PS', 4) === 0 || strncmp($head, "\xC5\xD0\xD3\xC6", 4) === 0) {
+            return 'eps';
+        }
+        if (strncmp($head, "II*\x00", 4) === 0 || strncmp($head, "MM\x00*", 4) === 0) {
+            return 'tif';
+        }
+        if (preg_match('/^\s*(<\?xml|<svg)/i', substr($head, 0, 256))) {
+            return 'svg';
+        }
+
+        return '';
+    }
+
+    /**
+     * Do the bytes match the claimed extension? Illustrator ships as either
+     * PDF-based or PostScript-based, so it accepts both.
+     */
+    private function format_matches_extension($sniffed, $ext)
+    {
+        $expected = [
+            'psd' => ['psd'],
+            'tif' => ['tif'],
+            'tiff' => ['tif'],
+            'pdf' => ['pdf'],
+            'eps' => ['eps'],
+            'ai' => ['pdf', 'eps'],
+        ];
+
+        return isset($expected[$ext]) && in_array($sniffed, $expected[$ext], true);
     }
 
     private function temp_dir()
@@ -2402,8 +2530,28 @@ class BW_GSB_Plugin
 
         $name = sanitize_file_name((string) $_FILES['file']['name']);
         $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
-        if (!in_array($ext, self::server_convert_formats(), true)) {
+
+        if (!in_array($ext, $this->allowed_convert_formats(), true)) {
+            if (in_array($ext, self::ghostscript_convert_formats(), true)) {
+                wp_send_json_error([
+                    'message' => __('Log in to your account to upload PDF, AI, or EPS artwork. PNG, JPG, WEBP, SVG, PSD, and TIFF work without an account.', 'bw-gsb'),
+                    'needsLogin' => true,
+                ], 401);
+            }
             wp_send_json_error(['message' => __('Unsupported file type for conversion.', 'bw-gsb')], 400);
+        }
+
+        // The bytes must actually be what the extension claims — the extension
+        // is what picks Imagick's decoder.
+        $sniffed = $this->sniff_format($_FILES['file']['tmp_name']);
+        if (!$this->format_matches_extension($sniffed, $ext)) {
+            wp_send_json_error([
+                'message' => sprintf(
+                    /* translators: %s: file extension, e.g. PDF */
+                    __('That file is not a valid %s file. Re-export it and try again.', 'bw-gsb'),
+                    strtoupper($ext)
+                ),
+            ], 422);
         }
 
         $result = $this->convert_to_png_temp($_FILES['file']['tmp_name'], $ext, $name);
@@ -2459,38 +2607,43 @@ class BW_GSB_Plugin
             wp_send_json_error(['message' => __('That link did not return a usable file.', 'bw-gsb')], 422);
         }
 
-        // Sniff the real type from magic bytes — never trust the URL or headers.
-        $head = substr($body, 0, 16);
-        $sniffed = '';
-        if (strncmp($head, "\x89PNG", 4) === 0) {
-            $sniffed = 'png';
-        } elseif (strncmp($head, "\xFF\xD8\xFF", 3) === 0) {
-            $sniffed = 'jpg';
-        } elseif (strncmp($head, 'RIFF', 4) === 0 && substr($body, 8, 4) === 'WEBP') {
-            $sniffed = 'webp';
-        } elseif (strncmp($head, '8BPS', 4) === 0) {
-            $sniffed = 'psd';
-        } elseif (strncmp($head, '%PDF', 4) === 0) {
-            $sniffed = 'pdf';
-        } elseif (strncmp($head, '%!PS', 4) === 0) {
-            $sniffed = 'eps';
-        } elseif (strncmp($head, "II*\x00", 4) === 0 || strncmp($head, "MM\x00*", 4) === 0) {
-            $sniffed = 'tif';
-        } elseif (preg_match('/^\s*(<\?xml|<svg)/i', substr($body, 0, 256))) {
-            $sniffed = 'svg';
-        }
-
-        if ($sniffed === '') {
-            wp_send_json_error(['message' => __('That link is not a supported image format (PNG, JPG, WEBP, SVG, PSD, PDF, AI, EPS, TIFF).', 'bw-gsb')], 422);
-        }
-
         $path_name = basename((string) wp_parse_url($url, PHP_URL_PATH));
         $base = sanitize_file_name(pathinfo($path_name, PATHINFO_FILENAME)) ?: 'imported';
 
         $tmp = wp_tempnam('bw-gsb-import');
         file_put_contents($tmp, $body);
 
-        if (in_array($sniffed, ['psd', 'pdf', 'eps', 'tif'], true)) {
+        // Identify from bytes — never from the URL or response headers.
+        $sniffed = $this->sniff_format($tmp);
+
+        if ($sniffed === '') {
+            @unlink($tmp);
+            wp_send_json_error(['message' => __('That link is not a supported image format (PNG, JPG, WEBP, SVG, PSD, PDF, AI, EPS, TIFF).', 'bw-gsb')], 422);
+        }
+
+        // A link must clear exactly the same format gate as an upload, or
+        // pasting a URL would bypass it. Derived from the allowed list rather
+        // than hardcoded, so disabling a format disables it on both paths.
+        $needs_conversion = in_array($sniffed, ['psd', 'pdf', 'eps', 'tif'], true);
+        if ($needs_conversion && !in_array($sniffed, $this->allowed_convert_formats(), true)) {
+            @unlink($tmp);
+            if (self::ghostscript_convert_formats() && !is_user_logged_in()) {
+                wp_send_json_error([
+                    'message' => __('Log in to your account to import PDF, AI, or EPS artwork.', 'bw-gsb'),
+                    'needsLogin' => true,
+                ], 401);
+            }
+            wp_send_json_error([
+                'message' => sprintf(
+                    /* translators: 1: detected format, 2: list of accepted formats */
+                    __('That link is a %1$s file, which we cannot accept. Supported: %2$s.', 'bw-gsb'),
+                    strtoupper($sniffed),
+                    $this->accepted_formats_sentence()
+                ),
+            ], 422);
+        }
+
+        if ($needs_conversion) {
             $result = $this->convert_to_png_temp($tmp, $sniffed === 'tif' ? 'tif' : $sniffed, $base . '.' . $sniffed);
             @unlink($tmp);
             if (is_wp_error($result)) {
