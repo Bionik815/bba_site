@@ -919,11 +919,27 @@
                         var scale = 300 / 72;
                         var viewport = page.getViewport({ scale: scale });
 
-                        // Guard against a huge page blowing up memory.
-                        var maxSide = 6000;
-                        var biggest = Math.max(viewport.width, viewport.height);
+                        // Cap by AREA, not by side. A full-width 22in design at
+                        // 300 DPI is already 6600px, so a side cap quietly
+                        // downgrades legitimate artwork (a real 26x15in .ai came
+                        // through at 225 DPI). ~40M px keeps the canvas near
+                        // 160MB RGBA, which browsers handle comfortably.
+                        var maxArea = 40e6;
+                        var maxSide = 16000; // browser canvas dimension ceiling
+                        var shrink = 1;
+
+                        var area = viewport.width * viewport.height;
+                        if (area > maxArea) {
+                            shrink = Math.sqrt(maxArea / area);
+                        }
+
+                        var biggest = Math.max(viewport.width, viewport.height) * shrink;
                         if (biggest > maxSide) {
-                            viewport = page.getViewport({ scale: scale * (maxSide / biggest) });
+                            shrink *= maxSide / biggest;
+                        }
+
+                        if (shrink < 1) {
+                            viewport = page.getViewport({ scale: scale * shrink });
                         }
 
                         var pdfCanvas = document.createElement('canvas');
@@ -931,17 +947,22 @@
                         pdfCanvas.height = Math.max(1, Math.floor(viewport.height));
 
                         return page.render({
-                            // pdf.js 6 takes `canvas`; `canvasContext` alone silently
-                            // never completes.
-                            canvas: pdfCanvas,
+                            // Transparency is non-negotiable for DTF, and it hinges
+                            // on both of these:
+                            //  - Pass OUR context (canvas must be null): given
+                            //    `canvas`, pdf.js builds its own with {alpha:false},
+                            //    which renders every unmarked area opaque BLACK.
+                            //  - Override the background: pdf.js otherwise fills
+                            //    white.
+                            canvasContext: pdfCanvas.getContext('2d'),
+                            canvas: null,
+                            background: 'rgba(0,0,0,0)',
                             viewport: viewport,
-                            // 'print' is both semantically right for print-bound art
-                            // and skips pdf.js's requestAnimationFrame scheduling —
-                            // rAF is throttled//frozen in background tabs, which would
-                            // otherwise stall the render until the tab is refocused.
-                            intent: 'print',
-                            // Default is white; keep transparency for DTF.
-                            background: 'rgba(0,0,0,0)'
+                            // 'print' is the right intent for print-bound art, and it
+                            // skips pdf.js's requestAnimationFrame scheduling — rAF is
+                            // frozen in hidden/background tabs, which would otherwise
+                            // stall the render until the tab is refocused.
+                            intent: 'print'
                         }).promise.then(function () {
                             return new Promise(function (resolve) {
                                 pdfCanvas.toBlob(function (blob) {
