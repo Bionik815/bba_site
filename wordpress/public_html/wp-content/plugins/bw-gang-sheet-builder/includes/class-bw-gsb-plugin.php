@@ -214,6 +214,11 @@ class BW_GSB_Plugin
                 'designNonce' => wp_create_nonce('bw_gsb_design'),
                 'convertNonce' => wp_create_nonce('bw_gsb_convert'),
                 'serverFormats' => $this->allowed_convert_formats(),
+                'pdfFormats' => self::client_pdf_formats(),
+                'pdfjs' => [
+                    'lib' => BW_GSB_URL . 'assets/vendor/pdfjs/pdf.min.js',
+                    'worker' => BW_GSB_URL . 'assets/vendor/pdfjs/pdf.worker.min.js',
+                ],
                 'customSheet' => $this->get_custom_sheet_config(),
                 'isLoggedIn' => is_user_logged_in(),
                 'loginUrl' => wp_login_url($this->current_url()),
@@ -305,12 +310,12 @@ class BW_GSB_Plugin
                         </label>
                         <input type="hidden" name="custom_height" value="" data-bw-gsb-custom-height>
 
-                        <?php $server_formats = $this->allowed_convert_formats(); ?>
                         <label>
                             <span><?php esc_html_e('Artwork Files', 'bw-gsb'); ?></span>
-                            <input type="file" name="artwork_files[]" multiple accept=".png,.jpg,.jpeg,.webp,.svg<?php echo $server_formats ? ',.' . esc_attr(implode(',.', $server_formats)) : ''; ?>,image/png,image/jpeg,image/webp,image/svg+xml" data-bw-gsb-files>
+                            <input type="file" name="artwork_files[]" multiple accept=".<?php echo esc_attr(implode(',.', $this->accepted_upload_formats())); ?>,image/png,image/jpeg,image/webp,image/svg+xml" data-bw-gsb-files>
                         </label>
                         <p class="bw-gsb-help" data-bw-gsb-file-summary><?php esc_html_e('No files selected yet.', 'bw-gsb'); ?></p>
+                        <div class="bw-gsb-notices" data-bw-gsb-notices role="status" aria-live="polite"></div>
                         <p class="bw-gsb-help"><?php
                             printf(
                                 /* translators: %s: list of accepted file formats */
@@ -318,14 +323,7 @@ class BW_GSB_Plugin
                                 esc_html($this->accepted_formats_sentence())
                             );
                         ?></p>
-                        <?php if (!self::ghostscript_convert_formats()) : ?>
-                            <p class="bw-gsb-help"><?php esc_html_e('Working from a PDF, AI, or EPS? Export it as a transparent PNG first, or send it over on the contact page and we will set it up for you.', 'bw-gsb'); ?></p>
-                        <?php elseif (!is_user_logged_in()) : ?>
-                            <p class="bw-gsb-help">
-                                <a href="<?php echo esc_url(wp_login_url($this->current_url())); ?>"><?php esc_html_e('Log in', 'bw-gsb'); ?></a>
-                                <?php esc_html_e('to upload PDF, AI, or EPS artwork.', 'bw-gsb'); ?>
-                            </p>
-                        <?php endif; ?>
+                        <p class="bw-gsb-help"><?php esc_html_e('PDF and AI artwork opens straight in your browser — page 1 becomes your design. Working from an EPS? Export it as a PDF or transparent PNG first, or send it over on the contact page and we will set it up for you.', 'bw-gsb'); ?></p>
 
                         <label>
                             <span><?php esc_html_e('Or Import From A Link', 'bw-gsb'); ?></span>
@@ -345,7 +343,7 @@ class BW_GSB_Plugin
                     <div class="bw-gsb-card">
                         <h3><?php esc_html_e('How It Works', 'bw-gsb'); ?></h3>
                         <ol class="bw-gsb-steps">
-                            <li><?php esc_html_e('Pick your sheet size and upload artwork, or pull it in from a Dropbox/Drive link.', 'bw-gsb'); ?></li>
+                            <li><?php esc_html_e('Pick your sheet size and upload artwork (PNG, JPG, SVG, PSD, PDF, AI…), or pull it in from a Dropbox/Drive link.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('Place, resize, rotate, and duplicate designs until the sheet is full.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('Add the sheet to your cart and check out securely.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('We review every sheet before printing and reach out if anything needs attention.', 'bw-gsb'); ?></li>
@@ -2286,6 +2284,17 @@ class BW_GSB_Plugin
         return ['pdf', 'ai', 'eps'];
     }
 
+    /**
+     * Formats rendered to PNG in the browser by pdf.js — no server, no
+     * Ghostscript, so the delegate RCE simply cannot be reached. Covers PDF
+     * and any .ai saved with PDF compatibility (which modern Illustrator does
+     * by default). True EPS/PostScript stays unsupported.
+     */
+    public static function client_pdf_formats()
+    {
+        return ['pdf', 'ai'];
+    }
+
     /** What the current visitor is actually allowed to convert. */
     public function allowed_convert_formats()
     {
@@ -2296,6 +2305,16 @@ class BW_GSB_Plugin
         return $formats;
     }
 
+    /** Everything the builder accepts, however it gets processed. */
+    public function accepted_upload_formats()
+    {
+        return array_values(array_unique(array_merge(
+            ['png', 'jpg', 'jpeg', 'webp', 'svg'],
+            self::client_pdf_formats(),
+            $this->allowed_convert_formats()
+        )));
+    }
+
     /**
      * Human list of every accepted format, e.g. "PNG, JPG, WEBP, SVG, PSD,
      * and TIFF". Derived from what is actually enabled so the copy can never
@@ -2303,10 +2322,11 @@ class BW_GSB_Plugin
      */
     public function accepted_formats_sentence()
     {
-        $labels = ['PNG', 'JPG', 'WEBP', 'SVG'];
-        foreach ($this->allowed_convert_formats() as $ext) {
-            if ($ext === 'tiff') {
-                continue; // shown as TIF
+        $skip = ['jpeg' => 1, 'tiff' => 1]; // shown as JPG / TIF
+        $labels = [];
+        foreach ($this->accepted_upload_formats() as $ext) {
+            if (isset($skip[$ext])) {
+                continue;
             }
             $labels[] = $ext === 'tif' ? 'TIFF' : strtoupper($ext);
         }
@@ -2619,6 +2639,18 @@ class BW_GSB_Plugin
         if ($sniffed === '') {
             @unlink($tmp);
             wp_send_json_error(['message' => __('That link is not a supported image format (PNG, JPG, WEBP, SVG, PSD, PDF, AI, EPS, TIFF).', 'bw-gsb')], 422);
+        }
+
+        // A linked PDF goes back to the browser for pdf.js to render, exactly
+        // like a picked one — the bytes are never handed to Ghostscript.
+        if ($sniffed === 'pdf') {
+            $out_name = 'import-' . substr(wp_generate_uuid4(), 0, 8) . '.png';
+            @rename($tmp, $this->temp_dir() . '/' . $out_name);
+            wp_send_json_success([
+                'name' => $base . '.pdf',
+                'url' => $this->temp_url($out_name),
+                'pdf' => true,
+            ]);
         }
 
         // A link must clear exactly the same format gate as an upload, or

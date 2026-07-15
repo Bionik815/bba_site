@@ -752,3 +752,55 @@
 .bw-gsb-upload-flag.is-converted {
     color: #3f7d4e;
 }
+
+/* v0.8.0: inline notices (uploads/PDF render are background work — a modal
+   alert() there would freeze the page mid-operation) */
+
+.bw-gsb-notices {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bw-gsb-notices:not(:empty) {
+    margin: 8px 0 4px;
+}
+
+.bw-gsb-notice-line {
+    position: relative;
+    margin: 0;
+    padding: 9px 30px 9px 11px;
+    border-radius: 8px;
+    border-left: 4px solid #6b7280;
+    background: rgba(120, 130, 150, 0.1);
+    font-size: 13.5px;
+    line-height: 1.45;
+}
+
+.bw-gsb-notice-line.is-error {
+    border-left-color: #b64040;
+    background: rgba(182, 64, 64, 0.1);
+}
+
+.bw-gsb-notice-line.is-info {
+    border-left-color: #c99a63;
+    background: rgba(201, 154, 99, 0.12);
+}
+
+.bw-gsb-notice-x {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 17px;
+    line-height: 1;
+    padding: 2px 5px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.bw-gsb-notice-x:hover {
+    opacity: 1;
+}

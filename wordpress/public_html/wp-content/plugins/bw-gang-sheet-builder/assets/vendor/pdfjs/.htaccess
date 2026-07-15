@@ -1,0 +1,6 @@
+# ES modules must be served with a JavaScript MIME type or the browser refuses
+# to execute them. Hostinger/LiteSpeed served .mjs as text/plain, which is why
+# these files carry a .js extension — this is a second line of defence.
+<IfModule mod_mime.c>
+  AddType text/javascript .js .mjs
+</IfModule>

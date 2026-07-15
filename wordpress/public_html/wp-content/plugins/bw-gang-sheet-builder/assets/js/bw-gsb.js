@@ -770,7 +770,7 @@
         };
 
         function pngName(name) {
-            return String(name || 'artwork').replace(/\.(png|jpe?g|webp|svg)$/i, '') + '.png';
+            return String(name || 'artwork').replace(/\.(png|jpe?g|webp|svg|pdf|ai|psd|tiff?)$/i, '') + '.png';
         }
 
         function registerUpload(entry) {
@@ -857,13 +857,124 @@
 
             image.onerror = function () {
                 URL.revokeObjectURL(url);
-                window.alert((config.messages.badFile || 'Could not read this file:') + ' ' + file.name);
+                showNotice((config.messages.badFile || 'Could not read this file:') + ' ' + file.name, 'error');
             };
 
             image.src = url;
         }
 
-        /* ---------- Server-side conversion (PSD/PDF/AI/EPS/TIFF) ---------- */
+        /* ---------- PDF / AI rendered in the browser (pdf.js) ---------- */
+
+        var pdfFormats = Array.isArray(config.pdfFormats) ? config.pdfFormats : [];
+        var pdfjsPromise = null;
+
+        /**
+         * pdf.js is ~1.8MB, so it only loads once someone actually picks a
+         * PDF. isEvalSupported:false is deliberate — it closes the font-based
+         * script-execution class of pdf.js bug (e.g. CVE-2024-4367).
+         */
+        function loadPdfJs() {
+            if (pdfjsPromise) {
+                return pdfjsPromise;
+            }
+
+            var cfg = config.pdfjs || {};
+            pdfjsPromise = import(cfg.lib).then(function (lib) {
+                lib.GlobalWorkerOptions.workerSrc = cfg.worker;
+                return lib;
+            });
+
+            return pdfjsPromise;
+        }
+
+        /** True when the bytes start with %PDF — .ai files usually do too. */
+        function looksLikePdf(file) {
+            return file.slice(0, 5).arrayBuffer().then(function (buffer) {
+                var head = new Uint8Array(buffer);
+                return head[0] === 0x25 && head[1] === 0x50 && head[2] === 0x44 && head[3] === 0x46;
+            });
+        }
+
+        /**
+         * Render page 1 to a print-resolution PNG. The PDF never leaves the
+         * browser, so no server-side Ghostscript is involved.
+         */
+        function ingestPdf(file) {
+            setBusySummary((config.messages.openingPdf || 'Opening') + ' ' + file.name + '…');
+
+            return loadPdfJs()
+                .then(function (pdfjs) {
+                    return file.arrayBuffer().then(function (data) {
+                        return pdfjs.getDocument({
+                            data: data,
+                            isEvalSupported: false,
+                            disableAutoFetch: true
+                        }).promise;
+                    });
+                })
+                .then(function (doc) {
+                    var pages = doc.numPages;
+                    return doc.getPage(1).then(function (page) {
+                        // PDF points are 1/72in; scale so the raster lands at 300 DPI.
+                        var scale = 300 / 72;
+                        var viewport = page.getViewport({ scale: scale });
+
+                        // Guard against a huge page blowing up memory.
+                        var maxSide = 6000;
+                        var biggest = Math.max(viewport.width, viewport.height);
+                        if (biggest > maxSide) {
+                            viewport = page.getViewport({ scale: scale * (maxSide / biggest) });
+                        }
+
+                        var pdfCanvas = document.createElement('canvas');
+                        pdfCanvas.width = Math.max(1, Math.floor(viewport.width));
+                        pdfCanvas.height = Math.max(1, Math.floor(viewport.height));
+
+                        return page.render({
+                            // pdf.js 6 takes `canvas`; `canvasContext` alone silently
+                            // never completes.
+                            canvas: pdfCanvas,
+                            viewport: viewport,
+                            // 'print' is both semantically right for print-bound art
+                            // and skips pdf.js's requestAnimationFrame scheduling —
+                            // rAF is throttled//frozen in background tabs, which would
+                            // otherwise stall the render until the tab is refocused.
+                            intent: 'print',
+                            // Default is white; keep transparency for DTF.
+                            background: 'rgba(0,0,0,0)'
+                        }).promise.then(function () {
+                            return new Promise(function (resolve) {
+                                pdfCanvas.toBlob(function (blob) {
+                                    if (!blob) {
+                                        resolve();
+                                        return;
+                                    }
+                                    var converted = new File([blob], pngName(file.name), { type: 'image/png' });
+                                    registerUpload({
+                                        id: nextId('upload'),
+                                        name: converted.name,
+                                        file: converted,
+                                        url: URL.createObjectURL(blob),
+                                        width: pdfCanvas.width,
+                                        height: pdfCanvas.height,
+                                        convertedFrom: /\.ai$/i.test(file.name) ? 'AI' : 'PDF'
+                                    });
+                                    if (pages > 1) {
+                                        showNotice(file.name + ': ' + (config.messages.pdfMultiPage || 'only page 1 was added. Add the other pages as separate files if you need them.'), 'info');
+                                    }
+                                    resolve();
+                                }, 'image/png');
+                            });
+                        });
+                    });
+                })
+                .catch(function () {
+                    updateFileSummary();
+                    showNotice(file.name + ': ' + (config.messages.pdfFailed || 'could not be opened. If it is an EPS or an older Illustrator file, export it as a PDF or transparent PNG first.'), 'error');
+                });
+        }
+
+        /* ---------- Server-side conversion (PSD/TIFF) ---------- */
 
         var serverFormats = Array.isArray(config.serverFormats) ? config.serverFormats : [];
 
@@ -875,6 +986,41 @@
         function setBusySummary(message) {
             if (fileSummary) {
                 fileSummary.textContent = message;
+            }
+        }
+
+        var noticeBox = form.querySelector('[data-bw-gsb-notices]');
+
+        /**
+         * Inline, non-blocking message. Uploads and PDF rendering happen in the
+         * background, so a modal alert() there would freeze the page mid-work.
+         */
+        function showNotice(message, level) {
+            if (!noticeBox) {
+                window.alert(message);
+                return;
+            }
+
+            var note = document.createElement('p');
+            note.className = 'bw-gsb-notice-line is-' + (level || 'info');
+            note.textContent = message;
+
+            var dismiss = document.createElement('button');
+            dismiss.type = 'button';
+            dismiss.className = 'bw-gsb-notice-x';
+            dismiss.setAttribute('aria-label', 'Dismiss');
+            dismiss.textContent = '×';
+            dismiss.addEventListener('click', function () {
+                note.remove();
+            });
+
+            note.appendChild(dismiss);
+            noticeBox.appendChild(note);
+        }
+
+        function clearNotices() {
+            if (noticeBox) {
+                noticeBox.innerHTML = '';
             }
         }
 
@@ -912,7 +1058,7 @@
                 .then(function (payload) {
                     if (!payload || !payload.success) {
                         updateFileSummary();
-                        window.alert(payload && payload.data && payload.data.message ? payload.data.message : 'Conversion failed.');
+                        showNotice(payload && payload.data && payload.data.message ? payload.data.message : 'Conversion failed.', 'error');
                         return;
                     }
                     adoptConvertedPng(payload.data);
@@ -947,11 +1093,18 @@
                     }
                     if (!payload || !payload.success) {
                         updateFileSummary();
-                        window.alert(payload && payload.data && payload.data.message ? payload.data.message : 'Import failed.');
+                        showNotice(payload && payload.data && payload.data.message ? payload.data.message : 'Import failed.', 'error');
                         return;
                     }
 
-                    if (payload.data.native) {
+                    if (payload.data.pdf) {
+                        // Linked PDF: render it here, same as a picked file.
+                        fetch(payload.data.url, { credentials: 'same-origin' })
+                            .then(function (response) { return response.blob(); })
+                            .then(function (blob) {
+                                ingestPdf(new File([blob], payload.data.name, { type: 'application/pdf' }));
+                            });
+                    } else if (payload.data.native) {
                         // PNG/JPG/WEBP/SVG: run it through the normal browser ingest.
                         fetch(payload.data.url, { credentials: 'same-origin' })
                             .then(function (response) { return response.blob(); })
@@ -976,6 +1129,8 @@
         }
 
         function readUploads() {
+            clearNotices();
+
             if (!fileInput || !fileInput.files) {
                 updateFileSummary();
                 renderUploadCards();
@@ -983,9 +1138,24 @@
             }
 
             Array.prototype.forEach.call(fileInput.files, function (file) {
+                var ext = fileExtension(file.name);
+
+                if (pdfFormats.indexOf(ext) !== -1) {
+                    // .ai is a PDF when saved with PDF compatibility; if the
+                    // bytes say otherwise it is legacy PostScript we can't read.
+                    looksLikePdf(file).then(function (isPdf) {
+                        if (isPdf) {
+                            ingestPdf(file);
+                            return;
+                        }
+                        showNotice(file.name + ': ' + (config.messages.aiNotPdf || 'this Illustrator file was not saved with PDF compatibility, so it cannot be opened here. Re-save it with "Create PDF Compatible File" ticked, or export a transparent PNG.'), 'error');
+                    });
+                    return;
+                }
+
                 if (CONVERTIBLE_TYPES[file.type]) {
                     ingestFile(file);
-                } else if (serverFormats.indexOf(fileExtension(file.name)) !== -1) {
+                } else if (serverFormats.indexOf(ext) !== -1) {
                     serverConvert(file);
                 }
             });
