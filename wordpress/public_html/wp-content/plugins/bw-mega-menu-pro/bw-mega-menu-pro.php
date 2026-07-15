@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BW Mega Menu PRO (Creators + Groups)
  * Description: CPT “Creators” (logo + URL) + taxonomy “Groups” (Browse All URL). Shortcode [bw_mega_menu label="APPAREL STORES" all_link="/all-stores"] outputs a Bunker-style header tab bar: one tab per group, each opening a full-width panel of client logo cards.
- * Version: 4.4.0
+ * Version: 4.5.0
  * License: GPL-2.0+
  */
 if (!defined('ABSPATH')) exit;
@@ -42,9 +42,10 @@ class BW_Mega_Menu_Pro {
     add_filter('manage_edit-'.self::CPT_CREATOR.'_sortable_columns',[$this,'creator_sortable']);
     add_action('pre_get_posts',                                      [$this,'creator_admin_sorting']);
 
-    // assets + shortcode
+    // assets + shortcodes
     add_action('wp_enqueue_scripts', [$this,'register_assets']);
     add_shortcode('bw_mega_menu',   [$this,'shortcode']);
+    add_shortcode('bw_all_stores',  [$this,'all_stores_shortcode']);
 
     // settings page
     add_action('admin_menu',  [$this,'add_settings_page']);
@@ -180,12 +181,12 @@ class BW_Mega_Menu_Pro {
 
   /* ---------- Assets + Shortcode ---------- */
   public function register_assets(){
-    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '4.4.0');
+    wp_register_style('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.css', __FILE__), [], '4.5.0');
     // Astra safety: the panel is positioned against the header bar row that
     // hosts the shortcode, so those bars must allow overflow and anchor it.
     $astra = ".ast-primary-header-bar, .main-header-bar, .ast-below-header-bar { overflow:visible!important } .site-header, .ast-primary-header-bar, .ast-below-header-bar { position:relative; z-index:30 } .ast-builder-html-element { min-width:0; max-width:100% }";
     wp_add_inline_style('bw-mega-menu-pro',$astra);
-    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '4.4.0', true);
+    wp_register_script('bw-mega-menu-pro', plugins_url('bw-mega-menu-pro.js', __FILE__), [], '4.5.0', true);
   }
 
   public function shortcode($atts){
@@ -304,6 +305,73 @@ class BW_Mega_Menu_Pro {
         </div>
       </div>
     </nav>
+    <?php return ob_get_clean();
+  }
+
+  /**
+   * Full directory of client stores, grouped by category — the destination
+   * for the menu's "All Stores" link. Same tiles as the menu panel, laid out
+   * as a browsable page.
+   */
+  public function all_stores_shortcode($atts){
+    $atts = shortcode_atts([
+      'show_all_tx' => 'Shop All',
+      'grayscale'   => (get_option(self::OPT_GRAYSCALE,'on')==='on') ? 'on' : 'off',
+    ], $atts, 'bw_all_stores');
+
+    wp_enqueue_style('bw-mega-menu-pro');
+
+    $groups = get_terms([
+      'taxonomy'=>self::TAX_GROUP,'hide_empty'=>false,'orderby'=>'name','order'=>'ASC',
+    ]);
+    if (is_wp_error($groups) || empty($groups)) return '<!-- BW: no groups -->';
+
+    $gray_class = ($atts['grayscale']==='on') ? ' is-gray' : '';
+
+    ob_start(); ?>
+    <div class="bw-mm bw-all-stores<?php echo esc_attr($gray_class); ?>">
+      <?php foreach($groups as $g):
+        $browse = get_term_meta($g->term_id,self::TM_BROWSE,true) ?: get_term_link($g);
+        // Alphabetical, pinned creators first (PHP 8 usort is stable).
+        $creators = get_posts([
+          'post_type'=>self::CPT_CREATOR,'posts_per_page'=>-1,
+          'orderby'=>'title','order'=>'ASC',
+          'tax_query'=>[['taxonomy'=>self::TAX_GROUP,'field'=>'term_id','terms'=>[$g->term_id]]],
+          'meta_query'=>[['key'=>self::PM_SHOW,'value'=>'1']]
+        ]);
+        if (!$creators) continue;
+        usort($creators, function($a,$b){
+          $pa = get_post_meta($a->ID, self::PM_PINNED, true) === '1' ? 1 : 0;
+          $pb = get_post_meta($b->ID, self::PM_PINNED, true) === '1' ? 1 : 0;
+          return $pb <=> $pa;
+        });
+        ?>
+        <section class="bw-mm__group is-open" aria-label="<?php echo esc_attr($g->name); ?>">
+          <div class="bw-mm__group-head">
+            <h2 class="bw-mm__group-title"><?php echo esc_html($g->name); ?></h2>
+            <a class="bw-mm__group-all" href="<?php echo esc_url($browse); ?>">
+              <?php echo esc_html($atts['show_all_tx'].' '.$g->name); ?> <span class="arrow" aria-hidden="true">›</span>
+            </a>
+          </div>
+          <ul class="bw-mm__grid">
+            <?php foreach($creators as $c):
+              $u = $this->resolve_creator_url((int)$c->ID);
+              $name = get_the_title($c->ID);
+              $thumb_html = get_the_post_thumbnail($c->ID,'medium',['alt'=>$name, 'class'=>'bwmm-img', 'loading'=>'lazy']);
+              ?>
+              <li class="bw-mm__card-item">
+                <a class="bwmm-card" href="<?php echo esc_url($u); ?>" aria-label="<?php echo esc_attr($name); ?>" title="<?php echo esc_attr($name); ?>">
+                  <div class="bwmm-tile">
+                    <?php echo $thumb_html ?: '<span class="bw-logo-text">'.esc_html($name).'</span>'; ?>
+                  </div>
+                  <span class="bwmm-name"><?php echo esc_html($name); ?></span>
+                </a>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        </section>
+      <?php endforeach; ?>
+    </div>
     <?php return ob_get_clean();
   }
 

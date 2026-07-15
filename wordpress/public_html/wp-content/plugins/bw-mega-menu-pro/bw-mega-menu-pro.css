@@ -364,3 +364,39 @@
     height: auto;
   }
 }
+
+/* ---------- All Stores directory page ---------- */
+.bw-all-stores {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 8px 32px 40px;
+}
+
+/* This renders inside .entry-content, where Astra underlines every link with
+   a more specific selector than a plain component rule can outrank. */
+.bw-all-stores .bwmm-card,
+.bw-all-stores .bwmm-card:hover,
+.bw-all-stores .bwmm-card:focus-visible,
+.bw-all-stores .bwmm-name {
+  text-decoration: none !important;
+}
+
+@media (max-width: 920px) {
+  .bw-all-stores {
+    padding: 8px 16px 30px;
+  }
+}
+
+.bw-all-stores .bw-mm__group {
+  display: block;
+  margin-bottom: 38px;
+}
+
+.bw-all-stores .bw-mm__group-head {
+  border-bottom: 1px solid var(--bw-line-soft);
+  padding-bottom: 10px;
+}
+
+.bw-all-stores .bw-mm__group-title {
+  font-size: 1.35rem;
+}

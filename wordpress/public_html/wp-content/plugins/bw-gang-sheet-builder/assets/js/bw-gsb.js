@@ -77,6 +77,9 @@
         var textOutlineColor = form.querySelector('[data-bw-gsb-text-outline-color]');
         var textApply = form.querySelector('[data-bw-gsb-text-apply]');
         var textCancel = form.querySelector('[data-bw-gsb-text-cancel]');
+        var customHeightInput = form.querySelector('[data-bw-gsb-custom-height]');
+        var importUrlInput = form.querySelector('[data-bw-gsb-import-url]');
+        var importGoButton = form.querySelector('[data-bw-gsb-import-go]');
         var saveDesignButton = form.querySelector('[data-bw-gsb-save-design]');
         var myDesignsButton = form.querySelector('[data-bw-gsb-my-designs]');
         var designsPanel = form.querySelector('[data-bw-gsb-designs-panel]');
@@ -184,7 +187,9 @@
 
             var bounds = itemBounds(item);
             var epsilon = 0.01;
-            return bounds.left < -epsilon || bounds.top < -epsilon || bounds.right > state.sheet.width + epsilon || bounds.bottom > state.sheet.height + epsilon;
+            // Custom sheets grow to fit, so only the max length is a hard edge.
+            var limit = sheetMaxHeight();
+            return bounds.left < -epsilon || bounds.top < -epsilon || bounds.right > state.sheet.width + epsilon || bounds.bottom > limit + epsilon;
         }
 
         function boundsOverlap(a, b) {
@@ -269,6 +274,10 @@
             if (!canvas || !state.sheet) {
                 return;
             }
+
+            // A custom sheet resizes to its contents before anything is drawn.
+            refreshCustomSheet();
+            sizeCanvas();
 
             computeWarnings();
 
@@ -388,6 +397,72 @@
             }
         }
 
+        /* ---------- Custom (auto-grow) sheet ---------- */
+
+        var CUSTOM_TAIL_INCHES = 2; // breathing room under the lowest design
+
+        function isCustomSheet() {
+            return !!(state.sheet && state.sheet.isCustom);
+        }
+
+        /**
+         * How far down artwork may be placed. A custom sheet is bounded by its
+         * max length (it grows to fit); a fixed sheet by its own height.
+         */
+        function sheetMaxHeight() {
+            if (!state.sheet) {
+                return 0;
+            }
+            return isCustomSheet() ? state.sheet.maxHeight : state.sheet.height;
+        }
+
+        /** Lowest point any placed artwork reaches, in inches. */
+        function contentBottom() {
+            var bottom = 0;
+            state.items.forEach(function (item) {
+                var bounds = itemBounds(item);
+                if (bounds.bottom > bottom) {
+                    bottom = bounds.bottom;
+                }
+            });
+            return bottom;
+        }
+
+        /**
+         * Grow (or shrink) a custom sheet to fit its artwork, then reprice by
+         * the inch. Mirrors the server's billing: whole inches, min charge.
+         */
+        function refreshCustomSheet() {
+            if (!isCustomSheet()) {
+                return;
+            }
+
+            var cfg = state.sheet;
+            var needed = state.items.length ? contentBottom() + CUSTOM_TAIL_INCHES : cfg.minHeight;
+            var height = Math.ceil(clamp(needed, cfg.minHeight, cfg.maxHeight));
+
+            state.sheet.height = height;
+            state.sheet.price = Math.max(cfg.minCharge, height * cfg.pricePerInch);
+            state.sheet.label = cfg.width + '" x ' + height + '" (custom)';
+
+            if (customHeightInput) {
+                customHeightInput.value = height;
+            }
+
+            if (labelEl) {
+                labelEl.textContent = state.sheet.label;
+            }
+            if (priceEl) {
+                priceEl.textContent = money(state.sheet.price, config.currencySymbol);
+            }
+            if (dimensionsEl) {
+                dimensionsEl.textContent = cfg.width + '" x ' + height + '"';
+            }
+            if (buttonPrice) {
+                buttonPrice.textContent = '- ' + money(state.sheet.price, config.currencySymbol);
+            }
+        }
+
         function updateSheetMeta() {
             if (!sheetSelect) {
                 return;
@@ -398,13 +473,24 @@
                 return;
             }
 
+            var isCustom = option.getAttribute('data-custom') === '1';
+
             state.sheet = {
                 code: sheetSelect.value,
                 label: option.getAttribute('data-label') || option.textContent,
                 width: Number(option.getAttribute('data-width') || 0),
                 height: Number(option.getAttribute('data-height') || 0),
-                price: Number(option.getAttribute('data-price') || 0)
+                price: Number(option.getAttribute('data-price') || 0),
+                isCustom: isCustom,
+                pricePerInch: Number(option.getAttribute('data-price-per-inch') || 0),
+                minHeight: Number(option.getAttribute('data-min-height') || 12),
+                maxHeight: Number(option.getAttribute('data-max-height') || 240),
+                minCharge: Number(option.getAttribute('data-min-charge') || 0)
             };
+
+            if (customHeightInput) {
+                customHeightInput.value = isCustom ? state.sheet.height : '';
+            }
 
             if (labelEl) {
                 labelEl.textContent = state.sheet.label;
@@ -508,6 +594,12 @@
                     textFlag.textContent = config.messages.textFlag || 'Text design';
                     card.appendChild(textFlag);
                 }
+                if (upload.convertedFrom) {
+                    var convFlag = document.createElement('p');
+                    convFlag.className = 'bw-gsb-upload-flag is-converted';
+                    convFlag.textContent = (config.messages.convertedFlag || 'Converted from') + ' ' + upload.convertedFrom;
+                    card.appendChild(convFlag);
+                }
                 card.appendChild(button);
                 uploadList.appendChild(card);
             });
@@ -545,8 +637,9 @@
             var width = upload.width > 0 ? upload.width / 300 : state.sheet.width * 0.3;
             width = clamp(width, MIN_ITEM_INCHES, state.sheet.width * 0.9);
             var height = width * ratio;
-            if (height > state.sheet.height * 0.9) {
-                height = state.sheet.height * 0.9;
+            var heightCap = sheetMaxHeight() * 0.9;
+            if (height > heightCap) {
+                height = heightCap;
                 width = height / Math.max(ratio, 0.01);
             }
 
@@ -611,7 +704,7 @@
                     shelfH = 0;
                 }
 
-                if (shelfY + h > state.sheet.height + epsilon || w > state.sheet.width - margin * 2 + epsilon) {
+                if (shelfY + h > sheetMaxHeight() + epsilon || w > state.sheet.width - margin * 2 + epsilon) {
                     overflow += 1;
                     return;
                 }
@@ -662,7 +755,7 @@
             copy.id = nextId('item');
             copy.zIndex = state.items.length + 1;
             copy.x = clamp(item.x + 0.5, 0, Math.max(0, state.sheet.width - item.width));
-            copy.y = clamp(item.y + 0.5, 0, Math.max(0, state.sheet.height - item.height));
+            copy.y = clamp(item.y + 0.5, 0, Math.max(0, sheetMaxHeight() - item.height));
 
             state.items.push(copy);
             state.activeId = copy.id;
@@ -770,6 +863,118 @@
             image.src = url;
         }
 
+        /* ---------- Server-side conversion (PSD/PDF/AI/EPS/TIFF) ---------- */
+
+        var serverFormats = Array.isArray(config.serverFormats) ? config.serverFormats : [];
+
+        function fileExtension(name) {
+            var match = /\.([a-z0-9]+)$/i.exec(String(name || ''));
+            return match ? match[1].toLowerCase() : '';
+        }
+
+        function setBusySummary(message) {
+            if (fileSummary) {
+                fileSummary.textContent = message;
+            }
+        }
+
+        /** Pull a served PNG back into the builder as a normal upload. */
+        function adoptConvertedPng(data) {
+            fetch(data.url, { credentials: 'same-origin' })
+                .then(function (response) { return response.blob(); })
+                .then(function (blob) {
+                    var file = new File([blob], pngName(data.name), { type: 'image/png' });
+                    registerUpload({
+                        id: nextId('upload'),
+                        name: file.name,
+                        file: file,
+                        url: URL.createObjectURL(blob),
+                        width: Number(data.width || 0),
+                        height: Number(data.height || 0),
+                        convertedFrom: data.converted_from || ''
+                    });
+                })
+                .catch(function () {
+                    window.alert(config.messages.networkError || 'Network error — please try again.');
+                });
+        }
+
+        function serverConvert(file) {
+            setBusySummary((config.messages.converting || 'Converting') + ' ' + file.name + '…');
+
+            var data = new FormData();
+            data.append('action', 'bw_gsb_convert_artwork');
+            data.append('nonce', config.convertNonce || '');
+            data.append('file', file, file.name);
+
+            fetch(config.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: data })
+                .then(function (response) { return response.json(); })
+                .then(function (payload) {
+                    if (!payload || !payload.success) {
+                        updateFileSummary();
+                        window.alert(payload && payload.data && payload.data.message ? payload.data.message : 'Conversion failed.');
+                        return;
+                    }
+                    adoptConvertedPng(payload.data);
+                })
+                .catch(function () {
+                    updateFileSummary();
+                    window.alert(config.messages.networkError || 'Network error — please try again.');
+                });
+        }
+
+        function importFromUrl() {
+            var url = importUrlInput ? importUrlInput.value.trim() : '';
+            if (!url) {
+                return;
+            }
+
+            setBusySummary(config.messages.importing || 'Importing from link…');
+            if (importGoButton) {
+                importGoButton.disabled = true;
+            }
+
+            var data = new FormData();
+            data.append('action', 'bw_gsb_import_url');
+            data.append('nonce', config.convertNonce || '');
+            data.append('url', url);
+
+            fetch(config.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: data })
+                .then(function (response) { return response.json(); })
+                .then(function (payload) {
+                    if (importGoButton) {
+                        importGoButton.disabled = false;
+                    }
+                    if (!payload || !payload.success) {
+                        updateFileSummary();
+                        window.alert(payload && payload.data && payload.data.message ? payload.data.message : 'Import failed.');
+                        return;
+                    }
+
+                    if (payload.data.native) {
+                        // PNG/JPG/WEBP/SVG: run it through the normal browser ingest.
+                        fetch(payload.data.url, { credentials: 'same-origin' })
+                            .then(function (response) { return response.blob(); })
+                            .then(function (blob) {
+                                ingestFile(new File([blob], payload.data.name, { type: payload.data.mime }));
+                            });
+                    } else {
+                        adoptConvertedPng(payload.data);
+                    }
+
+                    if (importUrlInput) {
+                        importUrlInput.value = '';
+                    }
+                })
+                .catch(function () {
+                    if (importGoButton) {
+                        importGoButton.disabled = false;
+                    }
+                    updateFileSummary();
+                    window.alert(config.messages.networkError || 'Network error — please try again.');
+                });
+        }
+
         function readUploads() {
             if (!fileInput || !fileInput.files) {
                 updateFileSummary();
@@ -777,7 +982,13 @@
                 return;
             }
 
-            Array.prototype.forEach.call(fileInput.files, ingestFile);
+            Array.prototype.forEach.call(fileInput.files, function (file) {
+                if (CONVERTIBLE_TYPES[file.type]) {
+                    ingestFile(file);
+                } else if (serverFormats.indexOf(fileExtension(file.name)) !== -1) {
+                    serverConvert(file);
+                }
+            });
             fileInput.value = '';
         }
 
@@ -845,15 +1056,15 @@
                     var deltaX = (point.x - start.x) / scale;
                     var deltaY = (point.y - start.y) / scale;
                     item.x = clamp(startItem.x + deltaX, 0, Math.max(0, state.sheet.width - item.width));
-                    item.y = clamp(startItem.y + deltaY, 0, Math.max(0, state.sheet.height - item.height));
+                    item.y = clamp(startItem.y + deltaY, 0, Math.max(0, sheetMaxHeight() - item.height));
                 } else {
                     var resizeDeltaX = (point.x - start.x) / scale;
                     var nextWidth = clamp(startItem.width + resizeDeltaX, MIN_ITEM_INCHES, state.sheet.width);
                     var ratio = startItem.height / Math.max(startItem.width, 0.01);
                     item.width = nextWidth;
-                    item.height = clamp(nextWidth * ratio, MIN_ITEM_INCHES, state.sheet.height);
+                    item.height = clamp(nextWidth * ratio, MIN_ITEM_INCHES, sheetMaxHeight());
                     item.x = clamp(item.x, 0, Math.max(0, state.sheet.width - item.width));
-                    item.y = clamp(item.y, 0, Math.max(0, state.sheet.height - item.height));
+                    item.y = clamp(item.y, 0, Math.max(0, sheetMaxHeight() - item.height));
                 }
 
                 renderItems();
@@ -901,12 +1112,12 @@
                 nextWidth = clamp(Number(width), MIN_ITEM_INCHES, state.sheet.width);
                 nextHeight = nextWidth * ratio;
             } else {
-                nextHeight = clamp(Number(height), MIN_ITEM_INCHES, state.sheet.height);
+                nextHeight = clamp(Number(height), MIN_ITEM_INCHES, sheetMaxHeight());
                 nextWidth = nextHeight / Math.max(ratio, 0.01);
             }
 
-            if (nextHeight > state.sheet.height) {
-                nextHeight = state.sheet.height;
+            if (nextHeight > sheetMaxHeight()) {
+                nextHeight = sheetMaxHeight();
                 nextWidth = nextHeight / Math.max(ratio, 0.01);
             }
             if (nextWidth > state.sheet.width) {
@@ -917,7 +1128,7 @@
             item.width = Number(nextWidth.toFixed(2));
             item.height = Number(nextHeight.toFixed(2));
             item.x = clamp(item.x, 0, Math.max(0, state.sheet.width - item.width));
-            item.y = clamp(item.y, 0, Math.max(0, state.sheet.height - item.height));
+            item.y = clamp(item.y, 0, Math.max(0, sheetMaxHeight() - item.height));
             renderItems();
         }
 
@@ -963,10 +1174,10 @@
                     item.x = clamp(item.x + step, 0, Math.max(0, state.sheet.width - item.width));
                     break;
                 case 'ArrowUp':
-                    item.y = clamp(item.y - step, 0, Math.max(0, state.sheet.height - item.height));
+                    item.y = clamp(item.y - step, 0, Math.max(0, sheetMaxHeight() - item.height));
                     break;
                 case 'ArrowDown':
-                    item.y = clamp(item.y + step, 0, Math.max(0, state.sheet.height - item.height));
+                    item.y = clamp(item.y + step, 0, Math.max(0, sheetMaxHeight() - item.height));
                     break;
                 case 'Delete':
                 case 'Backspace':
@@ -1419,6 +1630,19 @@
                 });
                 if (upload && upload.textMeta) {
                     openTextPanel(upload.id);
+                }
+            });
+        }
+
+        if (importGoButton) {
+            importGoButton.addEventListener('click', importFromUrl);
+        }
+
+        if (importUrlInput) {
+            importUrlInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    importFromUrl();
                 }
             });
         }

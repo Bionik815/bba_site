@@ -60,6 +60,14 @@ class BW_GSB_Plugin
         add_action('wp_ajax_bw_gsb_list_designs', [$this, 'ajax_list_designs']);
         add_action('wp_ajax_bw_gsb_load_design', [$this, 'ajax_load_design']);
         add_action('wp_ajax_bw_gsb_delete_design', [$this, 'ajax_delete_design']);
+
+        // Pro-format conversion (PSD/PDF/AI/EPS/TIFF -> PNG) + link import.
+        add_action('wp_ajax_bw_gsb_convert_artwork', [$this, 'ajax_convert_artwork']);
+        add_action('wp_ajax_nopriv_bw_gsb_convert_artwork', [$this, 'ajax_convert_artwork']);
+        add_action('wp_ajax_bw_gsb_import_url', [$this, 'ajax_import_url']);
+        add_action('wp_ajax_nopriv_bw_gsb_import_url', [$this, 'ajax_import_url']);
+        add_action('bw_gsb_purge_temp_files', [$this, 'purge_temp_files']);
+        add_action('init', [$this, 'maybe_schedule_temp_purge']);
     }
 
     public static function activate()
@@ -204,6 +212,9 @@ class BW_GSB_Plugin
                 'dpiOk' => 150,
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'designNonce' => wp_create_nonce('bw_gsb_design'),
+                'convertNonce' => wp_create_nonce('bw_gsb_convert'),
+                'serverFormats' => self::server_convert_formats(),
+                'customSheet' => $this->get_custom_sheet_config(),
                 'isLoggedIn' => is_user_logged_in(),
                 'loginUrl' => wp_login_url($this->current_url()),
                 'messages' => [
@@ -270,15 +281,52 @@ class BW_GSB_Plugin
                                         <?php echo esc_html($sheet['label'] . ' - ' . $this->format_money($sheet['price'])); ?>
                                     </option>
                                 <?php endforeach; ?>
+                                <?php if ($custom_sheet = $this->get_custom_sheet_config()) : ?>
+                                    <option
+                                        value="<?php echo esc_attr($custom_sheet['code']); ?>"
+                                        data-label="<?php echo esc_attr($custom_sheet['label']); ?>"
+                                        data-custom="1"
+                                        data-price-per-inch="<?php echo esc_attr($this->number_string($custom_sheet['price_per_inch'])); ?>"
+                                        data-min-height="<?php echo esc_attr($this->number_string($custom_sheet['min_height'])); ?>"
+                                        data-max-height="<?php echo esc_attr($this->number_string($custom_sheet['max_height'])); ?>"
+                                        data-min-charge="<?php echo esc_attr($this->number_string($custom_sheet['min_charge'])); ?>"
+                                        data-width="<?php echo esc_attr($this->number_string($custom_sheet['width'])); ?>"
+                                        data-height="<?php echo esc_attr($this->number_string($custom_sheet['min_height'])); ?>"
+                                        data-price="<?php echo esc_attr($this->number_string($custom_sheet['min_charge'])); ?>"
+                                    >
+                                        <?php echo esc_html(sprintf(
+                                            /* translators: 1: price per inch */
+                                            __('Custom length — %s per inch, grows as you add art', 'bw-gsb'),
+                                            $this->format_money($custom_sheet['price_per_inch'])
+                                        )); ?>
+                                    </option>
+                                <?php endif; ?>
                             </select>
                         </label>
+                        <input type="hidden" name="custom_height" value="" data-bw-gsb-custom-height>
 
+                        <?php $server_formats = self::server_convert_formats(); ?>
                         <label>
                             <span><?php esc_html_e('Artwork Files', 'bw-gsb'); ?></span>
-                            <input type="file" name="artwork_files[]" multiple accept=".png,.jpg,.jpeg,.webp,.svg,image/png,image/jpeg,image/webp,image/svg+xml" data-bw-gsb-files>
+                            <input type="file" name="artwork_files[]" multiple accept=".png,.jpg,.jpeg,.webp,.svg<?php echo $server_formats ? ',.' . esc_attr(implode(',.', $server_formats)) : ''; ?>,image/png,image/jpeg,image/webp,image/svg+xml" data-bw-gsb-files>
                         </label>
                         <p class="bw-gsb-help" data-bw-gsb-file-summary><?php esc_html_e('No files selected yet.', 'bw-gsb'); ?></p>
-                        <p class="bw-gsb-help"><?php esc_html_e('PNG, JPG, WEBP, and SVG accepted — everything is converted to print-ready PNG right in your browser. PNG with a transparent background prints best; JPG backgrounds print white.', 'bw-gsb'); ?></p>
+                        <p class="bw-gsb-help"><?php
+                            if ($server_formats) {
+                                esc_html_e('PNG, JPG, WEBP, SVG — plus PSD, PDF, AI, EPS, and TIFF, which we convert to print-ready PNG for you. Transparent backgrounds print best; JPG backgrounds print white.', 'bw-gsb');
+                            } else {
+                                esc_html_e('PNG, JPG, WEBP, and SVG accepted — everything is converted to print-ready PNG right in your browser. PNG with a transparent background prints best; JPG backgrounds print white.', 'bw-gsb');
+                            }
+                        ?></p>
+
+                        <label>
+                            <span><?php esc_html_e('Or Import From A Link', 'bw-gsb'); ?></span>
+                            <span class="bw-gsb-import-row">
+                                <input type="url" placeholder="<?php esc_attr_e('Dropbox, Google Drive, or direct file link…', 'bw-gsb'); ?>" data-bw-gsb-import-url>
+                                <button type="button" class="bw-gsb-tool-button" data-bw-gsb-import-go><?php esc_html_e('Import', 'bw-gsb'); ?></button>
+                            </span>
+                        </label>
+                        <p class="bw-gsb-help"><?php esc_html_e('Paste a shared link and we pull the artwork in — works with Dropbox and Google Drive share links (set sharing to “anyone with the link”).', 'bw-gsb'); ?></p>
 
                         <label>
                             <span><?php esc_html_e('Notes', 'bw-gsb'); ?></span>
@@ -289,7 +337,7 @@ class BW_GSB_Plugin
                     <div class="bw-gsb-card">
                         <h3><?php esc_html_e('How It Works', 'bw-gsb'); ?></h3>
                         <ol class="bw-gsb-steps">
-                            <li><?php esc_html_e('Pick your sheet size and upload artwork (PNG, JPG, WEBP, or SVG).', 'bw-gsb'); ?></li>
+                            <li><?php esc_html_e('Pick your sheet size and upload artwork — PNG, JPG, WEBP, SVG, PSD, PDF, AI, EPS, or straight from a Dropbox/Drive link.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('Place, resize, rotate, and duplicate designs until the sheet is full.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('Add the sheet to your cart and check out securely.', 'bw-gsb'); ?></li>
                             <li><?php esc_html_e('We review every sheet before printing and reach out if anything needs attention.', 'bw-gsb'); ?></li>
@@ -454,7 +502,7 @@ class BW_GSB_Plugin
 
         $settings = $this->get_default_settings();
         $sheet_code = sanitize_text_field(wp_unslash($_POST['sheet_code'] ?? ''));
-        $sheet = $this->get_sheet_by_code($sheet_code, $settings['sheet_sizes']);
+        $sheet = $this->resolve_requested_sheet($sheet_code, $_POST['custom_height'] ?? 0);
 
         if (!$sheet) {
             wp_die(esc_html__('Invalid gang sheet size selected.', 'bw-gsb'), 400);
@@ -1381,6 +1429,18 @@ class BW_GSB_Plugin
                     'price' => 240.00,
                 ],
             ],
+            // Custom (auto-grow) sheet: priced by the running inch rather
+            // than a fixed tier. The canvas lengthens as artwork is added.
+            'custom_sheet' => [
+                'enabled' => true,
+                'code' => 'custom',
+                'label' => __('Custom length — grows as you add art', 'bw-gsb'),
+                'width' => 22,
+                'price_per_inch' => 1.00,
+                'min_height' => 12,
+                'max_height' => 240,
+                'min_charge' => 12.00,
+            ],
             'statuses' => [
                 'awaiting_payment',
                 'paid',
@@ -1440,6 +1500,61 @@ class BW_GSB_Plugin
         }
 
         return null;
+    }
+
+    /** Custom-sheet config, or null when the option is switched off. */
+    private function get_custom_sheet_config()
+    {
+        $settings = $this->get_default_settings();
+        $custom = $settings['custom_sheet'] ?? null;
+        if (!is_array($custom) || empty($custom['enabled'])) {
+            return null;
+        }
+        return $custom;
+    }
+
+    /**
+     * Price a custom-length sheet from its height. Authoritative: the browser
+     * only ever posts a height, never a price.
+     */
+    private function price_custom_sheet($height_inches)
+    {
+        $custom = $this->get_custom_sheet_config();
+        if (!$custom) {
+            return null;
+        }
+
+        $height = (float) $height_inches;
+        $height = max((float) $custom['min_height'], min((float) $custom['max_height'], $height));
+        $height = ceil($height); // bill by the whole inch
+
+        $price = $height * (float) $custom['price_per_inch'];
+        $price = max((float) $custom['min_charge'], $price);
+
+        return [
+            'code' => $custom['code'],
+            'label' => sprintf('%d" x %d" (custom)', (int) $custom['width'], (int) $height),
+            'width' => (float) $custom['width'],
+            'height' => (float) $height,
+            'price' => round($price, 2),
+            'is_custom' => true,
+        ];
+    }
+
+    /**
+     * Resolve the sheet for a request: a fixed tier by code, or the custom
+     * sheet priced from the posted height.
+     */
+    private function resolve_requested_sheet($sheet_code, $custom_height_raw)
+    {
+        $settings = $this->get_default_settings();
+        $custom = $this->get_custom_sheet_config();
+
+        if ($custom && $sheet_code === $custom['code']) {
+            return $this->price_custom_sheet((float) $custom_height_raw);
+        }
+
+        return $this->get_sheet_by_code($sheet_code, $settings['sheet_sizes']);
     }
 
     private function sanitize_layout_json($raw)
@@ -1945,7 +2060,10 @@ class BW_GSB_Plugin
         $user_id = $this->require_design_request();
 
         $settings = $this->get_default_settings();
-        $sheet = $this->get_sheet_by_code(sanitize_text_field(wp_unslash($_POST['sheet_code'] ?? '')), $settings['sheet_sizes']);
+        $sheet = $this->resolve_requested_sheet(
+            sanitize_text_field(wp_unslash($_POST['sheet_code'] ?? '')),
+            $_POST['custom_height'] ?? 0
+        );
         if (!$sheet) {
             wp_send_json_error(['message' => __('Invalid sheet size.', 'bw-gsb')], 400);
         }
@@ -2111,6 +2229,291 @@ class BW_GSB_Plugin
                 'filesize_bytes' => (int) $asset['filesize_bytes'],
             ]);
         }
+    }
+
+    /* ---------- Pro-format conversion + link import ---------- */
+
+    const CONVERT_MAX_BYTES = 41943040; // 40 MB
+    const CONVERT_MAX_SIDE = 6000;      // px cap on the produced PNG
+    const CONVERT_DPI = 300;            // raster density for vector sources
+
+    /** Extensions the server can turn into PNG (requires Imagick). */
+    public static function server_convert_formats()
+    {
+        if (!class_exists('Imagick')) {
+            return [];
+        }
+        return ['psd', 'pdf', 'ai', 'eps', 'tif', 'tiff'];
+    }
+
+    private function temp_dir()
+    {
+        $uploads = wp_upload_dir();
+        $dir = trailingslashit($uploads['basedir']) . 'bw-gsb-temp';
+        if (!is_dir($dir)) {
+            wp_mkdir_p($dir);
+        }
+        // Re-assert hardening on every call (cheap, self-heals a wiped dir):
+        // no directory listing, and force downloads so a stored SVG can never
+        // be rendered/executed in-browser even though it carries a .png name.
+        if (!file_exists($dir . '/index.html')) {
+            @file_put_contents($dir . '/index.html', '');
+        }
+        if (!file_exists($dir . '/.htaccess')) {
+            @file_put_contents(
+                $dir . '/.htaccess',
+                "Options -Indexes\n" .
+                "<IfModule mod_headers.c>\n" .
+                "  Header set Content-Disposition \"attachment\"\n" .
+                "  Header set X-Content-Type-Options \"nosniff\"\n" .
+                "</IfModule>\n"
+            );
+        }
+        return $dir;
+    }
+
+    private function temp_url($filename)
+    {
+        $uploads = wp_upload_dir();
+        return trailingslashit($uploads['baseurl']) . 'bw-gsb-temp/' . rawurlencode($filename);
+    }
+
+    public function maybe_schedule_temp_purge()
+    {
+        if (!wp_next_scheduled('bw_gsb_purge_temp_files')) {
+            wp_schedule_event(time() + DAY_IN_SECONDS, 'daily', 'bw_gsb_purge_temp_files');
+        }
+    }
+
+    /** Converted files only live long enough for the browser to fetch them. */
+    public function purge_temp_files()
+    {
+        $dir = $this->temp_dir();
+        foreach ((array) glob($dir . '/*.png') as $file) {
+            if (is_file($file) && filemtime($file) < time() - DAY_IN_SECONDS) {
+                @unlink($file);
+            }
+        }
+    }
+
+    private function enforce_convert_rate_limit()
+    {
+        $max = max(1, (int) apply_filters('bw_gsb_max_conversions_per_hour', 30));
+        $ip = isset($_SERVER['REMOTE_ADDR']) ? (string) $_SERVER['REMOTE_ADDR'] : '';
+        if ($ip === '') {
+            return;
+        }
+        $key = 'bw_gsb_cv_' . md5($ip);
+        $count = (int) get_transient($key);
+        if ($count >= $max) {
+            wp_send_json_error(['message' => __('Too many conversions from your network. Please wait a bit and try again.', 'bw-gsb')], 429);
+        }
+        set_transient($key, $count + 1, HOUR_IN_SECONDS);
+    }
+
+    /**
+     * Rasterize/flatten a PSD/PDF/AI/EPS/TIFF into a transparent-capable PNG
+     * in the temp dir. Returns [name, url, width, height] or WP_Error.
+     */
+    private function convert_to_png_temp($source_path, $ext, $original_name)
+    {
+        if (!class_exists('Imagick')) {
+            return new WP_Error('no_imagick', __('This server cannot convert that format right now.', 'bw-gsb'));
+        }
+
+        $ext = strtolower($ext);
+        $is_vector = in_array($ext, ['pdf', 'ai', 'eps'], true);
+
+        // Work from a copy that carries the right extension so Imagick's
+        // format detection has every hint available.
+        $work = $this->temp_dir() . '/src-' . wp_generate_uuid4() . '.' . $ext;
+        if (!@copy($source_path, $work)) {
+            return new WP_Error('copy_failed', __('Could not process the uploaded file.', 'bw-gsb'));
+        }
+
+        try {
+            $im = new Imagick();
+            $im->setResourceLimit(Imagick::RESOURCETYPE_MEMORY, 512 * 1024 * 1024);
+            $im->setResourceLimit(Imagick::RESOURCETYPE_MAP, 1024 * 1024 * 1024);
+
+            if ($is_vector) {
+                $im->setResolution(self::CONVERT_DPI, self::CONVERT_DPI);
+                $im->setBackgroundColor(new ImagickPixel('transparent'));
+            }
+
+            // First page / merged composite only.
+            $im->readImage($work . '[0]');
+            $im->setIteratorIndex(0);
+
+            if ($is_vector) {
+                $im->setImageBackgroundColor(new ImagickPixel('transparent'));
+            }
+
+            $width = $im->getImageWidth();
+            $height = $im->getImageHeight();
+            if ($width < 1 || $height < 1) {
+                throw new Exception('empty raster');
+            }
+
+            if (max($width, $height) > self::CONVERT_MAX_SIDE) {
+                $im->thumbnailImage(self::CONVERT_MAX_SIDE, self::CONVERT_MAX_SIDE, true);
+                $width = $im->getImageWidth();
+                $height = $im->getImageHeight();
+            }
+
+            $im->setImageFormat('png');
+
+            $base = sanitize_file_name(pathinfo($original_name, PATHINFO_FILENAME));
+            $base = $base !== '' ? $base : 'artwork';
+            $out_name = $base . '-' . substr(wp_generate_uuid4(), 0, 8) . '.png';
+            $out_path = $this->temp_dir() . '/' . $out_name;
+
+            $im->writeImage($out_path);
+            $im->clear();
+
+            return [
+                'name' => $base . '.png',
+                'url' => $this->temp_url($out_name),
+                'width' => $width,
+                'height' => $height,
+            ];
+        } catch (Exception $e) {
+            return new WP_Error('convert_failed', sprintf(
+                /* translators: %s: file extension */
+                __('Could not convert that %s file. Try exporting it as PNG instead.', 'bw-gsb'),
+                strtoupper($ext)
+            ));
+        } finally {
+            @unlink($work);
+        }
+    }
+
+    public function ajax_convert_artwork()
+    {
+        check_ajax_referer('bw_gsb_convert', 'nonce');
+        $this->enforce_convert_rate_limit();
+
+        if (empty($_FILES['file']) || !is_string($_FILES['file']['name'] ?? null) || (int) ($_FILES['file']['error'] ?? 1) !== UPLOAD_ERR_OK) {
+            wp_send_json_error(['message' => __('No file received.', 'bw-gsb')], 400);
+        }
+        if ((int) $_FILES['file']['size'] > self::CONVERT_MAX_BYTES) {
+            wp_send_json_error(['message' => __('That file is over the 40 MB conversion limit.', 'bw-gsb')], 400);
+        }
+
+        $name = sanitize_file_name((string) $_FILES['file']['name']);
+        $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+        if (!in_array($ext, self::server_convert_formats(), true)) {
+            wp_send_json_error(['message' => __('Unsupported file type for conversion.', 'bw-gsb')], 400);
+        }
+
+        $result = $this->convert_to_png_temp($_FILES['file']['tmp_name'], $ext, $name);
+        if (is_wp_error($result)) {
+            wp_send_json_error(['message' => $result->get_error_message()], 422);
+        }
+
+        $result['converted_from'] = strtoupper($ext);
+        wp_send_json_success($result);
+    }
+
+    /** Normalize common share links into direct-download URLs. */
+    private function normalize_import_url($url)
+    {
+        $host = strtolower((string) wp_parse_url($url, PHP_URL_HOST));
+
+        if (strpos($host, 'dropbox.com') !== false) {
+            $url = remove_query_arg('dl', $url);
+            $url = add_query_arg('dl', '1', $url);
+        }
+
+        if ($host === 'drive.google.com' && preg_match('#/file/d/([a-zA-Z0-9_-]+)#', $url, $m)) {
+            $url = 'https://drive.google.com/uc?export=download&id=' . $m[1];
+        }
+
+        return $url;
+    }
+
+    public function ajax_import_url()
+    {
+        check_ajax_referer('bw_gsb_convert', 'nonce');
+        $this->enforce_convert_rate_limit();
+
+        $url = esc_url_raw(wp_unslash($_POST['url'] ?? ''));
+        if ($url === '' || !in_array(wp_parse_url($url, PHP_URL_SCHEME), ['http', 'https'], true)) {
+            wp_send_json_error(['message' => __('Paste a valid http(s) link to an artwork file.', 'bw-gsb')], 400);
+        }
+
+        $url = $this->normalize_import_url($url);
+
+        // wp_safe_remote_get blocks private/loopback hosts (SSRF guard).
+        $response = wp_safe_remote_get($url, [
+            'timeout' => 25,
+            'redirection' => 3,
+            'limit_response_size' => self::CONVERT_MAX_BYTES,
+        ]);
+        if (is_wp_error($response) || (int) wp_remote_retrieve_response_code($response) !== 200) {
+            wp_send_json_error(['message' => __('Could not download from that link. Make sure it is a public, direct link to the file.', 'bw-gsb')], 422);
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        if ($body === '' || strlen($body) > self::CONVERT_MAX_BYTES) {
+            wp_send_json_error(['message' => __('That link did not return a usable file.', 'bw-gsb')], 422);
+        }
+
+        // Sniff the real type from magic bytes — never trust the URL or headers.
+        $head = substr($body, 0, 16);
+        $sniffed = '';
+        if (strncmp($head, "\x89PNG", 4) === 0) {
+            $sniffed = 'png';
+        } elseif (strncmp($head, "\xFF\xD8\xFF", 3) === 0) {
+            $sniffed = 'jpg';
+        } elseif (strncmp($head, 'RIFF', 4) === 0 && substr($body, 8, 4) === 'WEBP') {
+            $sniffed = 'webp';
+        } elseif (strncmp($head, '8BPS', 4) === 0) {
+            $sniffed = 'psd';
+        } elseif (strncmp($head, '%PDF', 4) === 0) {
+            $sniffed = 'pdf';
+        } elseif (strncmp($head, '%!PS', 4) === 0) {
+            $sniffed = 'eps';
+        } elseif (strncmp($head, "II*\x00", 4) === 0 || strncmp($head, "MM\x00*", 4) === 0) {
+            $sniffed = 'tif';
+        } elseif (preg_match('/^\s*(<\?xml|<svg)/i', substr($body, 0, 256))) {
+            $sniffed = 'svg';
+        }
+
+        if ($sniffed === '') {
+            wp_send_json_error(['message' => __('That link is not a supported image format (PNG, JPG, WEBP, SVG, PSD, PDF, AI, EPS, TIFF).', 'bw-gsb')], 422);
+        }
+
+        $path_name = basename((string) wp_parse_url($url, PHP_URL_PATH));
+        $base = sanitize_file_name(pathinfo($path_name, PATHINFO_FILENAME)) ?: 'imported';
+
+        $tmp = wp_tempnam('bw-gsb-import');
+        file_put_contents($tmp, $body);
+
+        if (in_array($sniffed, ['psd', 'pdf', 'eps', 'tif'], true)) {
+            $result = $this->convert_to_png_temp($tmp, $sniffed === 'tif' ? 'tif' : $sniffed, $base . '.' . $sniffed);
+            @unlink($tmp);
+            if (is_wp_error($result)) {
+                wp_send_json_error(['message' => $result->get_error_message()], 422);
+            }
+            $result['converted_from'] = strtoupper($sniffed);
+            wp_send_json_success($result);
+        }
+
+        // Browser-native format: stash as-is; the builder's normal client-side
+        // ingest (PNG passthrough / JPG-WEBP-SVG conversion) takes it from here.
+        $mimes = ['png' => 'image/png', 'jpg' => 'image/jpeg', 'webp' => 'image/webp', 'svg' => 'image/svg+xml'];
+        $out_name = 'import-' . substr(wp_generate_uuid4(), 0, 8) . '.png';
+        // Note: stored under .png for the temp-dir purge glob; the response
+        // mime tells the client the real type.
+        @rename($tmp, $this->temp_dir() . '/' . $out_name);
+
+        wp_send_json_success([
+            'name' => $base . '.' . $sniffed,
+            'url' => $this->temp_url($out_name),
+            'mime' => $mimes[$sniffed],
+            'native' => true,
+        ]);
     }
 
     private function submission_table_has_column($column)
