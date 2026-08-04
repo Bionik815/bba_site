@@ -390,6 +390,8 @@ class BW_GSB_Plugin
 
                     <aside class="bw-gsb-builder-side" aria-label="<?php esc_attr_e('Design controls', 'bw-gsb'); ?>">
                     <div class="bw-gsb-side-inner">
+                    <p class="bw-gsb-side-hint" data-bw-gsb-side-hint><?php esc_html_e('Select a design on the sheet to resize or rotate it.', 'bw-gsb'); ?></p>
+
                     <div class="bw-gsb-item-panel" data-bw-gsb-item-panel hidden>
                         <div class="bw-gsb-item-panel-head">
                             <strong data-bw-gsb-item-name></strong>
@@ -413,7 +415,6 @@ class BW_GSB_Plugin
                     </div>
 
                     <div class="bw-gsb-builder-tools">
-                        <p class="bw-gsb-side-hint" data-bw-gsb-side-hint><?php esc_html_e('Select a design on the sheet to resize or rotate it.', 'bw-gsb'); ?></p>
                         <div class="bw-gsb-tool-group">
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="4"><?php esc_html_e('4in Wide', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="10"><?php esc_html_e('10in Wide', 'bw-gsb'); ?></button>
