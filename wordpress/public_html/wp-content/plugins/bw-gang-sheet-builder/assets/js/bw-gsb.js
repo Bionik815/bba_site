@@ -349,12 +349,22 @@
             return active && (active === itemPanelWidth || active === itemPanelHeight || active === itemPanelRotation);
         }
 
+        var builderSide = form.querySelector('[data-bw-gsb-side-hint]')
+            ? form.querySelector('[data-bw-gsb-side-hint]').closest('.bw-gsb-builder-side')
+            : null;
+
         function updateItemPanel() {
             if (!itemPanel) {
                 return;
             }
 
             var item = activeItem();
+
+            // Swaps the rail's "select a design" prompt for the real controls.
+            if (builderSide) {
+                builderSide.classList.toggle('has-selection', !!item);
+            }
+
             if (!item) {
                 itemPanel.hidden = true;
                 return;

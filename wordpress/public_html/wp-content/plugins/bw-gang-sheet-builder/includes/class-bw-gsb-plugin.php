@@ -375,7 +375,45 @@ class BW_GSB_Plugin
                             <span data-bw-gsb-sheet-dimensions><?php echo esc_html($default_sheet['width'] . '" x ' . $default_sheet['height'] . '"'); ?></span>
                         </div>
                     </div>
+                    <div class="bw-gsb-builder-layout">
+                    <div class="bw-gsb-builder-main">
+                        <div class="bw-gsb-canvas-shell">
+                            <div class="bw-gsb-canvas" data-bw-gsb-canvas>
+                                <div class="bw-gsb-canvas-grid"></div>
+                                <div class="bw-gsb-canvas-empty">
+                                    <?php esc_html_e('Upload artwork above to start placing it on the sheet.', 'bw-gsb'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="bw-gsb-help"><?php esc_html_e('Tip: select an artwork to move, resize, or rotate it (drag the round handle, hold Shift to snap). Arrow keys nudge; Delete removes. Double-click a text design to edit it.', 'bw-gsb'); ?></p>
+                    </div>
+
+                    <aside class="bw-gsb-builder-side" aria-label="<?php esc_attr_e('Design controls', 'bw-gsb'); ?>">
+                    <div class="bw-gsb-side-inner">
+                    <div class="bw-gsb-item-panel" data-bw-gsb-item-panel hidden>
+                        <div class="bw-gsb-item-panel-head">
+                            <strong data-bw-gsb-item-name></strong>
+                            <span class="bw-gsb-dpi-badge" data-bw-gsb-item-dpi></span>
+                        </div>
+                        <div class="bw-gsb-item-fields">
+                            <label>
+                                <span><?php esc_html_e('Width (in)', 'bw-gsb'); ?></span>
+                                <input type="number" step="0.05" min="0.5" data-bw-gsb-item-width>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Height (in)', 'bw-gsb'); ?></span>
+                                <input type="number" step="0.05" min="0.5" data-bw-gsb-item-height>
+                            </label>
+                            <label>
+                                <span><?php esc_html_e('Rotation (°)', 'bw-gsb'); ?></span>
+                                <input type="number" step="1" data-bw-gsb-item-rotation>
+                            </label>
+                        </div>
+                        <p class="bw-gsb-item-warnings" data-bw-gsb-item-warnings hidden></p>
+                    </div>
+
                     <div class="bw-gsb-builder-tools">
+                        <p class="bw-gsb-side-hint" data-bw-gsb-side-hint><?php esc_html_e('Select a design on the sheet to resize or rotate it.', 'bw-gsb'); ?></p>
                         <div class="bw-gsb-tool-group">
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="4"><?php esc_html_e('4in Wide', 'bw-gsb'); ?></button>
                             <button type="button" class="bw-gsb-tool-button" data-bw-gsb-width-preset="10"><?php esc_html_e('10in Wide', 'bw-gsb'); ?></button>
@@ -401,7 +439,6 @@ class BW_GSB_Plugin
                                 <a class="bw-gsb-tool-button bw-gsb-tool-link" href="<?php echo esc_url(wp_login_url($this->current_url())); ?>"><?php esc_html_e('Log in to save designs', 'bw-gsb'); ?></a>
                             <?php endif; ?>
                         </div>
-                        <p class="bw-gsb-help"><?php esc_html_e('Tip: select an artwork to move, resize, or rotate it (drag the round handle, hold Shift to snap). Arrow keys nudge; Delete removes. Double-click a text design to edit it. Auto-Arrange packs everything on the sheet with even spacing.', 'bw-gsb'); ?></p>
                     </div>
 
                     <div class="bw-gsb-text-panel" data-bw-gsb-text-panel hidden>
@@ -455,35 +492,9 @@ class BW_GSB_Plugin
                         </div>
                         <div data-bw-gsb-designs-list><p class="bw-gsb-help"><?php esc_html_e('Loading…', 'bw-gsb'); ?></p></div>
                     </div>
-                    <div class="bw-gsb-item-panel" data-bw-gsb-item-panel hidden>
-                        <div class="bw-gsb-item-panel-head">
-                            <strong data-bw-gsb-item-name></strong>
-                            <span class="bw-gsb-dpi-badge" data-bw-gsb-item-dpi></span>
-                        </div>
-                        <div class="bw-gsb-item-fields">
-                            <label>
-                                <span><?php esc_html_e('Width (in)', 'bw-gsb'); ?></span>
-                                <input type="number" step="0.05" min="0.5" data-bw-gsb-item-width>
-                            </label>
-                            <label>
-                                <span><?php esc_html_e('Height (in)', 'bw-gsb'); ?></span>
-                                <input type="number" step="0.05" min="0.5" data-bw-gsb-item-height>
-                            </label>
-                            <label>
-                                <span><?php esc_html_e('Rotation (°)', 'bw-gsb'); ?></span>
-                                <input type="number" step="1" data-bw-gsb-item-rotation>
-                            </label>
-                        </div>
-                        <p class="bw-gsb-item-warnings" data-bw-gsb-item-warnings hidden></p>
                     </div>
-                    <div class="bw-gsb-canvas-shell">
-                        <div class="bw-gsb-canvas" data-bw-gsb-canvas>
-                            <div class="bw-gsb-canvas-grid"></div>
-                            <div class="bw-gsb-canvas-empty">
-                                <?php esc_html_e('Upload artwork above to start placing it on the sheet.', 'bw-gsb'); ?>
-                            </div>
-                        </div>
-                    </div>
+                    </aside>
+                    </div><!-- /bw-gsb-builder-layout -->
                 </section>
 
                 <section class="bw-gsb-actions">
