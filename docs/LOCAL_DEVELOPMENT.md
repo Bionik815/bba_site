@@ -11,7 +11,6 @@ This project now includes a Docker-based local stack under `wordpress/`.
 ```bash
 cd "/Users/nhayes/Documents/Barebones Apparel/wordpress"
 cp .env.local.example .env.local
-cp public_html/ops/config.local.php.example public_html/ops/config.local.php
 ```
 
 ## Start local services
@@ -19,8 +18,6 @@ cp public_html/ops/config.local.php.example public_html/ops/config.local.php
 ```bash
 ./scripts/start-local.sh
 ```
-
-The local WordPress image is built with `pdo_mysql` enabled so the `/ops` app can connect to MySQL.
 
 - WordPress: `http://localhost:8080`
 - phpMyAdmin: `http://localhost:8081`
@@ -31,15 +28,12 @@ The local WordPress image is built with `pdo_mysql` enabled so the `/ops` app ca
 ./scripts/import-db.sh
 ```
 
-By default this imports both:
+By default this imports `wordpress/u632291655_CIS0T.sql` into the WordPress schema.
 
-- `wordpress/u632291655_CIS0T.sql` into the WordPress schema
-- `wordpress/u632291655_barebones_ops.sql` into the ops schema
-
-You can pass custom paths:
+You can pass a custom path:
 
 ```bash
-./scripts/import-db.sh /absolute/path/to/wordpress.sql /absolute/path/to/ops.sql
+./scripts/import-db.sh /absolute/path/to/wordpress.sql
 ```
 
 ## Stop local services
@@ -52,10 +46,6 @@ You can pass custom paths:
 
 - `wp-config.php` now supports local DB overrides via environment variables (`WP_DB_NAME`, `WP_DB_USER`, `WP_DB_PASSWORD`, `WP_DB_HOST`).
 - Optional: create `wordpress/public_html/wp-config-local.php` for local-only overrides; this file is git-ignored.
-- Optional: update `wordpress/public_html/ops/config.local.php` with local ops DB creds; this file is git-ignored.
-- Ops PHP errors are centralized in `wordpress/public_html/ops/bootstrap.php`.
-- Set `OPS_DEBUG=1` to show errors in-browser during development (default is off).
-- Set `OPS_ERROR_LOG=/absolute/path/to/log.log` to override log destination (default is `ops/runtime/php-error.log`).
 - The import script updates `wp_options.home` and `wp_options.siteurl` to `http://localhost:8080`.
-- The local setup uses separate schemas for WordPress and ops. `OPS_DB_*` values can be set in `wordpress/.env.local`.
+- The old `/ops` order-tracking app was retired on 2026-10-14 (order tracking now lives in Wonward projects and WooCommerce); it remains in git history.
 - If your DB table prefix is not `wp_`, update `scripts/import-db.sh`.

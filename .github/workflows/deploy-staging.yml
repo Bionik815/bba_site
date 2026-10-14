@@ -2,7 +2,7 @@ name: Deploy to Staging (bbaprintshop.com)
 
 # Push-to-deploy: anything merged into the `staging` branch that touches
 # deployable code is mirrored to the bbaprintshop.com docroot on Hostinger.
-# Scope is CODE ONLY — bw-* plugins, mu-plugins, ops. Content/settings live
+# Scope is CODE ONLY — bw-* plugins, fm-surcharges, mu-plugins. Content/settings live
 # in the staging DB; media syncs separately (see docs/DEPLOYMENT.md).
 
 on:
@@ -12,7 +12,6 @@ on:
       - staging
     paths:
       - ".github/workflows/deploy-staging.yml"
-      - "wordpress/public_html/ops/**"
       - "wordpress/public_html/wp-content/mu-plugins/**"
       - "wordpress/public_html/wp-content/plugins/bw-*/**"
       - "wordpress/public_html/wp-content/plugins/fm-surcharges/**"
@@ -53,10 +52,6 @@ jobs:
             echo "set cmd:fail-exit yes"
             echo "set ssl:verify-certificate no"
             echo "set sftp:auto-confirm yes"
-
-            if [ -d "$SRC/ops" ]; then
-              echo "mirror -R --verbose --only-newer --parallel=2 --exclude-glob config.php --exclude-glob config.local.php --exclude ^runtime/ $SRC/ops \"$STAGING_REMOTE_DIR/ops\""
-            fi
 
             if [ -d "$SRC/wp-content/mu-plugins" ]; then
               echo "mirror -R --verbose --delete --parallel=2 $SRC/wp-content/mu-plugins \"$STAGING_REMOTE_DIR/wp-content/mu-plugins\""

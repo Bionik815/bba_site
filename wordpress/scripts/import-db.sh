@@ -3,15 +3,9 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WP_SQL_FILE="${1:-$ROOT_DIR/u632291655_CIS0T.sql}"
-OPS_SQL_FILE="${2:-$ROOT_DIR/u632291655_barebones_ops.sql}"
 
 if [[ ! -f "$WP_SQL_FILE" ]]; then
   echo "WordPress SQL file not found: $WP_SQL_FILE"
-  exit 1
-fi
-
-if [[ ! -f "$OPS_SQL_FILE" ]]; then
-  echo "Ops SQL file not found: $OPS_SQL_FILE"
   exit 1
 fi
 
@@ -23,8 +17,6 @@ fi
 
 # shellcheck source=/dev/null
 source "$ROOT_DIR/.env.local"
-
-OPS_DB_NAME="${OPS_DB_NAME:-barebones_ops}"
 
 cd "$ROOT_DIR"
 docker compose up -d db
@@ -54,15 +46,11 @@ if [[ "$db_ready" != "true" ]]; then
   exit 1
 fi
 
-echo "Resetting local databases..."
+echo "Resetting local database..."
 docker compose exec -T db "${DB_CLIENT_CMD}" -uroot "-p${MYSQL_ROOT_PASSWORD}" -e "DROP DATABASE IF EXISTS \`${MYSQL_DATABASE}\`; CREATE DATABASE \`${MYSQL_DATABASE}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-docker compose exec -T db "${DB_CLIENT_CMD}" -uroot "-p${MYSQL_ROOT_PASSWORD}" -e "DROP DATABASE IF EXISTS \`${OPS_DB_NAME}\`; CREATE DATABASE \`${OPS_DB_NAME}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
 echo "Importing WordPress SQL dump into ${MYSQL_DATABASE}..."
 docker compose exec -T db "${DB_CLIENT_CMD}" -uroot "-p${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}" < "$WP_SQL_FILE"
-
-echo "Importing Ops SQL dump into ${OPS_DB_NAME}..."
-docker compose exec -T db "${DB_CLIENT_CMD}" -uroot "-p${MYSQL_ROOT_PASSWORD}" "${OPS_DB_NAME}" < "$OPS_SQL_FILE"
 
 options_table="$(
   docker compose exec -T db "${DB_CLIENT_CMD}" -N -B -uroot "-p${MYSQL_ROOT_PASSWORD}" \
@@ -82,5 +70,4 @@ docker compose up -d wordpress phpmyadmin
 echo "Import complete."
 echo "WordPress:  http://localhost:8080"
 echo "phpMyAdmin: http://localhost:8081"
-echo "Ops login:   http://localhost:8080/ops/login.php"
 echo "If your WordPress table prefix is not wp_, edit scripts/import-db.sh and change the *_options lookup."

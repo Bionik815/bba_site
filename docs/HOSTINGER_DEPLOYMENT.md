@@ -6,7 +6,7 @@ This repo is ready for a GitHub-driven deploy to Hostinger without exposing loca
 
 1. Keep working locally in this repo.
 2. Push commits to GitHub.
-3. Let GitHub Actions sync the custom `ops` app and Barebones WordPress plugins to Hostinger over FTP/SFTP.
+3. Let GitHub Actions sync the Barebones WordPress plugins and mu-plugins to Hostinger over FTP/SFTP.
 4. Keep environment-specific secrets in `wp-config-local.php` on the server.
 
 This avoids relying on Hostinger's built-in Git deployment for an already-populated `public_html` directory.
@@ -22,11 +22,11 @@ Create these repository secrets before enabling the workflow:
 - `HOSTINGER_PASSWORD`: your Hostinger SSH/SFTP password
 - `HOSTINGER_REMOTE_DIR`: the actual web root on Hostinger. For this project, prefer `public_html` unless Hostinger explicitly requires an absolute path.
 
-The workflow lives at `.github/workflows/deploy-hostinger.yml` and runs on pushes to `main` or manual dispatch.
+The workflow lives at `.github/workflows/deploy-hostinger.yml`. It is manual-only since 2026-10-14: its original target (the first Hostinger site on the temporary domain) was retired, so retarget `HOSTINGER_REMOTE_DIR` and switch it to dynamic `bw-*` discovery before using it for the production go-live.
 
 ## Staging (bbaprintshop.com)
 
-Staging has its own push-to-deploy workflow: `.github/workflows/deploy-staging.yml`, which runs on pushes to the `staging` branch (or manual dispatch) and mirrors **all** `bw-*` plugins (discovered dynamically — new plugins deploy without editing the workflow), `fm-surcharges`, `mu-plugins`, and `ops` to the staging docroot.
+Staging has its own push-to-deploy workflow: `.github/workflows/deploy-staging.yml`, which runs on pushes to the `staging` branch (or manual dispatch) and mirrors **all** `bw-*` plugins (discovered dynamically — new plugins deploy without editing the workflow), `fm-surcharges`, and `mu-plugins` to the staging docroot.
 
 Additional repository secret required:
 
@@ -74,8 +74,8 @@ That file is already git-ignored, so the credentials stay off GitHub.
 
 ## Notes
 
-- The deploy workflow intentionally uploads only the custom `ops` app, `mu-plugins`, and Barebones plugins instead of the full WordPress install.
-- The deploy workflow intentionally does not overwrite `wp-config.php` or `ops/config.php`, because those may contain production-only database settings on Hostinger.
+- The deploy workflow intentionally uploads only `mu-plugins` and the Barebones plugins instead of the full WordPress install.
+- The deploy workflow intentionally does not overwrite `wp-config.php`, because it may contain production-only database settings on Hostinger.
 - Local override files and runtime directories are skipped.
 - If you later want Git to fully own WordPress core, plugins, and uploads, we should do that as a separate cleanup pass instead of mixing it into the first production rollout.
 - Hostinger also documents directory-level password protection in hPanel if you want a second layer in front of the entire site.

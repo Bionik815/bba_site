@@ -56,7 +56,6 @@ function bba_preview_gate_is_public_request(): bool {
 		'/wp-admin',
 		'/wp-login.php',
 		'/wp-cron.php',
-		'/ops/',
 	];
 
 	foreach ( $allowed_prefixes as $prefix ) {

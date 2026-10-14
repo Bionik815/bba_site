@@ -1,15 +1,11 @@
 name: Deploy to Hostinger
 
+# Manual-only since 2026-10-14: this deployed to the original Hostinger site on
+# the temporary domain, which has been retired. Before using it for the
+# production go-live, point HOSTINGER_REMOTE_DIR at the live docroot and switch
+# the plugin list to the dynamic bw-* discovery used in deploy-staging.yml.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/deploy-hostinger.yml"
-      - "wordpress/public_html/ops/**"
-      - "wordpress/public_html/wp-content/mu-plugins/**"
-      - "wordpress/public_html/wp-content/plugins/bw-*/**"
 
 jobs:
   deploy:
@@ -42,15 +38,6 @@ jobs:
           set cmd:fail-exit yes
           set ssl:verify-certificate no
           set sftp:auto-confirm yes
-
-          mirror -R \
-            --verbose \
-            --only-newer \
-            --parallel=2 \
-            --exclude-glob config.php \
-            --exclude-glob config.local.php \
-            --exclude ^runtime/ \
-            wordpress/public_html/ops "$HOSTINGER_REMOTE_DIR/ops"
 
           mirror -R \
             --verbose \

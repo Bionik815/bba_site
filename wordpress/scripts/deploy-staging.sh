@@ -2,7 +2,7 @@
 #
 # Deploy code to the bbaprintshop.com staging site over SSH (rsync).
 # Same scope as .github/workflows/deploy-staging.yml: bw-* plugins,
-# fm-surcharges, mu-plugins, ops. Code only — DB and settings are not
+# fm-surcharges, mu-plugins. Code only — DB and settings are not
 # touched. Media is opt-in with --media.
 #
 # Usage:
@@ -64,14 +64,6 @@ for dir in "$SRC"/wp-content/plugins/bw-* "$SRC"/wp-content/plugins/fm-surcharge
     "$dir/" \
     "$REMOTE:$STAGING_REMOTE_DIR/wp-content/plugins/$name/"
 done
-
-# ops scripts if present (never overwrite server-local config)
-if [ -d "$SRC/ops" ]; then
-  rsync "${RSYNC_OPTS[@]}" \
-    --exclude 'config.php' --exclude 'config.local.php' --exclude 'runtime/' \
-    "$SRC/ops/" \
-    "$REMOTE:$STAGING_REMOTE_DIR/ops/"
-fi
 
 if [ "$WITH_MEDIA" = "1" ]; then
   echo "==> Syncing media library (this can take a while)"
