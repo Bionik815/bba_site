@@ -26,13 +26,14 @@ The workflow lives at `.github/workflows/deploy-hostinger.yml`. It is manual-onl
 
 ## Staging (bbaprintshop.com)
 
-Staging has its own push-to-deploy workflow: `.github/workflows/deploy-staging.yml`, which runs on pushes to the `staging` branch (or manual dispatch) and mirrors **all** `bw-*` plugins (discovered dynamically — new plugins deploy without editing the workflow), `fm-surcharges`, and `mu-plugins` to the staging docroot.
+Staging has its own push-to-deploy workflow: `.github/workflows/deploy-staging.yml`, which runs on pushes to the `staging` branch (or manual dispatch, with an optional dry run). It runs the same script as local deploys, `wordpress/scripts/deploy-staging.sh`, over SSH with a dedicated deploy key, so both paths ship exactly the same files: **all** `bw-*` plugins (discovered dynamically — new plugins deploy without editing anything), `fm-surcharges`, and our mu-plugins. Hostinger's own `hostinger-*` mu-plugins are never sent or deleted.
 
-Additional repository secret required:
+Repository secrets (GitHub → Settings → Secrets and variables → Actions):
 
-- `STAGING_REMOTE_DIR`: the bbaprintshop.com web root, e.g. `domains/bbaprintshop.com/public_html`
+- `STAGING_SSH_KEY`: the private half of the GitHub Actions deploy key. Its public half is added in hPanel → Advanced → SSH Access.
+- `STAGING_DEPLOY_ENV`: the contents of `wordpress/scripts/deploy.env` (SSH user, host, port, remote dir).
 
-The existing `HOSTINGER_HOST` / `HOSTINGER_USERNAME` / `HOSTINGER_PASSWORD` secrets are reused (same hosting account).
+The workflow pins the server's SSH host keys (hashed, so the address isn't published); if Hostinger rotates them, regenerate that block as described in the workflow file. Staging no longer uses the FTP `HOSTINGER_*` secrets.
 
 ### Day-to-day flow
 

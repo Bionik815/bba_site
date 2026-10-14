@@ -1,20 +1,37 @@
 name: Deploy to Staging (bbaprintshop.com)
 
 # Push-to-deploy: anything merged into the `staging` branch that touches
-# deployable code is mirrored to the bbaprintshop.com docroot on Hostinger.
-# Scope is CODE ONLY — bw-* plugins, fm-surcharges, mu-plugins. Content/settings live
-# in the staging DB; media syncs separately (see docs/DEPLOYMENT.md).
+# deployable code is synced to the bbaprintshop.com docroot on Hostinger.
+# Scope is CODE ONLY — bw-* plugins, fm-surcharges, our mu-plugins. Content/settings live
+# in the staging DB; media syncs separately (deploy-staging.sh --media, run locally).
+#
+# Runs the same script as local deploys (wordpress/scripts/deploy-staging.sh) over
+# SSH with a dedicated deploy key. Repository secrets:
+#   STAGING_SSH_KEY     private half of the GitHub Actions deploy key (its public half
+#                       is added in hPanel → Advanced → SSH Access)
+#   STAGING_DEPLOY_ENV  contents of wordpress/scripts/deploy.env (SSH user, host, port,
+#                       remote dir)
 
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: list what would change, upload nothing"
+        type: boolean
+        default: false
   push:
     branches:
       - staging
     paths:
       - ".github/workflows/deploy-staging.yml"
+      - "wordpress/scripts/deploy-staging.sh"
       - "wordpress/public_html/wp-content/mu-plugins/**"
       - "wordpress/public_html/wp-content/plugins/bw-*/**"
       - "wordpress/public_html/wp-content/plugins/fm-surcharges/**"
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -24,46 +41,27 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install lftp
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lftp
-
-      - name: Upload app files
+      - name: Set up SSH
         env:
-          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
-          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
-          HOSTINGER_PROTOCOL: ${{ secrets.HOSTINGER_PROTOCOL }}
-          HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
-          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
-          STAGING_REMOTE_DIR: ${{ secrets.STAGING_REMOTE_DIR }}
+          STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          STAGING_DEPLOY_ENV: ${{ secrets.STAGING_DEPLOY_ENV }}
         run: |
-          test -n "$HOSTINGER_HOST"
-          test -n "$HOSTINGER_USERNAME"
-          test -n "$HOSTINGER_PASSWORD"
-          test -n "$STAGING_REMOTE_DIR"
+          test -n "$STAGING_SSH_KEY" || { echo "::error::Missing repository secret STAGING_SSH_KEY"; exit 1; }
+          test -n "$STAGING_DEPLOY_ENV" || { echo "::error::Missing repository secret STAGING_DEPLOY_ENV"; exit 1; }
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$STAGING_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          # Pinned host keys for the Hostinger SSH endpoint, hashed so the address
+          # stays out of this public file. If Hostinger rotates them, regenerate with:
+          #   ssh-keyscan -p PORT HOST > kh && ssh-keygen -H -f kh && grep '^|1|' kh
+          cat > ~/.ssh/known_hosts <<'EOF'
+          |1|SKDm5sBXPtbeP3yXLwZSvV508BU=|WRoLIZ4iSIOVxCy9JKEYa2Ne9GI= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDfowDm9v3IrTlYfQl8kSvpbbAZAQtItnyqcqfOKTDWwrPWE+3AJXJQwYMBZnCxbRFmY06VBBmHB4xLJSm6x47gs4nblSxNayFPxBoib4LVOHd5R53RIFRKEHeXm3Et6GixXU8zKHsSW3Fw/KLrYNUq9udvksf6H1g1NbaWUNts+36gdCQrKqcPbkULW8NNnr6MldxK1vSEonlJIAIGgDDksDbdXPfIkspwxS/u9O4ZZIKi+P91cc5WVnkccc6RANdJDlLqBD1Q5DGdb2NgCQGNfT//hiM2y/bOZ92yuysOd2Wbd0KWDlJ46IUAW3MhNaH0/MmvO0AJEK7AYSAVXLdK3RSdwm26PBz8WmCg9XWJhCH0tLXrv3GLmRiRa/GhN5qO24ylA23EgOkscAbZ9WTIvFTCM5QZ8LN4OFdg+jnvDILVmA1kyuEhcv7xED1pQZzJ+yPdZxv4feGHI6nKG7jqsAcweJf/gcQEvLn4kti1+dLB/Tcj/TLS7hfafFbf/9M=
+          |1|jKMUQJDymea7iwd0BSyk38S6/k8=|X+W53lfeunaBE7NY47K48F9L2fY= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEj7CKtwxxrZ4wjw1EA4FWdzyQVFehTn10SKpjIHcjIOWdfpBDATtqwmBiFG6Tjkfz0VEwLwAqQuvhbHPu9qKF8=
+          |1|rAZRA3dNSKpVbKlcvmUKr2OQF/Y=|A7jRO2Gc4Y5bBGsHIF5ns5gmKwo= ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/rVNgqqlsIEXd+69C5Q9EGcge7bZU6hrJMFuAN71RX
+          EOF
+          printf 'Host *\n  IdentityFile %s/.ssh/deploy_key\n  IdentitiesOnly yes\n  UserKnownHostsFile %s/.ssh/known_hosts\n  StrictHostKeyChecking yes\n  BatchMode yes\n' "$HOME" "$HOME" > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+          printf '%s\n' "$STAGING_DEPLOY_ENV" > wordpress/scripts/deploy.env
 
-          SRC="wordpress/public_html"
-
-          # Build the mirror command list dynamically: every bw-* plugin dir
-          # that exists in the repo gets mirrored, so new plugins deploy
-          # without editing this file.
-          {
-            echo "set cmd:fail-exit yes"
-            echo "set ssl:verify-certificate no"
-            echo "set sftp:auto-confirm yes"
-
-            if [ -d "$SRC/wp-content/mu-plugins" ]; then
-              echo "mirror -R --verbose --delete --parallel=2 $SRC/wp-content/mu-plugins \"$STAGING_REMOTE_DIR/wp-content/mu-plugins\""
-            fi
-
-            for dir in "$SRC"/wp-content/plugins/bw-* "$SRC"/wp-content/plugins/fm-surcharges; do
-              [ -d "$dir" ] || continue
-              name="$(basename "$dir")"
-              echo "mirror -R --verbose --delete --parallel=2 $dir \"$STAGING_REMOTE_DIR/wp-content/plugins/$name\""
-            done
-
-            echo "bye"
-          } > /tmp/lftp-script
-
-          lftp -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" "${HOSTINGER_PROTOCOL:-sftp}://$HOSTINGER_HOST:${HOSTINGER_PORT:-22}" -f /tmp/lftp-script
+      - name: Deploy
+        run: bash wordpress/scripts/deploy-staging.sh ${{ inputs.dry_run && '--dry-run' || '' }}
